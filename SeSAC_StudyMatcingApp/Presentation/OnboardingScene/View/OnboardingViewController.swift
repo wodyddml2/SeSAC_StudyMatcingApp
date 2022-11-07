@@ -94,7 +94,8 @@ extension OnboardingViewController {
         startButton.rx.tap
             .withUnretained(self)
             .bind { vc, _ in
-                vc.transition(LoginViewController() , transitionStyle: .push)
+                vc.sceneChange(viewController: LoginViewController())
+                UserManager.onboarding = true
             }
             .disposed(by: disposeBag)
     }

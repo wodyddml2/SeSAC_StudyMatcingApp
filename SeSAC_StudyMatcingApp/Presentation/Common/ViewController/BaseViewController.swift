@@ -36,9 +36,9 @@ class BaseViewController: UIViewController {
         let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
         let sceneDelegate = windowScene?.delegate as? SceneDelegate
         
-        let viewController = vc
+        let nav = UINavigationController(rootViewController: vc)
         
-        sceneDelegate?.window?.rootViewController = viewController
+        sceneDelegate?.window?.rootViewController = nav
         sceneDelegate?.window?.makeKeyAndVisible()
     }
 }

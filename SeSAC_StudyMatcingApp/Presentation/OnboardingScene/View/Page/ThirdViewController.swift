@@ -7,23 +7,25 @@
 
 import UIKit
 
-class ThirdViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+final class ThirdViewController: BaseViewController {
+    
+    let mainView = OnboardingView()
+    
+    override func loadView() {
+        view = mainView
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        mainView.introLabel.text = "SeSAC Study"
+        
+        mainView.onboardingImageView.image = .onboardingImage(num: 3)
     }
-    */
 
+    override func setConstraints() {
+        mainView.introLabel.snp.updateConstraints { make in
+            make.top.equalTo(135)
+        }
+    }
 }
