@@ -15,6 +15,14 @@
 		63467DC82918D4DC00E7D8AE /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 63467DC72918D4DC00E7D8AE /* SnapKit */; };
 		63467DCB2918D4EA00E7D8AE /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 63467DCA2918D4EA00E7D8AE /* RxCocoa */; };
 		63467DCD2918D4EA00E7D8AE /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 63467DCC2918D4EA00E7D8AE /* RxSwift */; };
+		63467DD32918D80800E7D8AE /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63467DD22918D80800E7D8AE /* FirstViewController.swift */; };
+		63467DD52918D80E00E7D8AE /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63467DD42918D80E00E7D8AE /* SecondViewController.swift */; };
+		63467DD72918D81300E7D8AE /* ThirdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63467DD62918D81300E7D8AE /* ThirdViewController.swift */; };
+		63467DD92918D82100E7D8AE /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63467DD82918D82100E7D8AE /* OnboardingView.swift */; };
+		63467DDE2918D85800E7D8AE /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63467DDD2918D85800E7D8AE /* BaseViewController.swift */; };
+		63467DE02918D87F00E7D8AE /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63467DDF2918D87F00E7D8AE /* BaseView.swift */; };
+		63467DE62918D90000E7D8AE /* NotoSansKR-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 63467DE52918D90000E7D8AE /* NotoSansKR-Medium.otf */; };
+		63467DE82918D90700E7D8AE /* NotoSansKR-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 63467DE72918D90700E7D8AE /* NotoSansKR-Regular.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +33,14 @@
 		63467DBB2918D4AF00E7D8AE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		63467DBE2918D4AF00E7D8AE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		63467DC02918D4AF00E7D8AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		63467DD22918D80800E7D8AE /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
+		63467DD42918D80E00E7D8AE /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
+		63467DD62918D81300E7D8AE /* ThirdViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdViewController.swift; sourceTree = "<group>"; };
+		63467DD82918D82100E7D8AE /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		63467DDD2918D85800E7D8AE /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		63467DDF2918D87F00E7D8AE /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
+		63467DE52918D90000E7D8AE /* NotoSansKR-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Medium.otf"; sourceTree = "<group>"; };
+		63467DE72918D90700E7D8AE /* NotoSansKR-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Regular.otf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,7 +87,8 @@
 		63467DCE2918D4F700E7D8AE /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				63467DB62918D4AE00E7D8AE /* OnboardingViewController.swift */,
+				63467DDA2918D82500E7D8AE /* Common */,
+				63467DD12918D7F300E7D8AE /* OnboardingScene */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -88,10 +105,81 @@
 		63467DD02918D65700E7D8AE /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				63467DE42918D8EC00E7D8AE /* Fonts */,
 				63467DBD2918D4AF00E7D8AE /* LaunchScreen.storyboard */,
 				63467DBB2918D4AF00E7D8AE /* Assets.xcassets */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		63467DD12918D7F300E7D8AE /* OnboardingScene */ = {
+			isa = PBXGroup;
+			children = (
+				63467DE12918D89000E7D8AE /* View */,
+				63467DE32918D8B800E7D8AE /* ViewModel */,
+			);
+			path = OnboardingScene;
+			sourceTree = "<group>";
+		};
+		63467DDA2918D82500E7D8AE /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				63467DDC2918D83600E7D8AE /* View */,
+				63467DDB2918D82F00E7D8AE /* ViewController */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		63467DDB2918D82F00E7D8AE /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				63467DDD2918D85800E7D8AE /* BaseViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		63467DDC2918D83600E7D8AE /* View */ = {
+			isa = PBXGroup;
+			children = (
+				63467DDF2918D87F00E7D8AE /* BaseView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		63467DE12918D89000E7D8AE /* View */ = {
+			isa = PBXGroup;
+			children = (
+				63467DE22918D8AA00E7D8AE /* Page */,
+				63467DB62918D4AE00E7D8AE /* OnboardingViewController.swift */,
+				63467DD82918D82100E7D8AE /* OnboardingView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		63467DE22918D8AA00E7D8AE /* Page */ = {
+			isa = PBXGroup;
+			children = (
+				63467DD22918D80800E7D8AE /* FirstViewController.swift */,
+				63467DD42918D80E00E7D8AE /* SecondViewController.swift */,
+				63467DD62918D81300E7D8AE /* ThirdViewController.swift */,
+			);
+			path = Page;
+			sourceTree = "<group>";
+		};
+		63467DE32918D8B800E7D8AE /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		63467DE42918D8EC00E7D8AE /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				63467DE52918D90000E7D8AE /* NotoSansKR-Medium.otf */,
+				63467DE72918D90700E7D8AE /* NotoSansKR-Regular.otf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -161,7 +249,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63467DE62918D90000E7D8AE /* NotoSansKR-Medium.otf in Resources */,
 				63467DBF2918D4AF00E7D8AE /* LaunchScreen.storyboard in Resources */,
+				63467DE82918D90700E7D8AE /* NotoSansKR-Regular.otf in Resources */,
 				63467DBC2918D4AF00E7D8AE /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -176,6 +266,12 @@
 				63467DB72918D4AE00E7D8AE /* OnboardingViewController.swift in Sources */,
 				63467DB32918D4AE00E7D8AE /* AppDelegate.swift in Sources */,
 				63467DB52918D4AE00E7D8AE /* SceneDelegate.swift in Sources */,
+				63467DD52918D80E00E7D8AE /* SecondViewController.swift in Sources */,
+				63467DD72918D81300E7D8AE /* ThirdViewController.swift in Sources */,
+				63467DDE2918D85800E7D8AE /* BaseViewController.swift in Sources */,
+				63467DE02918D87F00E7D8AE /* BaseView.swift in Sources */,
+				63467DD32918D80800E7D8AE /* FirstViewController.swift in Sources */,
+				63467DD92918D82100E7D8AE /* OnboardingView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
