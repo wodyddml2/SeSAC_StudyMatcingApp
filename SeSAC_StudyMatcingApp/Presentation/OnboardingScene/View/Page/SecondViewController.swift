@@ -7,23 +7,25 @@
 
 import UIKit
 
-class SecondViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+final class SecondViewController: BaseViewController {
+    
+    let mainView = OnboardingView()
+    
+    override func loadView() {
+        view = mainView
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        mainView.introLabel.text =
+            """
+            스터디를 원하는 친구를
+            찾을 수 있어요
+            """
+        
+        mainView.onboardingImageView.image = .onboardingImage(num: 2)
+        
+        mainView.introLabel.attributedText = NSAttributedString.introText(text: mainView.introLabel.text!, rangeText: "스터디를 원하는 친구")
     }
-    */
-
 }

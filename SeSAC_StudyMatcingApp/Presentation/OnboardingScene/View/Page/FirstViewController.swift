@@ -7,23 +7,25 @@
 
 import UIKit
 
-class FirstViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+final class FirstViewController: BaseViewController {
+    
+    let mainView = OnboardingView()
+    
+    override func loadView() {
+        view = mainView
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        mainView.introLabel.text =
+            """
+            위치 기반으로 빠르게
+            주위 친구를 확인
+            """
+        
+        mainView.onboardingImageView.image = .onboardingImage(num: 1)
+        
+        mainView.introLabel.attributedText = NSAttributedString.introText(text: mainView.introLabel.text!, rangeText: "위치 기반")
     }
-    */
-
 }

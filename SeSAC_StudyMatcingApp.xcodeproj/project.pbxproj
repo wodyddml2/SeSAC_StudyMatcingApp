@@ -23,6 +23,14 @@
 		63467DE02918D87F00E7D8AE /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63467DDF2918D87F00E7D8AE /* BaseView.swift */; };
 		63467DE62918D90000E7D8AE /* NotoSansKR-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 63467DE52918D90000E7D8AE /* NotoSansKR-Medium.otf */; };
 		63467DE82918D90700E7D8AE /* NotoSansKR-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 63467DE72918D90700E7D8AE /* NotoSansKR-Regular.otf */; };
+		63467DEC2918DB3E00E7D8AE /* UIFont+CustomFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63467DEB2918DB3E00E7D8AE /* UIFont+CustomFont.swift */; };
+		63467DEE2918E0EF00E7D8AE /* UIImage+OnboardingImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63467DED2918E0EF00E7D8AE /* UIImage+OnboardingImage.swift */; };
+		63467DF02918E2F900E7D8AE /* UIColor+CustomColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63467DEF2918E2F900E7D8AE /* UIColor+CustomColor.swift */; };
+		63467DF22918E57E00E7D8AE /* UIViewController+Transition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63467DF12918E57E00E7D8AE /* UIViewController+Transition.swift */; };
+		63467DF52918E6E300E7D8AE /* UserDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63467DF42918E6E300E7D8AE /* UserDefault.swift */; };
+		63467DFA2918E7FC00E7D8AE /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63467DF92918E7FC00E7D8AE /* ViewModelType.swift */; };
+		63467DFD2918EA8400E7D8AE /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63467DFC2918EA8400E7D8AE /* LoginViewController.swift */; };
+		63467DFF2918F04300E7D8AE /* NSAttributedString+CustomText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63467DFE2918F04300E7D8AE /* NSAttributedString+CustomText.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +49,14 @@
 		63467DDF2918D87F00E7D8AE /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		63467DE52918D90000E7D8AE /* NotoSansKR-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Medium.otf"; sourceTree = "<group>"; };
 		63467DE72918D90700E7D8AE /* NotoSansKR-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Regular.otf"; sourceTree = "<group>"; };
+		63467DEB2918DB3E00E7D8AE /* UIFont+CustomFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+CustomFont.swift"; sourceTree = "<group>"; };
+		63467DED2918E0EF00E7D8AE /* UIImage+OnboardingImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+OnboardingImage.swift"; sourceTree = "<group>"; };
+		63467DEF2918E2F900E7D8AE /* UIColor+CustomColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+CustomColor.swift"; sourceTree = "<group>"; };
+		63467DF12918E57E00E7D8AE /* UIViewController+Transition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Transition.swift"; sourceTree = "<group>"; };
+		63467DF42918E6E300E7D8AE /* UserDefault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefault.swift; sourceTree = "<group>"; };
+		63467DF92918E7FC00E7D8AE /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
+		63467DFC2918EA8400E7D8AE /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		63467DFE2918F04300E7D8AE /* NSAttributedString+CustomText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+CustomText.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +94,7 @@
 			children = (
 				63467DCF2918D5BF00E7D8AE /* Application */,
 				63467DCE2918D4F700E7D8AE /* Presentation */,
+				63467DE92918DB0A00E7D8AE /* Utils */,
 				63467DD02918D65700E7D8AE /* Resources */,
 				63467DC02918D4AF00E7D8AE /* Info.plist */,
 			);
@@ -89,6 +106,7 @@
 			children = (
 				63467DDA2918D82500E7D8AE /* Common */,
 				63467DD12918D7F300E7D8AE /* OnboardingScene */,
+				63467DFB2918EA4C00E7D8AE /* LoginScene */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -116,7 +134,6 @@
 			isa = PBXGroup;
 			children = (
 				63467DE12918D89000E7D8AE /* View */,
-				63467DE32918D8B800E7D8AE /* ViewModel */,
 			);
 			path = OnboardingScene;
 			sourceTree = "<group>";
@@ -124,6 +141,7 @@
 		63467DDA2918D82500E7D8AE /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				63467DF82918E7F300E7D8AE /* ViewModel */,
 				63467DDC2918D83600E7D8AE /* View */,
 				63467DDB2918D82F00E7D8AE /* ViewController */,
 			);
@@ -166,13 +184,6 @@
 			path = Page;
 			sourceTree = "<group>";
 		};
-		63467DE32918D8B800E7D8AE /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
 		63467DE42918D8EC00E7D8AE /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -180,6 +191,51 @@
 				63467DE72918D90700E7D8AE /* NotoSansKR-Regular.otf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		63467DE92918DB0A00E7D8AE /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				63467DF32918E6D000E7D8AE /* PropertyWrapper */,
+				63467DEA2918DB1600E7D8AE /* Extension */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		63467DEA2918DB1600E7D8AE /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				63467DEB2918DB3E00E7D8AE /* UIFont+CustomFont.swift */,
+				63467DEF2918E2F900E7D8AE /* UIColor+CustomColor.swift */,
+				63467DFE2918F04300E7D8AE /* NSAttributedString+CustomText.swift */,
+				63467DED2918E0EF00E7D8AE /* UIImage+OnboardingImage.swift */,
+				63467DF12918E57E00E7D8AE /* UIViewController+Transition.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		63467DF32918E6D000E7D8AE /* PropertyWrapper */ = {
+			isa = PBXGroup;
+			children = (
+				63467DF42918E6E300E7D8AE /* UserDefault.swift */,
+			);
+			path = PropertyWrapper;
+			sourceTree = "<group>";
+		};
+		63467DF82918E7F300E7D8AE /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				63467DF92918E7FC00E7D8AE /* ViewModelType.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		63467DFB2918EA4C00E7D8AE /* LoginScene */ = {
+			isa = PBXGroup;
+			children = (
+				63467DFC2918EA8400E7D8AE /* LoginViewController.swift */,
+			);
+			path = LoginScene;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -264,13 +320,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				63467DB72918D4AE00E7D8AE /* OnboardingViewController.swift in Sources */,
+				63467DFF2918F04300E7D8AE /* NSAttributedString+CustomText.swift in Sources */,
 				63467DB32918D4AE00E7D8AE /* AppDelegate.swift in Sources */,
 				63467DB52918D4AE00E7D8AE /* SceneDelegate.swift in Sources */,
+				63467DF22918E57E00E7D8AE /* UIViewController+Transition.swift in Sources */,
 				63467DD52918D80E00E7D8AE /* SecondViewController.swift in Sources */,
 				63467DD72918D81300E7D8AE /* ThirdViewController.swift in Sources */,
+				63467DEE2918E0EF00E7D8AE /* UIImage+OnboardingImage.swift in Sources */,
 				63467DDE2918D85800E7D8AE /* BaseViewController.swift in Sources */,
+				63467DF52918E6E300E7D8AE /* UserDefault.swift in Sources */,
+				63467DEC2918DB3E00E7D8AE /* UIFont+CustomFont.swift in Sources */,
 				63467DE02918D87F00E7D8AE /* BaseView.swift in Sources */,
+				63467DFA2918E7FC00E7D8AE /* ViewModelType.swift in Sources */,
+				63467DFD2918EA8400E7D8AE /* LoginViewController.swift in Sources */,
 				63467DD32918D80800E7D8AE /* FirstViewController.swift in Sources */,
+				63467DF02918E2F900E7D8AE /* UIColor+CustomColor.swift in Sources */,
 				63467DD92918D82100E7D8AE /* OnboardingView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
