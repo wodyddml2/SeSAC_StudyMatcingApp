@@ -7,17 +7,22 @@
 
 import Foundation
 
+import RxSwift
+import RxCocoa
+
 final class NumberViewModel: ViewModelType {
     struct Input {
-        
+        let numberText: ControlProperty<String?>
     }
     
     struct Output {
-        
+        let numberText: ControlEvent<String>
     }
     
     func transform(input: Input) -> Output {
-        
-        return Output()
+        let numberText = input.numberText
+            .orEmpty
+            .changed
+        return Output(numberText: numberText)
     }
 }
