@@ -29,8 +29,10 @@
 		63467DF22918E57E00E7D8AE /* UIViewController+Transition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63467DF12918E57E00E7D8AE /* UIViewController+Transition.swift */; };
 		63467DF52918E6E300E7D8AE /* UserDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63467DF42918E6E300E7D8AE /* UserDefault.swift */; };
 		63467DFA2918E7FC00E7D8AE /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63467DF92918E7FC00E7D8AE /* ViewModelType.swift */; };
-		63467DFD2918EA8400E7D8AE /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63467DFC2918EA8400E7D8AE /* LoginViewController.swift */; };
+		63467DFD2918EA8400E7D8AE /* NumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63467DFC2918EA8400E7D8AE /* NumberViewController.swift */; };
 		63467DFF2918F04300E7D8AE /* NSAttributedString+CustomText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63467DFE2918F04300E7D8AE /* NSAttributedString+CustomText.swift */; };
+		63467E042918F9CE00E7D8AE /* NumberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63467E032918F9CE00E7D8AE /* NumberView.swift */; };
+		63467E062918FA2E00E7D8AE /* NumberViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63467E052918FA2E00E7D8AE /* NumberViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,8 +57,10 @@
 		63467DF12918E57E00E7D8AE /* UIViewController+Transition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Transition.swift"; sourceTree = "<group>"; };
 		63467DF42918E6E300E7D8AE /* UserDefault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefault.swift; sourceTree = "<group>"; };
 		63467DF92918E7FC00E7D8AE /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
-		63467DFC2918EA8400E7D8AE /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		63467DFC2918EA8400E7D8AE /* NumberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberViewController.swift; sourceTree = "<group>"; };
 		63467DFE2918F04300E7D8AE /* NSAttributedString+CustomText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+CustomText.swift"; sourceTree = "<group>"; };
+		63467E032918F9CE00E7D8AE /* NumberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberView.swift; sourceTree = "<group>"; };
+		63467E052918FA2E00E7D8AE /* NumberViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -233,9 +237,35 @@
 		63467DFB2918EA4C00E7D8AE /* LoginScene */ = {
 			isa = PBXGroup;
 			children = (
-				63467DFC2918EA8400E7D8AE /* LoginViewController.swift */,
+				63467E002918F93D00E7D8AE /* NumberScene */,
 			);
 			path = LoginScene;
+			sourceTree = "<group>";
+		};
+		63467E002918F93D00E7D8AE /* NumberScene */ = {
+			isa = PBXGroup;
+			children = (
+				63467E012918F9B700E7D8AE /* View */,
+				63467E022918F9BD00E7D8AE /* ViewModel */,
+			);
+			path = NumberScene;
+			sourceTree = "<group>";
+		};
+		63467E012918F9B700E7D8AE /* View */ = {
+			isa = PBXGroup;
+			children = (
+				63467DFC2918EA8400E7D8AE /* NumberViewController.swift */,
+				63467E032918F9CE00E7D8AE /* NumberView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		63467E022918F9BD00E7D8AE /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				63467E052918FA2E00E7D8AE /* NumberViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -324,15 +354,17 @@
 				63467DB32918D4AE00E7D8AE /* AppDelegate.swift in Sources */,
 				63467DB52918D4AE00E7D8AE /* SceneDelegate.swift in Sources */,
 				63467DF22918E57E00E7D8AE /* UIViewController+Transition.swift in Sources */,
+				63467E062918FA2E00E7D8AE /* NumberViewModel.swift in Sources */,
 				63467DD52918D80E00E7D8AE /* SecondViewController.swift in Sources */,
 				63467DD72918D81300E7D8AE /* ThirdViewController.swift in Sources */,
 				63467DEE2918E0EF00E7D8AE /* UIImage+OnboardingImage.swift in Sources */,
 				63467DDE2918D85800E7D8AE /* BaseViewController.swift in Sources */,
 				63467DF52918E6E300E7D8AE /* UserDefault.swift in Sources */,
 				63467DEC2918DB3E00E7D8AE /* UIFont+CustomFont.swift in Sources */,
+				63467E042918F9CE00E7D8AE /* NumberView.swift in Sources */,
 				63467DE02918D87F00E7D8AE /* BaseView.swift in Sources */,
 				63467DFA2918E7FC00E7D8AE /* ViewModelType.swift in Sources */,
-				63467DFD2918EA8400E7D8AE /* LoginViewController.swift in Sources */,
+				63467DFD2918EA8400E7D8AE /* NumberViewController.swift in Sources */,
 				63467DD32918D80800E7D8AE /* FirstViewController.swift in Sources */,
 				63467DF02918E2F900E7D8AE /* UIColor+CustomColor.swift in Sources */,
 				63467DD92918D82100E7D8AE /* OnboardingView.swift in Sources */,
