@@ -9,6 +9,7 @@ import UIKit
 
 import RxSwift
 import RxGesture
+import FirebaseAuth
 
 final class NumberViewController: BaseViewController {
     
@@ -24,6 +25,8 @@ final class NumberViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         bindTo()
+        
+        
         
     }
     
@@ -100,9 +103,31 @@ extension NumberViewController {
         output.auth
             .withUnretained(self)
             .bind { vc, _ in
+                vc.requestAuth(phoneNumber: vc.formattingNumber())
                 vc.transition(MessageViewController(), transitionStyle: .push)
             }
             .disposed(by: disposeBag)
             
+    }
+    
+    func requestAuth(phoneNumber: String) {
+        PhoneAuthProvider.provider()
+          .verifyPhoneNumber(phoneNumber, uiDelegate: nil) { verificationID, error in
+              if let error = error {
+                  print(error)
+                return
+              }
+              print(verificationID)
+          }
+        Auth.auth().languageCode = "kr"
+    }
+    
+    func formattingNumber() -> String {
+        guard var text = mainView.numberTextField.text else {return ""}
+        text.remove(at: text.startIndex)
+        
+        let formater = "+82 " + text
+        
+        return formater
     }
 }

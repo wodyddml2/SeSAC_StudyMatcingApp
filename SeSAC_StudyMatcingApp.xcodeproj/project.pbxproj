@@ -37,6 +37,11 @@
 		63467E0E291937B200E7D8AE /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63467E0D291937B200E7D8AE /* MessageViewController.swift */; };
 		63467E10291937C800E7D8AE /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63467E0F291937C800E7D8AE /* MessageView.swift */; };
 		63467E12291937CF00E7D8AE /* MessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63467E11291937CF00E7D8AE /* MessageViewModel.swift */; };
+		63467E1A2919436B00E7D8AE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 63467E192919436B00E7D8AE /* GoogleService-Info.plist */; };
+		63467E1D291943BE00E7D8AE /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 63467E1C291943BE00E7D8AE /* FirebaseAnalytics */; };
+		63467E1F291943BE00E7D8AE /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 63467E1E291943BE00E7D8AE /* FirebaseAuth */; };
+		63467E2429194B8700E7D8AE /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 63467E2329194B8700E7D8AE /* .gitignore */; };
+		6351B6852919772000B953BF /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6351B6842919772000B953BF /* LoginView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -68,6 +73,10 @@
 		63467E0D291937B200E7D8AE /* MessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewController.swift; sourceTree = "<group>"; };
 		63467E0F291937C800E7D8AE /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		63467E11291937CF00E7D8AE /* MessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewModel.swift; sourceTree = "<group>"; };
+		63467E1829193D8400E7D8AE /* SeSAC_StudyMatcingApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SeSAC_StudyMatcingApp.entitlements; sourceTree = "<group>"; };
+		63467E192919436B00E7D8AE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		63467E2329194B8700E7D8AE /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		6351B6842919772000B953BF /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,8 +85,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				63467DCD2918D4EA00E7D8AE /* RxSwift in Frameworks */,
+				63467E1F291943BE00E7D8AE /* FirebaseAuth in Frameworks */,
 				63467DCB2918D4EA00E7D8AE /* RxCocoa in Frameworks */,
 				63467E0B291931A700E7D8AE /* RxGesture in Frameworks */,
+				63467E1D291943BE00E7D8AE /* FirebaseAnalytics in Frameworks */,
 				63467DC82918D4DC00E7D8AE /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -88,6 +99,7 @@
 		63467DA62918D4AE00E7D8AE = {
 			isa = PBXGroup;
 			children = (
+				63467E2329194B8700E7D8AE /* .gitignore */,
 				63467DB12918D4AE00E7D8AE /* SeSAC_StudyMatcingApp */,
 				63467DB02918D4AE00E7D8AE /* Products */,
 			);
@@ -104,11 +116,11 @@
 		63467DB12918D4AE00E7D8AE /* SeSAC_StudyMatcingApp */ = {
 			isa = PBXGroup;
 			children = (
+				63467E1829193D8400E7D8AE /* SeSAC_StudyMatcingApp.entitlements */,
 				63467DCF2918D5BF00E7D8AE /* Application */,
 				63467DCE2918D4F700E7D8AE /* Presentation */,
 				63467DE92918DB0A00E7D8AE /* Utils */,
 				63467DD02918D65700E7D8AE /* Resources */,
-				63467DC02918D4AF00E7D8AE /* Info.plist */,
 			);
 			path = SeSAC_StudyMatcingApp;
 			sourceTree = "<group>";
@@ -135,6 +147,8 @@
 		63467DD02918D65700E7D8AE /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				63467DC02918D4AF00E7D8AE /* Info.plist */,
+				63467E192919436B00E7D8AE /* GoogleService-Info.plist */,
 				63467DE42918D8EC00E7D8AE /* Fonts */,
 				63467DBD2918D4AF00E7D8AE /* LaunchScreen.storyboard */,
 				63467DBB2918D4AF00E7D8AE /* Assets.xcassets */,
@@ -245,6 +259,7 @@
 		63467DFB2918EA4C00E7D8AE /* LoginScene */ = {
 			isa = PBXGroup;
 			children = (
+				6351B6832919770F00B953BF /* CustomView */,
 				63467E002918F93D00E7D8AE /* NumberScene */,
 				63467E0C2919379600E7D8AE /* MessageScene */,
 			);
@@ -303,6 +318,14 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		6351B6832919770F00B953BF /* CustomView */ = {
+			isa = PBXGroup;
+			children = (
+				6351B6842919772000B953BF /* LoginView.swift */,
+			);
+			path = CustomView;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -324,6 +347,8 @@
 				63467DCA2918D4EA00E7D8AE /* RxCocoa */,
 				63467DCC2918D4EA00E7D8AE /* RxSwift */,
 				63467E0A291931A700E7D8AE /* RxGesture */,
+				63467E1C291943BE00E7D8AE /* FirebaseAnalytics */,
+				63467E1E291943BE00E7D8AE /* FirebaseAuth */,
 			);
 			productName = SeSAC_StudyMatcingApp;
 			productReference = 63467DAF2918D4AE00E7D8AE /* SeSAC_StudyMatcingApp.app */;
@@ -357,6 +382,7 @@
 				63467DC62918D4DC00E7D8AE /* XCRemoteSwiftPackageReference "SnapKit" */,
 				63467DC92918D4EA00E7D8AE /* XCRemoteSwiftPackageReference "RxSwift" */,
 				63467E09291931A700E7D8AE /* XCRemoteSwiftPackageReference "RxGesture" */,
+				63467E1B291943BE00E7D8AE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 63467DB02918D4AE00E7D8AE /* Products */;
 			projectDirPath = "";
@@ -374,7 +400,9 @@
 			files = (
 				63467DE62918D90000E7D8AE /* NotoSansKR-Medium.otf in Resources */,
 				63467DBF2918D4AF00E7D8AE /* LaunchScreen.storyboard in Resources */,
+				63467E1A2919436B00E7D8AE /* GoogleService-Info.plist in Resources */,
 				63467DE82918D90700E7D8AE /* NotoSansKR-Regular.otf in Resources */,
+				63467E2429194B8700E7D8AE /* .gitignore in Resources */,
 				63467DBC2918D4AF00E7D8AE /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -390,6 +418,7 @@
 				63467DB72918D4AE00E7D8AE /* OnboardingViewController.swift in Sources */,
 				63467DFF2918F04300E7D8AE /* NSAttributedString+CustomText.swift in Sources */,
 				63467DB32918D4AE00E7D8AE /* AppDelegate.swift in Sources */,
+				6351B6852919772000B953BF /* LoginView.swift in Sources */,
 				63467DB52918D4AE00E7D8AE /* SceneDelegate.swift in Sources */,
 				63467DF22918E57E00E7D8AE /* UIViewController+Transition.swift in Sources */,
 				63467E062918FA2E00E7D8AE /* NumberViewModel.swift in Sources */,
@@ -544,11 +573,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = SeSAC_StudyMatcingApp/SeSAC_StudyMatcingApp.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = QV329P6X5G;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = SeSAC_StudyMatcingApp/Info.plist;
+				INFOPLIST_FILE = SeSAC_StudyMatcingApp/Resources/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "새싹 스터디";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -562,6 +593,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.jy.SeSAC-StudyMatcingApp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -576,11 +608,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = SeSAC_StudyMatcingApp/SeSAC_StudyMatcingApp.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = QV329P6X5G;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = SeSAC_StudyMatcingApp/Info.plist;
+				INFOPLIST_FILE = SeSAC_StudyMatcingApp/Resources/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "새싹 스터디";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -594,6 +628,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.jy.SeSAC-StudyMatcingApp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -651,6 +686,14 @@
 				minimumVersion = 4.0.0;
 			};
 		};
+		63467E1B291943BE00E7D8AE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -673,6 +716,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 63467E09291931A700E7D8AE /* XCRemoteSwiftPackageReference "RxGesture" */;
 			productName = RxGesture;
+		};
+		63467E1C291943BE00E7D8AE /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 63467E1B291943BE00E7D8AE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		63467E1E291943BE00E7D8AE /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 63467E1B291943BE00E7D8AE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
