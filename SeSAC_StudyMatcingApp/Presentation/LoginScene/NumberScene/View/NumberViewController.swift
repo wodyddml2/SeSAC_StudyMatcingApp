@@ -8,6 +8,7 @@
 import UIKit
 
 import RxSwift
+import RxGesture
 
 final class NumberViewController: BaseViewController {
     
@@ -44,16 +45,18 @@ final class NumberViewController: BaseViewController {
         return result
     }
     
-    func valdatePhone(num: String) -> Bool {
-        let regex = "^010-?([0-9]{4})-?([0-9]{4})"
-        return NSPredicate(format: "SELF MATCHES %@", regex).evaluate(with: num)
-    }
+    
 }
 
 extension NumberViewController {
     private func bindTo() {
         
-        let input = NumberViewModel.Input(numberText: mainView.numberTextField.rx.text)
+        let input = NumberViewModel.Input(
+            numberText: mainView.numberTextField.rx.text,
+            beginEdit: mainView.numberTextField.rx.controlEvent([.editingDidBegin]),
+            endEdit: mainView.numberTextField.rx.controlEvent([.editingDidEnd]),
+            auth: mainView.authButton.rx.tap
+        )
         
         let output = viewModel.transform(input: input)
         
@@ -63,6 +66,43 @@ extension NumberViewController {
                 vc.mainView.numberTextField.text = vc.format(with: "XXX-XXXX-XXXX", phone: value)
             }
             .disposed(by: disposeBag)
-      
+        
+        output.numberValid
+            .withUnretained(self)
+            .bind(onNext: { vc, bool in
+                vc.mainView.authButton.isEnabled = bool
+                vc.mainView.authButton.backgroundColor = bool == true ? .sesacGreen : .gray6
+            })
+            .disposed(by: disposeBag)
+        
+        output.beginEdit
+            .withUnretained(self)
+            .bind { vc, _ in
+                vc.mainView.numberView.backgroundColor = .black
+            }
+            .disposed(by: disposeBag)
+        
+        output.endEdit
+            .withUnretained(self)
+            .bind { vc, _ in
+                vc.mainView.numberView.backgroundColor = .gray3
+            }
+            .disposed(by: disposeBag)
+        
+        
+        mainView.rx.tapGesture()
+            .when(.recognized)
+            .subscribe { _ in
+                self.mainView.endEditing(true)
+            }
+            .disposed(by: disposeBag)
+        
+        output.auth
+            .withUnretained(self)
+            .bind { vc, _ in
+                vc.transition(MessageViewController(), transitionStyle: .push)
+            }
+            .disposed(by: disposeBag)
+            
     }
 }

@@ -33,6 +33,10 @@
 		63467DFF2918F04300E7D8AE /* NSAttributedString+CustomText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63467DFE2918F04300E7D8AE /* NSAttributedString+CustomText.swift */; };
 		63467E042918F9CE00E7D8AE /* NumberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63467E032918F9CE00E7D8AE /* NumberView.swift */; };
 		63467E062918FA2E00E7D8AE /* NumberViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63467E052918FA2E00E7D8AE /* NumberViewModel.swift */; };
+		63467E0B291931A700E7D8AE /* RxGesture in Frameworks */ = {isa = PBXBuildFile; productRef = 63467E0A291931A700E7D8AE /* RxGesture */; };
+		63467E0E291937B200E7D8AE /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63467E0D291937B200E7D8AE /* MessageViewController.swift */; };
+		63467E10291937C800E7D8AE /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63467E0F291937C800E7D8AE /* MessageView.swift */; };
+		63467E12291937CF00E7D8AE /* MessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63467E11291937CF00E7D8AE /* MessageViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -61,6 +65,9 @@
 		63467DFE2918F04300E7D8AE /* NSAttributedString+CustomText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+CustomText.swift"; sourceTree = "<group>"; };
 		63467E032918F9CE00E7D8AE /* NumberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberView.swift; sourceTree = "<group>"; };
 		63467E052918FA2E00E7D8AE /* NumberViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberViewModel.swift; sourceTree = "<group>"; };
+		63467E0D291937B200E7D8AE /* MessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewController.swift; sourceTree = "<group>"; };
+		63467E0F291937C800E7D8AE /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
+		63467E11291937CF00E7D8AE /* MessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +77,7 @@
 			files = (
 				63467DCD2918D4EA00E7D8AE /* RxSwift in Frameworks */,
 				63467DCB2918D4EA00E7D8AE /* RxCocoa in Frameworks */,
+				63467E0B291931A700E7D8AE /* RxGesture in Frameworks */,
 				63467DC82918D4DC00E7D8AE /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -238,6 +246,7 @@
 			isa = PBXGroup;
 			children = (
 				63467E002918F93D00E7D8AE /* NumberScene */,
+				63467E0C2919379600E7D8AE /* MessageScene */,
 			);
 			path = LoginScene;
 			sourceTree = "<group>";
@@ -268,6 +277,32 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		63467E0C2919379600E7D8AE /* MessageScene */ = {
+			isa = PBXGroup;
+			children = (
+				63467E14291937D600E7D8AE /* View */,
+				63467E13291937D200E7D8AE /* ViewModel */,
+			);
+			path = MessageScene;
+			sourceTree = "<group>";
+		};
+		63467E13291937D200E7D8AE /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				63467E11291937CF00E7D8AE /* MessageViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		63467E14291937D600E7D8AE /* View */ = {
+			isa = PBXGroup;
+			children = (
+				63467E0D291937B200E7D8AE /* MessageViewController.swift */,
+				63467E0F291937C800E7D8AE /* MessageView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -288,6 +323,7 @@
 				63467DC72918D4DC00E7D8AE /* SnapKit */,
 				63467DCA2918D4EA00E7D8AE /* RxCocoa */,
 				63467DCC2918D4EA00E7D8AE /* RxSwift */,
+				63467E0A291931A700E7D8AE /* RxGesture */,
 			);
 			productName = SeSAC_StudyMatcingApp;
 			productReference = 63467DAF2918D4AE00E7D8AE /* SeSAC_StudyMatcingApp.app */;
@@ -320,6 +356,7 @@
 			packageReferences = (
 				63467DC62918D4DC00E7D8AE /* XCRemoteSwiftPackageReference "SnapKit" */,
 				63467DC92918D4EA00E7D8AE /* XCRemoteSwiftPackageReference "RxSwift" */,
+				63467E09291931A700E7D8AE /* XCRemoteSwiftPackageReference "RxGesture" */,
 			);
 			productRefGroup = 63467DB02918D4AE00E7D8AE /* Products */;
 			projectDirPath = "";
@@ -349,6 +386,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63467E12291937CF00E7D8AE /* MessageViewModel.swift in Sources */,
 				63467DB72918D4AE00E7D8AE /* OnboardingViewController.swift in Sources */,
 				63467DFF2918F04300E7D8AE /* NSAttributedString+CustomText.swift in Sources */,
 				63467DB32918D4AE00E7D8AE /* AppDelegate.swift in Sources */,
@@ -361,8 +399,10 @@
 				63467DDE2918D85800E7D8AE /* BaseViewController.swift in Sources */,
 				63467DF52918E6E300E7D8AE /* UserDefault.swift in Sources */,
 				63467DEC2918DB3E00E7D8AE /* UIFont+CustomFont.swift in Sources */,
+				63467E10291937C800E7D8AE /* MessageView.swift in Sources */,
 				63467E042918F9CE00E7D8AE /* NumberView.swift in Sources */,
 				63467DE02918D87F00E7D8AE /* BaseView.swift in Sources */,
+				63467E0E291937B200E7D8AE /* MessageViewController.swift in Sources */,
 				63467DFA2918E7FC00E7D8AE /* ViewModelType.swift in Sources */,
 				63467DFD2918EA8400E7D8AE /* NumberViewController.swift in Sources */,
 				63467DD32918D80800E7D8AE /* FirstViewController.swift in Sources */,
@@ -603,6 +643,14 @@
 				minimumVersion = 6.0.0;
 			};
 		};
+		63467E09291931A700E7D8AE /* XCRemoteSwiftPackageReference "RxGesture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RxSwiftCommunity/RxGesture.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -620,6 +668,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 63467DC92918D4EA00E7D8AE /* XCRemoteSwiftPackageReference "RxSwift" */;
 			productName = RxSwift;
+		};
+		63467E0A291931A700E7D8AE /* RxGesture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 63467E09291931A700E7D8AE /* XCRemoteSwiftPackageReference "RxGesture" */;
+			productName = RxGesture;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -7,7 +7,7 @@
 
 import UIKit
  
-final class NumberView: BaseView {
+class NumberView: BaseView {
     
     let introLabel: UILabel = {
         let view = UILabel()
@@ -41,6 +41,7 @@ final class NumberView: BaseView {
         view.setTitleColor(.white, for: .normal)
         view.backgroundColor = .gray6
         view.layer.cornerRadius = 8
+        view.isEnabled = false
         return view
     }()
     
