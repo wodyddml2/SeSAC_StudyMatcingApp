@@ -65,7 +65,7 @@ extension NumberViewController {
             .withUnretained(self)
             .bind { vc, value in
                 
-                if value[2] == "0" {
+                if value.validPhone(idx: 2) == "0" {
                     vc.mainView.numberTextField.text = vc.formattingHyphen(with: "XXX-XXXX-XXXX", phone: value)
                 } else {
                     vc.mainView.numberTextField.text = vc.formattingHyphen(with: "XXX-XXX-XXXX", phone: value)
@@ -107,8 +107,8 @@ extension NumberViewController {
         output.auth
             .withUnretained(self)
             .bind { vc, _ in
-//                vc.requestAuth(phoneNumber: vc.formattingNumber())
-                vc.transition(MessageViewController(), transitionStyle: .push)
+                vc.requestAuth(phoneNumber: vc.formattingNumber())
+                
             }
             .disposed(by: disposeBag)
             
@@ -117,13 +117,18 @@ extension NumberViewController {
     func requestAuth(phoneNumber: String) {
         PhoneAuthProvider.provider()
           .verifyPhoneNumber(phoneNumber, uiDelegate: nil) { verificationID, error in
+
               if let error = error {
                   print(error)
                 return
               }
-              print(verificationID)
+              guard let verificationID  = verificationID else {return}
+              
+              UserManager.authVerificationID = verificationID
+      
           }
         Auth.auth().languageCode = "kr"
+        transition(MessageViewController(), transitionStyle: .push)
     }
     
     func formattingNumber() -> String {

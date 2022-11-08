@@ -28,5 +28,8 @@ struct UserDefault<T> {
 class UserManager {
     @UserDefault(key: "onboarding", defaultValue: false)
     static var onboarding: Bool
+    
+    @UserDefault(key: "authVerificationID", defaultValue: "")
+    static var authVerificationID: String
 }
 

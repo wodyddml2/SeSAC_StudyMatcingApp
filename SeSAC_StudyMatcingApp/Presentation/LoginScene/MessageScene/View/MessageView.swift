@@ -34,6 +34,7 @@ final class MessageView: LoginView {
         let view = UILabel()
         view.text = "05:00"
         view.font = UIFont.notoSans(size: 14, family: .Medium)
+        view.textAlignment = .right
         view.textColor = .sesacGreen
         return view
     }()
@@ -70,11 +71,16 @@ final class MessageView: LoginView {
             make.height.equalTo(1)
         }
         
+        timerLabel.snp.makeConstraints { make in
+            make.trailing.equalTo(resendButton.snp.leading).offset(-20)
+            make.bottom.equalTo(numberView.snp.top).offset(-12)
+        }
+        
         resendButton.snp.makeConstraints { make in
             make.trailing.equalTo(-16)
             make.leading.equalTo(numberView.snp.trailing).offset(8)
             make.bottom.equalTo(numberView.snp.bottom)
-            make.top.equalTo(numberTextField.snp.top)
+            make.height.equalTo(40)
         }
         
     }
