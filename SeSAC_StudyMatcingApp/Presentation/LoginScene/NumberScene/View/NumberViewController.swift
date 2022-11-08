@@ -65,11 +65,10 @@ extension NumberViewController {
         output.numberText
             .withUnretained(self)
             .bind { vc, value in
-                
-                if value.validPhone(idx: 2) == "0" {
-                    vc.mainView.numberTextField.text = vc.formattingHyphen(with: "XXX-XXXX-XXXX", phone: value)
-                } else {
+                if value.count <= 12 {
                     vc.mainView.numberTextField.text = vc.formattingHyphen(with: "XXX-XXX-XXXX", phone: value)
+                } else {
+                    vc.mainView.numberTextField.text = vc.formattingHyphen(with: "XXX-XXXX-XXXX", phone: value)
                 }
                 
             }
@@ -110,10 +109,8 @@ extension NumberViewController {
                 if vc.mainView.authButton.backgroundColor == .sesacGreen {
                     vc.requestAuth(phoneNumber: vc.formattingNumber())
                 } else {
-                    vc.mainView.makeToast("응 안돼~")
+                    vc.mainView.makeToast("잘못된 전화번호 형식입니다.")
                 }
-                
-                
             }
             .disposed(by: disposeBag)
             
@@ -121,19 +118,20 @@ extension NumberViewController {
     
     func requestAuth(phoneNumber: String) {
         PhoneAuthProvider.provider()
-          .verifyPhoneNumber(phoneNumber, uiDelegate: nil) { verificationID, error in
-
+          .verifyPhoneNumber(phoneNumber, uiDelegate: nil) { [weak self] verificationID, error in
+              guard let self = self else {return}
               if let error = error {
                   print(error)
                 return
               }
-              guard let verificationID  = verificationID else {return}
-              
-              UserManager.authVerificationID = verificationID
-      
+              if let verificationID  = verificationID {
+                  UserManager.authVerificationID = verificationID
+                  
+                  self.transition(MessageViewController(), transitionStyle: .push)
+              }
+             
           }
-        Auth.auth().languageCode = "kr"
-        transition(MessageViewController(), transitionStyle: .push)
+        
     }
     
     func formattingNumber() -> String {

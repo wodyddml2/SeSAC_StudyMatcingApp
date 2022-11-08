@@ -66,7 +66,7 @@ extension MessageViewController {
         output.valid
             .bind { value in
                 if value.count > 6 {
-                    self.mainView.numberTextField.text = value.validMessage(idx: 6)
+                    self.mainView.numberTextField.text = value.validMessage(idx: 5)
                 }
             }
             .disposed(by: disposeBag)
