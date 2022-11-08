@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 import RxGesture
 import FirebaseAuth
+import Toast
 
 final class NumberViewController: BaseViewController {
     
@@ -77,7 +78,6 @@ extension NumberViewController {
         output.numberValid
             .withUnretained(self)
             .bind(onNext: { vc, bool in
-                vc.mainView.authButton.isEnabled = bool
                 vc.mainView.authButton.backgroundColor = bool == true ? .sesacGreen : .gray6
             })
             .disposed(by: disposeBag)
@@ -107,7 +107,12 @@ extension NumberViewController {
         output.auth
             .withUnretained(self)
             .bind { vc, _ in
-                vc.requestAuth(phoneNumber: vc.formattingNumber())
+                if vc.mainView.authButton.backgroundColor == .sesacGreen {
+                    vc.requestAuth(phoneNumber: vc.formattingNumber())
+                } else {
+                    vc.mainView.makeToast("응 안돼~")
+                }
+                
                 
             }
             .disposed(by: disposeBag)

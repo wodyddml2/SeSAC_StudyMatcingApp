@@ -22,7 +22,6 @@ class LoginView: BaseView {
         view.setTitleColor(.white, for: .normal)
         view.backgroundColor = .gray6
         view.layer.cornerRadius = 8
-        view.isEnabled = false
         return view
     }()
     

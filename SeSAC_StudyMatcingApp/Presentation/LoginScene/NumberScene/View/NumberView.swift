@@ -18,6 +18,7 @@ class NumberView: LoginView {
     let numberTextField: UITextField = {
         let view = UITextField()
         view.keyboardType = .numberPad
+        view.placeholder = "휴대폰 번호(-없이 숫자만 입력)"
         return view
     }()
     
@@ -29,7 +30,6 @@ class NumberView: LoginView {
             새싹 서비스 이용을 위해
             휴대폰 번호를 입력해 주세요
             """
-        numberTextField.placeholder = "휴대폰 번호(-없이 숫자만 입력)"
         authButton.setTitle("인증 문자 받기", for: .normal)
     }
     
