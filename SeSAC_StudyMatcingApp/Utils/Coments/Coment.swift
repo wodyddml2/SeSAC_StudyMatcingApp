@@ -7,6 +7,8 @@
 
 import Foundation
 
-enum Coment {
-    
+enum AuthComent: String {
+    case phoneAuth = "전화 번호 인증 시작"
+    case messageAuth = "인증번호를 보냈습니다."
+    case invalidNumber = "잘못된 전화번호 형식입니다."
 }

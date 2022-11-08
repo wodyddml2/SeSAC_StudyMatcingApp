@@ -44,6 +44,8 @@
 		63467E2429194B8700E7D8AE /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 63467E2329194B8700E7D8AE /* .gitignore */; };
 		6351B6852919772000B953BF /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6351B6842919772000B953BF /* LoginView.swift */; };
 		638B0746291AA49600E9D254 /* Coment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638B0745291AA49600E9D254 /* Coment.swift */; };
+		638B074B291AB44200E9D254 /* FirebaseAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638B074A291AB44200E9D254 /* FirebaseAPIService.swift */; };
+		638B074D291ABB9E00E9D254 /* FirebaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638B074C291ABB9E00E9D254 /* FirebaseError.swift */; };
 		63F423402919E9AF00F91D01 /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 63F4233F2919E9AF00F91D01 /* Toast */; };
 /* End PBXBuildFile section */
 
@@ -82,6 +84,8 @@
 		63467E2329194B8700E7D8AE /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		6351B6842919772000B953BF /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		638B0745291AA49600E9D254 /* Coment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coment.swift; sourceTree = "<group>"; };
+		638B074A291AB44200E9D254 /* FirebaseAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAPIService.swift; sourceTree = "<group>"; };
+		638B074C291ABB9E00E9D254 /* FirebaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +127,7 @@
 			isa = PBXGroup;
 			children = (
 				63467E1829193D8400E7D8AE /* SeSAC_StudyMatcingApp.entitlements */,
+				638B0748291AB41200E9D254 /* Network */,
 				63467DCF2918D5BF00E7D8AE /* Application */,
 				63467DCE2918D4F700E7D8AE /* Presentation */,
 				63467DE92918DB0A00E7D8AE /* Utils */,
@@ -228,6 +233,7 @@
 		63467DE92918DB0A00E7D8AE /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				638B0747291AA7FC00E9D254 /* Error */,
 				638B0744291AA05D00E9D254 /* Coments */,
 				63467DF32918E6D000E7D8AE /* PropertyWrapper */,
 				63467DEA2918DB1600E7D8AE /* Extension */,
@@ -342,6 +348,30 @@
 			path = Coments;
 			sourceTree = "<group>";
 		};
+		638B0747291AA7FC00E9D254 /* Error */ = {
+			isa = PBXGroup;
+			children = (
+				638B074C291ABB9E00E9D254 /* FirebaseError.swift */,
+			);
+			path = Error;
+			sourceTree = "<group>";
+		};
+		638B0748291AB41200E9D254 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				638B0749291AB41E00E9D254 /* Firebase */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		638B0749291AB41E00E9D254 /* Firebase */ = {
+			isa = PBXGroup;
+			children = (
+				638B074A291AB44200E9D254 /* FirebaseAPIService.swift */,
+			);
+			path = Firebase;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -435,11 +465,13 @@
 				63467E12291937CF00E7D8AE /* MessageViewModel.swift in Sources */,
 				638B0746291AA49600E9D254 /* Coment.swift in Sources */,
 				63467DB72918D4AE00E7D8AE /* OnboardingViewController.swift in Sources */,
+				638B074B291AB44200E9D254 /* FirebaseAPIService.swift in Sources */,
 				63467DFF2918F04300E7D8AE /* NSAttributedString+CustomText.swift in Sources */,
 				6337F01E291A5B57002C81FA /* String+Custom.swift in Sources */,
 				63467DB32918D4AE00E7D8AE /* AppDelegate.swift in Sources */,
 				6351B6852919772000B953BF /* LoginView.swift in Sources */,
 				63467DB52918D4AE00E7D8AE /* SceneDelegate.swift in Sources */,
+				638B074D291ABB9E00E9D254 /* FirebaseError.swift in Sources */,
 				63467DF22918E57E00E7D8AE /* UIViewController+Transition.swift in Sources */,
 				63467E062918FA2E00E7D8AE /* NumberViewModel.swift in Sources */,
 				63467DD52918D80E00E7D8AE /* SecondViewController.swift in Sources */,

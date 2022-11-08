@@ -107,31 +107,22 @@ extension NumberViewController {
             .withUnretained(self)
             .bind { vc, _ in
                 if vc.mainView.authButton.backgroundColor == .sesacGreen {
-                    vc.requestAuth(phoneNumber: vc.formattingNumber())
+                    self.mainView.makeToast(AuthComent.phoneAuth.rawValue, duration: 5, position: .center)
+                    
+                    FirebaseAPIService.shared.requestAuth(phoneNumber: vc.formattingNumber()) { result in
+                        switch result {
+                        case .success(let success):
+                            UserManager.authVerificationID = success
+                            vc.transition(MessageViewController(), transitionStyle: .push)
+                        case .failure(let fail):
+                            vc.mainView.makeToast(fail.errorDescription!, position: .center)
+                        }
+                    }
                 } else {
-                    vc.mainView.makeToast("잘못된 전화번호 형식입니다.")
+                    vc.mainView.makeToast(AuthComent.invalidNumber.rawValue, position: .center)
                 }
             }
             .disposed(by: disposeBag)
-            
-    }
-    
-    func requestAuth(phoneNumber: String) {
-        PhoneAuthProvider.provider()
-          .verifyPhoneNumber(phoneNumber, uiDelegate: nil) { [weak self] verificationID, error in
-              guard let self = self else {return}
-              if let error = error {
-                  print(error)
-                return
-              }
-              if let verificationID  = verificationID {
-                  UserManager.authVerificationID = verificationID
-                  
-                  self.transition(MessageViewController(), transitionStyle: .push)
-              }
-             
-          }
-        
     }
     
     func formattingNumber() -> String {
