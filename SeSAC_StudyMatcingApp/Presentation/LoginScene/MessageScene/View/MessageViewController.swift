@@ -14,8 +14,8 @@ let mainView = MessageView()
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        view.backgroundColor = .sesacGreen
+        navigationController?.navigationBar.backIndicatorImage = UIImage(named: "arrow")
+        navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage(named: "arrow")
     }
 
 }

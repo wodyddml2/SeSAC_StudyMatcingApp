@@ -25,12 +25,10 @@ final class NumberViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         bindTo()
-        
-        
-        
+        navigationItem.backButtonTitle = ""
     }
     
-    private func format(with mask: String, phone: String) -> String {
+    private func formattingHyphen(with mask: String, phone: String) -> String {
         let numbers = phone.replacingOccurrences(of: "[^0-9]", with: "", options: .regularExpression)
         var result = ""
         var index = numbers.startIndex
@@ -66,7 +64,13 @@ extension NumberViewController {
         output.numberText
             .withUnretained(self)
             .bind { vc, value in
-                vc.mainView.numberTextField.text = vc.format(with: "XXX-XXXX-XXXX", phone: value)
+                
+                if value[2] == "0" {
+                    vc.mainView.numberTextField.text = vc.formattingHyphen(with: "XXX-XXXX-XXXX", phone: value)
+                } else {
+                    vc.mainView.numberTextField.text = vc.formattingHyphen(with: "XXX-XXX-XXXX", phone: value)
+                }
+                
             }
             .disposed(by: disposeBag)
         
@@ -103,7 +107,7 @@ extension NumberViewController {
         output.auth
             .withUnretained(self)
             .bind { vc, _ in
-                vc.requestAuth(phoneNumber: vc.formattingNumber())
+//                vc.requestAuth(phoneNumber: vc.formattingNumber())
                 vc.transition(MessageViewController(), transitionStyle: .push)
             }
             .disposed(by: disposeBag)

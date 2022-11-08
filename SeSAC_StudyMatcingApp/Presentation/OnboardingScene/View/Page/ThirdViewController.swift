@@ -23,9 +23,4 @@ final class ThirdViewController: BaseViewController {
         mainView.onboardingImageView.image = .onboardingImage(num: 3)
     }
 
-    override func setConstraints() {
-        mainView.introLabel.snp.updateConstraints { make in
-            make.top.equalTo(135)
-        }
-    }
 }

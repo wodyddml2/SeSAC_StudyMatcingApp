@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6337F01E291A5B57002C81FA /* String+Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6337F01D291A5B57002C81FA /* String+Custom.swift */; };
 		63467DB32918D4AE00E7D8AE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63467DB22918D4AE00E7D8AE /* AppDelegate.swift */; };
 		63467DB52918D4AE00E7D8AE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63467DB42918D4AE00E7D8AE /* SceneDelegate.swift */; };
 		63467DB72918D4AE00E7D8AE /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63467DB62918D4AE00E7D8AE /* OnboardingViewController.swift */; };
@@ -42,9 +43,11 @@
 		63467E1F291943BE00E7D8AE /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 63467E1E291943BE00E7D8AE /* FirebaseAuth */; };
 		63467E2429194B8700E7D8AE /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 63467E2329194B8700E7D8AE /* .gitignore */; };
 		6351B6852919772000B953BF /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6351B6842919772000B953BF /* LoginView.swift */; };
+		63F423402919E9AF00F91D01 /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 63F4233F2919E9AF00F91D01 /* Toast */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6337F01D291A5B57002C81FA /* String+Custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Custom.swift"; sourceTree = "<group>"; };
 		63467DAF2918D4AE00E7D8AE /* SeSAC_StudyMatcingApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SeSAC_StudyMatcingApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		63467DB22918D4AE00E7D8AE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		63467DB42918D4AE00E7D8AE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -89,6 +92,7 @@
 				63467DCB2918D4EA00E7D8AE /* RxCocoa in Frameworks */,
 				63467E0B291931A700E7D8AE /* RxGesture in Frameworks */,
 				63467E1D291943BE00E7D8AE /* FirebaseAnalytics in Frameworks */,
+				63F423402919E9AF00F91D01 /* Toast in Frameworks */,
 				63467DC82918D4DC00E7D8AE /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -232,6 +236,7 @@
 			isa = PBXGroup;
 			children = (
 				63467DEB2918DB3E00E7D8AE /* UIFont+CustomFont.swift */,
+				6337F01D291A5B57002C81FA /* String+Custom.swift */,
 				63467DEF2918E2F900E7D8AE /* UIColor+CustomColor.swift */,
 				63467DFE2918F04300E7D8AE /* NSAttributedString+CustomText.swift */,
 				63467DED2918E0EF00E7D8AE /* UIImage+OnboardingImage.swift */,
@@ -349,6 +354,7 @@
 				63467E0A291931A700E7D8AE /* RxGesture */,
 				63467E1C291943BE00E7D8AE /* FirebaseAnalytics */,
 				63467E1E291943BE00E7D8AE /* FirebaseAuth */,
+				63F4233F2919E9AF00F91D01 /* Toast */,
 			);
 			productName = SeSAC_StudyMatcingApp;
 			productReference = 63467DAF2918D4AE00E7D8AE /* SeSAC_StudyMatcingApp.app */;
@@ -383,6 +389,7 @@
 				63467DC92918D4EA00E7D8AE /* XCRemoteSwiftPackageReference "RxSwift" */,
 				63467E09291931A700E7D8AE /* XCRemoteSwiftPackageReference "RxGesture" */,
 				63467E1B291943BE00E7D8AE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				63F4233E2919E9AF00F91D01 /* XCRemoteSwiftPackageReference "Toast-Swift" */,
 			);
 			productRefGroup = 63467DB02918D4AE00E7D8AE /* Products */;
 			projectDirPath = "";
@@ -417,6 +424,7 @@
 				63467E12291937CF00E7D8AE /* MessageViewModel.swift in Sources */,
 				63467DB72918D4AE00E7D8AE /* OnboardingViewController.swift in Sources */,
 				63467DFF2918F04300E7D8AE /* NSAttributedString+CustomText.swift in Sources */,
+				6337F01E291A5B57002C81FA /* String+Custom.swift in Sources */,
 				63467DB32918D4AE00E7D8AE /* AppDelegate.swift in Sources */,
 				6351B6852919772000B953BF /* LoginView.swift in Sources */,
 				63467DB52918D4AE00E7D8AE /* SceneDelegate.swift in Sources */,
@@ -694,6 +702,14 @@
 				minimumVersion = 9.0.0;
 			};
 		};
+		63F4233E2919E9AF00F91D01 /* XCRemoteSwiftPackageReference "Toast-Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scalessec/Toast-Swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -726,6 +742,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 63467E1B291943BE00E7D8AE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAuth;
+		};
+		63F4233F2919E9AF00F91D01 /* Toast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 63F4233E2919E9AF00F91D01 /* XCRemoteSwiftPackageReference "Toast-Swift" */;
+			productName = Toast;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

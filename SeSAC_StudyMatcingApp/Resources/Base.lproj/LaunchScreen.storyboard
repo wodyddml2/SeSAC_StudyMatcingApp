@@ -23,8 +23,8 @@
                                     <constraint firstAttribute="height" constant="259.56" id="Rej-Ti-1VP"/>
                                 </constraints>
                             </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splash_txt" translatesAutoresizingMaskIntoConstraints="NO" id="eRQ-km-28O">
-                                <rect key="frame" x="41" y="514" width="308" height="101"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splash_text" translatesAutoresizingMaskIntoConstraints="NO" id="eRQ-km-28O">
+                                <rect key="frame" x="41" y="513.66666666666663" width="308" height="101"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="101" id="skt-Gq-3At"/>
                                 </constraints>
@@ -37,7 +37,7 @@
                             <constraint firstItem="5ZA-6C-8JC" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="77" id="mcX-TO-vZ7"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="eRQ-km-28O" secondAttribute="trailing" constant="41" id="qM4-GE-LKg"/>
                             <constraint firstItem="eRQ-km-28O" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="41" id="tmH-tR-UH6"/>
-                            <constraint firstItem="eRQ-km-28O" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" constant="514" id="xvu-Nm-Dcd"/>
+                            <constraint firstItem="eRQ-km-28O" firstAttribute="top" secondItem="5ZA-6C-8JC" secondAttribute="bottom" constant="35" id="xvu-Nm-Dcd"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="5ZA-6C-8JC" secondAttribute="trailing" constant="77" id="zxk-qn-0tc"/>
                         </constraints>
                     </view>
@@ -49,7 +49,7 @@
     </scenes>
     <resources>
         <image name="splash_logo" width="220" height="264"/>
-        <image name="splash_txt" width="328" height="112"/>
+        <image name="splash_text" width="260" height="42"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

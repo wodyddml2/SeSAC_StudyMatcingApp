@@ -56,12 +56,12 @@ final class OnboardingViewController: BaseViewController {
             
         }
         pageContorl.snp.makeConstraints { make in
-            make.bottom.equalTo(startButton.snp.top).offset(-42)
+            make.bottom.equalTo(startButton.snp.top).multipliedBy(0.95)
             make.centerX.equalTo(view)
         }
         
         startButton.snp.makeConstraints { make in
-            make.bottom.equalTo(-50)
+            make.bottom.equalTo(view.snp.bottom).multipliedBy(0.94)
             make.leading.equalTo(16)
             make.trailing.equalTo(-16)
             make.height.equalTo(48)

@@ -27,7 +27,7 @@ final class NumberViewModel: ViewModelType {
     }
     
     func valdatePhone(num: String) -> Bool {
-        let regex = "^010-?([0-9]{4})-?([0-9]{4})"
+        let regex = "^01[0|1]-?([0-9]{3,4})-?([0-9]{4})"
         return NSPredicate(format: "SELF MATCHES %@", regex).evaluate(with: num)
     }
     

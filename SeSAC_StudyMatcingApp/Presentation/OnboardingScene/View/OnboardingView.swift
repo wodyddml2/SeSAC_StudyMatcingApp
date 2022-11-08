@@ -44,12 +44,12 @@ final class OnboardingView: BaseView {
     
     override func setConstraints() {
         introLabel.snp.makeConstraints { make in
-            make.top.equalTo(116)
+            make.centerY.equalTo(self.snp.centerY).multipliedBy(0.37)
             make.centerX.equalTo(self)
         }
  
         onboardingImageView.snp.makeConstraints { make in
-            make.bottom.equalTo(-204)
+            make.centerY.equalTo(self.snp.centerY).multipliedBy(1.05)
             make.trailing.equalTo(-3)
             make.leading.equalTo(3)
             make.height.equalTo(onboardingImageView.snp.width)
