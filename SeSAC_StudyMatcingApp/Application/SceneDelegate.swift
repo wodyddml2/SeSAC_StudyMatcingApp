@@ -17,8 +17,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: scene)
         
         if UserManager.onboarding {
-            let vc = UINavigationController(rootViewController: NumberViewController())
-            window?.rootViewController = vc
+            if UserManager.login == LoginStatusCode.success {
+                print("나중~")
+            } else {
+                let vc = UINavigationController(rootViewController: NumberViewController())
+                window?.rootViewController = vc
+            }
+            
         } else {
             let vc = OnboardingViewController()
             window?.rootViewController = vc

@@ -26,6 +26,9 @@ final class NumberViewController: BaseViewController {
         super.viewDidLoad()
         bindViewModel()
         navigationItem.backButtonTitle = ""
+        if UserManager.login == LoginStatusCode.fail {
+            transition(NicknameViewController(), transitionStyle: .noAnimatedPush)
+        }
     }
 }
 

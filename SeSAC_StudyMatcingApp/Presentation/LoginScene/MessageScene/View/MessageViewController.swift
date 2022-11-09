@@ -98,13 +98,13 @@ extension MessageViewController {
                                 SeSACAPIService.shared.requestSeSACLogin(query: idToken) { result in
                                     switch result {
                                     case .success(let success):
-                                        UserManager.login = 200
+                                        UserManager.login = LoginStatusCode.success
                                         print("==========\(success)")
                                     case .failure(let fail):
                                         let error = fail as! SeSACLoginError
                                         if error == SeSACLoginError.noSignup {
                                             UserManager.idToken = idToken // 혹시 몰라서 저장
-                                            UserManager.login = error.rawValue
+                                            UserManager.login = LoginStatusCode.fail
                                             
                                             vc.transition(NicknameViewController(), transitionStyle: .push)
                                         } else {

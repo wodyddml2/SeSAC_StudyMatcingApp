@@ -12,6 +12,7 @@ extension UIViewController {
         case presentFull
         case presentOverFull
         case push
+        case noAnimatedPush
     }
     
     func transition<T: UIViewController>(_ viewController: T, transitionStyle: TransitionStyle) {
@@ -26,6 +27,8 @@ extension UIViewController {
             self.present(vc, animated: true)
         case .push:
             navigationController?.pushViewController(vc, animated: true)
+        case .noAnimatedPush:
+            navigationController?.pushViewController(vc, animated: false)
         }
     }
 }
