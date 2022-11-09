@@ -131,12 +131,13 @@ extension MessageViewController {
                     switch result {
                     case .success(let success):
                         UserManager.authVerificationID = success
+                        vc.setTimer(with: output.timer)
                     case .failure(let fail):
                         vc.mainView.makeToast(fail.errorDescription!, position: .center)
                     }
                 }
                 
-                vc.setTimer(with: output.timer)
+                vc.mainView.numberTextField.text = nil
 
             }
             .disposed(by: disposeBag)
