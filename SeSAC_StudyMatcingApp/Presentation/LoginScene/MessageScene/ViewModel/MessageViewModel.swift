@@ -16,6 +16,7 @@ class MessageViewModel: ViewModelType {
     
     struct Input {
         let auth: ControlEvent<Void>
+        let resend: ControlEvent<Void>
         let valid: ControlProperty<String?>
         let beginEdit: ControlEvent<Void>
         let endEdit: ControlEvent<Void>
@@ -23,6 +24,7 @@ class MessageViewModel: ViewModelType {
     
     struct Output {
         let auth: ControlEvent<Void>
+        let resend: ControlEvent<Void>
         let valid: ControlProperty<String>
         let beginEdit: ControlEvent<Void>
         let endEdit: ControlEvent<Void>
@@ -33,6 +35,6 @@ class MessageViewModel: ViewModelType {
     func transform(input: Input) -> Output {
         let valid = input.valid.orEmpty
         let timer = Observable<Int>.timer(.seconds(1), period: .seconds(1), scheduler: MainScheduler.instance)
-        return Output(auth: input.auth, valid: valid, beginEdit: input.beginEdit, endEdit: input.endEdit, timer: timer)
+        return Output(auth: input.auth, resend: input.resend, valid: valid, beginEdit: input.beginEdit, endEdit: input.endEdit, timer: timer)
     }
 }

@@ -20,6 +20,7 @@ class FirebaseAPIService {
             .verifyPhoneNumber(phoneNumber, uiDelegate: nil) { verificationID, error in
                 if let error = error {
                     let code = (error as NSError).code
+                  
                     switch code {
                     case 17010:
                         completion(.failure(.tooManyRequest))
@@ -45,10 +46,11 @@ class FirebaseAPIService {
         Auth.auth().signIn(with: credential) { authResult, error in
             if let error = error {
                 let code = (error as NSError).code
-                
                 switch code {
                 case 17044:
                     completion(.failure(.invalidVerificationCode))
+                case 17043, 17045:
+                    completion(.failure(.missingVerificationID))
                 case 17046:
                     completion(.failure(.invalidVerificationID))
                 default:
@@ -59,8 +61,6 @@ class FirebaseAPIService {
             if let authResult = authResult {
                 completion(.success(authResult))
             }
-//            print("LogIn Success!!")
-//            print("\(authResult!.user)")
         }
     }
 }

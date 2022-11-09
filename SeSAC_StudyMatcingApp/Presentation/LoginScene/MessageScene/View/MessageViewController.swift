@@ -32,8 +32,8 @@ class MessageViewController: BaseViewController {
     
     override func configureUI() {
         bindTo()
+        
     }
-    
 }
 
 extension MessageViewController {
@@ -41,20 +41,25 @@ extension MessageViewController {
     func setTimer(with timer: Observable<Int>) {
         timerDisposable?.dispose()
         timerDisposable = timer
-            .subscribe { value in
+            .subscribe(onNext: { value in
                 if value <= 50 {
                     self.mainView.timerLabel.text = value == 0 ? "01:00" : "00:\(60 - value)"
                 } else if value <= 60 {
                     self.mainView.timerLabel.text = "00:0\(60 - value)"
                 } else {
                     self.timerDisposable?.dispose()
+                    
                 }
-            }
+            }, onDisposed: {
+                UserManager.authVerificationID = ""
+            })
+
     }
     
     func bindTo() {
         let input = MessageViewModel.Input(
             auth: mainView.authButton.rx.tap,
+            resend: mainView.resendButton.rx.tap,
             valid: mainView.numberTextField.rx.text,
             beginEdit: mainView.numberTextField.rx.controlEvent([.editingDidBegin]),
             endEdit: mainView.numberTextField.rx.controlEvent([.editingDidEnd])
@@ -64,10 +69,22 @@ extension MessageViewController {
         
         setTimer(with: output.timer)
         
-        mainView.resendButton.rx.tap
-            .bind { _ in
+        output.resend
+            .withUnretained(self)
+            .throttle(.seconds(5), scheduler: MainScheduler.instance)
+            .bind { vc, _ in
                 
-                self.setTimer(with: output.timer)
+                FirebaseAPIService.shared.requestAuth(phoneNumber: UserManager.phoneNumber) { result in
+                    vc.mainView.makeToast(AuthComent.resend.rawValue, position: .center)
+                    switch result {
+                    case .success(let success):
+                        UserManager.authVerificationID = success
+                    case .failure(let fail):
+                        vc.mainView.makeToast(fail.errorDescription!, position: .center)
+                    }
+                }
+                
+                vc.setTimer(with: output.timer)
 
             }
             .disposed(by: disposeBag)

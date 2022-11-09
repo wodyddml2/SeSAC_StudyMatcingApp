@@ -31,5 +31,8 @@ class UserManager {
     
     @UserDefault(key: "authVerificationID", defaultValue: "")
     static var authVerificationID: String
+    
+    @UserDefault(key: "phoneNumber", defaultValue: "")
+    static var phoneNumber: String
 }
 

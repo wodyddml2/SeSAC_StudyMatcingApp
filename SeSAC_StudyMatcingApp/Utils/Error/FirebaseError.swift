@@ -10,6 +10,7 @@ import Foundation
 enum FirebaseError: Error {
     case invalidVerificationCode
     case invalidVerificationID
+    case missingVerificationID
     case tooManyRequest
     case etc
 }
@@ -25,6 +26,8 @@ extension FirebaseError: LocalizedError {
             return "전화 번호 인증 실패"
         case .invalidVerificationID:
             return "에러가 발생했습니다. 잠시 후 다시 시도해주세요."
+        case .missingVerificationID:
+            return "전화 번호 인증 실패"
         }
     }
 }

@@ -112,6 +112,8 @@ extension NumberViewController {
                         switch result {
                         case .success(let success):
                             UserManager.authVerificationID = success
+                            UserManager.phoneNumber = vc.formattingNumber()
+                            
                             vc.transition(MessageViewController(), transitionStyle: .push)
                         case .failure(let fail):
                             vc.mainView.makeToast(fail.errorDescription!, position: .center)
