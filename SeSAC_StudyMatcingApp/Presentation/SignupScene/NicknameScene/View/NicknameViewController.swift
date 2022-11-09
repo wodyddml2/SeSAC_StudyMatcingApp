@@ -7,9 +7,14 @@
 
 import UIKit
 
+import RxSwift
+
 final class NicknameViewController: BaseViewController {
     
     let mainView = NicknameView()
+    let viewModel = NicknameViewModel()
+    
+    let disposeBag = DisposeBag()
     
     override func loadView() {
         view = mainView
@@ -18,7 +23,65 @@ final class NicknameViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationBackButton()
+        
+        bindViewModel()
+    }
+
+}
+
+extension NicknameViewController {
+    
+    private func bindViewModel() {
+        let input = NicknameViewModel.Input(
+            valid: mainView.numberTextField.rx.text,
+            beginEdit: mainView.numberTextField.rx.controlEvent([.editingDidBegin]),
+            endEdit: mainView.numberTextField.rx.controlEvent([.editingDidEnd])
+        )
+        
+        let output = viewModel.transform(input: input)
+   
+        mainView.rx.tapGesture()
+            .when(.recognized)
+            .subscribe { _ in
+                self.mainView.endEditing(true)
+            }
+            .disposed(by: disposeBag)
+
+        bindValidText(output: output)
+        bindTextFieldEdit(output: output)
+        
     }
     
-
+    private func bindValidText(output: NicknameViewModel.Output) {
+        output.valid
+            .bind { value in
+                switch true {
+                case value.count == 0:
+                    self.mainView.authButton.backgroundColor = .gray6
+                case value.count > 0 && value.count < 10:
+                    self.mainView.authButton.backgroundColor = .sesacGreen
+                case value.count >= 10:
+                    self.mainView.numberTextField.text = value.validMessage(idx: 9)
+                default:
+                    break
+                }
+            }
+            .disposed(by: disposeBag)
+    }
+    private func bindTextFieldEdit(output: NicknameViewModel.Output) {
+        output.beginEdit
+            .withUnretained(self)
+            .bind { vc, _ in
+                vc.mainView.numberView.backgroundColor = .black
+            }
+            .disposed(by: disposeBag)
+        
+        output.endEdit
+            .withUnretained(self)
+            .bind { vc, _ in
+                vc.mainView.numberView.backgroundColor = .gray3
+            }
+            .disposed(by: disposeBag)
+    }
 }

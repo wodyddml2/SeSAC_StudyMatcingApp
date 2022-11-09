@@ -17,8 +17,8 @@ class NicknameView: LoginView {
     
     let numberTextField: UITextField = {
         let view = UITextField()
-        view.keyboardType = .numberPad
         view.placeholder = "10자 이내로 입력"
+        view.becomeFirstResponder()
         return view
     }()
     

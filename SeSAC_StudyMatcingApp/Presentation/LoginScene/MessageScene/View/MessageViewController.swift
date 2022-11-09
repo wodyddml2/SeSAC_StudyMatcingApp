@@ -26,9 +26,7 @@ class MessageViewController: BaseViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBar.tintColor = .black
-        navigationController?.navigationBar.backIndicatorImage = UIImage(named: "arrow")
-        navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage(named: "arrow")
+        navigationBackButton()
     }
     
     override func configureUI() {
@@ -172,19 +170,6 @@ extension MessageViewController {
             }
             .disposed(by: disposeBag)
         
-//        s()
     }
- 
-//    func s() {
-//        let currentUser = Auth.auth().currentUser
-//        currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
-//          if let error = error {
-//            // Handle error
-//            return
-//          }
-//            print("=====================\(idToken ?? "")")
-//          // Send token to your backend via HTTPS
-//          // ...
-//        }
-//    }
+
 }
