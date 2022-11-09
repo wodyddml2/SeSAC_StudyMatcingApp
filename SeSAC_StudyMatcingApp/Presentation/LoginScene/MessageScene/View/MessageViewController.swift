@@ -9,6 +9,7 @@ import UIKit
 
 import RxSwift
 import RxCocoa
+import RxGesture
 import FirebaseAuth
 
 class MessageViewController: BaseViewController {
@@ -33,35 +34,6 @@ class MessageViewController: BaseViewController {
         bindTo()
     }
     
-    //    func ss() {
-    //        let driver = Driver<Int>.interval(.seconds(1))
-    //            .map { _ in
-    //                return 1
-    //            }
-    //
-    //        driver.asObservable()
-    //            .subscribe { value in
-    //                <#code#>
-    //            }
-    //    }
-    //
-    func verificationCompare() {
-        let verificationCode = mainView.numberTextField.text!
-        let verificationID = UserManager.authVerificationID
-        let credential = PhoneAuthProvider.provider().credential(
-            withVerificationID: verificationID,
-            verificationCode: verificationCode
-        )
-        Auth.auth().signIn(with: credential) { authResult, error in
-            if let error = error {
-                print(error.localizedDescription)
-                print("LogIn Failed...")
-            }
-            print("LogIn Success!!")
-            print("\(authResult!.user)")
-        }
-    }
-    
 }
 
 extension MessageViewController {
@@ -81,7 +53,12 @@ extension MessageViewController {
     }
     
     func bindTo() {
-        let input = MessageViewModel.Input(auth: mainView.authButton.rx.tap, valid: mainView.numberTextField.rx.text)
+        let input = MessageViewModel.Input(
+            auth: mainView.authButton.rx.tap,
+            valid: mainView.numberTextField.rx.text,
+            beginEdit: mainView.numberTextField.rx.controlEvent([.editingDidBegin]),
+            endEdit: mainView.numberTextField.rx.controlEvent([.editingDidEnd])
+        )
         
         let output = viewModel.transform(input: input)
         
@@ -91,21 +68,53 @@ extension MessageViewController {
             .bind { _ in
                 
                 self.setTimer(with: output.timer)
+
             }
             .disposed(by: disposeBag)
         
         output.auth
             .withUnretained(self)
             .bind { vc, _ in
-                vc.verificationCompare()
+                FirebaseAPIService.shared.requestVerificationCompare(text: vc.mainView.numberTextField.text!) { result in
+                    switch result {
+                    case .success(let success):
+                        print(success.user)
+                    case .failure(let fail):
+                        vc.mainView.makeToast(fail.errorDescription!, position: .center)
+                    }
+                }
             }
             .disposed(by: disposeBag)
         
         output.valid
             .bind { value in
-                if value.count > 6 {
+                if value.count >= 6 {
                     self.mainView.numberTextField.text = value.validMessage(idx: 5)
+                    self.mainView.authButton.backgroundColor = .sesacGreen
+                } else {
+                    self.mainView.authButton.backgroundColor = .gray6
                 }
+            }
+            .disposed(by: disposeBag)
+        
+        output.beginEdit
+            .withUnretained(self)
+            .bind { vc, _ in
+                vc.mainView.numberView.backgroundColor = .black
+            }
+            .disposed(by: disposeBag)
+        
+        output.endEdit
+            .withUnretained(self)
+            .bind { vc, _ in
+                vc.mainView.numberView.backgroundColor = .gray3
+            }
+            .disposed(by: disposeBag)
+        
+        mainView.rx.tapGesture()
+            .when(.recognized)
+            .subscribe { _ in
+                self.mainView.endEditing(true)
             }
             .disposed(by: disposeBag)
     }

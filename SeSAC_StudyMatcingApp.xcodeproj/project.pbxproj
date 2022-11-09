@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		6337F01E291A5B57002C81FA /* String+Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6337F01D291A5B57002C81FA /* String+Custom.swift */; };
-		6337F020291A5CA8002C81FA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6337F01F291A5CA8002C81FA /* GoogleService-Info.plist */; };
 		63467DB32918D4AE00E7D8AE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63467DB22918D4AE00E7D8AE /* AppDelegate.swift */; };
 		63467DB52918D4AE00E7D8AE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63467DB42918D4AE00E7D8AE /* SceneDelegate.swift */; };
 		63467DB72918D4AE00E7D8AE /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63467DB62918D4AE00E7D8AE /* OnboardingViewController.swift */; };
@@ -43,6 +42,7 @@
 		63467E1F291943BE00E7D8AE /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 63467E1E291943BE00E7D8AE /* FirebaseAuth */; };
 		63467E2429194B8700E7D8AE /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 63467E2329194B8700E7D8AE /* .gitignore */; };
 		6351B6852919772000B953BF /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6351B6842919772000B953BF /* LoginView.swift */; };
+		635E1607291B991F0042E8E4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 635E1606291B991F0042E8E4 /* GoogleService-Info.plist */; };
 		638B0746291AA49600E9D254 /* Coment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638B0745291AA49600E9D254 /* Coment.swift */; };
 		638B074B291AB44200E9D254 /* FirebaseAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638B074A291AB44200E9D254 /* FirebaseAPIService.swift */; };
 		638B074D291ABB9E00E9D254 /* FirebaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638B074C291ABB9E00E9D254 /* FirebaseError.swift */; };
@@ -51,7 +51,6 @@
 
 /* Begin PBXFileReference section */
 		6337F01D291A5B57002C81FA /* String+Custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Custom.swift"; sourceTree = "<group>"; };
-		6337F01F291A5CA8002C81FA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		63467DAF2918D4AE00E7D8AE /* SeSAC_StudyMatcingApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SeSAC_StudyMatcingApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		63467DB22918D4AE00E7D8AE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		63467DB42918D4AE00E7D8AE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -83,6 +82,7 @@
 		63467E1829193D8400E7D8AE /* SeSAC_StudyMatcingApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SeSAC_StudyMatcingApp.entitlements; sourceTree = "<group>"; };
 		63467E2329194B8700E7D8AE /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		6351B6842919772000B953BF /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		635E1606291B991F0042E8E4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		638B0745291AA49600E9D254 /* Coment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coment.swift; sourceTree = "<group>"; };
 		638B074A291AB44200E9D254 /* FirebaseAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAPIService.swift; sourceTree = "<group>"; };
 		638B074C291ABB9E00E9D254 /* FirebaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseError.swift; sourceTree = "<group>"; };
@@ -158,7 +158,7 @@
 		63467DD02918D65700E7D8AE /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				6337F01F291A5CA8002C81FA /* GoogleService-Info.plist */,
+				635E1606291B991F0042E8E4 /* GoogleService-Info.plist */,
 				63467DC02918D4AF00E7D8AE /* Info.plist */,
 				63467DE42918D8EC00E7D8AE /* Fonts */,
 				63467DBD2918D4AF00E7D8AE /* LaunchScreen.storyboard */,
@@ -451,7 +451,7 @@
 				63467DE82918D90700E7D8AE /* NotoSansKR-Regular.otf in Resources */,
 				63467E2429194B8700E7D8AE /* .gitignore in Resources */,
 				63467DBC2918D4AF00E7D8AE /* Assets.xcassets in Resources */,
-				6337F020291A5CA8002C81FA /* GoogleService-Info.plist in Resources */,
+				635E1607291B991F0042E8E4 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -644,7 +644,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.jy.SeSAC-StudyMatchingApp";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.jy.SeSAC-StudyMatcingApp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -680,7 +680,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.jy.SeSAC-StudyMatchingApp";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.jy.SeSAC-StudyMatcingApp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

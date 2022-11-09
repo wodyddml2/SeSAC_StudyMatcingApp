@@ -98,6 +98,19 @@ extension OnboardingViewController {
                 UserManager.onboarding = true
             }
             .disposed(by: disposeBag)
+        
+        pageContorl.rx.controlEvent(.valueChanged)
+            .bind { _ in
+                guard let firstView = self.pageViewController.viewControllers?.first, let index = self.pageViewControllerList.firstIndex(of: firstView) else { return }
+                let page = self.pageContorl.currentPage
+                if page > index {
+                    self.pageViewController.setViewControllers([self.pageViewControllerList[page]], direction: .forward, animated: true)
+                } else {
+                    self.pageViewController.setViewControllers([self.pageViewControllerList[page]], direction: .reverse, animated: true)
+                }
+                
+            }
+            .disposed(by: disposeBag)
     }
 }
 

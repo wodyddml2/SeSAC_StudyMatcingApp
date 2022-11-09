@@ -34,4 +34,33 @@ class FirebaseAPIService {
                 
             }
     }
+    
+    func requestVerificationCompare(text: String, completion: @escaping (Result<AuthDataResult, FirebaseError>) -> Void) {
+        let verificationCode = text
+        let verificationID = UserManager.authVerificationID
+        let credential = PhoneAuthProvider.provider().credential(
+            withVerificationID: verificationID,
+            verificationCode: verificationCode
+        )
+        Auth.auth().signIn(with: credential) { authResult, error in
+            if let error = error {
+                let code = (error as NSError).code
+                
+                switch code {
+                case 17044:
+                    completion(.failure(.invalidVerificationCode))
+                case 17046:
+                    completion(.failure(.invalidVerificationID))
+                default:
+                    completion(.failure(.etc))
+                }
+            }
+            
+            if let authResult = authResult {
+                completion(.success(authResult))
+            }
+//            print("LogIn Success!!")
+//            print("\(authResult!.user)")
+        }
+    }
 }
