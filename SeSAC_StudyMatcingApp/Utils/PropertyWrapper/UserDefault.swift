@@ -34,5 +34,11 @@ class UserManager {
     
     @UserDefault(key: "phoneNumber", defaultValue: "")
     static var phoneNumber: String
+    
+    @UserDefault(key: "idToken", defaultValue: "")
+    static var idToken: String
+    
+    @UserDefault(key: "login", defaultValue: 0)
+    static var login: Int
 }
 

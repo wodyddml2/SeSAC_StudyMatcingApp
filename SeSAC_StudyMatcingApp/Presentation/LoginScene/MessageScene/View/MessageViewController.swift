@@ -26,6 +26,7 @@ class MessageViewController: BaseViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.navigationBar.tintColor = .black
         navigationController?.navigationBar.backIndicatorImage = UIImage(named: "arrow")
         navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage(named: "arrow")
     }
@@ -82,7 +83,6 @@ extension MessageViewController {
         
     }
     
-    
     private func bindButtonTapped(output: MessageViewModel.Output) {
  
         output.auth
@@ -92,15 +92,29 @@ extension MessageViewController {
                     switch result {
                     case .success(let success):
                         success.user.getIDTokenForcingRefresh(true) { idToken, error in
-                            if let error = error {
-                              // Handle error
-                              return
+                            if error != nil { return }
+                            
+                            if let idToken = idToken {
+                                SeSACAPIService.shared.requestSeSACLogin(query: idToken) { result in
+                                    switch result {
+                                    case .success(let success):
+                                        UserManager.login = 200
+                                        print("==========\(success)")
+                                    case .failure(let fail):
+                                        let error = fail as! SeSACLoginError
+                                        if error == SeSACLoginError.noSignup {
+                                            UserManager.idToken = idToken // 혹시 몰라서 저장
+                                            UserManager.login = error.rawValue
+                                            
+                                            vc.transition(NicknameViewController(), transitionStyle: .push)
+                                        } else {
+                                            vc.mainView.makeToast(error.errorDescription!, position: .center)
+                                        }
+                                    }
+                                }
                             }
-                              print("=====================\(idToken ?? "")")
+                            
                         }
-//                        success.user.getIDToken { value, error in
-//                            print("=====================\(value ?? "")")
-//                        }
                         
                     case .failure(let fail):
                         vc.mainView.makeToast(fail.errorDescription!, position: .center)

@@ -45,7 +45,10 @@
 		635E1609291BD9D00042E8E4 /* SeSACAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635E1608291BD9D00042E8E4 /* SeSACAPIService.swift */; };
 		635E160C291BDA1C0042E8E4 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 635E160B291BDA1C0042E8E4 /* Alamofire */; };
 		635E1610291BE3F50042E8E4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 635E160F291BE3F50042E8E4 /* GoogleService-Info.plist */; };
-		638B0746291AA49600E9D254 /* Coment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638B0745291AA49600E9D254 /* Coment.swift */; };
+		635E1612291BF26B0042E8E4 /* SeSACAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635E1611291BF26B0042E8E4 /* SeSACAPI.swift */; };
+		635E1618291BF65B0042E8E4 /* SeSACLoginDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635E1617291BF65B0042E8E4 /* SeSACLoginDTO.swift */; };
+		635E161E291C0C890042E8E4 /* NicknameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635E161D291C0C890042E8E4 /* NicknameViewController.swift */; };
+		638B0746291AA49600E9D254 /* AuthComent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638B0745291AA49600E9D254 /* AuthComent.swift */; };
 		638B074B291AB44200E9D254 /* FirebaseAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638B074A291AB44200E9D254 /* FirebaseAPIService.swift */; };
 		638B074D291ABB9E00E9D254 /* FirebaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638B074C291ABB9E00E9D254 /* FirebaseError.swift */; };
 		63F423402919E9AF00F91D01 /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 63F4233F2919E9AF00F91D01 /* Toast */; };
@@ -86,7 +89,10 @@
 		6351B6842919772000B953BF /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		635E1608291BD9D00042E8E4 /* SeSACAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACAPIService.swift; sourceTree = "<group>"; };
 		635E160F291BE3F50042E8E4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		638B0745291AA49600E9D254 /* Coment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coment.swift; sourceTree = "<group>"; };
+		635E1611291BF26B0042E8E4 /* SeSACAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACAPI.swift; sourceTree = "<group>"; };
+		635E1617291BF65B0042E8E4 /* SeSACLoginDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACLoginDTO.swift; sourceTree = "<group>"; };
+		635E161D291C0C890042E8E4 /* NicknameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewController.swift; sourceTree = "<group>"; };
+		638B0745291AA49600E9D254 /* AuthComent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthComent.swift; sourceTree = "<group>"; };
 		638B074A291AB44200E9D254 /* FirebaseAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAPIService.swift; sourceTree = "<group>"; };
 		638B074C291ABB9E00E9D254 /* FirebaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -131,6 +137,8 @@
 			isa = PBXGroup;
 			children = (
 				63467E1829193D8400E7D8AE /* SeSAC_StudyMatcingApp.entitlements */,
+				635E1614291BF6340042E8E4 /* Data */,
+				635E1613291BF6280042E8E4 /* Domain */,
 				638B0748291AB41200E9D254 /* Network */,
 				63467DCF2918D5BF00E7D8AE /* Application */,
 				63467DCE2918D4F700E7D8AE /* Presentation */,
@@ -146,6 +154,7 @@
 				63467DDA2918D82500E7D8AE /* Common */,
 				63467DD12918D7F300E7D8AE /* OnboardingScene */,
 				63467DFB2918EA4C00E7D8AE /* LoginScene */,
+				635E1619291C0C360042E8E4 /* SignupScene */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -238,7 +247,7 @@
 			isa = PBXGroup;
 			children = (
 				638B0747291AA7FC00E9D254 /* Error */,
-				638B0744291AA05D00E9D254 /* Coments */,
+				638B0744291AA05D00E9D254 /* Constant */,
 				63467DF32918E6D000E7D8AE /* PropertyWrapper */,
 				63467DEA2918DB1600E7D8AE /* Extension */,
 			);
@@ -344,12 +353,76 @@
 			path = CustomView;
 			sourceTree = "<group>";
 		};
-		638B0744291AA05D00E9D254 /* Coments */ = {
+		635E1613291BF6280042E8E4 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
-				638B0745291AA49600E9D254 /* Coment.swift */,
+				635E1616291BF64C0042E8E4 /* Model */,
 			);
-			path = Coments;
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		635E1614291BF6340042E8E4 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				635E1615291BF63E0042E8E4 /* Network */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		635E1615291BF63E0042E8E4 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				635E1617291BF65B0042E8E4 /* SeSACLoginDTO.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		635E1616291BF64C0042E8E4 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		635E1619291C0C360042E8E4 /* SignupScene */ = {
+			isa = PBXGroup;
+			children = (
+				635E161A291C0C5C0042E8E4 /* NicknameScene */,
+			);
+			path = SignupScene;
+			sourceTree = "<group>";
+		};
+		635E161A291C0C5C0042E8E4 /* NicknameScene */ = {
+			isa = PBXGroup;
+			children = (
+				635E161B291C0C6A0042E8E4 /* View */,
+				635E161C291C0C6E0042E8E4 /* ViewModel */,
+			);
+			path = NicknameScene;
+			sourceTree = "<group>";
+		};
+		635E161B291C0C6A0042E8E4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				635E161D291C0C890042E8E4 /* NicknameViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		635E161C291C0C6E0042E8E4 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		638B0744291AA05D00E9D254 /* Constant */ = {
+			isa = PBXGroup;
+			children = (
+				638B0745291AA49600E9D254 /* AuthComent.swift */,
+				635E1611291BF26B0042E8E4 /* SeSACAPI.swift */,
+			);
+			path = Constant;
 			sourceTree = "<group>";
 		};
 		638B0747291AA7FC00E9D254 /* Error */ = {
@@ -470,17 +543,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				63467E12291937CF00E7D8AE /* MessageViewModel.swift in Sources */,
-				638B0746291AA49600E9D254 /* Coment.swift in Sources */,
+				638B0746291AA49600E9D254 /* AuthComent.swift in Sources */,
 				63467DB72918D4AE00E7D8AE /* OnboardingViewController.swift in Sources */,
 				638B074B291AB44200E9D254 /* FirebaseAPIService.swift in Sources */,
+				635E1612291BF26B0042E8E4 /* SeSACAPI.swift in Sources */,
 				63467DFF2918F04300E7D8AE /* NSAttributedString+CustomText.swift in Sources */,
 				6337F01E291A5B57002C81FA /* String+Custom.swift in Sources */,
 				63467DB32918D4AE00E7D8AE /* AppDelegate.swift in Sources */,
+				635E161E291C0C890042E8E4 /* NicknameViewController.swift in Sources */,
 				6351B6852919772000B953BF /* LoginView.swift in Sources */,
 				63467DB52918D4AE00E7D8AE /* SceneDelegate.swift in Sources */,
 				638B074D291ABB9E00E9D254 /* FirebaseError.swift in Sources */,
 				63467DF22918E57E00E7D8AE /* UIViewController+Transition.swift in Sources */,
 				63467E062918FA2E00E7D8AE /* NumberViewModel.swift in Sources */,
+				635E1618291BF65B0042E8E4 /* SeSACLoginDTO.swift in Sources */,
 				63467DD52918D80E00E7D8AE /* SecondViewController.swift in Sources */,
 				63467DD72918D81300E7D8AE /* ThirdViewController.swift in Sources */,
 				63467DEE2918E0EF00E7D8AE /* UIImage+OnboardingImage.swift in Sources */,
