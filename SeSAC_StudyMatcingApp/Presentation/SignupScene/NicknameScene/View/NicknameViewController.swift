@@ -27,6 +27,11 @@ final class NicknameViewController: BaseViewController {
         
         bindViewModel()
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        UserManager.login = 0
+    }
 
 }
 
@@ -68,7 +73,6 @@ extension NicknameViewController {
                 if vc.mainView.authButton.backgroundColor == .sesacGreen && vc.nameFormatter(text: nicknameText) {
                     UserManager.nickname = nicknameText
                     vc.transition(BirthViewController(), transitionStyle: .push)
-                    
                 } else {
                     vc.mainView.makeToast(SignupCommet.nicknameValid, position: .center)
                 }
