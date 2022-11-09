@@ -11,9 +11,7 @@ import RxSwift
 import RxCocoa
 
 class MessageViewModel: ViewModelType {
-    
-    let authTimer = BehaviorRelay(value: false)
-    
+ 
     struct Input {
         let auth: ControlEvent<Void>
         let resend: ControlEvent<Void>

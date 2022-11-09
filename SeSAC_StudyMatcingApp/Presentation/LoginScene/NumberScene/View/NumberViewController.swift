@@ -9,7 +9,6 @@ import UIKit
 
 import RxSwift
 import RxGesture
-import FirebaseAuth
 import Toast
 
 final class NumberViewController: BaseViewController {
@@ -25,10 +24,12 @@ final class NumberViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        bindTo()
+        bindViewModel()
         navigationItem.backButtonTitle = ""
     }
-    
+}
+
+extension NumberViewController {
     private func formattingHyphen(with mask: String, phone: String) -> String {
         let numbers = phone.replacingOccurrences(of: "[^0-9]", with: "", options: .regularExpression)
         var result = ""
@@ -47,12 +48,35 @@ final class NumberViewController: BaseViewController {
         return result
     }
     
+    private func formattingNumber() -> String {
+        guard var text = mainView.numberTextField.text else {return ""}
+        text.remove(at: text.startIndex)
+        
+        let formater = "+82 " + text
+        
+        return formater
+    }
     
+    private func requestFirebase() {
+        FirebaseAPIService.shared.requestAuth(phoneNumber: formattingNumber()) { [weak self] result in
+            guard let self = self else {return}
+            switch result {
+            case .success(let success):
+                UserManager.authVerificationID = success
+                UserManager.phoneNumber = self.formattingNumber()
+                
+                self.transition(MessageViewController(), transitionStyle: .push)
+            case .failure(let fail):
+                self.mainView.makeToast(fail.errorDescription!, position: .center)
+            }
+        }
+    }
+
 }
 
 extension NumberViewController {
-    private func bindTo() {
-        
+    
+    private func bindViewModel() {
         let input = NumberViewModel.Input(
             numberText: mainView.numberTextField.rx.text,
             beginEdit: mainView.numberTextField.rx.controlEvent([.editingDidBegin]),
@@ -62,6 +86,31 @@ extension NumberViewController {
         
         let output = viewModel.transform(input: input)
         
+        output.auth
+            .withUnretained(self)
+            .bind { vc, _ in
+                if vc.mainView.authButton.backgroundColor == .sesacGreen {
+                    self.mainView.makeToast(AuthComent.phoneAuth.rawValue, duration: 5, position: .center)
+                    
+                    vc.requestFirebase()
+                } else {
+                    vc.mainView.makeToast(AuthComent.invalidNumber.rawValue, position: .center)
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        mainView.rx.tapGesture()
+            .when(.recognized)
+            .subscribe { _ in
+                self.mainView.endEditing(true)
+            }
+            .disposed(by: disposeBag)
+        
+        bindValidText(output: output)
+        bindTextFieldEdit(output: output)
+    }
+    
+    private func bindValidText(output: NumberViewModel.Output) {
         output.numberText
             .withUnretained(self)
             .bind { vc, value in
@@ -79,7 +128,9 @@ extension NumberViewController {
                 vc.mainView.authButton.backgroundColor = bool == true ? .sesacGreen : .gray6
             })
             .disposed(by: disposeBag)
-        
+    }
+    
+    private func bindTextFieldEdit(output: NumberViewModel.Output) {
         output.beginEdit
             .withUnretained(self)
             .bind { vc, _ in
@@ -93,45 +144,6 @@ extension NumberViewController {
                 vc.mainView.numberView.backgroundColor = .gray3
             }
             .disposed(by: disposeBag)
-        
-        
-        mainView.rx.tapGesture()
-            .when(.recognized)
-            .subscribe { _ in
-                self.mainView.endEditing(true)
-            }
-            .disposed(by: disposeBag)
-        
-        output.auth
-            .withUnretained(self)
-            .bind { vc, _ in
-                if vc.mainView.authButton.backgroundColor == .sesacGreen {
-                    self.mainView.makeToast(AuthComent.phoneAuth.rawValue, duration: 5, position: .center)
-                    
-                    FirebaseAPIService.shared.requestAuth(phoneNumber: vc.formattingNumber()) { result in
-                        switch result {
-                        case .success(let success):
-                            UserManager.authVerificationID = success
-                            UserManager.phoneNumber = vc.formattingNumber()
-                            
-                            vc.transition(MessageViewController(), transitionStyle: .push)
-                        case .failure(let fail):
-                            vc.mainView.makeToast(fail.errorDescription!, position: .center)
-                        }
-                    }
-                } else {
-                    vc.mainView.makeToast(AuthComent.invalidNumber.rawValue, position: .center)
-                }
-            }
-            .disposed(by: disposeBag)
     }
-    
-    func formattingNumber() -> String {
-        guard var text = mainView.numberTextField.text else {return ""}
-        text.remove(at: text.startIndex)
-        
-        let formater = "+82 " + text
-        
-        return formater
-    }
+
 }

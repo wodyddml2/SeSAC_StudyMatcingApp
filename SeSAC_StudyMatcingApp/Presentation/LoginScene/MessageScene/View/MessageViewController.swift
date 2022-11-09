@@ -10,7 +10,6 @@ import UIKit
 import RxSwift
 import RxCocoa
 import RxGesture
-import FirebaseAuth
 
 class MessageViewController: BaseViewController {
     
@@ -18,6 +17,7 @@ class MessageViewController: BaseViewController {
     let viewModel = MessageViewModel()
     
     var disposeBag = DisposeBag()
+    
     var timerDisposable: Disposable?
     
     override func loadView() {
@@ -27,17 +27,14 @@ class MessageViewController: BaseViewController {
         super.viewDidLoad()
         navigationController?.navigationBar.backIndicatorImage = UIImage(named: "arrow")
         navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage(named: "arrow")
-        mainView.authButton.isEnabled = true
     }
     
     override func configureUI() {
-        bindTo()
-        
+        bindViewModel()
     }
 }
 
 extension MessageViewController {
-    
     func setTimer(with timer: Observable<Int>) {
         timerDisposable?.dispose()
         timerDisposable = timer
@@ -55,8 +52,11 @@ extension MessageViewController {
             })
 
     }
+}
+
+extension MessageViewController {
     
-    func bindTo() {
+    private func bindViewModel() {
         let input = MessageViewModel.Input(
             auth: mainView.authButton.rx.tap,
             resend: mainView.resendButton.rx.tap,
@@ -68,6 +68,36 @@ extension MessageViewController {
         let output = viewModel.transform(input: input)
         
         setTimer(with: output.timer)
+        
+        mainView.rx.tapGesture()
+            .when(.recognized)
+            .subscribe { _ in
+                self.mainView.endEditing(true)
+            }
+            .disposed(by: disposeBag)
+        
+        bindButtonTapped(output: output)
+        bindValidText(output: output)
+        bindTextFieldEdit(output: output)
+        
+    }
+    
+    
+    private func bindButtonTapped(output: MessageViewModel.Output) {
+ 
+        output.auth
+            .withUnretained(self)
+            .bind { vc, _ in
+                FirebaseAPIService.shared.requestVerificationCompare(text: vc.mainView.numberTextField.text!) { result in
+                    switch result {
+                    case .success(let success):
+                        print(success.user)
+                    case .failure(let fail):
+                        vc.mainView.makeToast(fail.errorDescription!, position: .center)
+                    }
+                }
+            }
+            .disposed(by: disposeBag)
         
         output.resend
             .withUnretained(self)
@@ -88,21 +118,9 @@ extension MessageViewController {
 
             }
             .disposed(by: disposeBag)
-        
-        output.auth
-            .withUnretained(self)
-            .bind { vc, _ in
-                FirebaseAPIService.shared.requestVerificationCompare(text: vc.mainView.numberTextField.text!) { result in
-                    switch result {
-                    case .success(let success):
-                        print(success.user)
-                    case .failure(let fail):
-                        vc.mainView.makeToast(fail.errorDescription!, position: .center)
-                    }
-                }
-            }
-            .disposed(by: disposeBag)
-        
+    }
+    
+    private func bindValidText(output: MessageViewModel.Output) {
         output.valid
             .bind { value in
                 if value.count >= 6 {
@@ -113,7 +131,9 @@ extension MessageViewController {
                 }
             }
             .disposed(by: disposeBag)
-        
+    }
+    
+    private func bindTextFieldEdit(output: MessageViewModel.Output) {
         output.beginEdit
             .withUnretained(self)
             .bind { vc, _ in
@@ -127,12 +147,6 @@ extension MessageViewController {
                 vc.mainView.numberView.backgroundColor = .gray3
             }
             .disposed(by: disposeBag)
-        
-        mainView.rx.tapGesture()
-            .when(.recognized)
-            .subscribe { _ in
-                self.mainView.endEditing(true)
-            }
-            .disposed(by: disposeBag)
     }
+ 
 }
