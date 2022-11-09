@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-class MessageViewModel: ViewModelType {
+final class MessageViewModel: ViewModelType {
  
     struct Input {
         let auth: ControlEvent<Void>

@@ -51,6 +51,10 @@
 		635E1620291C19230042E8E4 /* LoginStatusCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635E161F291C19230042E8E4 /* LoginStatusCode.swift */; };
 		635E1622291C1A440042E8E4 /* NicknameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635E1621291C1A440042E8E4 /* NicknameView.swift */; };
 		635E1624291C23CE0042E8E4 /* NicknameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635E1623291C23CE0042E8E4 /* NicknameViewModel.swift */; };
+		635E1626291C2BFC0042E8E4 /* SignupCommet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635E1625291C2BFC0042E8E4 /* SignupCommet.swift */; };
+		635E162C291C2CF40042E8E4 /* BirthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635E162B291C2CF40042E8E4 /* BirthViewController.swift */; };
+		635E162E291C2CFE0042E8E4 /* BirthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635E162D291C2CFE0042E8E4 /* BirthView.swift */; };
+		635E1630291C2D090042E8E4 /* BirthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635E162F291C2D090042E8E4 /* BirthViewModel.swift */; };
 		638B0746291AA49600E9D254 /* AuthComent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638B0745291AA49600E9D254 /* AuthComent.swift */; };
 		638B074B291AB44200E9D254 /* FirebaseAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638B074A291AB44200E9D254 /* FirebaseAPIService.swift */; };
 		638B074D291ABB9E00E9D254 /* FirebaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638B074C291ABB9E00E9D254 /* FirebaseError.swift */; };
@@ -98,6 +102,10 @@
 		635E161F291C19230042E8E4 /* LoginStatusCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginStatusCode.swift; sourceTree = "<group>"; };
 		635E1621291C1A440042E8E4 /* NicknameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameView.swift; sourceTree = "<group>"; };
 		635E1623291C23CE0042E8E4 /* NicknameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewModel.swift; sourceTree = "<group>"; };
+		635E1625291C2BFC0042E8E4 /* SignupCommet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupCommet.swift; sourceTree = "<group>"; };
+		635E162B291C2CF40042E8E4 /* BirthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthViewController.swift; sourceTree = "<group>"; };
+		635E162D291C2CFE0042E8E4 /* BirthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthView.swift; sourceTree = "<group>"; };
+		635E162F291C2D090042E8E4 /* BirthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthViewModel.swift; sourceTree = "<group>"; };
 		638B0745291AA49600E9D254 /* AuthComent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthComent.swift; sourceTree = "<group>"; };
 		638B074A291AB44200E9D254 /* FirebaseAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAPIService.swift; sourceTree = "<group>"; };
 		638B074C291ABB9E00E9D254 /* FirebaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseError.swift; sourceTree = "<group>"; };
@@ -394,6 +402,7 @@
 			isa = PBXGroup;
 			children = (
 				635E161A291C0C5C0042E8E4 /* NicknameScene */,
+				635E1628291C2C4B0042E8E4 /* BirthScene */,
 			);
 			path = SignupScene;
 			sourceTree = "<group>";
@@ -424,10 +433,37 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		635E1628291C2C4B0042E8E4 /* BirthScene */ = {
+			isa = PBXGroup;
+			children = (
+				635E1629291C2C560042E8E4 /* View */,
+				635E162A291C2C5E0042E8E4 /* ViewModel */,
+			);
+			path = BirthScene;
+			sourceTree = "<group>";
+		};
+		635E1629291C2C560042E8E4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				635E162B291C2CF40042E8E4 /* BirthViewController.swift */,
+				635E162D291C2CFE0042E8E4 /* BirthView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		635E162A291C2C5E0042E8E4 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				635E162F291C2D090042E8E4 /* BirthViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		638B0744291AA05D00E9D254 /* Constant */ = {
 			isa = PBXGroup;
 			children = (
 				638B0745291AA49600E9D254 /* AuthComent.swift */,
+				635E1625291C2BFC0042E8E4 /* SignupCommet.swift */,
 				635E1611291BF26B0042E8E4 /* SeSACAPI.swift */,
 				635E161F291C19230042E8E4 /* LoginStatusCode.swift */,
 			);
@@ -555,7 +591,9 @@
 				638B0746291AA49600E9D254 /* AuthComent.swift in Sources */,
 				63467DB72918D4AE00E7D8AE /* OnboardingViewController.swift in Sources */,
 				638B074B291AB44200E9D254 /* FirebaseAPIService.swift in Sources */,
+				635E1630291C2D090042E8E4 /* BirthViewModel.swift in Sources */,
 				635E1612291BF26B0042E8E4 /* SeSACAPI.swift in Sources */,
+				635E162E291C2CFE0042E8E4 /* BirthView.swift in Sources */,
 				63467DFF2918F04300E7D8AE /* NSAttributedString+CustomText.swift in Sources */,
 				6337F01E291A5B57002C81FA /* String+Custom.swift in Sources */,
 				63467DB32918D4AE00E7D8AE /* AppDelegate.swift in Sources */,
@@ -571,6 +609,7 @@
 				63467DD52918D80E00E7D8AE /* SecondViewController.swift in Sources */,
 				63467DD72918D81300E7D8AE /* ThirdViewController.swift in Sources */,
 				63467DEE2918E0EF00E7D8AE /* UIImage+OnboardingImage.swift in Sources */,
+				635E162C291C2CF40042E8E4 /* BirthViewController.swift in Sources */,
 				63467DDE2918D85800E7D8AE /* BaseViewController.swift in Sources */,
 				63467DF52918E6E300E7D8AE /* UserDefault.swift in Sources */,
 				63467DEC2918DB3E00E7D8AE /* UIFont+CustomFont.swift in Sources */,
@@ -580,6 +619,7 @@
 				63467E0E291937B200E7D8AE /* MessageViewController.swift in Sources */,
 				635E1609291BD9D00042E8E4 /* SeSACAPIService.swift in Sources */,
 				63467DFA2918E7FC00E7D8AE /* ViewModelType.swift in Sources */,
+				635E1626291C2BFC0042E8E4 /* SignupCommet.swift in Sources */,
 				63467DFD2918EA8400E7D8AE /* NumberViewController.swift in Sources */,
 				63467DD32918D80800E7D8AE /* FirstViewController.swift in Sources */,
 				635E1622291C1A440042E8E4 /* NicknameView.swift in Sources */,

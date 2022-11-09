@@ -7,7 +7,7 @@
 
 import UIKit
 
-class NicknameView: LoginView {
+final class NicknameView: LoginView {
     
     let numberView: UIView = {
         let view = UIView()
@@ -15,7 +15,7 @@ class NicknameView: LoginView {
         return view
     }()
     
-    let numberTextField: UITextField = {
+    let nicknameTextField: UITextField = {
         let view = UITextField()
         view.placeholder = "10자 이내로 입력"
         view.becomeFirstResponder()
@@ -31,7 +31,7 @@ class NicknameView: LoginView {
     override func configureUI() {
         super.configureUI()
         
-        [numberTextField, numberView].forEach {
+        [nicknameTextField, numberView].forEach {
             self.addSubview($0)
         }
     }
@@ -39,7 +39,7 @@ class NicknameView: LoginView {
     override func setConstraints() {
         super.setConstraints()
         
-        numberTextField.snp.makeConstraints { make in
+        nicknameTextField.snp.makeConstraints { make in
             make.bottom.equalTo(authButton.snp.bottom).multipliedBy(0.74)
             make.leading.equalTo(28)
             make.trailing.equalTo(-28)
@@ -47,7 +47,7 @@ class NicknameView: LoginView {
         }
 
         numberView.snp.makeConstraints { make in
-            make.top.equalTo(numberTextField.snp.bottom)
+            make.top.equalTo(nicknameTextField.snp.bottom)
             make.leading.equalTo(16)
             make.trailing.equalTo(-16)
             make.height.equalTo(1)

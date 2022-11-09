@@ -35,10 +35,13 @@ class UserManager {
     @UserDefault(key: "phoneNumber", defaultValue: "")
     static var phoneNumber: String
     
-    @UserDefault(key: "idToken", defaultValue: "")
+    @UserDefault(key: "idToken", defaultValue: "") // 나중에 지울 수도 있음
     static var idToken: String
     
     @UserDefault(key: "login", defaultValue: 0)
     static var login: Int
+    
+    @UserDefault(key: "nickname", defaultValue: "")
+    static var nickname: String
 }
 

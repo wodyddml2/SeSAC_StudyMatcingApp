@@ -34,9 +34,10 @@ extension NicknameViewController {
     
     private func bindViewModel() {
         let input = NicknameViewModel.Input(
-            valid: mainView.numberTextField.rx.text,
-            beginEdit: mainView.numberTextField.rx.controlEvent([.editingDidBegin]),
-            endEdit: mainView.numberTextField.rx.controlEvent([.editingDidEnd])
+            auth: mainView.authButton.rx.tap,
+            valid: mainView.nicknameTextField.rx.text,
+            beginEdit: mainView.nicknameTextField.rx.controlEvent([.editingDidBegin]),
+            endEdit: mainView.nicknameTextField.rx.controlEvent([.editingDidEnd])
         )
         
         let output = viewModel.transform(input: input)
@@ -48,9 +49,31 @@ extension NicknameViewController {
             }
             .disposed(by: disposeBag)
 
+        bindButtonTapped(output: output)
         bindValidText(output: output)
         bindTextFieldEdit(output: output)
         
+    }
+    
+    func nameFormatter(text: String) -> Bool {
+        let trimString = text.trimmingCharacters(in: [" "])
+        return trimString.count == 0 ? false : true
+    }
+    
+    private func bindButtonTapped(output: NicknameViewModel.Output) {
+        output.auth
+            .withUnretained(self)
+            .bind { vc, _ in
+                guard let nicknameText = vc.mainView.nicknameTextField.text else {return}
+                if vc.mainView.authButton.backgroundColor == .sesacGreen && vc.nameFormatter(text: nicknameText) {
+                    UserManager.nickname = nicknameText
+                    vc.transition(BirthViewController(), transitionStyle: .push)
+                    
+                } else {
+                    vc.mainView.makeToast(SignupCommet.nicknameValid, position: .center)
+                }
+            }
+            .disposed(by: disposeBag)
     }
     
     private func bindValidText(output: NicknameViewModel.Output) {
@@ -62,7 +85,7 @@ extension NicknameViewController {
                 case value.count > 0 && value.count < 10:
                     self.mainView.authButton.backgroundColor = .sesacGreen
                 case value.count >= 10:
-                    self.mainView.numberTextField.text = value.validMessage(idx: 9)
+                    self.mainView.nicknameTextField.text = value.validMessage(idx: 9)
                 default:
                     break
                 }
