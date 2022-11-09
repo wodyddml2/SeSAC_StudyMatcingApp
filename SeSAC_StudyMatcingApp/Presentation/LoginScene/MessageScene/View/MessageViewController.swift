@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import RxGesture
+import FirebaseAuth
 
 class MessageViewController: BaseViewController {
     
@@ -50,7 +51,6 @@ extension MessageViewController {
             }, onDisposed: {
                 UserManager.authVerificationID = ""
             })
-
     }
 }
 
@@ -91,7 +91,17 @@ extension MessageViewController {
                 FirebaseAPIService.shared.requestVerificationCompare(text: vc.mainView.numberTextField.text!) { result in
                     switch result {
                     case .success(let success):
-                        print(success.user)
+                        success.user.getIDTokenForcingRefresh(true) { idToken, error in
+                            if let error = error {
+                              // Handle error
+                              return
+                            }
+                              print("=====================\(idToken ?? "")")
+                        }
+//                        success.user.getIDToken { value, error in
+//                            print("=====================\(value ?? "")")
+//                        }
+                        
                     case .failure(let fail):
                         vc.mainView.makeToast(fail.errorDescription!, position: .center)
                     }
@@ -147,6 +157,20 @@ extension MessageViewController {
                 vc.mainView.numberView.backgroundColor = .gray3
             }
             .disposed(by: disposeBag)
+        
+//        s()
     }
  
+//    func s() {
+//        let currentUser = Auth.auth().currentUser
+//        currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
+//          if let error = error {
+//            // Handle error
+//            return
+//          }
+//            print("=====================\(idToken ?? "")")
+//          // Send token to your backend via HTTPS
+//          // ...
+//        }
+//    }
 }
