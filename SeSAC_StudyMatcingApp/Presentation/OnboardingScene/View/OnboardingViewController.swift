@@ -47,7 +47,7 @@ final class OnboardingViewController: BaseViewController {
         configurePageViewController()
         
         pageContorl.numberOfPages = pageViewControllerList.count
-        
+     
         bindTo()
     }
     override func setConstraints() {

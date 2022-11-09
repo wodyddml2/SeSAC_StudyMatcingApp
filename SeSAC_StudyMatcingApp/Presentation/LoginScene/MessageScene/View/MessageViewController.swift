@@ -8,6 +8,7 @@
 import UIKit
 
 import RxSwift
+import RxCocoa
 import FirebaseAuth
 
 class MessageViewController: BaseViewController {
@@ -15,7 +16,8 @@ class MessageViewController: BaseViewController {
     let mainView = MessageView()
     let viewModel = MessageViewModel()
     
-    let disposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
+    var timerDisposable: Disposable?
     
     override func loadView() {
         view = mainView
@@ -31,6 +33,18 @@ class MessageViewController: BaseViewController {
         bindTo()
     }
     
+    //    func ss() {
+    //        let driver = Driver<Int>.interval(.seconds(1))
+    //            .map { _ in
+    //                return 1
+    //            }
+    //
+    //        driver.asObservable()
+    //            .subscribe { value in
+    //                <#code#>
+    //            }
+    //    }
+    //
     func verificationCompare() {
         let verificationCode = mainView.numberTextField.text!
         let verificationID = UserManager.authVerificationID
@@ -51,10 +65,34 @@ class MessageViewController: BaseViewController {
 }
 
 extension MessageViewController {
+    
+    func setTimer(with timer: Observable<Int>) {
+        timerDisposable?.dispose()
+        timerDisposable = timer
+            .subscribe { value in
+                if value <= 50 {
+                    self.mainView.timerLabel.text = value == 0 ? "01:00" : "00:\(60 - value)"
+                } else if value <= 60 {
+                    self.mainView.timerLabel.text = "00:0\(60 - value)"
+                } else {
+                    self.timerDisposable?.dispose()
+                }
+            }
+    }
+    
     func bindTo() {
         let input = MessageViewModel.Input(auth: mainView.authButton.rx.tap, valid: mainView.numberTextField.rx.text)
         
         let output = viewModel.transform(input: input)
+        
+        setTimer(with: output.timer)
+        
+        mainView.resendButton.rx.tap
+            .bind { _ in
+                
+                self.setTimer(with: output.timer)
+            }
+            .disposed(by: disposeBag)
         
         output.auth
             .withUnretained(self)

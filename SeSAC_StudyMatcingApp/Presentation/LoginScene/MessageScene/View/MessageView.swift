@@ -32,7 +32,7 @@ final class MessageView: LoginView {
     
     let timerLabel: UILabel = {
         let view = UILabel()
-        view.text = "05:00"
+        view.text = "01:00"
         view.font = UIFont.notoSans(size: 14, family: .Medium)
         view.textAlignment = .right
         view.textColor = .sesacGreen

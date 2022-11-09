@@ -70,7 +70,6 @@ extension NumberViewController {
                 } else {
                     vc.mainView.numberTextField.text = vc.formattingHyphen(with: "XXX-XXXX-XXXX", phone: value)
                 }
-                
             }
             .disposed(by: disposeBag)
         
