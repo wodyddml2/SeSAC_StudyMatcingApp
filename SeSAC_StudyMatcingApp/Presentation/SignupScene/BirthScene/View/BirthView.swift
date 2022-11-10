@@ -39,6 +39,8 @@ class BirthView: LoginView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
+        baseUI(labelText: "생년월일을 알려주세요", buttonText: "다음")
     }
     
     override func configureUI() {

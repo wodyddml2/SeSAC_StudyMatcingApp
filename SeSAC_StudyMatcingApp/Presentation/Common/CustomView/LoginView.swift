@@ -36,6 +36,11 @@ class LoginView: BaseView {
         }
     }
     
+    func baseUI(labelText: String, buttonText: String) {
+        introLabel.text = labelText
+        authButton.setTitle(buttonText, for: .normal)
+    }
+    
     override func setConstraints() {
         introLabel.snp.makeConstraints { make in
             make.top.equalTo(self.safeAreaLayoutGuide.snp.top).multipliedBy(1.75)

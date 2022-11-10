@@ -43,8 +43,7 @@ final class MessageView: LoginView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        introLabel.text = "인증번호가 문자로 전송이 되었어요"
-        authButton.setTitle("인증하고 시작하기", for: .normal)
+        baseUI(labelText: "인증번호가 문자로 전송이 되었어요", buttonText: "인증하고 시작하기")
     }
     
     override func configureUI() {

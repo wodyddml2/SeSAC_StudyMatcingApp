@@ -24,8 +24,8 @@ final class NicknameView: LoginView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        introLabel.text = "닉네임을 입력해 주세요"
-        authButton.setTitle("다음", for: .normal)
+
+        baseUI(labelText: "닉네임을 입력해 주세요", buttonText: "다음")
     }
     
     override func configureUI() {
@@ -35,6 +35,7 @@ final class NicknameView: LoginView {
             self.addSubview($0)
         }
     }
+
 
     override func setConstraints() {
         super.setConstraints()

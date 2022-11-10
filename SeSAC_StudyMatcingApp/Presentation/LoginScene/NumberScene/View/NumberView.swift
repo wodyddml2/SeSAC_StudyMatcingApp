@@ -25,12 +25,12 @@ class NumberView: LoginView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        introLabel.text =
-            """
+        let labelText = """
             새싹 서비스 이용을 위해
             휴대폰 번호를 입력해 주세요
             """
-        authButton.setTitle("인증 문자 받기", for: .normal)
+        
+        baseUI(labelText: labelText, buttonText: "인증 문자 받기")
     }
     
     override func configureUI() {
@@ -39,6 +39,9 @@ class NumberView: LoginView {
         [numberTextField, numberView].forEach {
             self.addSubview($0)
         }
+    }
+    override func baseUI(labelText: String, buttonText: String) {
+        super.baseUI(labelText: labelText, buttonText: buttonText)
     }
 
     override func setConstraints() {
