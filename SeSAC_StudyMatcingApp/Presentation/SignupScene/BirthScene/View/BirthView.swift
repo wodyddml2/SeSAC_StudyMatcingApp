@@ -22,19 +22,25 @@ class BirthView: LoginView {
     lazy var yearView: BirthCustomView = {
         let view = BirthCustomView()
         view.textField.inputView = datePicker
+        view.textField.placeholder = "1997"
+        view.dateLabel.text = "년"
         view.isUserInteractionEnabled = false
         return view
     }()
     
     let monthView: BirthCustomView = {
         let view = BirthCustomView()
+        view.textField.placeholder = "12"
         view.textField.isEnabled = false
+        view.dateLabel.text = "월"
         return view
     }()
     
     let dayView: BirthCustomView = {
         let view = BirthCustomView()
+        view.textField.placeholder = "26"
         view.textField.isEnabled = false
+        view.dateLabel.text = "일"
         return view
     }()
   

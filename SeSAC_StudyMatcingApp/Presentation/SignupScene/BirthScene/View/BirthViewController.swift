@@ -60,21 +60,26 @@ extension BirthViewController {
             .bind { vc, _ in
                 vc.datePickerToText()
                 vc.mainView.authButton.backgroundColor = .sesacGreen
-          
+                let birth = vc.viewModel.datePickerFormat(dateFormat: "yyyy-MM-dd", date: vc.mainView.datePicker.date)
             }
             .disposed(by: disposeBag)
         
         output.nextButton
             .withUnretained(self)
             .bind { vc, _ in
-                let month = Int(vc.mainView.monthView.textField.text!)! * 100
-                let day = Int(vc.mainView.dayView.textField.text!)!
-                let year = vc.mainView.datePicker.date
-                if vc.viewModel.ageCalculate(months: month, days: day, year: year) {
-                    
-                } else {
-                    vc.mainView.makeToast(SignupCommet.birthValid, position: .center)
+                if vc.mainView.authButton.backgroundColor == .sesacGreen {
+                    let month = Int(vc.mainView.monthView.textField.text!)! * 100
+                    let day = Int(vc.mainView.dayView.textField.text!)!
+                    let year = vc.mainView.datePicker.date
+                    if vc.viewModel.ageCalculate(months: month, days: day, year: year) {
+                        let birth = vc.viewModel.datePickerFormat(dateFormat: "yyyy-MM-dd", date: vc.mainView.datePicker.date)
+                        UserManager.birth = birth + "T15:00:00.000Z"
+                        vc.transition(EmailViewController(), transitionStyle: .push)
+                    } else {
+                        vc.mainView.makeToast(SignupCommet.birthValid, position: .center)
+                    }
                 }
+                
             }
             .disposed(by: disposeBag)
     }

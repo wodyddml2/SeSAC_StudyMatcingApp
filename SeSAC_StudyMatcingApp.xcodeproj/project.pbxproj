@@ -59,6 +59,9 @@
 		638B0746291AA49600E9D254 /* AuthComent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638B0745291AA49600E9D254 /* AuthComent.swift */; };
 		638B074B291AB44200E9D254 /* FirebaseAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638B074A291AB44200E9D254 /* FirebaseAPIService.swift */; };
 		638B074D291ABB9E00E9D254 /* FirebaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638B074C291ABB9E00E9D254 /* FirebaseError.swift */; };
+		63F31446291D2A3500C31F59 /* EmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F31445291D2A3500C31F59 /* EmailViewController.swift */; };
+		63F31448291D2A4000C31F59 /* EmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F31447291D2A4000C31F59 /* EmailView.swift */; };
+		63F3144A291D2A6300C31F59 /* EmailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F31449291D2A6300C31F59 /* EmailViewModel.swift */; };
 		63F423402919E9AF00F91D01 /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 63F4233F2919E9AF00F91D01 /* Toast */; };
 /* End PBXBuildFile section */
 
@@ -111,6 +114,9 @@
 		638B0745291AA49600E9D254 /* AuthComent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthComent.swift; sourceTree = "<group>"; };
 		638B074A291AB44200E9D254 /* FirebaseAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAPIService.swift; sourceTree = "<group>"; };
 		638B074C291ABB9E00E9D254 /* FirebaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseError.swift; sourceTree = "<group>"; };
+		63F31445291D2A3500C31F59 /* EmailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailViewController.swift; sourceTree = "<group>"; };
+		63F31447291D2A4000C31F59 /* EmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailView.swift; sourceTree = "<group>"; };
+		63F31449291D2A6300C31F59 /* EmailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -406,6 +412,8 @@
 			children = (
 				635E161A291C0C5C0042E8E4 /* NicknameScene */,
 				635E1628291C2C4B0042E8E4 /* BirthScene */,
+				63F31442291D2A0700C31F59 /* EmailScene */,
+				63F3144B291D363D00C31F59 /* GenderScene */,
 			);
 			path = SignupScene;
 			sourceTree = "<group>";
@@ -496,6 +504,47 @@
 				635E1608291BD9D00042E8E4 /* SeSACAPIService.swift */,
 			);
 			path = Firebase;
+			sourceTree = "<group>";
+		};
+		63F31442291D2A0700C31F59 /* EmailScene */ = {
+			isa = PBXGroup;
+			children = (
+				63F31443291D2A2300C31F59 /* View */,
+				63F31444291D2A2700C31F59 /* ViewModel */,
+			);
+			path = EmailScene;
+			sourceTree = "<group>";
+		};
+		63F31443291D2A2300C31F59 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				63F31445291D2A3500C31F59 /* EmailViewController.swift */,
+				63F31447291D2A4000C31F59 /* EmailView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		63F31444291D2A2700C31F59 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				63F31449291D2A6300C31F59 /* EmailViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		63F3144B291D363D00C31F59 /* GenderScene */ = {
+			isa = PBXGroup;
+			children = (
+				63F3144C291D365400C31F59 /* View */,
+			);
+			path = GenderScene;
+			sourceTree = "<group>";
+		};
+		63F3144C291D365400C31F59 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -609,8 +658,10 @@
 				63467DF22918E57E00E7D8AE /* UIViewController+Transition.swift in Sources */,
 				63467E062918FA2E00E7D8AE /* NumberViewModel.swift in Sources */,
 				635E1618291BF65B0042E8E4 /* SeSACLoginDTO.swift in Sources */,
+				63F31446291D2A3500C31F59 /* EmailViewController.swift in Sources */,
 				63467DD52918D80E00E7D8AE /* SecondViewController.swift in Sources */,
 				63467DD72918D81300E7D8AE /* ThirdViewController.swift in Sources */,
+				63F31448291D2A4000C31F59 /* EmailView.swift in Sources */,
 				6329D7CE291CA605004AC51C /* BirthCustomView.swift in Sources */,
 				63467DEE2918E0EF00E7D8AE /* UIImage+OnboardingImage.swift in Sources */,
 				635E162C291C2CF40042E8E4 /* BirthViewController.swift in Sources */,
@@ -625,6 +676,7 @@
 				63467DFA2918E7FC00E7D8AE /* ViewModelType.swift in Sources */,
 				635E1626291C2BFC0042E8E4 /* SignupCommet.swift in Sources */,
 				63467DFD2918EA8400E7D8AE /* NumberViewController.swift in Sources */,
+				63F3144A291D2A6300C31F59 /* EmailViewModel.swift in Sources */,
 				63467DD32918D80800E7D8AE /* FirstViewController.swift in Sources */,
 				635E1622291C1A440042E8E4 /* NicknameView.swift in Sources */,
 				63467DF02918E2F900E7D8AE /* UIColor+CustomColor.swift in Sources */,
