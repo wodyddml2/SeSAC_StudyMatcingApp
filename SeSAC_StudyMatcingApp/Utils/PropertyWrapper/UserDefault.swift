@@ -51,7 +51,7 @@ class UserManager {
     static var email: String
     
     @UserDefault(key: "gender", defaultValue: nil)
-    static var gender: Int?
+    static var gender: String?
     
     @UserDefault(key: "FCMToken", defaultValue: "")
     static var fcmToken: String

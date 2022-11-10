@@ -22,7 +22,6 @@ class GenderView: LoginView {
         let view = GenderButtonView()
         view.genderImage.image = UIImage.genderImage(gender: GenderImage.man)
         view.genderLabel.text = "남자"
-        view.backgroundColor = .sesacGreen
         return view
     }()
     

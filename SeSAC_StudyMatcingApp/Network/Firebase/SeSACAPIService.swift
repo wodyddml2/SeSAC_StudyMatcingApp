@@ -11,6 +11,7 @@ import Alamofire
 
 enum Router: URLRequestConvertible {
     case loginGet(query: String)
+    case signUpPost
     
     
     var baseURL: URL {
@@ -20,16 +21,46 @@ enum Router: URLRequestConvertible {
     var header: HTTPHeaders {
         switch self {
         case .loginGet(let query):
-            return [
+            return  [
                 "Content-Type": SeSACLoginHeader.contentType,
                 "accept": SeSACLoginHeader.accept,
                 "idtoken": query
             ]
+        case .signUpPost:
+            return [
+                "Content-Type": SeSACLoginHeader.contentType,
+                "accept": SeSACLoginHeader.accept,
+                "idtoken": UserManager.idToken
+            ]
         }
     }
     
+    var parameters: Parameters {
+        switch self {
+        case .loginGet:
+            return ["":""]
+        case .signUpPost:
+            guard let gender = UserManager.gender else {return Parameters()}
+            return [
+                "phoneNumber": UserManager.phoneNumber,
+                "FCMtoken": UserManager.fcmToken,
+                "nick": UserManager.nickname,
+                "birth": UserManager.birth,
+                "email": UserManager.email,
+                "gender": gender
+            ]
+        }
+    }
+    
+    
     var method: HTTPMethod {
-        return .get
+        switch self {
+        case .loginGet:
+            return .get
+        case .signUpPost:
+            return .post
+        }
+        
     }
     
     func asURLRequest() throws -> URLRequest {
@@ -37,11 +68,19 @@ enum Router: URLRequestConvertible {
         var request = URLRequest(url: url)
         request.method = method
         request.headers = header
-        return request
+        switch self {
+        case .loginGet:
+            return request
+        case .signUpPost:
+            return try URLEncoding.default.encode(request, with: parameters)
+        }
+        
     }
 }
 
 enum SeSACLoginError: Int, Error {
+    case notNickname = 202
+    case existingUsers = 201
     case firebaseTokenError = 401
     case noSignup = 406
     case serverError = 500
@@ -55,6 +94,10 @@ extension SeSACLoginError: LocalizedError {
             return "에러가 발생했습니다. 다시 시도해주세요"
         case .noSignup:
             return ""
+        case .notNickname:
+            return "사용할 수 없는 닉네임입니다."
+        case .existingUsers:
+            return "이미 가입한 유저입니다."
         }
     }
 }
@@ -64,8 +107,8 @@ class SeSACAPIService {
     
     private init() { }
     
-    func requestSeSACLogin(query: String, completion: @escaping (Result<SESACLoginDTO, Error>) -> Void) {
-        AF.request(Router.loginGet(query: query)).responseDecodable(of: SESACLoginDTO.self) { response in
+    func requestSeSACLogin(router: URLRequestConvertible ,completion: @escaping (Result<SESACLoginDTO, Error>) -> Void) {
+        AF.request(router).responseDecodable(of: SESACLoginDTO.self) { response in
   
             switch response.result {
             case .success(let result):

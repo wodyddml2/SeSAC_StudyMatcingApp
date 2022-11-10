@@ -43,7 +43,7 @@ extension GenderViewController {
         output.manButton
             .withUnretained(self)
             .bind { vc, _ in
-                vc.mainView.manView.backgroundColor = .sesacGreen
+                vc.mainView.manView.backgroundColor = .sesacWhiteGreen
                 vc.mainView.womanView.backgroundColor = .white
                 vc.mainView.authButton.backgroundColor = .sesacGreen
             }
@@ -53,7 +53,7 @@ extension GenderViewController {
             .withUnretained(self)
             .bind { vc, _ in
                 vc.mainView.manView.backgroundColor = .white
-                vc.mainView.womanView.backgroundColor = .sesacGreen
+                vc.mainView.womanView.backgroundColor = .sesacWhiteGreen
                 vc.mainView.authButton.backgroundColor = .sesacGreen
             }
             .disposed(by: disposeBag)
@@ -62,8 +62,17 @@ extension GenderViewController {
             .withUnretained(self)
             .bind { vc, _ in
                 if vc.mainView.authButton.backgroundColor == .sesacGreen {
-                    UserManager.gender = vc.mainView.manView.genderButton.backgroundColor == .sesacGreen ? 1 : 0
+                    UserManager.gender = vc.mainView.manView.genderButton.backgroundColor == .sesacGreen ? "1" : "0"
+                    SeSACAPIService.shared.requestSeSACLogin(router: Router.signUpPost) { result in
+                        switch result {
+                        case .success(let success):
+                            print(success)
+                        case .failure(let fail):
+                            print(fail)
+                        }
+                    }
                 }
+                
             }
             .disposed(by: disposeBag)
         
