@@ -12,14 +12,14 @@ import RxCocoa
 
 final class NicknameViewModel: ViewModelType {
     struct Input {
-        let auth: ControlEvent<Void>
+        let nextButton: ControlEvent<Void>
         let valid: ControlProperty<String?>
         let beginEdit: ControlEvent<Void>
         let endEdit: ControlEvent<Void>
     }
     
     struct Output {
-        let auth: ControlEvent<Void>
+        let nextButton: ControlEvent<Void>
         let valid: ControlProperty<String>
         let beginEdit: ControlEvent<Void>
         let endEdit: ControlEvent<Void>
@@ -27,6 +27,6 @@ final class NicknameViewModel: ViewModelType {
     
     func transform(input: Input) -> Output {
         let valid = input.valid.orEmpty
-        return Output(auth: input.auth, valid: valid, beginEdit: input.beginEdit, endEdit: input.endEdit)
+        return Output(nextButton: input.nextButton, valid: valid, beginEdit: input.beginEdit, endEdit: input.endEdit)
     }
 }

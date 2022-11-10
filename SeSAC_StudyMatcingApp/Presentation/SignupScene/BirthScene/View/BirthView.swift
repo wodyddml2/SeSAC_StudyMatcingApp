@@ -15,6 +15,7 @@ class BirthView: LoginView {
         view.datePickerMode = .date
         view.locale = Locale(identifier: "ko-KR")
         view.preferredDatePickerStyle = .wheels
+        view.maximumDate = Date()
         return view
     }()
     
@@ -54,9 +55,7 @@ class BirthView: LoginView {
     
     override func configureUI() {
         super.configureUI()
-        [stackView].forEach {
-            self.addSubview($0)
-        }
+        self.addSubview(stackView)
     }
     
     override func setConstraints() {

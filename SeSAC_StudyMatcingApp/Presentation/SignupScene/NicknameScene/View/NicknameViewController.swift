@@ -34,7 +34,7 @@ extension NicknameViewController {
     
     private func bindViewModel() {
         let input = NicknameViewModel.Input(
-            auth: mainView.authButton.rx.tap,
+            nextButton: mainView.authButton.rx.tap,
             valid: mainView.nicknameTextField.rx.text,
             beginEdit: mainView.nicknameTextField.rx.controlEvent([.editingDidBegin]),
             endEdit: mainView.nicknameTextField.rx.controlEvent([.editingDidEnd])
@@ -61,7 +61,7 @@ extension NicknameViewController {
     }
     
     private func bindButtonTapped(output: NicknameViewModel.Output) {
-        output.auth
+        output.nextButton
             .withUnretained(self)
             .bind { vc, _ in
                 guard let nicknameText = vc.mainView.nicknameTextField.text else {return}
