@@ -9,22 +9,31 @@ import UIKit
 
 
 class BirthView: LoginView {
-    let yearView: BirthCustomView = {
+    
+    lazy var datePicker: UIDatePicker = {
+        let view = UIDatePicker()
+        view.datePickerMode = .date
+        view.locale = Locale(identifier: "ko-KR")
+        view.preferredDatePickerStyle = .wheels
+        return view
+    }()
+    
+    lazy var yearView: BirthCustomView = {
         let view = BirthCustomView()
-        
-       
+        view.textField.inputView = datePicker
+        view.isUserInteractionEnabled = false
         return view
     }()
     
     let monthView: BirthCustomView = {
         let view = BirthCustomView()
-        
-       
+        view.textField.isEnabled = false
         return view
     }()
     
     let dayView: BirthCustomView = {
         let view = BirthCustomView()
+        view.textField.isEnabled = false
         return view
     }()
   

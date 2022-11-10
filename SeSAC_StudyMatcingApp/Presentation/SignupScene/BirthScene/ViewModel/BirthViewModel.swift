@@ -19,4 +19,12 @@ class BirthViewModel: ViewModelType {
     func transform(input: Input) -> Output {
         return Output()
     }
+    
+    func datePickerFormat(dateFormat: String, date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = dateFormat
+        formatter.locale = Locale(identifier: "ko_KR")
+        return formatter.string(from: date)
+    }
+
 }

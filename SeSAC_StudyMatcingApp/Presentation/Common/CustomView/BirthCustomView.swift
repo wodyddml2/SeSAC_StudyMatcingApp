@@ -12,18 +12,21 @@ class BirthCustomView: BaseView {
     let textField: UITextField = {
         let view = UITextField()
         view.placeholder = "1999"
+        view.tintColor = .clear
+        view.font = UIFont.notoSans(size: 14, family: .Regular)
         return view
     }()
     
     let underlineView: UIView = {
         let view = UIView()
-        view.backgroundColor = .black
+        view.backgroundColor = .gray3
         return view
     }()
     
     let dateLabel: UILabel = {
         let view = UILabel()
         view.text = "년"
+        view.font = UIFont.notoSans(size: 16, family: .Regular)
         return view
     }()
     
