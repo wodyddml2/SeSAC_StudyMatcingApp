@@ -60,7 +60,6 @@ extension BirthViewController {
             .bind { vc, _ in
                 vc.datePickerToText()
                 vc.mainView.authButton.backgroundColor = .sesacGreen
-                let birth = vc.viewModel.datePickerFormat(dateFormat: "yyyy-MM-dd", date: vc.mainView.datePicker.date)
             }
             .disposed(by: disposeBag)
         

@@ -22,7 +22,7 @@ class EmailViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        navigationBackButton()
         bindViewModel()
     }
     
@@ -46,7 +46,7 @@ extension EmailViewController {
             .bind { vc, _ in
                 if vc.mainView.authButton.backgroundColor == .sesacGreen {
                     UserManager.email = vc.mainView.emailTextField.text!
-//                    vc.transition(<#T##viewController: T##T#>, transitionStyle: .push)
+                    vc.transition(GenderViewController(), transitionStyle: .push)
                 } else {
                     vc.mainView.makeToast(SignupCommet.emailValid, position: .center)
                 }
