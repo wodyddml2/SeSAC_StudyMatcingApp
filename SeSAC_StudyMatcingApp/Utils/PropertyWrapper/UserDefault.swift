@@ -52,5 +52,8 @@ class UserManager {
     
     @UserDefault(key: "gender", defaultValue: nil)
     static var gender: Int?
+    
+    @UserDefault(key: "FCMToken", defaultValue: "")
+    static var fcmToken: String
 }
 
