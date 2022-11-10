@@ -71,8 +71,8 @@ extension BirthViewController {
                     let day = Int(vc.mainView.dayView.textField.text!)!
                     let year = vc.mainView.datePicker.date
                     if vc.viewModel.ageCalculate(months: month, days: day, year: year) {
-                        let birth = vc.viewModel.datePickerFormat(dateFormat: "yyyy-MM-dd", date: vc.mainView.datePicker.date)
-                        UserManager.birth = birth + "T15:00:00.000Z"
+                        let birth = vc.viewModel.datePickerFormat(dateFormat: "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", date: vc.mainView.datePicker.date)
+                        UserManager.birth = birth
                         vc.transition(EmailViewController(), transitionStyle: .push)
                     } else {
                         vc.mainView.makeToast(SignupCommet.birthValid, position: .center)
