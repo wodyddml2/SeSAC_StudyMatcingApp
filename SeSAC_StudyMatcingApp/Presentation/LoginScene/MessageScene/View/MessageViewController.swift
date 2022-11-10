@@ -31,6 +31,7 @@ class MessageViewController: BaseViewController {
     
     override func configureUI() {
         bindViewModel()
+        
     }
 }
 

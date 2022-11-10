@@ -27,11 +27,6 @@ final class NicknameViewController: BaseViewController {
         
         bindViewModel()
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        UserManager.login = 0
-    }
 
 }
 
@@ -100,14 +95,14 @@ extension NicknameViewController {
         output.beginEdit
             .withUnretained(self)
             .bind { vc, _ in
-                vc.mainView.numberView.backgroundColor = .black
+                vc.mainView.underlineView.backgroundColor = .black
             }
             .disposed(by: disposeBag)
         
         output.endEdit
             .withUnretained(self)
             .bind { vc, _ in
-                vc.mainView.numberView.backgroundColor = .gray3
+                vc.mainView.underlineView.backgroundColor = .gray3
             }
             .disposed(by: disposeBag)
     }

@@ -9,7 +9,7 @@ import UIKit
 
 final class NicknameView: LoginView {
     
-    let numberView: UIView = {
+    let underlineView: UIView = {
         let view = UIView()
         view.backgroundColor = .gray3
         return view
@@ -31,7 +31,7 @@ final class NicknameView: LoginView {
     override func configureUI() {
         super.configureUI()
         
-        [nicknameTextField, numberView].forEach {
+        [nicknameTextField, underlineView].forEach {
             self.addSubview($0)
         }
     }
@@ -46,7 +46,7 @@ final class NicknameView: LoginView {
             make.height.equalTo(48)
         }
 
-        numberView.snp.makeConstraints { make in
+        underlineView.snp.makeConstraints { make in
             make.top.equalTo(nicknameTextField.snp.bottom)
             make.leading.equalTo(16)
             make.trailing.equalTo(-16)
