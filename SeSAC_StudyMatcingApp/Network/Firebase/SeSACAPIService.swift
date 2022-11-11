@@ -40,11 +40,12 @@ enum Router: URLRequestConvertible {
             return ["":""]
         case .signUpPost:
             guard let gender = UserManager.gender else {return Parameters()}
+            guard let birth = UserManager.birth else {return Parameters()}
             return [
                 "phoneNumber": UserManager.phoneNumber.saveNumber(),
                 "FCMtoken": UserManager.fcmToken,
                 "nick": UserManager.nickname,
-                "birth": UserManager.birth,
+                "birth": birth.datePickerFormat(dateFormat: "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'") ,
                 "email": UserManager.email,
                 "gender": gender
             ]

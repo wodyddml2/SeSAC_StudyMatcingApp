@@ -29,17 +29,19 @@ final class BirthViewController: BaseViewController {
         
     }
 //
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        if UserManager.nickError {
-//
-//        }
-//    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if UserManager.nickError {
+            guard let birth = UserManager.birth else {return}
+            mainView.datePicker.date = birth
+            mainView.authButton.backgroundColor = .sesacGreen
+            datePickerToText()
+        }
+    }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         mainView.yearView.textField.becomeFirstResponder()
-       
     }
 
     func datePickerToText() {
@@ -79,8 +81,7 @@ extension BirthViewController {
                     let year = vc.mainView.datePicker.date
                     
                     if vc.viewModel.ageCalculate(months: month, days: day, year: year) {
-                        let birth = vc.viewModel.datePickerFormat(dateFormat: "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", date: vc.mainView.datePicker.date)
-                        UserManager.birth = birth
+                        UserManager.birth = vc.mainView.datePicker.date
                         vc.transition(EmailViewController(), transitionStyle: .push)
                     } else {
                         vc.mainView.makeToast(SignupCommet.birthValid, position: .center)

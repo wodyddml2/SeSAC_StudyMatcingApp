@@ -28,7 +28,6 @@ class SplashViewController: BaseViewController {
         super.viewDidLoad()
         
         splashAnimation()
-        print(UserManager.idToken)
     }
     
     private func splashAnimation() {
@@ -52,7 +51,9 @@ class SplashViewController: BaseViewController {
                 guard let self = self else {return}
                 switch result {
                 case .success(_):
-                    let vc = HomeViewController()
+//                    let vc = HomeViewController()
+//                    sceneDelegate?.window?.rootViewController = vc
+                    let vc = UINavigationController(rootViewController: NumberViewController())
                     sceneDelegate?.window?.rootViewController = vc
                 case .failure(let fail):
                     let error = fail as! SeSACLoginError

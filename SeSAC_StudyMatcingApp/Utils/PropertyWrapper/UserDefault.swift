@@ -44,8 +44,8 @@ class UserManager {
     @UserDefault(key: "nickname", defaultValue: "")
     static var nickname: String
     
-    @UserDefault(key: "birth", defaultValue: "")
-    static var birth: String
+    @UserDefault(key: "birth", defaultValue: nil)
+    static var birth: Date?
     
     @UserDefault(key: "email", defaultValue: "")
     static var email: String
@@ -58,5 +58,8 @@ class UserManager {
     
     @UserDefault(key: "nickError", defaultValue: false)
     static var nickError: Bool
+    
+//    @UserDefault(key: "s", defaultValue: nil)
+//    static var s: Date?
 }
 

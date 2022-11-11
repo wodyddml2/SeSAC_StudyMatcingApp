@@ -26,11 +26,6 @@ final class NicknameViewController: BaseViewController {
         bindViewModel()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-    }
-    
 }
 
 extension NicknameViewController {
@@ -44,7 +39,17 @@ extension NicknameViewController {
         )
         
         let output = viewModel.transform(input: input)
-   
+        
+        mainView.nicknameTextField.rx.text
+            .map { value in
+                value == ""
+            }
+            .take(1)
+            .bind { bool in
+                UserManager.nickError = !bool
+            }
+            .disposed(by: disposeBag)
+        
         mainView.rx.tapGesture()
             .when(.recognized)
             .subscribe { _ in
@@ -94,6 +99,7 @@ extension NicknameViewController {
             }
             .disposed(by: disposeBag)
     }
+    
     private func bindTextFieldEdit(output: NicknameViewModel.Output) {
         output.beginEdit
             .withUnretained(self)

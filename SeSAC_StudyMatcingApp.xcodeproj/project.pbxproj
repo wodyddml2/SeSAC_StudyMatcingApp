@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		6300491D291E4F570046E6D3 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6300491C291E4F570046E6D3 /* SplashViewController.swift */; };
 		6300491F291E5E7F0046E6D3 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6300491E291E5E7F0046E6D3 /* HomeViewController.swift */; };
+		63004921291E9D780046E6D3 /* Date+Format.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63004920291E9D780046E6D3 /* Date+Format.swift */; };
 		6329D7CE291CA605004AC51C /* BirthCustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6329D7CD291CA605004AC51C /* BirthCustomView.swift */; };
 		6337F01E291A5B57002C81FA /* String+Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6337F01D291A5B57002C81FA /* String+Custom.swift */; };
 		63467DB32918D4AE00E7D8AE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63467DB22918D4AE00E7D8AE /* AppDelegate.swift */; };
@@ -75,6 +76,7 @@
 /* Begin PBXFileReference section */
 		6300491C291E4F570046E6D3 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		6300491E291E5E7F0046E6D3 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		63004920291E9D780046E6D3 /* Date+Format.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Format.swift"; sourceTree = "<group>"; };
 		6329D7CD291CA605004AC51C /* BirthCustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthCustomView.swift; sourceTree = "<group>"; };
 		6337F01D291A5B57002C81FA /* String+Custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Custom.swift"; sourceTree = "<group>"; };
 		63467DAF2918D4AE00E7D8AE /* SeSAC_StudyMatcingApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SeSAC_StudyMatcingApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -305,6 +307,7 @@
 			isa = PBXGroup;
 			children = (
 				63467DEB2918DB3E00E7D8AE /* UIFont+CustomFont.swift */,
+				63004920291E9D780046E6D3 /* Date+Format.swift */,
 				6337F01D291A5B57002C81FA /* String+Custom.swift */,
 				63467DEF2918E2F900E7D8AE /* UIColor+CustomColor.swift */,
 				63467DFE2918F04300E7D8AE /* NSAttributedString+CustomText.swift */,
@@ -706,6 +709,7 @@
 				635E162C291C2CF40042E8E4 /* BirthViewController.swift in Sources */,
 				63467DDE2918D85800E7D8AE /* BaseViewController.swift in Sources */,
 				63F31451291D36E600C31F59 /* GenderView.swift in Sources */,
+				63004921291E9D780046E6D3 /* Date+Format.swift in Sources */,
 				63467DF52918E6E300E7D8AE /* UserDefault.swift in Sources */,
 				63467DEC2918DB3E00E7D8AE /* UIFont+CustomFont.swift in Sources */,
 				63467E10291937C800E7D8AE /* MessageView.swift in Sources */,

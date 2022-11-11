@@ -37,6 +37,11 @@ extension GenderViewController {
         
         let output = viewModel.transform(input: input)
         
+        bindButtonTapped(output: output)
+        
+    }
+    
+    private func bindButtonTapped(output: GenderViewModel.Output) {
         output.manButton
             .withUnretained(self)
             .bind { vc, _ in
@@ -68,27 +73,42 @@ extension GenderViewController {
                             let error = fail as! SeSACLoginError
                             switch error {
                             case .notNickname:
-                                UserManager.nickError = true
-                                let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
-               
-                                for viewController in viewControllers {
-                                    if let rootVC = viewController as? NicknameViewController {
-                                        vc.navigationController?.popToViewController(rootVC, animated: true)
-                                        rootVC.mainView.makeToast(error.errorDescription, position: .center)
-                                    }
-                                }
+                                vc.notNicknameError(error: error.errorDescription ?? "닉네임 불가")
                             case .existingUsers:
-                                vc.mainView.makeToast(error.errorDescription, position: .center)
+                                vc.existingUsersError(error: error.errorDescription ?? "이미 가입된 회원")
                             default:
                                 vc.mainView.makeToast(error.errorDescription, position: .center)
-                            
                             }
                         }
                     }
+                } else {
+                    vc.mainView.makeToast("성별을 선택해주세요.", position: .center)
                 }
                 
             }
             .disposed(by: disposeBag)
-        
+    }
+    
+    private func notNicknameError(error: String) {
+        UserManager.nickError = true
+        let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
+
+        for viewController in viewControllers {
+            if let rootVC = viewController as? NicknameViewController {
+                navigationController?.popToViewController(rootVC, animated: true)
+                rootVC.mainView.makeToast(error, position: .center)
+            }
+        }
+    }
+    
+    private func existingUsersError(error: String) {
+        let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
+
+        for viewController in viewControllers {
+            if let rootVC = viewController as? NumberViewController {
+                navigationController?.popToViewController(rootVC, animated: true)
+                rootVC.mainView.makeToast(error, position: .center) // toast가 찌그러져서 뜸 ;;
+            }
+        }
     }
 }
