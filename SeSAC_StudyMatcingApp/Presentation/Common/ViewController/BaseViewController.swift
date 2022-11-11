@@ -31,6 +31,22 @@ class BaseViewController: UIViewController {
 //
 //        present(alert, animated: true)
 //    }
+    func showSettingAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        let ok = UIAlertAction(title: "설정으로 이동", style: .destructive) { _ in
+            if let appSetting = URL(string: UIApplication.openSettingsURLString) {
+                UIApplication.shared.open(appSetting)
+            }
+        }
+        let cancel = UIAlertAction(title: "취소", style: .destructive)
+        
+        [ok, cancel].forEach {
+            alert.addAction($0)
+        }
+        
+        self.present(alert, animated: true)
+    }
     
     func sceneChange(viewController vc: UIViewController) {
         let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene

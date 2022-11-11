@@ -205,7 +205,8 @@
 		6300492A291EC21E0046E6D3 /* HomeScene */ = {
 			isa = PBXGroup;
 			children = (
-				6300491E291E5E7F0046E6D3 /* HomeViewController.swift */,
+				63004936291EC84B0046E6D3 /* View */,
+				63004937291EC8540046E6D3 /* ViewModel */,
 			);
 			path = HomeScene;
 			sourceTree = "<group>";
@@ -232,6 +233,21 @@
 				63004932291EC2950046E6D3 /* ProfileViewController.swift */,
 			);
 			path = ProfileScene;
+			sourceTree = "<group>";
+		};
+		63004936291EC84B0046E6D3 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				6300491E291E5E7F0046E6D3 /* HomeViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		63004937291EC8540046E6D3 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		63467DA62918D4AE00E7D8AE = {
