@@ -10,6 +10,7 @@
 		6300491D291E4F570046E6D3 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6300491C291E4F570046E6D3 /* SplashViewController.swift */; };
 		6300491F291E5E7F0046E6D3 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6300491E291E5E7F0046E6D3 /* HomeViewController.swift */; };
 		63004921291E9D780046E6D3 /* Date+Format.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63004920291E9D780046E6D3 /* Date+Format.swift */; };
+		63004924291EAAC70046E6D3 /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63004923291EAAC70046E6D3 /* NetworkMonitor.swift */; };
 		6329D7CE291CA605004AC51C /* BirthCustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6329D7CD291CA605004AC51C /* BirthCustomView.swift */; };
 		6337F01E291A5B57002C81FA /* String+Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6337F01D291A5B57002C81FA /* String+Custom.swift */; };
 		63467DB32918D4AE00E7D8AE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63467DB22918D4AE00E7D8AE /* AppDelegate.swift */; };
@@ -77,6 +78,7 @@
 		6300491C291E4F570046E6D3 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		6300491E291E5E7F0046E6D3 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		63004920291E9D780046E6D3 /* Date+Format.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Format.swift"; sourceTree = "<group>"; };
+		63004923291EAAC70046E6D3 /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
 		6329D7CD291CA605004AC51C /* BirthCustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthCustomView.swift; sourceTree = "<group>"; };
 		6337F01D291A5B57002C81FA /* String+Custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Custom.swift"; sourceTree = "<group>"; };
 		63467DAF2918D4AE00E7D8AE /* SeSAC_StudyMatcingApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SeSAC_StudyMatcingApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -160,6 +162,14 @@
 				6300491C291E4F570046E6D3 /* SplashViewController.swift */,
 			);
 			path = Splash;
+			sourceTree = "<group>";
+		};
+		63004922291EAAAC0046E6D3 /* NetworkMonitor */ = {
+			isa = PBXGroup;
+			children = (
+				63004923291EAAC70046E6D3 /* NetworkMonitor.swift */,
+			);
+			path = NetworkMonitor;
 			sourceTree = "<group>";
 		};
 		63467DA62918D4AE00E7D8AE = {
@@ -520,6 +530,7 @@
 		638B0748291AB41200E9D254 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				63004922291EAAAC0046E6D3 /* NetworkMonitor */,
 				638B0749291AB41E00E9D254 /* Firebase */,
 			);
 			path = Network;
@@ -716,6 +727,7 @@
 				63F31457291D39F300C31F59 /* Gender.swift in Sources */,
 				63467E042918F9CE00E7D8AE /* NumberView.swift in Sources */,
 				63467DE02918D87F00E7D8AE /* BaseView.swift in Sources */,
+				63004924291EAAC70046E6D3 /* NetworkMonitor.swift in Sources */,
 				63467E0E291937B200E7D8AE /* MessageViewController.swift in Sources */,
 				635E1609291BD9D00042E8E4 /* SeSACAPIService.swift in Sources */,
 				63467DFA2918E7FC00E7D8AE /* ViewModelType.swift in Sources */,
