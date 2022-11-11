@@ -30,4 +30,8 @@ extension String {
         return String(self[...result])
     }
     
+    func saveNumber() -> String {
+            let saveText = self.components(separatedBy: [" ","-"]).joined()
+            return saveText
+    }
 }

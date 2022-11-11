@@ -12,6 +12,7 @@ enum SeSACAPI {
     static let loginURL = "http://api.sesac.co.kr:1207/v1/user"
 }
 
+// 알아보기
 enum SeSACLoginHeader {
     static let contentType = "application/x-www-form-urlencoded"
     static let accept = "application/json"

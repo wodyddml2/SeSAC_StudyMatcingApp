@@ -68,7 +68,13 @@ extension GenderViewController {
                         case .success(let success):
                             print(success)
                         case .failure(let fail):
-                            print(fail)
+                            let error = fail as! SeSACLoginError
+                            print(error)
+                            if error.rawValue == 202 {
+                                UserManager.nickError = true
+                                
+                                vc.navigationController?.popViewController(animated: false)
+                            }
                         }
                     }
                 }

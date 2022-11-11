@@ -26,6 +26,14 @@ final class BirthViewController: BaseViewController {
         navigationBackButton()
         
         bindViewModel()
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if UserManager.nickError {
+            navigationController?.popViewController(animated: false)
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -38,9 +46,7 @@ final class BirthViewController: BaseViewController {
         let date = mainView.datePicker.date
         
         mainView.yearView.textField.text = viewModel.datePickerFormat(dateFormat: "yyyy", date: date)
-        
         mainView.monthView.textField.text = viewModel.datePickerFormat(dateFormat: "M", date: date)
-        
         mainView.dayView.textField.text = viewModel.datePickerFormat(dateFormat: "d", date: date)
     }
 }
@@ -67,9 +73,11 @@ extension BirthViewController {
             .withUnretained(self)
             .bind { vc, _ in
                 if vc.mainView.authButton.backgroundColor == .sesacGreen {
+                    
                     let month = Int(vc.mainView.monthView.textField.text!)! * 100
                     let day = Int(vc.mainView.dayView.textField.text!)!
                     let year = vc.mainView.datePicker.date
+                    
                     if vc.viewModel.ageCalculate(months: month, days: day, year: year) {
                         let birth = vc.viewModel.datePickerFormat(dateFormat: "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", date: vc.mainView.datePicker.date)
                         UserManager.birth = birth

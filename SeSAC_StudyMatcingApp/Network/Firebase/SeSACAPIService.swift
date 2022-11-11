@@ -29,7 +29,6 @@ enum Router: URLRequestConvertible {
         case .signUpPost:
             return [
                 "Content-Type": SeSACLoginHeader.contentType,
-                "accept": SeSACLoginHeader.accept,
                 "idtoken": UserManager.idToken
             ]
         }
@@ -42,7 +41,7 @@ enum Router: URLRequestConvertible {
         case .signUpPost:
             guard let gender = UserManager.gender else {return Parameters()}
             return [
-                "phoneNumber": UserManager.phoneNumber,
+                "phoneNumber": UserManager.phoneNumber.saveNumber(),
                 "FCMtoken": UserManager.fcmToken,
                 "nick": UserManager.nickname,
                 "birth": UserManager.birth,

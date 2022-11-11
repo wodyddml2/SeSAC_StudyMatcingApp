@@ -24,6 +24,15 @@ class EmailViewController: BaseViewController {
         super.viewDidLoad()
         navigationBackButton()
         bindViewModel()
+        
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if UserManager.nickError {
+            navigationController?.popViewController(animated: false)
+        }
     }
     
 }

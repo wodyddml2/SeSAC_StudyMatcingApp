@@ -55,5 +55,8 @@ class UserManager {
     
     @UserDefault(key: "FCMToken", defaultValue: "")
     static var fcmToken: String
+    
+    @UserDefault(key: "nickError", defaultValue: false)
+    static var nickError: Bool
 }
 

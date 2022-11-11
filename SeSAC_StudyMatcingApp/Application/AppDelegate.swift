@@ -37,10 +37,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         Messaging.messaging().token { token, error in
             if let error = error {
-                print("Error fetching FCM registration token: \(error)")
+                print(error)
             } else if let token = token {
                 UserManager.fcmToken = token
-                print("FCM registration token: \(token)")
             }
         }
         return true
