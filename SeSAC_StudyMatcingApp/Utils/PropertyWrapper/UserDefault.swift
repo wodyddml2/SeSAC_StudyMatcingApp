@@ -38,8 +38,8 @@ class UserManager {
     @UserDefault(key: "idToken", defaultValue: "")
     static var idToken: String
     
-    @UserDefault(key: "login", defaultValue: 0)
-    static var login: Int
+    @UserDefault(key: "signupStatus", defaultValue: true)
+    static var signupStatus: Bool
     
     @UserDefault(key: "nickname", defaultValue: "")
     static var nickname: String

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6300491D291E4F570046E6D3 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6300491C291E4F570046E6D3 /* SplashViewController.swift */; };
+		6300491F291E5E7F0046E6D3 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6300491E291E5E7F0046E6D3 /* HomeViewController.swift */; };
 		6329D7CE291CA605004AC51C /* BirthCustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6329D7CD291CA605004AC51C /* BirthCustomView.swift */; };
 		6337F01E291A5B57002C81FA /* String+Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6337F01D291A5B57002C81FA /* String+Custom.swift */; };
 		63467DB32918D4AE00E7D8AE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63467DB22918D4AE00E7D8AE /* AppDelegate.swift */; };
@@ -74,6 +75,7 @@
 
 /* Begin PBXFileReference section */
 		6300491C291E4F570046E6D3 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		6300491E291E5E7F0046E6D3 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		6329D7CD291CA605004AC51C /* BirthCustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthCustomView.swift; sourceTree = "<group>"; };
 		6337F01D291A5B57002C81FA /* String+Custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Custom.swift"; sourceTree = "<group>"; };
 		63467DAF2918D4AE00E7D8AE /* SeSAC_StudyMatcingApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SeSAC_StudyMatcingApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -200,6 +202,7 @@
 				63467DD12918D7F300E7D8AE /* OnboardingScene */,
 				63467DFB2918EA4C00E7D8AE /* LoginScene */,
 				635E1619291C0C360042E8E4 /* SignupScene */,
+				6300491E291E5E7F0046E6D3 /* HomeViewController.swift */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -716,6 +719,7 @@
 				63467E0E291937B200E7D8AE /* MessageViewController.swift in Sources */,
 				635E1609291BD9D00042E8E4 /* SeSACAPIService.swift in Sources */,
 				63467DFA2918E7FC00E7D8AE /* ViewModelType.swift in Sources */,
+				6300491F291E5E7F0046E6D3 /* HomeViewController.swift in Sources */,
 				635E1626291C2BFC0042E8E4 /* SignupCommet.swift in Sources */,
 				63467DFD2918EA8400E7D8AE /* NumberViewController.swift in Sources */,
 				63F3144A291D2A6300C31F59 /* EmailViewModel.swift in Sources */,

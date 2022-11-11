@@ -94,17 +94,16 @@ extension MessageViewController {
                             if error != nil { return }
                             
                             if let idToken = idToken {
-//                                print(idToken)
                                 SeSACAPIService.shared.requestSeSACLogin(router: Router.loginGet(query: idToken)) { result in
                                     switch result {
                                     case .success(let success):
-                                        UserManager.login = LoginStatusCode.success
+                                        UserManager.signupStatus = true
                                         print("==========\(success)")
                                     case .failure(let fail):
                                         let error = fail as! SeSACLoginError
                                         if error == SeSACLoginError.noSignup {
                                             UserManager.idToken = idToken // 혹시 몰라서 저장
-                                            UserManager.login = LoginStatusCode.fail
+                                            UserManager.signupStatus = false
                                             
                                             vc.transition(NicknameViewController(), transitionStyle: .push)
                                         } else {

@@ -7,6 +7,8 @@
 
 import UIKit
 
+import FirebaseAuth
+
 class SplashViewController: BaseViewController {
     
     let logoImageView: UIImageView = {
@@ -21,35 +23,97 @@ class SplashViewController: BaseViewController {
         view.contentMode = .scaleAspectFit
         return view
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        splashAnimation()
+        print(UserManager.idToken)
+    }
+    
+    private func splashAnimation() {
         self.logoImageView.alpha = 1
         self.textImageView.alpha = 1
         
         UIView.animate(withDuration: 0.4, delay: 1.5, options: .curveEaseOut, animations: {
             self.logoImageView.alpha = 0
             self.textImageView.alpha = 0
-        }) { _ in
-            let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
-            let sceneDelegate = windowScene?.delegate as? SceneDelegate
-
-            if UserManager.onboarding {
-                if UserManager.login == LoginStatusCode.success {
-                    print("나중~")
-                } else {
-                    let vc = UINavigationController(rootViewController: NumberViewController())
-                    sceneDelegate?.window?.rootViewController = vc
-                }
-
-            } else {
-                let vc = OnboardingViewController()
-                sceneDelegate?.window?.rootViewController = vc
-            }
-
-            sceneDelegate?.window?.makeKeyAndVisible()
+        }) { [weak self] _ in
+            guard let self = self else {return}
+            self.requestSeSAC()
         }
+    }
+    
+    private func requestSeSAC() {
+        let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+        let sceneDelegate = windowScene?.delegate as? SceneDelegate
+        UserManager.idToken = ""
+        if UserManager.onboarding {
+            SeSACAPIService.shared.requestSeSACLogin(router: Router.loginGet(query: UserManager.idToken)) { [weak self] result in
+                guard let self = self else {return}
+                switch result {
+                case .success(_):
+                    let vc = HomeViewController()
+                    sceneDelegate?.window?.rootViewController = vc
+                case .failure(let fail):
+                    let error = fail as! SeSACLoginError
+                    switch error {
+                    case .firebaseTokenError:
+                        self.renewalRequest()
+                    case .noSignup:
+                        UserManager.signupStatus = false
+                        let vc = UINavigationController(rootViewController: NumberViewController())
+                        sceneDelegate?.window?.rootViewController = vc
+                    default:
+                        UserManager.signupStatus = true
+                        let vc = UINavigationController(rootViewController: NumberViewController())
+                        sceneDelegate?.window?.rootViewController = vc
+                    }
+                }
+            }
+        } else {
+            let vc = OnboardingViewController()
+            sceneDelegate?.window?.rootViewController = vc
+        }
+        
+        sceneDelegate?.window?.makeKeyAndVisible()
+    }
+    
+    private func renewalRequest() {
+        let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+        let sceneDelegate = windowScene?.delegate as? SceneDelegate
+        let currentUser = Auth.auth().currentUser
+        currentUser?.getIDTokenForcingRefresh(true) { [weak self] idToken, error in
+            guard let self = self else {return}
+            if error != nil {
+                self.view.makeToast("에러가 발생했습니다.")
+            }
+            if let idToken = idToken {
+                UserManager.idToken = idToken
+                
+                SeSACAPIService.shared.requestSeSACLogin(router: Router.loginGet(query: idToken)) { result in
+                    switch result {
+                    case .success(_):
+                        let vc = HomeViewController()
+                        sceneDelegate?.window?.rootViewController = vc
+                    case .failure(let fail):
+                        let error = fail as! SeSACLoginError
+                        switch error {
+                        case .noSignup:
+                            UserManager.signupStatus = false
+                            let vc = UINavigationController(rootViewController: NumberViewController())
+                            sceneDelegate?.window?.rootViewController = vc
+                        default:
+                            UserManager.signupStatus = true
+                            let vc = UINavigationController(rootViewController: NumberViewController())
+                            sceneDelegate?.window?.rootViewController = vc
+                        }
+                    }
+                }
+                
+            }
+        }
+        sceneDelegate?.window?.makeKeyAndVisible()
     }
     
     override func configureUI() {
@@ -73,5 +137,5 @@ class SplashViewController: BaseViewController {
             make.height.equalTo(textImageView.snp.width).multipliedBy(0.35)
         }
     }
-
+    
 }
