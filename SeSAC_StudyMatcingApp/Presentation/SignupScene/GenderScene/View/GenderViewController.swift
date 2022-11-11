@@ -25,6 +25,12 @@ class GenderViewController: BaseViewController {
 
         bindViewModel()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+    
+    }
 }
 
 extension GenderViewController {
@@ -64,7 +70,7 @@ extension GenderViewController {
             .withUnretained(self)
             .bind { vc, _ in
                 if vc.mainView.authButton.backgroundColor == .sesacGreen {
-                    UserManager.gender = vc.mainView.manView.genderButton.backgroundColor == .sesacGreen ? "1" : "0"
+                    UserManager.gender = vc.mainView.manView.genderButton.backgroundColor == .sesacGreen ? Gender.man : Gender.woman
                     SeSACAPIService.shared.requestSeSACLogin(router: Router.signUpPost) { result in
                         switch result {
                         case .success(let success):

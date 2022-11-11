@@ -66,7 +66,7 @@
 		63F31451291D36E600C31F59 /* GenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F31450291D36E600C31F59 /* GenderView.swift */; };
 		63F31453291D36F100C31F59 /* GenderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F31452291D36F100C31F59 /* GenderViewModel.swift */; };
 		63F31455291D37DF00C31F59 /* GenderButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F31454291D37DF00C31F59 /* GenderButtonView.swift */; };
-		63F31457291D39F300C31F59 /* GenderImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F31456291D39F300C31F59 /* GenderImage.swift */; };
+		63F31457291D39F300C31F59 /* Gender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F31456291D39F300C31F59 /* Gender.swift */; };
 		63F3145A291D569500C31F59 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 63F31459291D569500C31F59 /* FirebaseAnalytics */; };
 		63F3145C291D569500C31F59 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 63F3145B291D569500C31F59 /* FirebaseAuth */; };
 		63F3145E291D569500C31F59 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 63F3145D291D569500C31F59 /* FirebaseMessaging */; };
@@ -131,7 +131,7 @@
 		63F31450291D36E600C31F59 /* GenderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderView.swift; sourceTree = "<group>"; };
 		63F31452291D36F100C31F59 /* GenderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderViewModel.swift; sourceTree = "<group>"; };
 		63F31454291D37DF00C31F59 /* GenderButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderButtonView.swift; sourceTree = "<group>"; };
-		63F31456291D39F300C31F59 /* GenderImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderImage.swift; sourceTree = "<group>"; };
+		63F31456291D39F300C31F59 /* Gender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gender.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -501,7 +501,7 @@
 		638B0744291AA05D00E9D254 /* Constant */ = {
 			isa = PBXGroup;
 			children = (
-				63F31456291D39F300C31F59 /* GenderImage.swift */,
+				63F31456291D39F300C31F59 /* Gender.swift */,
 				638B0745291AA49600E9D254 /* AuthComent.swift */,
 				635E1625291C2BFC0042E8E4 /* SignupCommet.swift */,
 				635E1611291BF26B0042E8E4 /* SeSACAPI.swift */,
@@ -713,7 +713,7 @@
 				63467DF52918E6E300E7D8AE /* UserDefault.swift in Sources */,
 				63467DEC2918DB3E00E7D8AE /* UIFont+CustomFont.swift in Sources */,
 				63467E10291937C800E7D8AE /* MessageView.swift in Sources */,
-				63F31457291D39F300C31F59 /* GenderImage.swift in Sources */,
+				63F31457291D39F300C31F59 /* Gender.swift in Sources */,
 				63467E042918F9CE00E7D8AE /* NumberView.swift in Sources */,
 				63467DE02918D87F00E7D8AE /* BaseView.swift in Sources */,
 				63467E0E291937B200E7D8AE /* MessageViewController.swift in Sources */,

@@ -20,14 +20,14 @@ class GenderView: LoginView {
     
     let manView: GenderButtonView = {
         let view = GenderButtonView()
-        view.genderImage.image = UIImage.genderImage(gender: GenderImage.man)
+        view.genderImage.image = UIImage.genderImage(gender: Gender.manImage)
         view.genderLabel.text = "남자"
         return view
     }()
     
     let womanView: GenderButtonView = {
         let view = GenderButtonView()
-        view.genderImage.image = UIImage.genderImage(gender: GenderImage.woman)
+        view.genderImage.image = UIImage.genderImage(gender: Gender.womanImage)
         view.genderLabel.text = "여자"
         return view
     }()
