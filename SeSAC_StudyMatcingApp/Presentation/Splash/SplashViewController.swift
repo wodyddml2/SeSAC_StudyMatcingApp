@@ -51,10 +51,10 @@ class SplashViewController: BaseViewController {
                 guard let self = self else {return}
                 switch result {
                 case .success(_):
-//                    let vc = HomeViewController()
-//                    sceneDelegate?.window?.rootViewController = vc
-                    let vc = UINavigationController(rootViewController: NumberViewController())
+                    let vc = TabViewController()
                     sceneDelegate?.window?.rootViewController = vc
+//                    let vc = UINavigationController(rootViewController: NumberViewController())
+//                    sceneDelegate?.window?.rootViewController = vc
                 case .failure(let fail):
                     let error = fail as! SeSACLoginError
                     switch error {

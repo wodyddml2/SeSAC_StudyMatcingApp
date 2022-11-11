@@ -7,7 +7,6 @@
 
 import UIKit
 
-
 extension UIImage {
     
     static func onboardingImage(num: Int) -> UIImage {
