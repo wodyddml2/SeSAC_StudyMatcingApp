@@ -49,7 +49,6 @@
 		635E1612291BF26B0042E8E4 /* SeSACAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635E1611291BF26B0042E8E4 /* SeSACAPI.swift */; };
 		635E1618291BF65B0042E8E4 /* SeSACLoginDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635E1617291BF65B0042E8E4 /* SeSACLoginDTO.swift */; };
 		635E161E291C0C890042E8E4 /* NicknameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635E161D291C0C890042E8E4 /* NicknameViewController.swift */; };
-		635E1620291C19230042E8E4 /* LoginStatusCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635E161F291C19230042E8E4 /* LoginStatusCode.swift */; };
 		635E1622291C1A440042E8E4 /* NicknameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635E1621291C1A440042E8E4 /* NicknameView.swift */; };
 		635E1624291C23CE0042E8E4 /* NicknameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635E1623291C23CE0042E8E4 /* NicknameViewModel.swift */; };
 		635E1626291C2BFC0042E8E4 /* SignupCommet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635E1625291C2BFC0042E8E4 /* SignupCommet.swift */; };
@@ -114,7 +113,6 @@
 		635E1611291BF26B0042E8E4 /* SeSACAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACAPI.swift; sourceTree = "<group>"; };
 		635E1617291BF65B0042E8E4 /* SeSACLoginDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACLoginDTO.swift; sourceTree = "<group>"; };
 		635E161D291C0C890042E8E4 /* NicknameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewController.swift; sourceTree = "<group>"; };
-		635E161F291C19230042E8E4 /* LoginStatusCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginStatusCode.swift; sourceTree = "<group>"; };
 		635E1621291C1A440042E8E4 /* NicknameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameView.swift; sourceTree = "<group>"; };
 		635E1623291C23CE0042E8E4 /* NicknameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewModel.swift; sourceTree = "<group>"; };
 		635E1625291C2BFC0042E8E4 /* SignupCommet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupCommet.swift; sourceTree = "<group>"; };
@@ -504,7 +502,6 @@
 				638B0745291AA49600E9D254 /* AuthComent.swift */,
 				635E1625291C2BFC0042E8E4 /* SignupCommet.swift */,
 				635E1611291BF26B0042E8E4 /* SeSACAPI.swift */,
-				635E161F291C19230042E8E4 /* LoginStatusCode.swift */,
 			);
 			path = Constant;
 			sourceTree = "<group>";
@@ -690,7 +687,6 @@
 				6337F01E291A5B57002C81FA /* String+Custom.swift in Sources */,
 				63F31455291D37DF00C31F59 /* GenderButtonView.swift in Sources */,
 				63467DB32918D4AE00E7D8AE /* AppDelegate.swift in Sources */,
-				635E1620291C19230042E8E4 /* LoginStatusCode.swift in Sources */,
 				635E161E291C0C890042E8E4 /* NicknameViewController.swift in Sources */,
 				6351B6852919772000B953BF /* LoginView.swift in Sources */,
 				63467DB52918D4AE00E7D8AE /* SceneDelegate.swift in Sources */,

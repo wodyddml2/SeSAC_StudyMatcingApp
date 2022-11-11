@@ -47,7 +47,6 @@ class SplashViewController: BaseViewController {
     private func requestSeSAC() {
         let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
         let sceneDelegate = windowScene?.delegate as? SceneDelegate
-        UserManager.idToken = ""
         if UserManager.onboarding {
             SeSACAPIService.shared.requestSeSACLogin(router: Router.loginGet(query: UserManager.idToken)) { [weak self] result in
                 guard let self = self else {return}
@@ -110,7 +109,6 @@ class SplashViewController: BaseViewController {
                         }
                     }
                 }
-                
             }
         }
         sceneDelegate?.window?.makeKeyAndVisible()
