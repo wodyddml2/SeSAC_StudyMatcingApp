@@ -530,19 +530,11 @@
 		638B0748291AB41200E9D254 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				63004922291EAAAC0046E6D3 /* NetworkMonitor */,
-				638B0749291AB41E00E9D254 /* Firebase */,
-			);
-			path = Network;
-			sourceTree = "<group>";
-		};
-		638B0749291AB41E00E9D254 /* Firebase */ = {
-			isa = PBXGroup;
-			children = (
 				638B074A291AB44200E9D254 /* FirebaseAPIService.swift */,
 				635E1608291BD9D00042E8E4 /* SeSACAPIService.swift */,
+				63004922291EAAAC0046E6D3 /* NetworkMonitor */,
 			);
-			path = Firebase;
+			path = Network;
 			sourceTree = "<group>";
 		};
 		63F31442291D2A0700C31F59 /* EmailScene */ = {

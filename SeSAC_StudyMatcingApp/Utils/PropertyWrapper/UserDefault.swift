@@ -58,8 +58,5 @@ class UserManager {
     
     @UserDefault(key: "nickError", defaultValue: false)
     static var nickError: Bool
-    
-//    @UserDefault(key: "s", defaultValue: nil)
-//    static var s: Date?
 }
 
