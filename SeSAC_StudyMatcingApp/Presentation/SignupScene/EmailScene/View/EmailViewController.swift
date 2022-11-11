@@ -28,13 +28,6 @@ class EmailViewController: BaseViewController {
         
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        if UserManager.nickError {
-            navigationController?.popViewController(animated: false)
-        }
-    }
-    
 }
 
 extension EmailViewController {

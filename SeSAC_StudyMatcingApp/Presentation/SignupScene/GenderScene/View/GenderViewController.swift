@@ -72,8 +72,14 @@ extension GenderViewController {
                             print(error)
                             if error.rawValue == 202 {
                                 UserManager.nickError = true
-                                
-                                vc.navigationController?.popViewController(animated: false)
+                                let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
+               
+                                for viewController in viewControllers {
+                                    if let rootVC = viewController as? NicknameViewController {
+                                        vc.navigationController?.popToViewController(rootVC, animated: true)
+                                        rootVC.mainView.makeToast("해당 닉네임은 사용할 수 없습니다.", position: .center)
+                                    }
+                                }
                             }
                         }
                     }

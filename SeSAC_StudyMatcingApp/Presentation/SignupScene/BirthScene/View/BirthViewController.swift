@@ -29,13 +29,6 @@ final class BirthViewController: BaseViewController {
         
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        if UserManager.nickError {
-            navigationController?.popViewController(animated: false)
-        }
-    }
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         mainView.yearView.textField.becomeFirstResponder()

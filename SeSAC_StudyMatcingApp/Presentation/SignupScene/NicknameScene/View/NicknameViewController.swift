@@ -26,14 +26,14 @@ final class NicknameViewController: BaseViewController {
         bindViewModel()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        if UserManager.nickError {
-            UserManager.nickError = false
-            mainView.makeToast("해당 닉네임은 사용할 수 없습니다.", position: .center)
-        }
-       
-    }
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        if UserManager.nickError {
+//            UserManager.nickError = false
+//            
+//        }
+//       
+//    }
     
 }
 
