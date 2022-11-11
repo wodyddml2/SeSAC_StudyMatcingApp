@@ -25,9 +25,6 @@ class GenderViewController: BaseViewController {
 
         bindViewModel()
     }
-
-    
-
 }
 
 extension GenderViewController {

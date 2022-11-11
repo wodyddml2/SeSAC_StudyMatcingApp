@@ -26,14 +26,10 @@ final class NicknameViewController: BaseViewController {
         bindViewModel()
     }
 
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        if UserManager.nickError {
-//            UserManager.nickError = false
-//            
-//        }
-//       
-//    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+    }
     
 }
 
@@ -66,7 +62,7 @@ extension NicknameViewController {
         let trimString = text.trimmingCharacters(in: [" "])
         return trimString.count == 0 ? false : true
     }
-    
+  
     private func bindButtonTapped(output: NicknameViewModel.Output) {
         output.nextButton
             .withUnretained(self)

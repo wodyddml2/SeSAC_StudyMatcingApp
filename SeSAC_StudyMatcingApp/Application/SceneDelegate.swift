@@ -16,19 +16,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)
         
-        if UserManager.onboarding {
-            if UserManager.login == LoginStatusCode.success {
-                print("나중~")
-            } else {
-                let vc = UINavigationController(rootViewController: NumberViewController())
-                window?.rootViewController = vc
-            }
-            
-        } else {
-            let vc = OnboardingViewController()
-            window?.rootViewController = vc
-        }
+//        if UserManager.onboarding {
+//            if UserManager.login == LoginStatusCode.success {
+//                print("나중~")
+//            } else {
+//                let vc = UINavigationController(rootViewController: NumberViewController())
+//                window?.rootViewController = vc
+//            }
+//
+//        } else {
+//            let vc = OnboardingViewController()
+//            window?.rootViewController = vc
+//        }
         
+        let vc = SplashViewController()
+        
+        window?.rootViewController = vc
         window?.makeKeyAndVisible()
     }
 

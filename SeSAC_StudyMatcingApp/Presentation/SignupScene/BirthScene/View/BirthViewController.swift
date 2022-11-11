@@ -28,6 +28,13 @@ final class BirthViewController: BaseViewController {
         bindViewModel()
         
     }
+//
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        if UserManager.nickError {
+//
+//        }
+//    }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
