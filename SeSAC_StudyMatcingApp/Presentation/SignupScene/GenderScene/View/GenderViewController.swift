@@ -29,7 +29,14 @@ class GenderViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-    
+        if UserManager.nickError {
+            if UserManager.gender == Gender.man {
+                mainView.manView.backgroundColor = .sesacWhiteGreen
+            } else {
+                mainView.womanView.backgroundColor = .sesacWhiteGreen
+            }
+            mainView.authButton.backgroundColor = .sesacGreen
+        }
     }
 }
 
@@ -65,6 +72,8 @@ extension GenderViewController {
                 vc.mainView.authButton.backgroundColor = .sesacGreen
             }
             .disposed(by: disposeBag)
+        
+        
         
         output.nextButton
             .withUnretained(self)
