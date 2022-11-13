@@ -50,9 +50,13 @@ class SplashViewController: BaseViewController {
             SeSACAPIService.shared.requestSeSACLogin(router: Router.loginGet(query: UserManager.idToken)) { [weak self] result in
                 guard let self = self else {return}
                 switch result {
-                case .success(_):
+                case .success(let success):
+                    
+//                    UserManager.userProfile = success.toDomain()
                     let vc = TabViewController()
                     sceneDelegate?.window?.rootViewController = vc
+                    
+                    
 //                    let vc = UINavigationController(rootViewController: NumberViewController())
 //                    sceneDelegate?.window?.rootViewController = vc
                 case .failure(let fail):
@@ -94,7 +98,7 @@ class SplashViewController: BaseViewController {
                 SeSACAPIService.shared.requestSeSACLogin(router: Router.loginGet(query: idToken)) { result in
                     switch result {
                     case .success(_):
-                        let vc = HomeViewController()
+                        let vc = TabViewController()
                         sceneDelegate?.window?.rootViewController = vc
                     case .failure(let fail):
                         let error = fail as! SeSACLoginError

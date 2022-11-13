@@ -36,3 +36,10 @@ struct SESACLoginDTO: Codable {
         case reviewedBefore, reportedNum, reportedUser, dodgepenalty, dodgeNum, ageMin, ageMax, searchable, createdAt
     }
 }
+
+extension SESACLoginDTO {
+    func toDomain() -> SeSACProfile {
+        return .init(nickname: nick, sesac: sesac)
+    }
+}
+

@@ -27,13 +27,12 @@ enum SettingText {
     static let permit = "이용약관"
 }
 
-
 final class SettingViewController: BaseViewController {
 
     let tableView: UITableView = {
         let view = UITableView()
-        view.register(ProfileTableViewCell.self, forCellReuseIdentifier: "ProfileTableViewCell")
-        view.register(SettingTableViewCell.self, forCellReuseIdentifier: "SettingTableViewCell")
+        view.register(ProfileTableViewCell.self, forCellReuseIdentifier: ProfileTableViewCell.reusableIdentifier)
+        view.register(SettingTableViewCell.self, forCellReuseIdentifier: SettingTableViewCell.reusableIdentifier)
         return view
     }()
     
@@ -43,18 +42,18 @@ final class SettingViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+//        print(UserManager.userProfile)
         navigationBarCommon(title: "내정보")
 
         dataSource = RxTableViewSectionedReloadDataSource<SettingSectionModel>(configureCell: { dataSource, tableView, indexPath, item in
             if indexPath.row == 0 {
-                guard let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileTableViewCell", for: indexPath) as? ProfileTableViewCell else { return UITableViewCell() }
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: ProfileTableViewCell.reusableIdentifier, for: indexPath) as? ProfileTableViewCell else { return UITableViewCell() }
                 cell.separatorInset = UIEdgeInsets(top: 0, left: 17, bottom: 0, right: 15)
                 cell.profileImage.image = UIImage(systemName: "person")
                 cell.profileLabel.text = item.title
                 return cell
             } else {
-                guard let cell = tableView.dequeueReusableCell(withIdentifier: "SettingTableViewCell", for: indexPath) as? SettingTableViewCell else { return UITableViewCell() }
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: SettingTableViewCell.reusableIdentifier, for: indexPath) as? SettingTableViewCell else { return UITableViewCell() }
                 
                 cell.separatorInset = UIEdgeInsets(top: 0, left: 17, bottom: 0, right: 15)
                 cell.iconImage.image = item.leftImage

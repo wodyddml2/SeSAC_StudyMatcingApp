@@ -58,5 +58,8 @@ class UserManager {
     
     @UserDefault(key: "nickError", defaultValue: false)
     static var nickError: Bool
+    
+//    @UserDefault(key: "userProfile", defaultValue: nil)
+//    static var userProfile: SeSACProfile?
 }
 

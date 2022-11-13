@@ -22,6 +22,8 @@
 		631DC94929210F5100F23211 /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631DC94829210F5100F23211 /* BaseTableViewCell.swift */; };
 		631DC94B29210FB300F23211 /* SettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631DC94A29210FB300F23211 /* SettingTableViewCell.swift */; };
 		631DC94D2921194C00F23211 /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631DC94C2921194C00F23211 /* ProfileTableViewCell.swift */; };
+		631DC95029212CA300F23211 /* ReusableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631DC94F29212CA300F23211 /* ReusableProtocol.swift */; };
+		631DC9542921319F00F23211 /* SeSACProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631DC9532921319F00F23211 /* SeSACProfile.swift */; };
 		6329D7CE291CA605004AC51C /* BirthCustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6329D7CD291CA605004AC51C /* BirthCustomView.swift */; };
 		6337F01E291A5B57002C81FA /* String+Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6337F01D291A5B57002C81FA /* String+Custom.swift */; };
 		63467DB32918D4AE00E7D8AE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63467DB22918D4AE00E7D8AE /* AppDelegate.swift */; };
@@ -100,6 +102,8 @@
 		631DC94829210F5100F23211 /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
 		631DC94A29210FB300F23211 /* SettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableViewCell.swift; sourceTree = "<group>"; };
 		631DC94C2921194C00F23211 /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
+		631DC94F29212CA300F23211 /* ReusableProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableProtocol.swift; sourceTree = "<group>"; };
+		631DC9532921319F00F23211 /* SeSACProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACProfile.swift; sourceTree = "<group>"; };
 		6329D7CD291CA605004AC51C /* BirthCustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthCustomView.swift; sourceTree = "<group>"; };
 		6337F01D291A5B57002C81FA /* String+Custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Custom.swift"; sourceTree = "<group>"; };
 		63467DAF2918D4AE00E7D8AE /* SeSAC_StudyMatcingApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SeSAC_StudyMatcingApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -274,6 +278,14 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		631DC94E29212C8000F23211 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				631DC94F29212CA300F23211 /* ReusableProtocol.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
 		63467DA62918D4AE00E7D8AE = {
 			isa = PBXGroup;
 			children = (
@@ -408,6 +420,7 @@
 		63467DE92918DB0A00E7D8AE /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				631DC94E29212C8000F23211 /* Protocol */,
 				638B0747291AA7FC00E9D254 /* Error */,
 				638B0744291AA05D00E9D254 /* Constant */,
 				63467DF32918E6D000E7D8AE /* PropertyWrapper */,
@@ -544,6 +557,7 @@
 		635E1616291BF64C0042E8E4 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				631DC9532921319F00F23211 /* SeSACProfile.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -808,6 +822,7 @@
 				6300491D291E4F570046E6D3 /* SplashViewController.swift in Sources */,
 				635E1624291C23CE0042E8E4 /* NicknameViewModel.swift in Sources */,
 				631DC94B29210FB300F23211 /* SettingTableViewCell.swift in Sources */,
+				631DC95029212CA300F23211 /* ReusableProtocol.swift in Sources */,
 				638B074D291ABB9E00E9D254 /* FirebaseError.swift in Sources */,
 				63467DF22918E57E00E7D8AE /* UIViewController+Transition.swift in Sources */,
 				63467E062918FA2E00E7D8AE /* NumberViewModel.swift in Sources */,
@@ -842,6 +857,7 @@
 				6300491F291E5E7F0046E6D3 /* HomeViewController.swift in Sources */,
 				635E1626291C2BFC0042E8E4 /* SignupCommet.swift in Sources */,
 				63467DFD2918EA8400E7D8AE /* NumberViewController.swift in Sources */,
+				631DC9542921319F00F23211 /* SeSACProfile.swift in Sources */,
 				63F3144A291D2A6300C31F59 /* EmailViewModel.swift in Sources */,
 				63467DD32918D80800E7D8AE /* FirstViewController.swift in Sources */,
 				635E1622291C1A440042E8E4 /* NicknameView.swift in Sources */,
