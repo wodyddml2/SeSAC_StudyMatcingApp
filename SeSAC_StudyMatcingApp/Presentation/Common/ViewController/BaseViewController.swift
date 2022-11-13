@@ -61,10 +61,20 @@ class BaseViewController: UIViewController {
     func navigationBackButton() {
         navigationItem.backButtonTitle = ""
         navigationController?.navigationBar.tintColor = .black
-        
+    
         let navigationAppearance = UINavigationBarAppearance()
 
         navigationAppearance.setBackIndicatorImage(UIImage(named: "arrow"), transitionMaskImage: UIImage(named: "arrow"))
+        navigationController?.navigationBar.scrollEdgeAppearance = navigationAppearance
+        navigationController?.navigationBar.standardAppearance = navigationAppearance
+    }
+    
+    func navigationBarCommon(title: String) {
+        navigationItem.backButtonTitle = ""
+        navigationItem.title = title
+        navigationController?.navigationBar.tintColor = .black
+    
+        let navigationAppearance = UINavigationBarAppearance()
         navigationController?.navigationBar.scrollEdgeAppearance = navigationAppearance
         navigationController?.navigationBar.standardAppearance = navigationAppearance
     }

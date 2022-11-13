@@ -32,7 +32,7 @@ final class TabViewController: UITabBarController {
       
         let chattingVC = setupTabBar(viewController: ChattingViewController(), title: "새싹친구", image: TabImage.chat)
         
-        let profileVC = setupTabBar(viewController: ProfileViewController(), title: "내정보", image: TabImage.profile)
+        let profileVC = setupTabBar(viewController: SettingViewController(), title: "내정보", image: TabImage.profile)
 
         setViewControllers([homeVC, shopVC, chattingVC, profileVC], animated: true)
     }

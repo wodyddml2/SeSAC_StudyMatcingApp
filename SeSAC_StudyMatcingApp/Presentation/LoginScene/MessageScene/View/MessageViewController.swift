@@ -102,8 +102,9 @@ extension MessageViewController {
                                     case .failure(let fail):
                                         let error = fail as! SeSACLoginError
                                         if error == SeSACLoginError.noSignup {
-                                            UserManager.idToken = idToken // 혹시 몰라서 저장
+                                            UserManager.idToken = idToken
                                             UserManager.signupStatus = false
+                                            UserManager.nickError = false
                                             
                                             vc.transition(NicknameViewController(), transitionStyle: .push)
                                         } else {

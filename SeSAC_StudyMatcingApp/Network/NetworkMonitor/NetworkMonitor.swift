@@ -30,7 +30,7 @@ final class NetworkMonitor {
             
             self.isConnected = path.status == .satisfied
             
-            if self.isConnected == false{
+            if self.isConnected == false {
                 DispatchQueue.main.async {
                     guard let viewController = (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.window?.rootViewController?.topViewController else { return }
                     viewController.present(self.showNetworkAlert(), animated: true)

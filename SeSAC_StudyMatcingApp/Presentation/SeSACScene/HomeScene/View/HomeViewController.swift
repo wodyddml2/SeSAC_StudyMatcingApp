@@ -13,29 +13,26 @@ final class HomeViewController: BaseViewController {
     
     private let locationManager = CLLocationManager()
 
-    let mapView: MKMapView = {
-        let view = MKMapView()
-      
-        return view
-    }()
+    let mainView = HomeView()
+    
+    override func loadView() {
+        view = mainView
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        checkUserDeviceLocationSeviceAuthorization()
 
         locationManager.delegate = self
-    }
-    
-    override func configureUI() {
-        view.addSubview(mapView)
         
-        checkUserDeviceLocationSeviceAuthorization()
+        mainView.allButton.addTarget(self, action: #selector(aa), for: .touchUpInside)
     }
     
-    override func setConstraints() {
-        mapView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
+    @objc func aa() {
+        print("SSSSSSSS")
     }
+    
+  
 
 }
 
@@ -83,13 +80,13 @@ extension HomeViewController {
   
         let region = MKCoordinateRegion(center: center, latitudinalMeters: 1000, longitudinalMeters: 1000)
         
-        mapView.setRegion(region, animated: true)
+        mainView.mapView.setRegion(region, animated: true)
 
         let annotation = MKPointAnnotation()
         
         annotation.coordinate = center
         annotation.title = "현재 위치"
 
-        mapView.addAnnotation(annotation)
+        mainView.mapView.addAnnotation(annotation)
     }
 }

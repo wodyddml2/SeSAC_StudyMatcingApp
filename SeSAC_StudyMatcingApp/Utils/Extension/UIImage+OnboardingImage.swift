@@ -13,7 +13,7 @@ extension UIImage {
         return UIImage(named: "onboarding_img\(num)") ?? UIImage(systemName: "person")!
     }
     
-    static func genderImage(gender: String) -> UIImage {
-        return UIImage(named: gender) ?? UIImage(systemName: "person")!
+    static func commonImage(name: String) -> UIImage {
+        return UIImage(named: name) ?? UIImage(systemName: "person")!
     }
 }
