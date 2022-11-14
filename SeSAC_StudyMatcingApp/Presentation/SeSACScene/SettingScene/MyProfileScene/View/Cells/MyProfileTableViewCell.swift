@@ -10,8 +10,7 @@ import UIKit
 import MultiSlider
 
 enum MyProfileIndex: Int {
-    case gender = 2
-    case study, permit, age, withdraw
+    case gender, study, permit, age, withdraw
 }
 
 enum MyProfileText {

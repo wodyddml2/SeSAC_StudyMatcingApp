@@ -32,11 +32,11 @@ class MyProfileViewController: BaseViewController {
 
         dataSource = RxTableViewSectionedReloadDataSource<MyProfileSectionModel>(configureCell: { dataSource, tableView, indexPath, item in
             
-            if indexPath.row == 0 {
+            if indexPath.section == 0 {
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: MyProfileImageTableViewCell.reusableIdentifier, for: indexPath) as? MyProfileImageTableViewCell else { return UITableViewCell() }
                 
                 return cell
-            } else if indexPath.row == 1 {
+            } else if indexPath.section == 1 {
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: MyProfileReviewTableViewCell.reusableIdentifier, for: indexPath) as? MyProfileReviewTableViewCell else { return UITableViewCell() }
                 
                 return cell
@@ -48,17 +48,18 @@ class MyProfileViewController: BaseViewController {
             }
    
         })
-        let sections = MyProfileSectionModel(items: [
-            MyProfileModel(),
-            MyProfileModel(),
+        let sections = [
+            MyProfileSectionModel(items: [MyProfileModel()]),
+            MyProfileSectionModel(items: [MyProfileModel()]),
+            MyProfileSectionModel(items: [
             MyProfileModel(title: MyProfileText.gender),
             MyProfileModel(title: MyProfileText.study),
             MyProfileModel(title: MyProfileText.permit),
             MyProfileModel(title: MyProfileText.age),
             MyProfileModel(title: MyProfileText.withdraw)
-            ])
+            ])]
     
-        let data = Observable<[MyProfileSectionModel]>.just([sections])
+        let data = Observable<[MyProfileSectionModel]>.just(sections)
         
         data
             .bind(to: tableView.rx.items(dataSource: dataSource!))
@@ -91,9 +92,9 @@ class MyProfileViewController: BaseViewController {
 
 extension MyProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == 0 {
-            return 210
-        } else if indexPath.row == 1 {
+        if indexPath.section == 0 {
+            return 195
+        } else if indexPath.section == 1 {
             return 58
         } else {
             switch MyProfileIndex(rawValue: indexPath.row) {

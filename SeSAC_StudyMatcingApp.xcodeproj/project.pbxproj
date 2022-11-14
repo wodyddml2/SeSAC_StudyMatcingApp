@@ -671,9 +671,7 @@
 			children = (
 				6378279D292225D3009E1424 /* MyProfileViewController.swift */,
 				637827AC29225C78009E1424 /* MyProfileSectionModel.swift */,
-				637827A1292226BD009E1424 /* MyProfileTableViewCell.swift */,
-				637827A529222E20009E1424 /* MyProfileImageTableViewCell.swift */,
-				637827A729222E30009E1424 /* MyProfileReviewTableViewCell.swift */,
+				637827AE2922734D009E1424 /* Cells */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -683,6 +681,16 @@
 			children = (
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		637827AE2922734D009E1424 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				637827A1292226BD009E1424 /* MyProfileTableViewCell.swift */,
+				637827A529222E20009E1424 /* MyProfileImageTableViewCell.swift */,
+				637827A729222E30009E1424 /* MyProfileReviewTableViewCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		638B0744291AA05D00E9D254 /* Constant */ = {
