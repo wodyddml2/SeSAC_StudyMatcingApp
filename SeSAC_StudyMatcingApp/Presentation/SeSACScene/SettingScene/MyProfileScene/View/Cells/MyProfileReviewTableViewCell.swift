@@ -22,6 +22,13 @@ class MyProfileReviewTableViewCell: BaseTableViewCell {
         view.contentMode = .scaleAspectFit
         return view
     }()
+    
+    let reviewView: ReviewView = {
+        let view = ReviewView()
+        return view
+    }()
+    
+
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -37,20 +44,26 @@ class MyProfileReviewTableViewCell: BaseTableViewCell {
     }
     
     override func configureUI() {
-        [nicknameLabel, sesacReviewImageView].forEach {
-            self.addSubview($0)
+        [nicknameLabel, sesacReviewImageView, reviewView].forEach {
+            contentView.addSubview($0)
         }
     }
     
     override func setConstraints() {
         nicknameLabel.snp.makeConstraints { make in
             make.leading.equalTo(16)
-            make.centerY.equalTo(self)
+            make.top.equalTo(16)
         }
         sesacReviewImageView.snp.makeConstraints { make in
             make.trailing.equalTo(-18)
-            make.centerY.equalTo(self)
+            make.top.equalTo(16)
             make.width.height.equalTo(16)
         }
+        
+        reviewView.snp.makeConstraints { make in
+            make.top.equalTo(nicknameLabel.snp.bottom).offset(24)
+            make.leading.trailing.bottom.equalToSuperview().inset(16)
+        }
+    
     }
 }

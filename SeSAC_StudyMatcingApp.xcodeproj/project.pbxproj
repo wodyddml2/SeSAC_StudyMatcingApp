@@ -77,6 +77,8 @@
 		637827A829222E30009E1424 /* MyProfileReviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637827A729222E30009E1424 /* MyProfileReviewTableViewCell.swift */; };
 		637827AB29225A9F009E1424 /* MultiSlider in Frameworks */ = {isa = PBXBuildFile; productRef = 637827AA29225A9F009E1424 /* MultiSlider */; };
 		637827AD29225C78009E1424 /* MyProfileSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637827AC29225C78009E1424 /* MyProfileSectionModel.swift */; };
+		637827B029229990009E1424 /* ReviewStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637827AF29229990009E1424 /* ReviewStackView.swift */; };
+		637827B229229FD2009E1424 /* ReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637827B129229FD2009E1424 /* ReviewView.swift */; };
 		638B0746291AA49600E9D254 /* AuthComent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638B0745291AA49600E9D254 /* AuthComent.swift */; };
 		638B074B291AB44200E9D254 /* FirebaseAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638B074A291AB44200E9D254 /* FirebaseAPIService.swift */; };
 		638B074D291ABB9E00E9D254 /* FirebaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638B074C291ABB9E00E9D254 /* FirebaseError.swift */; };
@@ -161,6 +163,8 @@
 		637827A529222E20009E1424 /* MyProfileImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileImageTableViewCell.swift; sourceTree = "<group>"; };
 		637827A729222E30009E1424 /* MyProfileReviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileReviewTableViewCell.swift; sourceTree = "<group>"; };
 		637827AC29225C78009E1424 /* MyProfileSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileSectionModel.swift; sourceTree = "<group>"; };
+		637827AF29229990009E1424 /* ReviewStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewStackView.swift; sourceTree = "<group>"; };
+		637827B129229FD2009E1424 /* ReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewView.swift; sourceTree = "<group>"; };
 		638B0745291AA49600E9D254 /* AuthComent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthComent.swift; sourceTree = "<group>"; };
 		638B074A291AB44200E9D254 /* FirebaseAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAPIService.swift; sourceTree = "<group>"; };
 		638B074C291ABB9E00E9D254 /* FirebaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseError.swift; sourceTree = "<group>"; };
@@ -689,6 +693,8 @@
 				637827A1292226BD009E1424 /* MyProfileTableViewCell.swift */,
 				637827A529222E20009E1424 /* MyProfileImageTableViewCell.swift */,
 				637827A729222E30009E1424 /* MyProfileReviewTableViewCell.swift */,
+				637827AF29229990009E1424 /* ReviewStackView.swift */,
+				637827B129229FD2009E1424 /* ReviewView.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -892,6 +898,7 @@
 				63004927291EC1290046E6D3 /* TabViewController.swift in Sources */,
 				6351B6852919772000B953BF /* LoginView.swift in Sources */,
 				63467DB52918D4AE00E7D8AE /* SceneDelegate.swift in Sources */,
+				637827B229229FD2009E1424 /* ReviewView.swift in Sources */,
 				6300491D291E4F570046E6D3 /* SplashViewController.swift in Sources */,
 				635E1624291C23CE0042E8E4 /* NicknameViewModel.swift in Sources */,
 				631DC94B29210FB300F23211 /* SettingTableViewCell.swift in Sources */,
@@ -903,6 +910,7 @@
 				635E1618291BF65B0042E8E4 /* SeSACLoginDTO.swift in Sources */,
 				63004931291EC28E0046E6D3 /* ChattingViewController.swift in Sources */,
 				63F31446291D2A3500C31F59 /* EmailViewController.swift in Sources */,
+				637827B029229990009E1424 /* ReviewStackView.swift in Sources */,
 				63467DD52918D80E00E7D8AE /* SecondViewController.swift in Sources */,
 				63467DD72918D81300E7D8AE /* ThirdViewController.swift in Sources */,
 				63F31448291D2A4000C31F59 /* EmailView.swift in Sources */,

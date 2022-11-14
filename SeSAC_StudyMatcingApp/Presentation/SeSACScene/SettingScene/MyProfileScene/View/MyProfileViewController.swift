@@ -26,6 +26,8 @@ class MyProfileViewController: BaseViewController {
     
     var dataSource: RxTableViewSectionedReloadDataSource<MyProfileSectionModel>?
     
+    var autoBool: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationBarCommon(title: "내정보")
@@ -68,14 +70,16 @@ class MyProfileViewController: BaseViewController {
         tableView.rx.setDelegate(self)
             .disposed(by: disposeBag)
         
-//        tableView.rx.itemSelected
-//            .withUnretained(self)
-//            .subscribe { vc, index in
-//                if index.row == 0 {
-//                    vc.transition(MyProfileViewController(), transitionStyle: .push)
-//                }
-//            }
-//            .disposed(by: disposeBag)
+        tableView.rx.itemSelected
+            .withUnretained(self)
+            .subscribe { vc, index in
+                if index.section == 1 {
+                    vc.autoBool.toggle()
+                    vc.tableView.reloadRows(at: [IndexPath(row: index.row, section: index.section)], with: .fade)
+                    
+                }
+            }
+            .disposed(by: disposeBag)
     }
     
     override func configureUI() {
@@ -91,11 +95,12 @@ class MyProfileViewController: BaseViewController {
 }
 
 extension MyProfileViewController: UITableViewDelegate {
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 0 {
-            return 195
+            return 225
         } else if indexPath.section == 1 {
-            return 58
+            return autoBool == true ? UITableView.automaticDimension : 58
         } else {
             switch MyProfileIndex(rawValue: indexPath.row) {
             case .gender, .age:
