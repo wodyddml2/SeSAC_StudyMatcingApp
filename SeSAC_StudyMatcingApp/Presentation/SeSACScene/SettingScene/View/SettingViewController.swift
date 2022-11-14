@@ -42,7 +42,6 @@ final class SettingViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        print(UserManager.userProfile)
         navigationBarCommon(title: "내정보")
 
         dataSource = RxTableViewSectionedReloadDataSource<SettingSectionModel>(configureCell: { dataSource, tableView, indexPath, item in
@@ -79,6 +78,15 @@ final class SettingViewController: BaseViewController {
         
         tableView.rx.setDelegate(self)
             .disposed(by: disposeBag)
+        
+        tableView.rx.itemSelected
+            .withUnretained(self)
+            .subscribe { vc, index in
+                if index.row == 0 {
+                    vc.transition(MyProfileViewController(), transitionStyle: .push)
+                }
+            }
+            .disposed(by: disposeBag)
     }
     
     override func configureUI() {
@@ -86,6 +94,7 @@ final class SettingViewController: BaseViewController {
         tableView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+        
     }
     
     
@@ -93,6 +102,7 @@ final class SettingViewController: BaseViewController {
 }
 
 extension SettingViewController: UITableViewDelegate {
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return indexPath.row == 0 ? 96 : 74
     }
