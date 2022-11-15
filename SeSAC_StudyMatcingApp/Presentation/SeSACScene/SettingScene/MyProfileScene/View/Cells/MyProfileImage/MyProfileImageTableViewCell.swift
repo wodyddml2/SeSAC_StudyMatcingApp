@@ -12,14 +12,12 @@ class MyProfileImageTableViewCell: BaseTableViewCell {
         let view = UIImageView()
         view.layer.masksToBounds = true
         view .layer.cornerRadius = 8
-        view.backgroundColor = .sesacGreen
         view.contentMode = .scaleAspectFit
         return view
     }()
     
     let sesacImageView: UIImageView = {
         let view = UIImageView()
-        view.backgroundColor = .sesacWhiteGreen
         view.contentMode = .scaleAspectFit
         return view
     }()

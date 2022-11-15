@@ -8,9 +8,9 @@ import UIKit
 
 import RxDataSources
 
-struct MyProfileModel {
-    var title: String?
-}
+//struct MyProfileModel {
+//    var title: String?
+//}
 
 struct MyProfileSectionModel {
     var items: [Item]
@@ -18,7 +18,7 @@ struct MyProfileSectionModel {
 
 extension MyProfileSectionModel: SectionModelType {
     
-    typealias Item = MyProfileModel
+    typealias Item = SeSACProfile
 
     init(original: MyProfileSectionModel, items: [Item]) {
         self = original

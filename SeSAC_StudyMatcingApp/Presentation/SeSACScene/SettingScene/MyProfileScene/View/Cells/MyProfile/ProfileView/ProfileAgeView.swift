@@ -32,6 +32,7 @@ class ProfileAgeView: BaseView {
         view.thumbCount = 2
         view.minimumValue = 18
         view.maximumValue = 65
+        view.outerTrackColor = .gray2
         view.tintColor = .sesacGreen
         view.thumbImage = UIImage(named: "slider")!
         return view

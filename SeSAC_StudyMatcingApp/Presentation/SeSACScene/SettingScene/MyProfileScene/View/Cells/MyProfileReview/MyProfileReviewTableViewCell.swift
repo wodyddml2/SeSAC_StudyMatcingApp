@@ -68,3 +68,20 @@ class MyProfileReviewTableViewCell: BaseTableViewCell {
     
     }
 }
+
+extension MyProfileReviewTableViewCell {
+    func configureReputation(reputation: [Int]) {
+        let review = reviewView.reviewStackView
+        [review.mannerButton, review.promiseButton, review.fastButton, review.kindButton, review.skillButton, review.beneficialButton].forEach {
+            setReputation(reputation: reputation, sender: $0)
+        }
+    }
+    
+    func setReputation(reputation: [Int], sender : CommonButton) {
+        if reputation[sender.tag] > 0 {
+            sender.selectedStyle()
+        } else {
+            sender.normalStyle()
+        }
+    } 
+}

@@ -83,3 +83,21 @@ class MyProfileTableViewCell: BaseTableViewCell {
         }
     }
 }
+
+extension MyProfileTableViewCell {
+    func configureGender(gender: Int) {
+        if gender == 0 {
+            genderView.manButton.selectedStyle()
+        } else {
+            genderView.womanButton.selectedStyle()
+        }
+    }
+    
+    func configurePermit(permit: Int) {
+        if permit == 0 {
+            permitView.permitSwitch.isOn = false
+        } else {
+            permitView.permitSwitch.isOn = true
+        }
+    }
+}

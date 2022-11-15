@@ -21,7 +21,6 @@ class MyProfileViewModel {
             guard let self = self else {return}
             switch result {
             case .success(let success):
-                output.networkFailed.accept(false)
                 output.sesacInfo.onNext(success.toDomain())
             case .failure(let fail):
                 let error = fail as! SeSACLoginError

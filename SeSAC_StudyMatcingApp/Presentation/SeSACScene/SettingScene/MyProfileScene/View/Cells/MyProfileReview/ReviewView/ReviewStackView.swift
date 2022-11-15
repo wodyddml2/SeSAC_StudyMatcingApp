@@ -12,36 +12,42 @@ class ReviewStackView: UIStackView {
     let mannerButton: CommonButton = {
         let view = CommonButton()
         view.setTitle(SeSACTitle.manner, for: .normal)
+        view.tag = 0
         return view
     }()
     
     let promiseButton: CommonButton = {
         let view = CommonButton()
         view.setTitle(SeSACTitle.promise, for: .normal)
+        view.tag = 1
         return view
     }()
     
     let fastButton: CommonButton = {
         let view = CommonButton()
         view.setTitle(SeSACTitle.fast, for: .normal)
+        view.tag = 2
         return view
     }()
     
     let kindButton: CommonButton = {
         let view = CommonButton()
         view.setTitle(SeSACTitle.kind, for: .normal)
+        view.tag = 3
         return view
     }()
     
     let skillButton: CommonButton = {
         let view = CommonButton()
         view.setTitle(SeSACTitle.skill, for: .normal)
+        view.tag = 4
         return view
     }()
     
     let beneficialButton: CommonButton = {
         let view = CommonButton()
         view.setTitle(SeSACTitle.beneficial, for: .normal)
+        view.tag = 5
         return view
     }()
     

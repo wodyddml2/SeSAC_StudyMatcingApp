@@ -44,8 +44,9 @@ final class MyProfileViewController: BaseViewController {
     override func configureUI() {
         navigationBarCommon(title: "내정보")
         view.addSubview(tableView)
-        setTableView()
         bindViewModel()
+        
+        
     }
     
     override func setConstraints() {
@@ -55,30 +56,59 @@ final class MyProfileViewController: BaseViewController {
         }
     }
     
-    private func setTableView() {
+    private func setTableView(sesacInfo: SeSACProfile) {
         dataSource = RxTableViewSectionedReloadDataSource<MyProfileSectionModel>(configureCell: { dataSource, tableView, indexPath, item in
             switch ProfileSection(rawValue: indexPath.section) {
             case .image:
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: MyProfileImageTableViewCell.reusableIdentifier, for: indexPath) as? MyProfileImageTableViewCell else { return UITableViewCell() }
-                
+                cell.sesacBackgroundImageView.image = .sesacBackgroundImage(num: item.backgroundImage)
+                cell.sesacImageView.image = .sesacImage(num: item.image)
                 return cell
             case .review:
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: MyProfileReviewTableViewCell.reusableIdentifier, for: indexPath) as? MyProfileReviewTableViewCell else { return UITableViewCell() }
-                
+                cell.nicknameLabel.text = item.nickname
+                cell.reviewView.sesacReviewLabel.text = item.comment.first
+                cell.configureReputation(reputation: item.sesacTitle)
                 return cell
             case .info:
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: MyProfileTableViewCell.reusableIdentifier, for: indexPath) as? MyProfileTableViewCell else { return UITableViewCell() }
                 
-                return cell
+                cell.configureGender(gender: item.gender)
                 
+                cell.studyView.studyTextField.text = item.study
+                
+                cell.configurePermit(permit: item.searchable)
+                
+                cell.ageView.ageLabel.text = "\(item.ageMin)-\(item.ageMax)"
+                cell.ageView.ageSlider.value = [CGFloat(item.ageMin), CGFloat(item.ageMax)]
+                cell.ageView.ageSlider.rx.controlEvent(.valueChanged)
+                    .bind { _ in
+                        let sliderValue = cell.ageView.ageSlider.value
+                        cell.ageView.ageLabel.text = "\(Int(sliderValue[0]))-\(Int(sliderValue[1]))"
+                    }
+                    .disposed(by: self.disposeBag)
+                return cell
             default:
                 return UITableViewCell()
             }
         })
+        
+        
         let sections = [
-            MyProfileSectionModel(items: [MyProfileModel()]),
-            MyProfileSectionModel(items: [MyProfileModel()]),
-            MyProfileSectionModel(items: [MyProfileModel()])
+            MyProfileSectionModel(items: [SeSACProfile(
+                backgroundImage: sesacInfo.backgroundImage,
+                image: sesacInfo.image)]),
+            MyProfileSectionModel(items: [SeSACProfile(
+                nickname: sesacInfo.nickname,
+                sesacTitle: sesacInfo.sesacTitle,
+                comment: sesacInfo.comment)]),
+            MyProfileSectionModel(items: [SeSACProfile(
+                
+                gender: sesacInfo.gender,
+                study: sesacInfo.study,
+                searchable: sesacInfo.searchable,
+                ageMin: sesacInfo.ageMin,
+                ageMax: sesacInfo.ageMax)])
         ]
     
         let data = Observable<[MyProfileSectionModel]>.just(sections)
@@ -123,17 +153,21 @@ extension MyProfileViewController {
         let input = MyProfileViewModel.Input(viewDidLoadEvent: Observable.just(()))
         let output = viewModel.transform(input: input)
       
-        output.networkFailed.asDriver(onErrorJustReturn: false)
-            .drive (onNext: { error in
-                    if error == true {
-                        self.view.makeToast("사용자의 정보를 불러오는데 실패했습니다.")
-                    }
-                
+        output.networkFailed
+            .asDriver(onErrorJustReturn: false)
+            .drive (onNext: { [weak self] error in
+                guard let self = self else {return}
+                if error == true {
+                    self.view.makeToast("사용자의 정보를 불러오는데 실패했습니다.")
+                }
             }).disposed(by: disposeBag)
         
-        output.sesacInfo.subscribe { sesac in
-            print(sesac)
-        }
-        .disposed(by: disposeBag)
+        output.sesacInfo
+            .withUnretained(self)
+            .subscribe { vc, sesac in
+                print(sesac)
+                self.setTableView(sesacInfo: sesac)
+            }
+            .disposed(by: disposeBag)
     }
 }

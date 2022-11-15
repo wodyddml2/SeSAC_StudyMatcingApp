@@ -17,6 +17,7 @@ class CommonButton: UIButton {
         self.setTitleColor(.black, for: .normal)
         self.layer.masksToBounds = true
         self.layer.cornerRadius = 8
+        self.titleLabel?.font = UIFont.notoSans(size: 14, family: .Regular)
     }
     
     required init?(coder: NSCoder) {
