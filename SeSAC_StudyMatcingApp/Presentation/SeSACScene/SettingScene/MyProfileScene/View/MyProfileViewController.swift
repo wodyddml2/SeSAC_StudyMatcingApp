@@ -19,6 +19,7 @@ class MyProfileViewController: BaseViewController {
         view.register(MyProfileReviewTableViewCell.self, forCellReuseIdentifier: MyProfileReviewTableViewCell.reusableIdentifier)
         view.register(MyProfileImageTableViewCell.self, forCellReuseIdentifier: MyProfileImageTableViewCell.reusableIdentifier)
         view.separatorStyle = .none
+        view.showsVerticalScrollIndicator = false
         return view
     }()
     
@@ -31,7 +32,6 @@ class MyProfileViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationBarCommon(title: "내정보")
-
         dataSource = RxTableViewSectionedReloadDataSource<MyProfileSectionModel>(configureCell: { dataSource, tableView, indexPath, item in
             
             if indexPath.section == 0 {
@@ -44,8 +44,8 @@ class MyProfileViewController: BaseViewController {
                 return cell
             } else {
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: MyProfileTableViewCell.reusableIdentifier, for: indexPath) as? MyProfileTableViewCell else { return UITableViewCell() }
-                cell.titleLabel.text = item.title
-                cell.setConstraint(index: indexPath.row)
+//                cell.titleLabel.text = item.title
+//                cell.setConstraint(index: indexPath.row)
                 return cell
             }
    
@@ -54,11 +54,7 @@ class MyProfileViewController: BaseViewController {
             MyProfileSectionModel(items: [MyProfileModel()]),
             MyProfileSectionModel(items: [MyProfileModel()]),
             MyProfileSectionModel(items: [
-            MyProfileModel(title: MyProfileText.gender),
-            MyProfileModel(title: MyProfileText.study),
-            MyProfileModel(title: MyProfileText.permit),
-            MyProfileModel(title: MyProfileText.age),
-            MyProfileModel(title: MyProfileText.withdraw)
+            MyProfileModel(title: MyProfileText.gender)
             ])]
     
         let data = Observable<[MyProfileSectionModel]>.just(sections)
@@ -76,7 +72,6 @@ class MyProfileViewController: BaseViewController {
                 if index.section == 1 {
                     vc.autoBool.toggle()
                     vc.tableView.reloadRows(at: [IndexPath(row: index.row, section: index.section)], with: .fade)
-                    
                 }
             }
             .disposed(by: disposeBag)
@@ -100,14 +95,9 @@ extension MyProfileViewController: UITableViewDelegate {
         if indexPath.section == 0 {
             return 225
         } else if indexPath.section == 1 {
-            return autoBool == true ? UITableView.automaticDimension : 58
+            return autoBool ? UITableView.automaticDimension : 58
         } else {
-            switch MyProfileIndex(rawValue: indexPath.row) {
-            case .gender, .age:
-                return 90
-            default:
-                return 75
-            }
+            return 415
         }
     }
 }

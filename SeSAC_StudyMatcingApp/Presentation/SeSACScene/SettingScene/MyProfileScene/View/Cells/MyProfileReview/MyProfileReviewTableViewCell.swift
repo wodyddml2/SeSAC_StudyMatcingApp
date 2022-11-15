@@ -51,17 +51,18 @@ class MyProfileReviewTableViewCell: BaseTableViewCell {
     
     override func setConstraints() {
         nicknameLabel.snp.makeConstraints { make in
+            make.height.equalTo(24)
             make.leading.equalTo(16)
             make.top.equalTo(16)
         }
         sesacReviewImageView.snp.makeConstraints { make in
             make.trailing.equalTo(-18)
-            make.top.equalTo(16)
+            make.centerY.equalTo(nicknameLabel.snp.centerY)
             make.width.height.equalTo(16)
         }
-        
+
         reviewView.snp.makeConstraints { make in
-            make.top.equalTo(nicknameLabel.snp.bottom).offset(24)
+            make.top.equalToSuperview().offset(66)
             make.leading.trailing.bottom.equalToSuperview().inset(16)
         }
     

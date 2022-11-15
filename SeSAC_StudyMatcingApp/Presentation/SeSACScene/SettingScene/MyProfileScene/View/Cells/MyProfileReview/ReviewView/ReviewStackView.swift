@@ -9,46 +9,48 @@ import UIKit
 
 class ReviewStackView: UIStackView {
     
-//    let sesacTitleLabel: UILabel = {
-//        let view = UILabel()
-//        view.text = "새싹 타이틀"
-//        view.font = UIFont.notoSans(size: 12, family: .Regular)
-//        return view
-//    }()
+    enum ReviewMent {
+        static let manner = "좋은 매너"
+        static let promise = "정확한 시간 약속"
+        static let fast = "빠른 응답"
+        static let kind = "친절한 성격"
+        static let skill = "능숙한 실력"
+        static let beneficial = "유익한 시간"
+    }
     
     let mannerButton: CommonButton = {
         let view = CommonButton()
-        view.setTitle("좋은 매너", for: .normal)
+        view.setTitle(ReviewMent.manner, for: .normal)
         return view
     }()
     
     let promiseButton: CommonButton = {
         let view = CommonButton()
-        view.setTitle("정확한 시간 약속", for: .normal)
+        view.setTitle(ReviewMent.promise, for: .normal)
         return view
     }()
     
     let fastButton: CommonButton = {
         let view = CommonButton()
-        view.setTitle("빠른 응답", for: .normal)
+        view.setTitle(ReviewMent.fast, for: .normal)
         return view
     }()
     
     let kindButton: CommonButton = {
         let view = CommonButton()
-        view.setTitle("친절한 성격", for: .normal)
+        view.setTitle(ReviewMent.kind, for: .normal)
         return view
     }()
     
     let skillButton: CommonButton = {
         let view = CommonButton()
-        view.setTitle("능숙한 실력", for: .normal)
+        view.setTitle(ReviewMent.skill, for: .normal)
         return view
     }()
     
     let beneficialButton: CommonButton = {
         let view = CommonButton()
-        view.setTitle("유익한 시간", for: .normal)
+        view.setTitle(ReviewMent.beneficial, for: .normal)
         return view
     }()
     
@@ -73,7 +75,6 @@ class ReviewStackView: UIStackView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-//        setConstraints()
         [leftStackView, rightStackView].forEach {
             self.addArrangedSubview($0)
         }
@@ -86,36 +87,5 @@ class ReviewStackView: UIStackView {
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    func setConstraints() {
-        mannerButton.snp.makeConstraints { make in
-            make.height.equalTo(32)
-            make.width.equalTo(151)
-        }
-        
-        promiseButton.snp.makeConstraints { make in
-            make.height.equalTo(32)
-            make.width.equalTo(151)
-        }
-        
-        fastButton.snp.makeConstraints { make in
-            make.height.equalTo(32)
-            make.width.equalTo(151)
-        }
-        
-        kindButton.snp.makeConstraints { make in
-            make.height.equalTo(32)
-            make.width.equalTo(151)
-        }
-        
-        skillButton.snp.makeConstraints { make in
-            make.height.equalTo(32)
-            make.width.equalTo(151)
-        }
-        
-        beneficialButton.snp.makeConstraints { make in
-            make.height.equalTo(32)
-            make.width.equalTo(151)
-        }
-    }
+
 }

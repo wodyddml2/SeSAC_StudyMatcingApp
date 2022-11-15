@@ -32,13 +32,15 @@ class ReviewView: BaseView {
         let view = UILabel()
         view.numberOfLines = 0
         view.text = """
-dssdsdsdsd
-첫 리뷰를 기다리는 중이에요!dfdfdfddfdfdfdfdfdfdfdffdfdfdffdfdfdfdfdfdfdfdfdfdfdfdf
-sdsdsds
-sdsdsds
-sdsdsds
-sdsds
-sdsdsd
+d dsdsdsdddddfdfdfdfsgdfgdfhdfhgfhjkfhl;lkjhgdfsaㅇㄹㅁ호ㅓㅏㅣ;ㅓㅗㅎㄹㅇㄴ
+sd
+
+sds
+ds
+ds
+ds
+ds
+ds
 """
         view.font = UIFont.notoSans(size: 14, family: .Regular)
         return view
@@ -49,7 +51,7 @@ sdsdsd
     }
     
     override func configureUI() {
-        [sesacTitleLabel, reviewStackView, sesacReviewTitleLabel ,sesacReviewLabel].forEach {
+        [sesacTitleLabel,reviewStackView, sesacReviewTitleLabel ,sesacReviewLabel].forEach {
             self.addSubview($0)
         }
     }
