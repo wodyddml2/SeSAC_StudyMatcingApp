@@ -27,6 +27,12 @@ final class MyProfileViewController: BaseViewController {
         return view
     }()
     
+    let saveButton: UIBarButtonItem = {
+        let view = UIBarButtonItem(title: "저장", style: .plain, target: MyProfileViewController.self, action: nil)
+        
+        return view
+    }()
+    
     let disposeBag = DisposeBag()
     
     let viewModel = MyProfileViewModel()
@@ -42,11 +48,10 @@ final class MyProfileViewController: BaseViewController {
     }
     
     override func configureUI() {
-        navigationBarCommon(title: "내정보")
+        navigationBarCommon(title: "정보 관리")
+        navigationItem.rightBarButtonItem = saveButton
         view.addSubview(tableView)
         bindViewModel()
-        
-        
     }
     
     override func setConstraints() {
@@ -87,6 +92,7 @@ final class MyProfileViewController: BaseViewController {
                         cell.ageView.ageLabel.text = "\(Int(sliderValue[0]))-\(Int(sliderValue[1]))"
                     }
                     .disposed(by: self.disposeBag)
+                
                 return cell
             default:
                 return UITableViewCell()
@@ -150,7 +156,7 @@ extension MyProfileViewController: UITableViewDelegate {
 
 extension MyProfileViewController {
     private func bindViewModel() {
-        let input = MyProfileViewModel.Input(viewDidLoadEvent: Observable.just(()))
+        let input = MyProfileViewModel.Input(viewDidLoadEvent: Observable.just(()), save: saveButton.rx.tap)
         let output = viewModel.transform(input: input)
       
         output.networkFailed
@@ -169,5 +175,14 @@ extension MyProfileViewController {
                 self.setTableView(sesacInfo: sesac)
             }
             .disposed(by: disposeBag)
+   
     }
+    
+    func bindSave(output: MyProfileViewModel.Output, sesacInfo: SeSACProfile) {
+//        output.save
+//            .bind { _ in
+//                <#code#>
+//            }
+    }
+    
 }

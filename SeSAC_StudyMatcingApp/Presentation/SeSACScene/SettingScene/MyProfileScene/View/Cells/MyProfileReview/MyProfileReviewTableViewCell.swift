@@ -11,7 +11,6 @@ class MyProfileReviewTableViewCell: BaseTableViewCell {
     
     let nicknameLabel: UILabel = {
         let view = UILabel()
-        view.text = "김아무개"
         return view
     }()
     
@@ -62,7 +61,7 @@ class MyProfileReviewTableViewCell: BaseTableViewCell {
         }
 
         reviewView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(66).labeled("호오")
+            make.top.equalToSuperview().offset(66)
             make.leading.trailing.bottom.equalToSuperview().inset(16)
         }
     

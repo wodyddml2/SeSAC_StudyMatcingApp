@@ -107,8 +107,8 @@ class SeSACAPIService {
     
     private init() { }
     
-    func requestSeSACLogin(router: URLRequestConvertible ,completion: @escaping (Result<SESACLoginDTO, Error>) -> Void) {
-        AF.request(router).responseDecodable(of: SESACLoginDTO.self) { response in
+    func requestSeSACLogin<T: Codable>(type: T.Type = T.self, router: URLRequestConvertible ,completion: @escaping (Result<T, Error>) -> Void) {
+        AF.request(router).responseDecodable(of: T.self) { response in
   
             switch response.result {
             case .success(let result):

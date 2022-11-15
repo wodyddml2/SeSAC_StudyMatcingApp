@@ -17,7 +17,7 @@ class MyProfileViewModel {
     
     func requsetProfile(output: Output) {
         
-        SeSACAPIService.shared.requestSeSACLogin(router: Router.loginGet(query: UserManager.idToken)) { [weak self] result in
+        SeSACAPIService.shared.requestSeSACLogin(type: SESACLoginDTO.self ,router: Router.loginGet(query: UserManager.idToken)) { [weak self] result in
             guard let self = self else {return}
             switch result {
             case .success(let success):
@@ -55,15 +55,17 @@ class MyProfileViewModel {
 extension MyProfileViewModel: ViewModelType {
     struct Input {
         let viewDidLoadEvent: Observable<Void>
+        let save: ControlEvent<Void>
     }
     
     struct Output {
         var sesacInfo = PublishSubject<SeSACProfile>()
         var networkFailed = PublishRelay<Bool>()
+        let save: ControlEvent<Void>
     }
     
     func transform(input: Input) -> Output {
-        let output = Output()
+        let output = Output(save: input.save)
         
         input.viewDidLoadEvent
             .withUnretained(self)

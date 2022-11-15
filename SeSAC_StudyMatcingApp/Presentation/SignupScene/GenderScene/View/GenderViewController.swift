@@ -80,7 +80,7 @@ extension GenderViewController {
             .bind { vc, _ in
                 if vc.mainView.authButton.backgroundColor == .sesacGreen {
                     UserManager.gender = vc.mainView.manView.genderButton.backgroundColor == .sesacGreen ? Gender.man : Gender.woman
-                    SeSACAPIService.shared.requestSeSACLogin(router: Router.signUpPost) { result in
+                    SeSACAPIService.shared.requestSeSACLogin(type: SESACLoginDTO.self,router: Router.signUpPost) { result in
                         switch result {
                         case .success(let success):
                             print(success)
