@@ -8,6 +8,14 @@
 import Foundation
 
 struct SeSACProfile {
+    let backgroundImage: Int
+    let image: Int
     let nickname: String
-    let sesac: Int
+    let sesacTitle: [Int]
+    let comment: [String]
+    let gender: Int
+    let study: String
+    let searchable: Int
+    let ageMin: Int
+    let ageMax: Int
 }

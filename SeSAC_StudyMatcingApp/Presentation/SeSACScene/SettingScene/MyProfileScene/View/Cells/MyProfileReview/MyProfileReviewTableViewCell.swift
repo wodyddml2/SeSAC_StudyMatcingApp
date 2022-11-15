@@ -62,7 +62,7 @@ class MyProfileReviewTableViewCell: BaseTableViewCell {
         }
 
         reviewView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(66)
+            make.top.equalToSuperview().offset(66).labeled("호오")
             make.leading.trailing.bottom.equalToSuperview().inset(16)
         }
     

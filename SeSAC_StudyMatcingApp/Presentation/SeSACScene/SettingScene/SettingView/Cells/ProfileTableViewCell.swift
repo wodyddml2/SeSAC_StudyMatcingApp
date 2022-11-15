@@ -11,9 +11,10 @@ class ProfileTableViewCell: BaseTableViewCell {
     
     let profileImage: UIImageView = {
         let view = UIImageView(frame: CGRect(x: 0, y: 0, width: 48, height: 48))
-        view.backgroundColor = .red
         view.layer.masksToBounds = true
         view.layer.cornerRadius = view.frame.width / 2
+        view.layer.borderColor = UIColor.gray2.cgColor
+        view.layer.borderWidth = 1
         return view
     }()
     
@@ -27,7 +28,7 @@ class ProfileTableViewCell: BaseTableViewCell {
     
     let profileLabel: UILabel = {
         let view = UILabel()
-        
+        view.font = UIFont.notoSans(size: 16, family: .Regular)
         return view
     }()
     

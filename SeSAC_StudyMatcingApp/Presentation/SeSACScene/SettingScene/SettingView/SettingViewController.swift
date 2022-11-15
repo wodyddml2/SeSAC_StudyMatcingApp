@@ -43,12 +43,11 @@ final class SettingViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationBarCommon(title: "내정보")
-
         dataSource = RxTableViewSectionedReloadDataSource<SettingSectionModel>(configureCell: { dataSource, tableView, indexPath, item in
             if indexPath.row == 0 {
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: ProfileTableViewCell.reusableIdentifier, for: indexPath) as? ProfileTableViewCell else { return UITableViewCell() }
                 cell.separatorInset = UIEdgeInsets(top: 0, left: 17, bottom: 0, right: 15)
-                cell.profileImage.image = UIImage(systemName: "person")
+                cell.profileImage.image = item.leftImage
                 cell.profileLabel.text = item.title
                 return cell
             } else {
@@ -62,7 +61,7 @@ final class SettingViewController: BaseViewController {
             
         })
         let sections = SettingSectionModel(items: [
-            SettingModel(leftImage: .commonImage(name: SettingImage.notice), title: SettingText.notice),
+            SettingModel(leftImage: .sesacImage(num: UserManager.sesacImage ?? 0), title: UserManager.nickname),
             SettingModel(leftImage: .commonImage(name: SettingImage.notice), title: SettingText.notice),
             SettingModel(leftImage: .commonImage(name: SettingImage.faq), title: SettingText.faq),
             SettingModel(leftImage: .commonImage(name: SettingImage.qna), title: SettingText.qna),

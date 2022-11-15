@@ -11,7 +11,11 @@ import RxDataSources
 import RxSwift
 import RxCocoa
 
-class MyProfileViewController: BaseViewController {
+enum ProfileSection: Int {
+    case image, review, info
+}
+
+final class MyProfileViewController: BaseViewController {
 
     let tableView: UITableView = {
         let view = UITableView()
@@ -25,37 +29,57 @@ class MyProfileViewController: BaseViewController {
     
     let disposeBag = DisposeBag()
     
+    let viewModel = MyProfileViewModel()
+    
     var dataSource: RxTableViewSectionedReloadDataSource<MyProfileSectionModel>?
     
     var autoBool: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+    }
+    
+    override func configureUI() {
         navigationBarCommon(title: "내정보")
+        view.addSubview(tableView)
+        setTableView()
+        bindViewModel()
+    }
+    
+    override func setConstraints() {
+        tableView.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview().inset(16)
+            make.top.bottom.equalToSuperview()
+        }
+    }
+    
+    private func setTableView() {
         dataSource = RxTableViewSectionedReloadDataSource<MyProfileSectionModel>(configureCell: { dataSource, tableView, indexPath, item in
-            
-            if indexPath.section == 0 {
+            switch ProfileSection(rawValue: indexPath.section) {
+            case .image:
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: MyProfileImageTableViewCell.reusableIdentifier, for: indexPath) as? MyProfileImageTableViewCell else { return UITableViewCell() }
                 
                 return cell
-            } else if indexPath.section == 1 {
+            case .review:
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: MyProfileReviewTableViewCell.reusableIdentifier, for: indexPath) as? MyProfileReviewTableViewCell else { return UITableViewCell() }
                 
                 return cell
-            } else {
+            case .info:
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: MyProfileTableViewCell.reusableIdentifier, for: indexPath) as? MyProfileTableViewCell else { return UITableViewCell() }
-//                cell.titleLabel.text = item.title
-//                cell.setConstraint(index: indexPath.row)
+                
                 return cell
+                
+            default:
+                return UITableViewCell()
             }
-   
         })
         let sections = [
             MyProfileSectionModel(items: [MyProfileModel()]),
             MyProfileSectionModel(items: [MyProfileModel()]),
-            MyProfileSectionModel(items: [
-            MyProfileModel(title: MyProfileText.gender)
-            ])]
+            MyProfileSectionModel(items: [MyProfileModel()])
+        ]
     
         let data = Observable<[MyProfileSectionModel]>.just(sections)
         
@@ -76,28 +100,40 @@ class MyProfileViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
     }
-    
-    override func configureUI() {
-        view.addSubview(tableView)
-        tableView.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(16)
-            make.top.bottom.equalToSuperview()
-        }
-        
-    }
-
-
 }
 
 extension MyProfileViewController: UITableViewDelegate {
-    
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == 0 {
+        switch ProfileSection(rawValue: indexPath.section) {
+        case .image:
             return 225
-        } else if indexPath.section == 1 {
+        case .review:
             return autoBool ? UITableView.automaticDimension : 58
-        } else {
+        case .info:
             return 415
+        default:
+            return 0
         }
+    }
+}
+
+extension MyProfileViewController {
+    private func bindViewModel() {
+        let input = MyProfileViewModel.Input(viewDidLoadEvent: Observable.just(()))
+        let output = viewModel.transform(input: input)
+      
+        output.networkFailed.asDriver(onErrorJustReturn: false)
+            .drive (onNext: { error in
+                    if error == true {
+                        self.view.makeToast("사용자의 정보를 불러오는데 실패했습니다.")
+                    }
+                
+            }).disposed(by: disposeBag)
+        
+        output.sesacInfo.subscribe { sesac in
+            print(sesac)
+        }
+        .disposed(by: disposeBag)
     }
 }

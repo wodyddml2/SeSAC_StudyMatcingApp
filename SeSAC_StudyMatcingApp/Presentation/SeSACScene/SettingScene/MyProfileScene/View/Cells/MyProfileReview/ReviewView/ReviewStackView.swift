@@ -9,48 +9,39 @@ import UIKit
 
 class ReviewStackView: UIStackView {
     
-    enum ReviewMent {
-        static let manner = "좋은 매너"
-        static let promise = "정확한 시간 약속"
-        static let fast = "빠른 응답"
-        static let kind = "친절한 성격"
-        static let skill = "능숙한 실력"
-        static let beneficial = "유익한 시간"
-    }
-    
     let mannerButton: CommonButton = {
         let view = CommonButton()
-        view.setTitle(ReviewMent.manner, for: .normal)
+        view.setTitle(SeSACTitle.manner, for: .normal)
         return view
     }()
     
     let promiseButton: CommonButton = {
         let view = CommonButton()
-        view.setTitle(ReviewMent.promise, for: .normal)
+        view.setTitle(SeSACTitle.promise, for: .normal)
         return view
     }()
     
     let fastButton: CommonButton = {
         let view = CommonButton()
-        view.setTitle(ReviewMent.fast, for: .normal)
+        view.setTitle(SeSACTitle.fast, for: .normal)
         return view
     }()
     
     let kindButton: CommonButton = {
         let view = CommonButton()
-        view.setTitle(ReviewMent.kind, for: .normal)
+        view.setTitle(SeSACTitle.kind, for: .normal)
         return view
     }()
     
     let skillButton: CommonButton = {
         let view = CommonButton()
-        view.setTitle(ReviewMent.skill, for: .normal)
+        view.setTitle(SeSACTitle.skill, for: .normal)
         return view
     }()
     
     let beneficialButton: CommonButton = {
         let view = CommonButton()
-        view.setTitle(ReviewMent.beneficial, for: .normal)
+        view.setTitle(SeSACTitle.beneficial, for: .normal)
         return view
     }()
     
