@@ -42,12 +42,30 @@ class HomeView: BaseView {
     
     lazy var stackView: UIStackView = {
         let view = UIStackView(arrangedSubviews: [allButton, manButton, womanButton])
+//        view.makeShadow(radius: 8, offset: CGSize(width: 10, height: 10), opacity: 1)
         view.axis = .vertical
-//        view.spacing = 0
         view.alignment = .fill
-        view.distribution = .fill
+        view.distribution = .fillEqually
         view.layer.masksToBounds = true
         view.layer.cornerRadius = 8
+        return view
+    }()
+    
+    let currentLocationButton: UIButton = {
+        let view = UIButton()
+        view.makeShadow(radius: 8, offset: CGSize(width: 0, height: 4), opacity: 0.2)
+        view.makeCornerStyle(radius: 8)
+        view.backgroundColor = .white
+        view.setImage(UIImage(named: "location"), for: .normal)
+        return view
+    }()
+    
+    let matchingButton: UIButton = {
+        let view = UIButton(frame: CGRect(x: 0, y: 0, width: 64, height: 64))
+        view.makeShadow(color: UIColor(red: 0, green: 0, blue: 0, alpha: 0.3).cgColor ,radius: 3, offset: CGSize(width: 0, height: 1), opacity: 1)
+        view.makeCornerStyle(radius: view.frame.width / 2)
+        view.backgroundColor = .focus
+        view.setImage(UIImage(named: MatchImage.search), for: .normal)
         return view
     }()
     
@@ -57,7 +75,7 @@ class HomeView: BaseView {
     
     override func configureUI() {
         self.addSubview(mapView)
-        [stackView].forEach {
+        [stackView, currentLocationButton, matchingButton].forEach {
             mapView.addSubview($0)
         }
         
@@ -69,8 +87,23 @@ class HomeView: BaseView {
         }
         
         stackView.snp.makeConstraints { make in
-            make.leading.equalTo(self.safeAreaLayoutGuide).offset(16)
-            make.top.equalTo(self.safeAreaLayoutGuide).offset(16)
+            make.leading.equalTo(16)
+            make.top.equalTo(52)
+            make.width.equalTo(48)
+            make.height.equalTo(144)
         }
+        
+        currentLocationButton.snp.makeConstraints { make in
+            make.leading.equalTo(16)
+            make.top.equalTo(stackView.snp.bottom).offset(16)
+            make.width.height.equalTo(48)
+        }
+        
+        matchingButton.snp.makeConstraints { make in
+            make.height.width.equalTo(64)
+            make.trailing.equalToSuperview().inset(16)
+            make.bottom.equalToSuperview().inset(100)
+        }
+        
     }
 }

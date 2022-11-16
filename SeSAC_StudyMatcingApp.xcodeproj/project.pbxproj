@@ -88,6 +88,8 @@
 		637827B229229FD2009E1424 /* ReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637827B129229FD2009E1424 /* ReviewView.swift */; };
 		637EDF3329249A59009089E4 /* SeSACProfilePut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637EDF3229249A59009089E4 /* SeSACProfilePut.swift */; };
 		637EDF362924F923009089E4 /* WithdrawViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637EDF352924F923009089E4 /* WithdrawViewController.swift */; };
+		637EDF38292522C5009089E4 /* UIView+Shadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637EDF37292522C5009089E4 /* UIView+Shadow.swift */; };
+		637EDF3A292528A5009089E4 /* MatchImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637EDF39292528A5009089E4 /* MatchImage.swift */; };
 		638B0746291AA49600E9D254 /* AuthComent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638B0745291AA49600E9D254 /* AuthComent.swift */; };
 		638B074B291AB44200E9D254 /* FirebaseAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638B074A291AB44200E9D254 /* FirebaseAPIService.swift */; };
 		638B074D291ABB9E00E9D254 /* FirebaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638B074C291ABB9E00E9D254 /* FirebaseError.swift */; };
@@ -183,6 +185,8 @@
 		637827B129229FD2009E1424 /* ReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewView.swift; sourceTree = "<group>"; };
 		637EDF3229249A59009089E4 /* SeSACProfilePut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACProfilePut.swift; sourceTree = "<group>"; };
 		637EDF352924F923009089E4 /* WithdrawViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawViewController.swift; sourceTree = "<group>"; };
+		637EDF37292522C5009089E4 /* UIView+Shadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Shadow.swift"; sourceTree = "<group>"; };
+		637EDF39292528A5009089E4 /* MatchImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchImage.swift; sourceTree = "<group>"; };
 		638B0745291AA49600E9D254 /* AuthComent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthComent.swift; sourceTree = "<group>"; };
 		638B074A291AB44200E9D254 /* FirebaseAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAPIService.swift; sourceTree = "<group>"; };
 		638B074C291ABB9E00E9D254 /* FirebaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseError.swift; sourceTree = "<group>"; };
@@ -282,9 +286,9 @@
 		6300492D291EC2590046E6D3 /* SettingScene */ = {
 			isa = PBXGroup;
 			children = (
-				637EDF342924F8F4009089E4 /* WithdrawScene */,
 				6378279829222579009E1424 /* SettingView */,
 				6378279A29222599009E1424 /* MyProfileScene */,
+				637EDF342924F8F4009089E4 /* WithdrawScene */,
 			);
 			path = SettingScene;
 			sourceTree = "<group>";
@@ -515,6 +519,7 @@
 			isa = PBXGroup;
 			children = (
 				63467DEB2918DB3E00E7D8AE /* UIFont+CustomFont.swift */,
+				637EDF37292522C5009089E4 /* UIView+Shadow.swift */,
 				63004920291E9D780046E6D3 /* Date+Format.swift */,
 				6337F01D291A5B57002C81FA /* String+Custom.swift */,
 				63467DEF2918E2F900E7D8AE /* UIColor+CustomColor.swift */,
@@ -779,6 +784,7 @@
 				63308F242923A7BF004B90A5 /* SeSACTitle.swift */,
 				63F31456291D39F300C31F59 /* Gender.swift */,
 				63004934291EC7020046E6D3 /* TabImage.swift */,
+				637EDF39292528A5009089E4 /* MatchImage.swift */,
 				638B0745291AA49600E9D254 /* AuthComent.swift */,
 				635E1625291C2BFC0042E8E4 /* SignupCommet.swift */,
 				635E1611291BF26B0042E8E4 /* SeSACAPI.swift */,
@@ -955,6 +961,7 @@
 			files = (
 				63467E12291937CF00E7D8AE /* MessageViewModel.swift in Sources */,
 				637827A629222E20009E1424 /* MyProfileImageTableViewCell.swift in Sources */,
+				637EDF3A292528A5009089E4 /* MatchImage.swift in Sources */,
 				63308F1D292334F3004B90A5 /* PrifileWithdrawView.swift in Sources */,
 				638B0746291AA49600E9D254 /* AuthComent.swift in Sources */,
 				63467DB72918D4AE00E7D8AE /* OnboardingViewController.swift in Sources */,
@@ -1009,6 +1016,7 @@
 				63F31451291D36E600C31F59 /* GenderView.swift in Sources */,
 				63004921291E9D780046E6D3 /* Date+Format.swift in Sources */,
 				63467DF52918E6E300E7D8AE /* UserDefault.swift in Sources */,
+				637EDF38292522C5009089E4 /* UIView+Shadow.swift in Sources */,
 				63467DEC2918DB3E00E7D8AE /* UIFont+CustomFont.swift in Sources */,
 				63467E10291937C800E7D8AE /* MessageView.swift in Sources */,
 				63F31457291D39F300C31F59 /* Gender.swift in Sources */,

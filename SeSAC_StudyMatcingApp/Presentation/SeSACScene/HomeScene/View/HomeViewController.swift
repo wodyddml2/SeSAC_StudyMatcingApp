@@ -31,8 +31,7 @@ final class HomeViewController: BaseViewController {
     @objc func aa() {
         print("SSSSSSSS")
     }
-    
-  
+ 
 
 }
 
@@ -77,8 +76,7 @@ extension HomeViewController: CLLocationManagerDelegate {
 
 extension HomeViewController {
     func setRegionAnnotation(center: CLLocationCoordinate2D) {
-  
-        let region = MKCoordinateRegion(center: center, latitudinalMeters: 1000, longitudinalMeters: 1000)
+        let region = MKCoordinateRegion(center: center, latitudinalMeters: 700, longitudinalMeters: 700)
         
         mainView.mapView.setRegion(region, animated: true)
 
