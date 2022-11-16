@@ -22,15 +22,19 @@ class BaseViewController: UIViewController {
     
     func setConstraints() { }
     
-//    func showAlert(text: String) {
-//        let alert = UIAlertController(title: text, message: nil, preferredStyle: .alert)
-//
-//        let ok = UIAlertAction(title: "확인", style: .default)
-//
-//        alert.addAction(ok)
-//
-//        present(alert, animated: true)
-//    }
+    func showAlert(text: String, completion: @escaping (UIAlertAction) -> Void) {
+        let alert = UIAlertController(title: text, message: nil, preferredStyle: .alert)
+
+        let ok = UIAlertAction(title: "확인", style: .default, handler: completion)
+        
+        let cancel = UIAlertAction(title: "취소", style: .cancel)
+
+        [ok, cancel].forEach {
+            alert.addAction($0)
+        }
+
+        present(alert, animated: true)
+    }
     func showSettingAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         

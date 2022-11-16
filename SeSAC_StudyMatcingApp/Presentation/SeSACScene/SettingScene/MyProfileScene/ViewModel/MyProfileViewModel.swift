@@ -21,6 +21,7 @@ class MyProfileViewModel {
             guard let self = self else {return}
             switch result {
             case .success(let success):
+                print(success.toDomain())
                 output.sesacInfo.onNext(success.toDomain())
             case .failure(let fail):
                 let error = fail as! SeSACLoginError
@@ -48,6 +49,23 @@ class MyProfileViewModel {
                 self.requsetProfile(output: output)
             }
         }
+    }
+    
+    func requestWithdraw(completion: @escaping (Result<SESACLoginDTO, Error>) -> Void) {
+        let currentUser = Auth.auth().currentUser
+        currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
+            if error != nil {
+                print("error")
+            }
+            if let idToken = idToken {
+                UserManager.idToken = idToken
+                
+                SeSACAPIService.shared.requestSeSACLogin(type: SESACLoginDTO.self,router: Router.withdrawPost(query: UserManager.idToken)) { result in
+                    completion(result)
+                }
+            }
+        }
+        
     }
 }
 

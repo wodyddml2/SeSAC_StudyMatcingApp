@@ -79,11 +79,16 @@ extension GenderViewController {
             .withUnretained(self)
             .bind { vc, _ in
                 if vc.mainView.authButton.backgroundColor == .sesacGreen {
-                    UserManager.gender = vc.mainView.manView.genderButton.backgroundColor == .sesacGreen ? Gender.man : Gender.woman
+                    UserManager.gender = vc.mainView.manView.backgroundColor == .sesacWhiteGreen ? Gender.man : Gender.woman
                     SeSACAPIService.shared.requestSeSACLogin(type: SESACLoginDTO.self,router: Router.signUpPost) { result in
                         switch result {
-                        case .success(let success):
-                            print(success)
+                        case .success(_):
+                            UserManager.signupStatus = true
+                            let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+                            let sceneDelegate = windowScene?.delegate as? SceneDelegate
+                            let vc = TabViewController()
+                            sceneDelegate?.window?.rootViewController = vc
+                            sceneDelegate?.window?.makeKeyAndVisible()
                         case .failure(let fail):
                             let error = fail as! SeSACLoginError
                             switch error {

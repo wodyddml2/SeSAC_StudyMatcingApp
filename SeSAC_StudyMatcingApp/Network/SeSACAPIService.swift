@@ -13,6 +13,7 @@ enum Router: URLRequestConvertible {
     case loginGet(query: String)
     case signUpPost
     case savePut(sesac: SeSACProfileGet, query: String)
+    case withdrawPost(query: String)
     
     
     var baseURL: URL {
@@ -21,6 +22,8 @@ enum Router: URLRequestConvertible {
             return URL(string: SeSACAPI.loginURL)!
         case .savePut:
             return URL(string: SeSACAPI.profileSaveURL)!
+        case .withdrawPost:
+            return URL(string: SeSACAPI.withdrawURL)!
         }
         
     }
@@ -38,18 +41,17 @@ enum Router: URLRequestConvertible {
                 "Content-Type": SeSACLoginHeader.contentType,
                 "idtoken": UserManager.idToken
             ]
-        case .savePut( _ ,let query):
+        case .savePut( _ ,let query), .withdrawPost(query: let query):
             return [
                 "Content-Type": SeSACLoginHeader.contentType,
                 "idtoken": query
             ]
-            
         }
     }
     
     var parameters: Parameters {
         switch self {
-        case .loginGet:
+        case .loginGet, .withdrawPost:
             return ["":""]
         case .signUpPost:
             guard let gender = UserManager.gender else {return Parameters()}
@@ -78,7 +80,7 @@ enum Router: URLRequestConvertible {
         switch self {
         case .loginGet:
             return .get
-        case .signUpPost:
+        case .signUpPost, .withdrawPost:
             return .post
         case .savePut:
             return .put
@@ -92,7 +94,7 @@ enum Router: URLRequestConvertible {
         request.method = method
         request.headers = header
         switch self {
-        case .loginGet:
+        case .loginGet, .withdrawPost:
             return request
         case .signUpPost, .savePut:
             return try URLEncoding.default.encode(request, with: parameters)
