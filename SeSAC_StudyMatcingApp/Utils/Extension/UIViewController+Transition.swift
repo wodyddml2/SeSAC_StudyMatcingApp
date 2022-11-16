@@ -24,7 +24,7 @@ extension UIViewController {
             self.present(vc, animated: true)
         case .presentOverFull:
             vc.modalPresentationStyle = .overFullScreen
-            self.present(vc, animated: true)
+            self.present(vc, animated: false)
         case .push:
             navigationController?.pushViewController(vc, animated: true)
         case .noAnimatedPush:

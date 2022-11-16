@@ -130,28 +130,8 @@ final class MyProfileViewController: BaseViewController {
                 cell.withdrawView.withdrawButton.rx.tap
                     .withUnretained(self)
                     .bind { vc, _ in
-                        vc.showAlert(text: "회원탈퇴를 진행하시겠습니까?") { _ in
-                            let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
-                            let sceneDelegate = windowScene?.delegate as? SceneDelegate
-                            vc.viewModel.requestWithdraw { result in
-                                switch result {
-                                case .success(_):
-                                    print("성공을 안타")
-                                case .failure(let fail):
-                                    let error = fail as! SeSACLoginError
-                                    switch error {
-                                    case .success, .existingUsers:
-                                        UserManager.onboarding = false
-                                        
-                                        let vc = OnboardingViewController()
-                                        sceneDelegate?.window?.rootViewController = vc
-                                        sceneDelegate?.window?.makeKeyAndVisible()
-                                    default:
-                                        vc.view.makeToast("응 못나가~", position: .center)
-                                    }
-                                }
-                            }
-                        }
+                        let viewController = WithdrawViewController()
+                        vc.transition(viewController, transitionStyle: .presentOverFull)
                     }
                     .disposed(by: self.disposeBag)
                 

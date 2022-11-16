@@ -51,22 +51,7 @@ class MyProfileViewModel {
         }
     }
     
-    func requestWithdraw(completion: @escaping (Result<SESACLoginDTO, Error>) -> Void) {
-        let currentUser = Auth.auth().currentUser
-        currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
-            if error != nil {
-                print("error")
-            }
-            if let idToken = idToken {
-                UserManager.idToken = idToken
-                
-                SeSACAPIService.shared.requestSeSACLogin(type: SESACLoginDTO.self,router: Router.withdrawPost(query: UserManager.idToken)) { result in
-                    completion(result)
-                }
-            }
-        }
-        
-    }
+    
 }
 
 extension MyProfileViewModel: ViewModelType {

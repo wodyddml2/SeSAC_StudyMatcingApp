@@ -87,6 +87,7 @@
 		637827B029229990009E1424 /* ReviewStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637827AF29229990009E1424 /* ReviewStackView.swift */; };
 		637827B229229FD2009E1424 /* ReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637827B129229FD2009E1424 /* ReviewView.swift */; };
 		637EDF3329249A59009089E4 /* SeSACProfilePut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637EDF3229249A59009089E4 /* SeSACProfilePut.swift */; };
+		637EDF362924F923009089E4 /* WithdrawViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637EDF352924F923009089E4 /* WithdrawViewController.swift */; };
 		638B0746291AA49600E9D254 /* AuthComent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638B0745291AA49600E9D254 /* AuthComent.swift */; };
 		638B074B291AB44200E9D254 /* FirebaseAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638B074A291AB44200E9D254 /* FirebaseAPIService.swift */; };
 		638B074D291ABB9E00E9D254 /* FirebaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638B074C291ABB9E00E9D254 /* FirebaseError.swift */; };
@@ -181,6 +182,7 @@
 		637827AF29229990009E1424 /* ReviewStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewStackView.swift; sourceTree = "<group>"; };
 		637827B129229FD2009E1424 /* ReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewView.swift; sourceTree = "<group>"; };
 		637EDF3229249A59009089E4 /* SeSACProfilePut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACProfilePut.swift; sourceTree = "<group>"; };
+		637EDF352924F923009089E4 /* WithdrawViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawViewController.swift; sourceTree = "<group>"; };
 		638B0745291AA49600E9D254 /* AuthComent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthComent.swift; sourceTree = "<group>"; };
 		638B074A291AB44200E9D254 /* FirebaseAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAPIService.swift; sourceTree = "<group>"; };
 		638B074C291ABB9E00E9D254 /* FirebaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseError.swift; sourceTree = "<group>"; };
@@ -280,6 +282,7 @@
 		6300492D291EC2590046E6D3 /* SettingScene */ = {
 			isa = PBXGroup;
 			children = (
+				637EDF342924F8F4009089E4 /* WithdrawScene */,
 				6378279829222579009E1424 /* SettingView */,
 				6378279A29222599009E1424 /* MyProfileScene */,
 			);
@@ -762,6 +765,14 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		637EDF342924F8F4009089E4 /* WithdrawScene */ = {
+			isa = PBXGroup;
+			children = (
+				637EDF352924F923009089E4 /* WithdrawViewController.swift */,
+			);
+			path = WithdrawScene;
+			sourceTree = "<group>";
+		};
 		638B0744291AA05D00E9D254 /* Constant */ = {
 			isa = PBXGroup;
 			children = (
@@ -1002,6 +1013,7 @@
 				63467E10291937C800E7D8AE /* MessageView.swift in Sources */,
 				63F31457291D39F300C31F59 /* Gender.swift in Sources */,
 				63467E042918F9CE00E7D8AE /* NumberView.swift in Sources */,
+				637EDF362924F923009089E4 /* WithdrawViewController.swift in Sources */,
 				63004935291EC7020046E6D3 /* TabImage.swift in Sources */,
 				63467DE02918D87F00E7D8AE /* BaseView.swift in Sources */,
 				63004924291EAAC70046E6D3 /* NetworkMonitor.swift in Sources */,
