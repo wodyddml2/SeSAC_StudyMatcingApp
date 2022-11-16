@@ -83,4 +83,20 @@ extension MyProfileReviewTableViewCell {
             sender.normalStyle()
         }
     }
+    
+    func setData(item: SeSACProfileGet) {
+        nicknameLabel.text = item.nickname
+        if item.comment.isEmpty {
+            reviewView.sesacReviewLabel.text = "첫 리뷰를 기다리는 중이에요"
+            reviewView.sesacReviewLabel.textColor = .gray5
+        } else if item.comment.count == 1 {
+            reviewView.sesacReviewLabel.text = item.comment.first
+        } else {
+            reviewView.sesacReviewLabel.text = item.comment.first
+            reviewView.sesacReviewImageView.isHidden = false
+            reviewView.sesacReviewButton.isHidden = false
+        }
+        
+        configureReputation(reputation: item.sesacTitle)
+    }
 }

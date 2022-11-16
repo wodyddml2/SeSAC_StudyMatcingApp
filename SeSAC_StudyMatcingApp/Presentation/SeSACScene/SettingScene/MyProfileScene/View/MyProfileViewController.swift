@@ -76,9 +76,8 @@ final class MyProfileViewController: BaseViewController {
                 return cell
             case .review:
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: MyProfileReviewTableViewCell.reusableIdentifier, for: indexPath) as? MyProfileReviewTableViewCell else { return UITableViewCell() }
-                cell.nicknameLabel.text = item.nickname
-                cell.reviewView.sesacReviewLabel.text = item.comment.first
-                cell.configureReputation(reputation: item.sesacTitle)
+                cell.sesacReviewImageView.image = self.autoBool ? UIImage(systemName: "chevron.up")! : UIImage(systemName: "chevron.down")!
+                cell.setData(item: item)
                 return cell
             case .info:
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: MyProfileTableViewCell.reusableIdentifier, for: indexPath) as? MyProfileTableViewCell else { return UITableViewCell() }

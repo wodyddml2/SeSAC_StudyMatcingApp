@@ -28,20 +28,24 @@ class ReviewView: BaseView {
         return view
     }()
     
+    let sesacReviewImageView: UIImageView = {
+        let view = UIImageView()
+        view.image = UIImage(systemName: "chevron.right")
+        view.tintColor = .gray7
+        view.isHidden = true
+        view.contentMode = .scaleAspectFit
+        return view
+    }()
+    
+    let sesacReviewButton: UIButton = {
+        let view = UIButton()
+        view.isHidden = true
+        return view
+    }()
+    
     let sesacReviewLabel: UILabel = {
         let view = UILabel()
         view.numberOfLines = 0
-        view.text = """
-d dsdsdsdddddfdfdfdfsgdfgdfhdfhgfhjkfhl;lkjhgdfsaㅇㄹㅁ호ㅓㅏㅣ;ㅓㅗㅎㄹㅇㄴ
-sd
-
-sds
-ds
-ds
-ds
-ds
-ds
-"""
         view.font = UIFont.notoSans(size: 14, family: .Regular)
         return view
     }()
@@ -51,7 +55,7 @@ ds
     }
     
     override func configureUI() {
-        [sesacTitleLabel,reviewStackView, sesacReviewTitleLabel ,sesacReviewLabel].forEach {
+        [sesacTitleLabel,reviewStackView, sesacReviewTitleLabel, sesacReviewImageView, sesacReviewButton, sesacReviewLabel].forEach {
             self.addSubview($0)
         }
     }
@@ -69,6 +73,16 @@ ds
         sesacReviewTitleLabel.snp.makeConstraints { make in
             make.top.equalTo(reviewStackView.snp.bottom).offset(24)
             make.leading.equalToSuperview()
+        }
+        
+        sesacReviewImageView.snp.makeConstraints { make in
+            make.top.equalTo(reviewStackView.snp.bottom).offset(24)
+            make.width.height.equalTo(16)
+            make.trailing.equalToSuperview().inset(16)
+        }
+        
+        sesacReviewButton.snp.makeConstraints { make in
+            make.edges.equalTo(sesacReviewImageView)
         }
         
         sesacReviewLabel.snp.makeConstraints { make in
