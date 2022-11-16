@@ -223,15 +223,21 @@ extension MyProfileViewController {
             .bind { vc, _ in
                 guard let sesacData = vc.sesacData else {return}
                 
-                SeSACAPIService.shared.requestSeSACLogin(type: SESACLoginDTO.self ,router: Router.savePut(sesac: sesacData)) { result in
+                SeSACAPIService.shared.requestSeSACLogin(type: SESACLoginDTO.self ,router: Router.savePut(sesac: sesacData, query: UserManager.idToken)) { result in
                     switch result {
-                    case .success(let success):
-                        self.navigationController?.popViewController(animated: true)
-                        print(success)
+                    case .success(_):
+                        print("성공해도 success를 안타네?")
                     case .failure(let fail):
-                        print(fail)
+                        let error = fail as! SeSACLoginError
+                        switch error {
+                        case .success:
+                            vc.view.makeToast("저장 완료!", position: .center)
+                        default:
+                            vc.view.makeToast("저장에 실패했습니다.", position: .center)
+                        }
                     }
                 }
+                
             }
             .disposed(by: disposeBag)
     }

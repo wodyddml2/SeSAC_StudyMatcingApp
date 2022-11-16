@@ -12,7 +12,7 @@ import Alamofire
 enum Router: URLRequestConvertible {
     case loginGet(query: String)
     case signUpPost
-    case savePut(sesac: SeSACProfileGet)
+    case savePut(sesac: SeSACProfileGet, query: String)
     
     
     var baseURL: URL {
@@ -33,11 +33,17 @@ enum Router: URLRequestConvertible {
                 "accept": SeSACLoginHeader.accept,
                 "idtoken": query
             ]
-        case .signUpPost, .savePut:
+        case .signUpPost:
             return [
                 "Content-Type": SeSACLoginHeader.contentType,
                 "idtoken": UserManager.idToken
             ]
+        case .savePut( _ ,let query):
+            return [
+                "Content-Type": SeSACLoginHeader.contentType,
+                "idtoken": query
+            ]
+            
         }
     }
     
@@ -56,7 +62,7 @@ enum Router: URLRequestConvertible {
                 "email": UserManager.email,
                 "gender": gender
             ]
-        case .savePut(let sesac):
+        case .savePut(let sesac, _):
             return [
                 "searchable": "\(sesac.searchable)",
                 "ageMin": "\(sesac.ageMin)",
