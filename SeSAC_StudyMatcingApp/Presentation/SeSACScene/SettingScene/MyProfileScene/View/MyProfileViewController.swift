@@ -40,11 +40,10 @@ final class MyProfileViewController: BaseViewController {
     var dataSource: RxTableViewSectionedReloadDataSource<MyProfileSectionModel>?
     
     var autoBool: Bool = false
+    var sesacData: SeSACProfileGet?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
     }
     
     override func configureUI() {
@@ -61,8 +60,14 @@ final class MyProfileViewController: BaseViewController {
         }
     }
     
-    private func setTableView(sesacInfo: SeSACProfile) {
-        dataSource = RxTableViewSectionedReloadDataSource<MyProfileSectionModel>(configureCell: { dataSource, tableView, indexPath, item in
+    private func setTableView(sesacInfo: SeSACProfileGet, output: MyProfileViewModel.Output) {
+        
+        
+        
+        
+        dataSource = RxTableViewSectionedReloadDataSource<MyProfileSectionModel>(configureCell: { [weak self] dataSource, tableView, indexPath, item in
+            guard let self = self else {return UITableViewCell()}
+            
             switch ProfileSection(rawValue: indexPath.section) {
             case .image:
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: MyProfileImageTableViewCell.reusableIdentifier, for: indexPath) as? MyProfileImageTableViewCell else { return UITableViewCell() }
@@ -78,18 +83,48 @@ final class MyProfileViewController: BaseViewController {
             case .info:
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: MyProfileTableViewCell.reusableIdentifier, for: indexPath) as? MyProfileTableViewCell else { return UITableViewCell() }
                 
-                cell.configureGender(gender: item.gender)
+                cell.setData(item: item)
                 
-                cell.studyView.studyTextField.text = item.study
+                cell.genderView.womanButton.rx.tap
+                    .withUnretained(self)
+                    .bind { vc, _ in
+                    cell.genderView.womanButton.selectedStyle()
+                    cell.genderView.manButton.normalStyle()
+                    vc.sesacData?.gender = cell.genderView.womanButton.tag
+                }
+                .disposed(by: self.disposeBag)
                 
-                cell.configurePermit(permit: item.searchable)
+                cell.genderView.manButton.rx.tap
+                    .withUnretained(self)
+                    .bind { vc, _ in
+                    cell.genderView.womanButton.normalStyle()
+                    cell.genderView.manButton.selectedStyle()
+                    vc.sesacData?.gender = cell.genderView.manButton.tag
+                }
+                .disposed(by: self.disposeBag)
                 
-                cell.ageView.ageLabel.text = "\(item.ageMin)-\(item.ageMax)"
-                cell.ageView.ageSlider.value = [CGFloat(item.ageMin), CGFloat(item.ageMax)]
+                cell.studyView.studyTextField.rx.text
+                    .orEmpty
+                    .withUnretained(self)
+                    .bind { vc, value in
+                        vc.sesacData?.study = value
+                    }
+                    .disposed(by: self.disposeBag)
+                
+                cell.permitView.permitSwitch.rx.isOn
+                    .withUnretained(self)
+                    .bind { vc, value in
+                        vc.sesacData?.searchable = value ? 1 : 0
+                    }
+                    .disposed(by: self.disposeBag)
+                
                 cell.ageView.ageSlider.rx.controlEvent(.valueChanged)
-                    .bind { _ in
+                    .withUnretained(self)
+                    .bind { vc, _ in
                         let sliderValue = cell.ageView.ageSlider.value
                         cell.ageView.ageLabel.text = "\(Int(sliderValue[0]))-\(Int(sliderValue[1]))"
+                        vc.sesacData?.ageMax = Int(sliderValue[1])
+                        vc.sesacData?.ageMin = Int(sliderValue[0])
                     }
                     .disposed(by: self.disposeBag)
                 
@@ -101,14 +136,14 @@ final class MyProfileViewController: BaseViewController {
         
         
         let sections = [
-            MyProfileSectionModel(items: [SeSACProfile(
+            MyProfileSectionModel(items: [SeSACProfileGet(
                 backgroundImage: sesacInfo.backgroundImage,
                 image: sesacInfo.image)]),
-            MyProfileSectionModel(items: [SeSACProfile(
+            MyProfileSectionModel(items: [SeSACProfileGet(
                 nickname: sesacInfo.nickname,
                 sesacTitle: sesacInfo.sesacTitle,
                 comment: sesacInfo.comment)]),
-            MyProfileSectionModel(items: [SeSACProfile(
+            MyProfileSectionModel(items: [SeSACProfileGet(
                 
                 gender: sesacInfo.gender,
                 study: sesacInfo.study,
@@ -156,6 +191,7 @@ extension MyProfileViewController: UITableViewDelegate {
 
 extension MyProfileViewController {
     private func bindViewModel() {
+        print(UserManager.idToken)
         let input = MyProfileViewModel.Input(viewDidLoadEvent: Observable.just(()), save: saveButton.rx.tap)
         let output = viewModel.transform(input: input)
       
@@ -171,18 +207,34 @@ extension MyProfileViewController {
         output.sesacInfo
             .withUnretained(self)
             .subscribe { vc, sesac in
-                print(sesac)
-                self.setTableView(sesacInfo: sesac)
+                vc.sesacData = sesac
+                vc.setTableView(sesacInfo: sesac, output: output)
+                vc.bindSave(output: output)
             }
             .disposed(by: disposeBag)
+        
+        
    
     }
     
-    func bindSave(output: MyProfileViewModel.Output, sesacInfo: SeSACProfile) {
-//        output.save
-//            .bind { _ in
-//                <#code#>
-//            }
+    
+    func bindSave(output: MyProfileViewModel.Output) {
+        output.save
+            .withUnretained(self)
+            .bind { vc, _ in
+                guard let sesacData = vc.sesacData else {return}
+                
+                SeSACAPIService.shared.requestSeSACLogin(type: SESACLoginDTO.self ,router: Router.savePut(sesac: sesacData)) { result in
+                    switch result {
+                    case .success(let success):
+                        self.navigationController?.popViewController(animated: true)
+                        print(success)
+                    case .failure(let fail):
+                        print(fail)
+                    }
+                }
+            }
+            .disposed(by: disposeBag)
     }
     
 }

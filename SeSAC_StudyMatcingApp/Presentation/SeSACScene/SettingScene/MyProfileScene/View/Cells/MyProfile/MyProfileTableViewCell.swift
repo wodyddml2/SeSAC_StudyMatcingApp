@@ -86,7 +86,7 @@ class MyProfileTableViewCell: BaseTableViewCell {
 
 extension MyProfileTableViewCell {
     func configureGender(gender: Int) {
-        if gender == 0 {
+        if gender == 1 {
             genderView.manButton.selectedStyle()
         } else {
             genderView.womanButton.selectedStyle()
@@ -94,10 +94,14 @@ extension MyProfileTableViewCell {
     }
     
     func configurePermit(permit: Int) {
-        if permit == 0 {
-            permitView.permitSwitch.isOn = false
-        } else {
-            permitView.permitSwitch.isOn = true
-        }
+        permitView.permitSwitch.isOn = permit == 0 ? false : true
+    }
+    
+    func setData(item: SeSACProfileGet) {
+        configureGender(gender: item.gender)
+        configurePermit(permit: item.searchable)
+        studyView.studyTextField.text = item.study
+        ageView.ageLabel.text = "\(item.ageMin)-\(item.ageMax)"
+        ageView.ageSlider.value = [CGFloat(item.ageMin), CGFloat(item.ageMax)]
     }
 }

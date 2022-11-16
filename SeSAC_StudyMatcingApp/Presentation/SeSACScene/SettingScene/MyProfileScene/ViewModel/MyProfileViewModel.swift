@@ -30,7 +30,6 @@ class MyProfileViewModel {
                     self.renewalRequest(output: output)
                 default:
                     output.networkFailed.accept(true)
-                    print(error)
                 }
             }
         }
@@ -59,7 +58,7 @@ extension MyProfileViewModel: ViewModelType {
     }
     
     struct Output {
-        var sesacInfo = PublishSubject<SeSACProfile>()
+        var sesacInfo = PublishSubject<SeSACProfileGet>()
         var networkFailed = PublishRelay<Bool>()
         let save: ControlEvent<Void>
     }
@@ -73,8 +72,7 @@ extension MyProfileViewModel: ViewModelType {
                 vc.requsetProfile(output: output)
             }
             .disposed(by: disposeBag)
-        
-        
+ 
         return output
     }
 }

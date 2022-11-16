@@ -82,5 +82,5 @@ extension MyProfileReviewTableViewCell {
         } else {
             sender.normalStyle()
         }
-    } 
+    }
 }

@@ -12,10 +12,17 @@ import Alamofire
 enum Router: URLRequestConvertible {
     case loginGet(query: String)
     case signUpPost
+    case savePut(sesac: SeSACProfileGet)
     
     
     var baseURL: URL {
-        return URL(string: SeSACAPI.loginURL)!
+        switch self {
+        case .loginGet, .signUpPost:
+            return URL(string: SeSACAPI.loginURL)!
+        case .savePut:
+            return URL(string: SeSACAPI.profileSaveURL)!
+        }
+        
     }
     
     var header: HTTPHeaders {
@@ -26,7 +33,7 @@ enum Router: URLRequestConvertible {
                 "accept": SeSACLoginHeader.accept,
                 "idtoken": query
             ]
-        case .signUpPost:
+        case .signUpPost, .savePut:
             return [
                 "Content-Type": SeSACLoginHeader.contentType,
                 "idtoken": UserManager.idToken
@@ -49,6 +56,14 @@ enum Router: URLRequestConvertible {
                 "email": UserManager.email,
                 "gender": gender
             ]
+        case .savePut(let sesac):
+            return [
+                "searchable": "\(sesac.searchable)",
+                "ageMin": "\(sesac.ageMin)",
+                "ageMax": "\(sesac.ageMax)",
+                "gender": "\(sesac.gender)",
+                "study": sesac.study
+            ]
         }
     }
     
@@ -59,6 +74,8 @@ enum Router: URLRequestConvertible {
             return .get
         case .signUpPost:
             return .post
+        case .savePut:
+            return .put
         }
         
     }
@@ -71,7 +88,7 @@ enum Router: URLRequestConvertible {
         switch self {
         case .loginGet:
             return request
-        case .signUpPost:
+        case .signUpPost, .savePut:
             return try URLEncoding.default.encode(request, with: parameters)
         }
         
@@ -85,6 +102,7 @@ enum SeSACLoginError: Int, Error {
     case noSignup = 406
     case serverError = 500
     case clientError = 501
+    case success = 200
 }
 
 extension SeSACLoginError: LocalizedError {
@@ -92,7 +110,7 @@ extension SeSACLoginError: LocalizedError {
         switch self {
         case .firebaseTokenError, .serverError, .clientError:
             return "에러가 발생했습니다. 다시 시도해주세요"
-        case .noSignup:
+        case .noSignup, .success:
             return ""
         case .notNickname:
             return "사용할 수 없는 닉네임입니다."
@@ -109,12 +127,13 @@ class SeSACAPIService {
     
     func requestSeSACLogin<T: Codable>(type: T.Type = T.self, router: URLRequestConvertible ,completion: @escaping (Result<T, Error>) -> Void) {
         AF.request(router).responseDecodable(of: T.self) { response in
-  
+            
             switch response.result {
             case .success(let result):
                 completion(.success(result))
             case .failure(_):
                 guard let statusCode = response.response?.statusCode else {return}
+                print(statusCode)
                 guard let error = SeSACLoginError(rawValue: statusCode) else {return}
                 completion(.failure(error))
             }

@@ -67,6 +67,7 @@ class BaseViewController: UIViewController {
         navigationAppearance.setBackIndicatorImage(UIImage(named: "arrow"), transitionMaskImage: UIImage(named: "arrow"))
         navigationController?.navigationBar.scrollEdgeAppearance = navigationAppearance
         navigationController?.navigationBar.standardAppearance = navigationAppearance
+        
     }
     
     func navigationBarCommon(title: String) {
@@ -77,6 +78,7 @@ class BaseViewController: UIViewController {
         let navigationAppearance = UINavigationBarAppearance()
         navigationController?.navigationBar.scrollEdgeAppearance = navigationAppearance
         navigationController?.navigationBar.standardAppearance = navigationAppearance
+        
     }
 }
 

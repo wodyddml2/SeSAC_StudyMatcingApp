@@ -10,6 +10,7 @@ import Foundation
 enum SeSACAPI {
     static let baseURL = "http://api.sesac.co.kr:1207"
     static let loginURL = "http://api.sesac.co.kr:1207/v1/user"
+    static let profileSaveURL = "http://api.sesac.co.kr:1207/v1/user/mypage"
 }
 
 // 알아보기

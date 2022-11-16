@@ -7,17 +7,17 @@
 
 import Foundation
 
-struct SeSACProfile {
+struct SeSACProfileGet {
     let backgroundImage: Int
     let image: Int
     let nickname: String
     let sesacTitle: [Int]
     let comment: [String]
-    let gender: Int
-    let study: String
-    let searchable: Int
-    let ageMin: Int
-    let ageMax: Int
+    var gender: Int
+    var study: String
+    var searchable: Int
+    var ageMin: Int
+    var ageMax: Int
     
     init(backgroundImage: Int = 3, image: Int = 0, nickname: String = "", sesacTitle: [Int] = [], comment: [String] = [], gender: Int = 0, study: String = "", searchable: Int = 0, ageMin: Int = 0, ageMax: Int = 0) {
         self.backgroundImage = backgroundImage

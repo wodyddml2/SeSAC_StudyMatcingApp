@@ -18,12 +18,14 @@ class ProfileGenderView: BaseView {
     let manButton: CommonButton = {
         let view = CommonButton()
         view.setTitle("남자", for: .normal)
+        view.tag = 1
         return view
     }()
     
     let womanButton: CommonButton = {
         let view = CommonButton()
         view.setTitle("여자", for: .normal)
+        view.tag = 0
         return view
     }()
     
