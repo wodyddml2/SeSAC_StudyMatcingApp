@@ -14,6 +14,7 @@ enum Router: URLRequestConvertible {
     case signUpPost
     case savePut(sesac: SeSACProfileGet, query: String)
     case withdrawPost(query: String)
+    case searchPost(query: String, lat: Double, long: Double)
     
     
     var baseURL: URL {
@@ -24,6 +25,8 @@ enum Router: URLRequestConvertible {
             return URL(string: SeSACAPI.profileSaveURL)!
         case .withdrawPost:
             return URL(string: SeSACAPI.withdrawURL)!
+        case .searchPost:
+            return URL(string: SeSACAPI.baseURL + "/v1/queue/search")!
         }
         
     }
@@ -41,7 +44,7 @@ enum Router: URLRequestConvertible {
                 "Content-Type": SeSACLoginHeader.contentType,
                 "idtoken": UserManager.idToken
             ]
-        case .savePut( _ ,let query), .withdrawPost(query: let query):
+        case .savePut( _ ,let query), .withdrawPost(let query), .searchPost(let query, _, _):
             return [
                 "Content-Type": SeSACLoginHeader.contentType,
                 "idtoken": query
@@ -72,6 +75,11 @@ enum Router: URLRequestConvertible {
                 "gender": "\(sesac.gender)",
                 "study": sesac.study
             ]
+        case .searchPost( _,let lat ,let long):
+            return [
+                "lat": "\(lat)",
+                "long": "\(long)"
+            ]
         }
     }
     
@@ -80,7 +88,7 @@ enum Router: URLRequestConvertible {
         switch self {
         case .loginGet:
             return .get
-        case .signUpPost, .withdrawPost:
+        case .signUpPost, .withdrawPost, .searchPost:
             return .post
         case .savePut:
             return .put
@@ -96,7 +104,7 @@ enum Router: URLRequestConvertible {
         switch self {
         case .loginGet, .withdrawPost:
             return request
-        case .signUpPost, .savePut:
+        case .signUpPost, .savePut, .searchPost:
             return try URLEncoding.default.encode(request, with: parameters)
         }
         

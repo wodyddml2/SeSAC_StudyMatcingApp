@@ -8,12 +8,6 @@
 import UIKit
 
 import RxSwift
-import RxCocoa
-
-struct ResultString: Hashable {
-    let id = UUID()
-    var study: String
-}
 
 class SearchViewController: BaseViewController, UIScrollViewDelegate {
     
@@ -36,15 +30,76 @@ class SearchViewController: BaseViewController, UIScrollViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: searchBar)
         navigationBackButton()
-        configureDataSource()
-        var snapshot = NSDiffableDataSourceSnapshot<Int, String>()
-        snapshot.appendSections([0, 1])
-        snapshot.appendItems(viewModel.myStudyArr, toSection: 1)
-        dataSource?.apply(snapshot, animatingDifferences: true)
         
-        searchBar.rx.searchButtonClicked
+        configureDataSource()
+      
+        bindViewModel()
+        
+        selectedCollection()
+    }
+    
+
+    
+    override func configureUI() {
+        view.addSubview(collectionView)
+    }
+    
+    override func setConstraints() {
+        collectionView.snp.makeConstraints { make in
+            make.edges.equalTo(view.safeAreaLayoutGuide)
+        }
+    }
+    
+    func selectedCollection() {
+      
+        collectionView.rx.itemSelected
+            .withUnretained(self)
+            .subscribe { vc, indexPath in
+                if indexPath.section == 0 {
+                    
+                } else {
+                    vc.viewModel.myStudyArr.remove(at: indexPath.item)
+                    var snapshot = NSDiffableDataSourceSnapshot<Int, String>()
+                    snapshot.appendSections([0, 1])
+                    snapshot.appendItems(vc.viewModel.myStudyArr, toSection: 1)
+                    vc.dataSource?.apply(snapshot, animatingDifferences: true)
+                }
+        }
+        .disposed(by: disposeBag)
+
+    }
+
+}
+
+extension SearchViewController {
+    private func bindViewModel() {
+        let input = SearchViewModel.Input(viewDidLoadEvent: Observable.just(()), searchTap: searchBar.rx.searchButtonClicked)
+        let output = viewModel.transform(input: input)
+        
+        output.sesacInfo
+            .withUnretained(self)
+            .subscribe(onNext: { vc, result in
+                vc.viewModel.recommendArr.append(contentsOf: result.fromRecommend)
+            })
+            .disposed(by: disposeBag)
+  
+        output.networkFailed
+            .asDriver(onErrorJustReturn: false)
+            .drive (onNext: { [weak self] error in
+                guard let self = self else {return}
+                if error == true {
+                    self.view.makeToast("사용자의 정보를 불러오는데 실패했습니다.")
+                }
+            }).disposed(by: disposeBag)
+        
+        bindSearchTap(output: output)
+    }
+    
+    private func bindSearchTap(output: SearchViewModel.Output) {
+        output.searchTap
             .withUnretained(self)
             .bind { vc, _ in
                 guard let text = vc.searchBar.text else {return}
@@ -68,40 +123,7 @@ class SearchViewController: BaseViewController, UIScrollViewDelegate {
                 }
             }
             .disposed(by: disposeBag)
-        
-        setCollection()
     }
-    
-    func setCollection() {
-      
-        collectionView.rx.itemSelected
-            .withUnretained(self)
-            .subscribe { vc, indexPath in
-                if indexPath.section == 0 {
-                    
-                } else {
-                    vc.viewModel.myStudyArr.remove(at: indexPath.item)
-                    var snapshot = NSDiffableDataSourceSnapshot<Int, String>()
-                    snapshot.appendSections([0, 1])
-                    snapshot.appendItems(vc.viewModel.myStudyArr, toSection: 1)
-                    vc.dataSource?.apply(snapshot, animatingDifferences: true)
-                }
-        }
-        .disposed(by: disposeBag)
-
-    }
-    
-    override func configureUI() {
-        view.addSubview(collectionView)
-    }
-    
-    override func setConstraints() {
-        collectionView.snp.makeConstraints { make in
-            make.edges.equalTo(view.safeAreaLayoutGuide)
-        }
-    }
-    
-
 }
 
 extension SearchViewController {

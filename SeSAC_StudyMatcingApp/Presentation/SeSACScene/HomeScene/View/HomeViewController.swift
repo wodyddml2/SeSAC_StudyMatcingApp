@@ -58,7 +58,6 @@ extension HomeViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let coordinate = locations.last?.coordinate else { return }
 //        locationManager.stopUpdatingLocation()
-        
         setRegionAnnotation(center: coordinate)
     }
     
@@ -95,6 +94,11 @@ extension HomeViewController {
                 let viewController = SearchViewController()
                 
                 vc.transition(viewController, transitionStyle: .push)
+                
+                if let coordinate = vc.locationManager.location?.coordinate {
+                    viewController.viewModel.locationValue = coordinate
+                }
+                
             }
             .disposed(by: disposeBag)
     }
