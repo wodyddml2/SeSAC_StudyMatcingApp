@@ -8,17 +8,17 @@
 import UIKit
 
 import RxSwift
+import RxCocoa
 
 struct ResultString: Hashable {
     let id = UUID()
     var study: String
 }
 
-class SearchViewController: BaseViewController {
+class SearchViewController: BaseViewController, UIScrollViewDelegate {
     
     lazy var collectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
-        view.delegate = self
         return view
     }()
 
@@ -47,26 +47,49 @@ class SearchViewController: BaseViewController {
         searchBar.rx.searchButtonClicked
             .withUnretained(self)
             .bind { vc, _ in
-                if vc.viewModel.overlapString(text: vc.searchBar.text!) {
+                guard let text = vc.searchBar.text else {return}
+                let separatedText = text.components(separatedBy: " ")
+                let result = separatedText.filter {$0 != ""}
+                if result.filter({$0.count > 8}).count != 0 {
+                    vc.view.makeToast("최소 한 자 이상, 최대 8글자까지 작성 가능합니다", position: .center)
+                } else  if result.filter({ vc.viewModel.myStudyArr.contains($0)}).count != 0 || result.count != Set(result).count {
                     vc.view.makeToast("스터디를 중복해서 등록할 수 없습니다.", position: .center)
                 } else {
                     if vc.viewModel.arrCountLimit() {
                         vc.view.makeToast("8개 이상 스터디를 등록할 수 없습니다.", position: .center)
                     } else {
-                        vc.viewModel.myStudyArr.append(vc.searchBar.text!)
+                        vc.viewModel.myStudyArr.append(contentsOf: result)
                         var snapshot = NSDiffableDataSourceSnapshot<Int, String>()
                         snapshot.appendSections([0, 1])
                         snapshot.appendItems(vc.viewModel.myStudyArr, toSection: 1)
                         vc.dataSource?.apply(snapshot, animatingDifferences: true)
+                        
                     }
                 }
             }
             .disposed(by: disposeBag)
+        
+        setCollection()
     }
     
-//    func setCollection() {
-//        
-//    }
+    func setCollection() {
+      
+        collectionView.rx.itemSelected
+            .withUnretained(self)
+            .subscribe { vc, indexPath in
+                if indexPath.section == 0 {
+                    
+                } else {
+                    vc.viewModel.myStudyArr.remove(at: indexPath.item)
+                    var snapshot = NSDiffableDataSourceSnapshot<Int, String>()
+                    snapshot.appendSections([0, 1])
+                    snapshot.appendItems(vc.viewModel.myStudyArr, toSection: 1)
+                    vc.dataSource?.apply(snapshot, animatingDifferences: true)
+                }
+        }
+        .disposed(by: disposeBag)
+
+    }
     
     override func configureUI() {
         view.addSubview(collectionView)
@@ -136,10 +159,6 @@ extension SearchViewController {
             return self?.collectionView.dequeueConfiguredReusableSupplementary(using: headerRegitration, for: indexPath)
         }
     }
-}
-
-extension SearchViewController: UICollectionViewDelegate {
-    
 }
 
 

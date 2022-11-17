@@ -10,6 +10,7 @@ import UIKit
 import FirebaseCore
 import FirebaseMessaging
 
+
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -64,4 +65,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
 }
-extension AppDelegate: MessagingDelegate, UNUserNotificationCenterDelegate { }
+extension AppDelegate: MessagingDelegate, UNUserNotificationCenterDelegate {
+
+}

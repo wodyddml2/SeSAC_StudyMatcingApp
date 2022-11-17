@@ -11,16 +11,9 @@ class SearchViewModel {
     var myStudyArr: [String] = []
     var arroundStudyArr: [String] = ["ss", "ssss", "sssss"]
     
-    func overlapString(text: String) -> Bool {
-        return myStudyArr.filter { text == $0 }.count > 0 ? true : false
-    }
-    
     func arrCountLimit() -> Bool {
         return myStudyArr.count > 9 ? true : false
     }
     
-    func removeStudy(text: String) {
-        guard let index = myStudyArr.firstIndex(of: text) else {return}
-        myStudyArr.remove(at: index)
-    }
+
 }
