@@ -7,8 +7,11 @@
 
 import UIKit
 
+import RxSwift
+
 struct ResultString: Hashable {
-    let study: String
+    let id = UUID()
+    var study: String
 }
 
 class SearchViewController: BaseViewController {
@@ -23,12 +26,12 @@ class SearchViewController: BaseViewController {
         let width = view.frame.width
         let view = UISearchBar(frame: CGRect(x: 0, y: 0, width: width - 20, height: 0))
         view.placeholder = "띄어쓰기로 복수 입력이 가능해요"
-        view.delegate = self
         return view
     }()
     
-//    lazy var a = [ResultString(study: "Ss")]
-    var ace: [String] = []
+    let disposeBag = DisposeBag()
+    let viewModel = SearchViewModel()
+    
     private var dataSource: UICollectionViewDiffableDataSource<Int, String>?
     
     override func viewDidLoad() {
@@ -37,9 +40,28 @@ class SearchViewController: BaseViewController {
         navigationBackButton()
         configureDataSource()
         var snapshot = NSDiffableDataSourceSnapshot<Int, String>()
-        snapshot.appendSections([0])
-        snapshot.appendItems(ace)
+        snapshot.appendSections([0, 1])
+        snapshot.appendItems(viewModel.myStudyArr, toSection: 1)
         dataSource?.apply(snapshot, animatingDifferences: true)
+        
+        searchBar.rx.searchButtonClicked
+            .withUnretained(self)
+            .bind { vc, _ in
+                if vc.viewModel.overlapString(text: vc.searchBar.text!) {
+                    vc.view.makeToast("스터디를 중복해서 등록할 수 없습니다.", position: .center)
+                } else {
+                    if vc.viewModel.arrCountLimit() {
+                        vc.view.makeToast("8개 이상 스터디를 등록할 수 없습니다.", position: .center)
+                    } else {
+                        vc.viewModel.myStudyArr.append(vc.searchBar.text!)
+                        var snapshot = NSDiffableDataSourceSnapshot<Int, String>()
+                        snapshot.appendSections([0, 1])
+                        snapshot.appendItems(vc.viewModel.myStudyArr, toSection: 1)
+                        vc.dataSource?.apply(snapshot, animatingDifferences: true)
+                    }
+                }
+            }
+            .disposed(by: disposeBag)
     }
     
     override func configureUI() {
@@ -96,7 +118,8 @@ extension SearchViewController {
         
         let headerRegitration = UICollectionView.SupplementaryRegistration<UICollectionViewListCell>(elementKind: UICollectionView.elementKindSectionHeader) { headerView, elementKind, indexPath in
             var configuration = headerView.defaultContentConfiguration()
-            configuration.text = "내가 하고 싶은"
+            configuration.text = indexPath.section == 0 ? "지금 주변에는" : "내가 하고 싶은"
+             
             configuration.textProperties.font = UIFont.notoSans(size: 12, family: .Regular)
             configuration.textProperties.color = .black
             headerView.contentConfiguration = configuration
@@ -117,23 +140,18 @@ extension SearchViewController: UICollectionViewDelegate {
     
 }
 
-extension SearchViewController: UISearchBarDelegate {
-    func updateSearchResults(for searchController: UISearchController) { }
-    
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        ace.append(searchBar.text!)
-        
-        var snapshot = NSDiffableDataSourceSnapshot<Int, String>()
-        snapshot.appendSections([0])
-        snapshot.appendItems(ace)
-        dataSource?.apply(snapshot, animatingDifferences: true)
-    }
-//    func removeDuplicate (_ array: [Int]) -> [Int] {
-//        var removedArray = [Int]()
-//        for i in array {
-//            if removedArray.contains(i) == false {
-//                removedArray.append(i)
-//            }
-//        }
+//extension SearchViewController: UISearchBarDelegate {
+//    func updateSearchResults(for searchController: UISearchController) { }
+//
+//    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+//
 //    }
-}
+////    func removeDuplicate (_ array: [Int]) -> [Int] {
+////        var removedArray = [Int]()
+////        for i in array {
+////            if removedArray.contains(i) == false {
+////                removedArray.append(i)
+////            }
+////        }
+////    }
+//}

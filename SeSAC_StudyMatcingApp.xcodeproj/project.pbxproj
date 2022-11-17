@@ -95,6 +95,7 @@
 		638B0746291AA49600E9D254 /* AuthComent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638B0745291AA49600E9D254 /* AuthComent.swift */; };
 		638B074B291AB44200E9D254 /* FirebaseAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638B074A291AB44200E9D254 /* FirebaseAPIService.swift */; };
 		638B074D291ABB9E00E9D254 /* FirebaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638B074C291ABB9E00E9D254 /* FirebaseError.swift */; };
+		63D01EEB2926152A007ADA35 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D01EEA2926152A007ADA35 /* SearchViewModel.swift */; };
 		63F31446291D2A3500C31F59 /* EmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F31445291D2A3500C31F59 /* EmailViewController.swift */; };
 		63F31448291D2A4000C31F59 /* EmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F31447291D2A4000C31F59 /* EmailView.swift */; };
 		63F3144A291D2A6300C31F59 /* EmailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F31449291D2A6300C31F59 /* EmailViewModel.swift */; };
@@ -194,6 +195,7 @@
 		638B0745291AA49600E9D254 /* AuthComent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthComent.swift; sourceTree = "<group>"; };
 		638B074A291AB44200E9D254 /* FirebaseAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAPIService.swift; sourceTree = "<group>"; };
 		638B074C291ABB9E00E9D254 /* FirebaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseError.swift; sourceTree = "<group>"; };
+		63D01EEA2926152A007ADA35 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		63F31445291D2A3500C31F59 /* EmailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailViewController.swift; sourceTree = "<group>"; };
 		63F31447291D2A4000C31F59 /* EmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailView.swift; sourceTree = "<group>"; };
 		63F31449291D2A6300C31F59 /* EmailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailViewModel.swift; sourceTree = "<group>"; };
@@ -804,6 +806,7 @@
 		637EDF3D29252FA2009089E4 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				63D01EEA2926152A007ADA35 /* SearchViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1075,6 +1078,7 @@
 				631DC9542921319F00F23211 /* SeSACProfileGet.swift in Sources */,
 				63F3144A291D2A6300C31F59 /* EmailViewModel.swift in Sources */,
 				63467DD32918D80800E7D8AE /* FirstViewController.swift in Sources */,
+				63D01EEB2926152A007ADA35 /* SearchViewModel.swift in Sources */,
 				635E1622291C1A440042E8E4 /* NicknameView.swift in Sources */,
 				63467DF02918E2F900E7D8AE /* UIColor+CustomColor.swift in Sources */,
 				6378279E292225D3009E1424 /* MyProfileViewController.swift in Sources */,
