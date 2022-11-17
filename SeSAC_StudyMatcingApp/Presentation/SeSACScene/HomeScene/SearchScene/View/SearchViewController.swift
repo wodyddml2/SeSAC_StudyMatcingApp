@@ -208,7 +208,21 @@ extension SearchViewController {
     
     
     private func configureDataSource() {
-        let cellRegistration = UICollectionView.CellRegistration<SearchCollectionViewCell, String> { cell, indexPath, itemIdentifier in
+        
+        let otherCellRegistration = UICollectionView.CellRegistration<SearchOtherStudyCollectionViewCell, String> { cell, indexPath, itemIdentifier in
+            cell.studyLabel.text = itemIdentifier
+            if indexPath.section == 0 {
+                cell.outlineBorder(color: UIColor.errorRed.cgColor)
+                cell.studyLabel.textColor = .errorRed
+            } else {
+                cell.outlineBorder(color: UIColor.gray4.cgColor)
+                cell.studyLabel.textColor = .black
+            }
+            
+        }
+        
+        
+        let myCellRegistration = UICollectionView.CellRegistration<SearchMyStudyCollectionViewCell, String> { cell, indexPath, itemIdentifier in
             cell.studyLabel.text = itemIdentifier
             cell.outlineBorder()
         }
@@ -223,8 +237,15 @@ extension SearchViewController {
         }
         
         dataSource = UICollectionViewDiffableDataSource(collectionView: collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
-            let cell = collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: itemIdentifier)
-            return cell
+            
+            if indexPath.section == 2 {
+                let cell = collectionView.dequeueConfiguredReusableCell(using: myCellRegistration, for: indexPath, item: itemIdentifier)
+                return cell
+            } else {
+                let cell = collectionView.dequeueConfiguredReusableCell(using: otherCellRegistration, for: indexPath, item: itemIdentifier)
+                return cell
+            }
+            
         })
         
         dataSource?.supplementaryViewProvider = { [weak self] headerView, elementKind, indexPath in

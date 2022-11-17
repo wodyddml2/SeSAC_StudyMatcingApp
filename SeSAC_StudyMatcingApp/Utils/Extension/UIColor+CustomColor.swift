@@ -52,5 +52,9 @@ extension UIColor {
     static var focus: UIColor {
         return UIColor(red: 51 / 255, green: 51 / 255, blue: 51 / 255, alpha: 1)
     }
+    
+    static var errorRed: UIColor {
+        return UIColor(red: 233 / 255, green: 102 / 255, blue: 107 / 255, alpha: 1)
+    }
 }
 

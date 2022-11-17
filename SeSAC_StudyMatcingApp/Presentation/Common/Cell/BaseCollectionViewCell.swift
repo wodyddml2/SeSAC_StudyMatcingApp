@@ -25,10 +25,9 @@ class BaseCollectionViewCell: UICollectionViewCell {
     
     func setConstraints() { }
     
-    func outlineBorder() {
-        layer.borderColor = UIColor.sesacGreen.cgColor
+    func outlineBorder(color: CGColor = UIColor.sesacGreen.cgColor) {
+        layer.borderColor = color
         layer.borderWidth = 1
         layer.cornerRadius = 8
     }
-    
 }

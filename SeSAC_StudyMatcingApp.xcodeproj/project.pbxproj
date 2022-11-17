@@ -90,13 +90,14 @@
 		637EDF38292522C5009089E4 /* UIView+Shadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637EDF37292522C5009089E4 /* UIView+Shadow.swift */; };
 		637EDF3A292528A5009089E4 /* MatchImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637EDF39292528A5009089E4 /* MatchImage.swift */; };
 		637EDF3F29252FB0009089E4 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637EDF3E29252FB0009089E4 /* SearchViewController.swift */; };
-		637EDF422925301E009089E4 /* SearchCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637EDF412925301E009089E4 /* SearchCollectionViewCell.swift */; };
+		637EDF422925301E009089E4 /* SearchMyStudyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637EDF412925301E009089E4 /* SearchMyStudyCollectionViewCell.swift */; };
 		637EDF4429253039009089E4 /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637EDF4329253039009089E4 /* BaseCollectionViewCell.swift */; };
 		638B0746291AA49600E9D254 /* AuthComent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638B0745291AA49600E9D254 /* AuthComent.swift */; };
 		638B074B291AB44200E9D254 /* FirebaseAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638B074A291AB44200E9D254 /* FirebaseAPIService.swift */; };
 		638B074D291ABB9E00E9D254 /* FirebaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638B074C291ABB9E00E9D254 /* FirebaseError.swift */; };
 		63D01EEB2926152A007ADA35 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D01EEA2926152A007ADA35 /* SearchViewModel.swift */; };
 		63D01EED292649BC007ADA35 /* SeSACSearchDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D01EEC292649BC007ADA35 /* SeSACSearchDTO.swift */; };
+		63D01EEF29268E88007ADA35 /* SearchOtherStudyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D01EEE29268E88007ADA35 /* SearchOtherStudyCollectionViewCell.swift */; };
 		63F31446291D2A3500C31F59 /* EmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F31445291D2A3500C31F59 /* EmailViewController.swift */; };
 		63F31448291D2A4000C31F59 /* EmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F31447291D2A4000C31F59 /* EmailView.swift */; };
 		63F3144A291D2A6300C31F59 /* EmailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F31449291D2A6300C31F59 /* EmailViewModel.swift */; };
@@ -191,13 +192,14 @@
 		637EDF37292522C5009089E4 /* UIView+Shadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Shadow.swift"; sourceTree = "<group>"; };
 		637EDF39292528A5009089E4 /* MatchImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchImage.swift; sourceTree = "<group>"; };
 		637EDF3E29252FB0009089E4 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
-		637EDF412925301E009089E4 /* SearchCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCollectionViewCell.swift; sourceTree = "<group>"; };
+		637EDF412925301E009089E4 /* SearchMyStudyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMyStudyCollectionViewCell.swift; sourceTree = "<group>"; };
 		637EDF4329253039009089E4 /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
 		638B0745291AA49600E9D254 /* AuthComent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthComent.swift; sourceTree = "<group>"; };
 		638B074A291AB44200E9D254 /* FirebaseAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAPIService.swift; sourceTree = "<group>"; };
 		638B074C291ABB9E00E9D254 /* FirebaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseError.swift; sourceTree = "<group>"; };
 		63D01EEA2926152A007ADA35 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		63D01EEC292649BC007ADA35 /* SeSACSearchDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACSearchDTO.swift; sourceTree = "<group>"; };
+		63D01EEE29268E88007ADA35 /* SearchOtherStudyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchOtherStudyCollectionViewCell.swift; sourceTree = "<group>"; };
 		63F31445291D2A3500C31F59 /* EmailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailViewController.swift; sourceTree = "<group>"; };
 		63F31447291D2A4000C31F59 /* EmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailView.swift; sourceTree = "<group>"; };
 		63F31449291D2A6300C31F59 /* EmailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailViewModel.swift; sourceTree = "<group>"; };
@@ -817,7 +819,8 @@
 		637EDF4029253002009089E4 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				637EDF412925301E009089E4 /* SearchCollectionViewCell.swift */,
+				637EDF412925301E009089E4 /* SearchMyStudyCollectionViewCell.swift */,
+				63D01EEE29268E88007ADA35 /* SearchOtherStudyCollectionViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -1005,7 +1008,7 @@
 			files = (
 				63467E12291937CF00E7D8AE /* MessageViewModel.swift in Sources */,
 				637827A629222E20009E1424 /* MyProfileImageTableViewCell.swift in Sources */,
-				637EDF422925301E009089E4 /* SearchCollectionViewCell.swift in Sources */,
+				637EDF422925301E009089E4 /* SearchMyStudyCollectionViewCell.swift in Sources */,
 				637EDF3A292528A5009089E4 /* MatchImage.swift in Sources */,
 				63308F1D292334F3004B90A5 /* PrifileWithdrawView.swift in Sources */,
 				638B0746291AA49600E9D254 /* AuthComent.swift in Sources */,
@@ -1078,6 +1081,7 @@
 				637EDF3F29252FB0009089E4 /* SearchViewController.swift in Sources */,
 				6300491F291E5E7F0046E6D3 /* HomeViewController.swift in Sources */,
 				635E1626291C2BFC0042E8E4 /* SignupCommet.swift in Sources */,
+				63D01EEF29268E88007ADA35 /* SearchOtherStudyCollectionViewCell.swift in Sources */,
 				63467DFD2918EA8400E7D8AE /* NumberViewController.swift in Sources */,
 				631DC9542921319F00F23211 /* SeSACProfileGet.swift in Sources */,
 				63F3144A291D2A6300C31F59 /* EmailViewModel.swift in Sources */,

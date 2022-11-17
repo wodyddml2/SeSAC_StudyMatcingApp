@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SearchCollectionViewCell: BaseCollectionViewCell {
+class SearchMyStudyCollectionViewCell: BaseCollectionViewCell {
     
     let studyLabel: UILabel = {
         let view = UILabel()
