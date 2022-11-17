@@ -35,4 +35,11 @@ class CommonButton: UIButton {
         self.backgroundColor = .sesacGreen
         self.setTitleColor(.white, for: .normal)
     }
+    
+    func outlineStyle() {
+        self.layer.borderWidth = 1
+        self.layer.borderColor = UIColor.sesacGreen.cgColor
+        self.setTitleColor(.sesacGreen, for: .normal)
+        self.backgroundColor = .white
+    }
 }

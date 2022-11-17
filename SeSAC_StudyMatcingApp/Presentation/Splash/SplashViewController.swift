@@ -56,9 +56,6 @@ class SplashViewController: BaseViewController {
                     let vc = TabViewController()
                     sceneDelegate?.window?.rootViewController = vc
                     
-                    
-//                    let vc = UINavigationController(rootViewController: NumberViewController())
-//                    sceneDelegate?.window?.rootViewController = vc
                 case .failure(let fail):
                     let error = fail as! SeSACLoginError
                     switch error {

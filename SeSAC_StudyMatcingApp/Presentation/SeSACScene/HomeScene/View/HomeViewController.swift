@@ -9,11 +9,15 @@ import UIKit
 import MapKit
 import CoreLocation
 
+import RxSwift
+
 final class HomeViewController: BaseViewController {
     
     private let locationManager = CLLocationManager()
 
     let mainView = HomeView()
+    
+    let disposeBag = DisposeBag()
     
     override func loadView() {
         view = mainView
@@ -24,15 +28,9 @@ final class HomeViewController: BaseViewController {
         checkUserDeviceLocationSeviceAuthorization()
 
         locationManager.delegate = self
-        
-        mainView.allButton.addTarget(self, action: #selector(aa), for: .touchUpInside)
-    }
-    
-    @objc func aa() {
-        print("SSSSSSSS")
-    }
- 
 
+        bindViewModel()
+    }
 }
 
 extension HomeViewController {
@@ -86,5 +84,18 @@ extension HomeViewController {
         annotation.title = "현재 위치"
 
         mainView.mapView.addAnnotation(annotation)
+    }
+}
+
+extension HomeViewController {
+    func bindViewModel() {
+        mainView.matchingButton.rx.tap
+            .withUnretained(self)
+            .bind { vc, _ in
+                let viewController = SearchViewController()
+                
+                vc.transition(viewController, transitionStyle: .push)
+            }
+            .disposed(by: disposeBag)
     }
 }
