@@ -51,7 +51,6 @@ class SplashViewController: BaseViewController {
                 guard let self = self else {return}
                 switch result {
                 case .success(let success):
-                    print(success)
                     UserManager.sesacImage = success.sesac
                     let vc = TabViewController()
                     sceneDelegate?.window?.rootViewController = vc
@@ -95,7 +94,6 @@ class SplashViewController: BaseViewController {
                 SeSACAPIService.shared.requestSeSACLogin(type: SESACLoginDTO.self,router: Router.loginGet(query: idToken)) { result in
                     switch result {
                     case .success(let success):
-                        print(success)
                         UserManager.sesacImage = success.sesac
                         let vc = TabViewController()
                         sceneDelegate?.window?.rootViewController = vc

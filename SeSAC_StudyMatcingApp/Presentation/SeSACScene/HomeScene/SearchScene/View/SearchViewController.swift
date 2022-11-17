@@ -63,8 +63,10 @@ class SearchViewController: BaseViewController, UIScrollViewDelegate {
                 } else {
                     vc.viewModel.myStudyArr.remove(at: indexPath.item)
                     var snapshot = NSDiffableDataSourceSnapshot<Int, String>()
-                    snapshot.appendSections([0, 1])
-                    snapshot.appendItems(vc.viewModel.myStudyArr, toSection: 1)
+                    snapshot.appendSections([0, 1, 2])
+                    snapshot.appendItems(vc.viewModel.recommendArr, toSection: 0)
+                    snapshot.appendItems(vc.viewModel.arroundStudyArr, toSection: 1)
+                    snapshot.appendItems(vc.viewModel.myStudyArr, toSection: 2)
                     vc.dataSource?.apply(snapshot, animatingDifferences: true)
                 }
         }
@@ -83,6 +85,13 @@ extension SearchViewController {
             .withUnretained(self)
             .subscribe(onNext: { vc, result in
                 vc.viewModel.recommendArr.append(contentsOf: result.fromRecommend)
+                vc.viewModel.arroundStudyArr.append(contentsOf: ["d"])
+                var snapshot = NSDiffableDataSourceSnapshot<Int, String>()
+                snapshot.appendSections([0, 1, 2])
+                snapshot.appendItems(vc.viewModel.recommendArr, toSection: 0)
+                snapshot.appendItems(vc.viewModel.arroundStudyArr, toSection: 1)
+                snapshot.appendItems(vc.viewModel.myStudyArr, toSection: 2)
+                vc.dataSource?.apply(snapshot, animatingDifferences: true)
             })
             .disposed(by: disposeBag)
   
@@ -115,8 +124,10 @@ extension SearchViewController {
                     } else {
                         vc.viewModel.myStudyArr.append(contentsOf: result)
                         var snapshot = NSDiffableDataSourceSnapshot<Int, String>()
-                        snapshot.appendSections([0, 1])
-                        snapshot.appendItems(vc.viewModel.myStudyArr, toSection: 1)
+                        snapshot.appendSections([0, 1, 2])
+                        snapshot.appendItems(vc.viewModel.recommendArr, toSection: 0)
+                        snapshot.appendItems(vc.viewModel.arroundStudyArr, toSection: 1)
+                        snapshot.appendItems(vc.viewModel.myStudyArr, toSection: 2)
                         vc.dataSource?.apply(snapshot, animatingDifferences: true)
                         
                     }
@@ -129,29 +140,69 @@ extension SearchViewController {
 extension SearchViewController {
     
     private func createLayout() -> UICollectionViewLayout {
-        let size = NSCollectionLayoutSize(widthDimension: .estimated(60), heightDimension: .absolute(35))
+        // UICollectionViewCompositionalLayoutSectionProvider
+        let sectionProvider = { (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+            if sectionIndex == 0 {
+                let size = NSCollectionLayoutSize(widthDimension: .estimated(60), heightDimension: .absolute(35))
 
-        let item = NSCollectionLayoutItem(layoutSize: size)
-        
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(35))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+                let item = NSCollectionLayoutItem(layoutSize: size)
+                
+                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(35))
+                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
 
-        group.interItemSpacing = .fixed(8)
-        
-        let section = NSCollectionLayoutSection(group: group)
-        section.interGroupSpacing = 8
-        section.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)
-        
-        // boundarySupplementaryItems: 머리글 및 바닥글과 같이 섹션의 경계 가장자리와 연결된 보충 항목의 배열
-        section.boundarySupplementaryItems = [
-            NSCollectionLayoutBoundarySupplementaryItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(40)), elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
-        ]
-     
+                group.interItemSpacing = .fixed(8)
+                
+                let section = NSCollectionLayoutSection(group: group)
+                section.interGroupSpacing = 8
+                section.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)
+                
+                // boundarySupplementaryItems: 머리글 및 바닥글과 같이 섹션의 경계 가장자리와 연결된 보충 항목의 배열
+                section.boundarySupplementaryItems = [
+                    NSCollectionLayoutBoundarySupplementaryItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(40)), elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+                ]
+             
+                return section
+            } else if sectionIndex == 1 {
+                let size = NSCollectionLayoutSize(widthDimension: .estimated(60), heightDimension: .absolute(35))
+
+                let item = NSCollectionLayoutItem(layoutSize: size)
+                
+                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(35))
+                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+
+                group.interItemSpacing = .fixed(8)
+                
+                let section = NSCollectionLayoutSection(group: group)
+                section.interGroupSpacing = 8
+                section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16)
+                return section
+            } else {
+                let size = NSCollectionLayoutSize(widthDimension: .estimated(60), heightDimension: .absolute(35))
+
+                let item = NSCollectionLayoutItem(layoutSize: size)
+                
+                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(35))
+                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+
+                group.interItemSpacing = .fixed(8)
+                
+                let section = NSCollectionLayoutSection(group: group)
+                section.interGroupSpacing = 8
+                section.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)
+                
+                // boundarySupplementaryItems: 머리글 및 바닥글과 같이 섹션의 경계 가장자리와 연결된 보충 항목의 배열
+                section.boundarySupplementaryItems = [
+                    NSCollectionLayoutBoundarySupplementaryItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(40)), elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+                ]
+                
+                return section
+            }
+        }
         let config = UICollectionViewCompositionalLayoutConfiguration()
         config.scrollDirection = .vertical
-        
-        let layout = UICollectionViewCompositionalLayout(section: section)
+        let layout = UICollectionViewCompositionalLayout(sectionProvider: sectionProvider)
         layout.configuration = config
+        
         return layout
     }
     
@@ -160,7 +211,6 @@ extension SearchViewController {
         let cellRegistration = UICollectionView.CellRegistration<SearchCollectionViewCell, String> { cell, indexPath, itemIdentifier in
             cell.studyLabel.text = itemIdentifier
             cell.outlineBorder()
-            print(itemIdentifier)
         }
         
         let headerRegitration = UICollectionView.SupplementaryRegistration<UICollectionViewListCell>(elementKind: UICollectionView.elementKindSectionHeader) { headerView, elementKind, indexPath in

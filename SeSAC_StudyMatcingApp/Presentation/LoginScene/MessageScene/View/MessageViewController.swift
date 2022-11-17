@@ -98,7 +98,6 @@ extension MessageViewController {
                                     switch result {
                                     case .success(let success):
                                         UserManager.signupStatus = true
-                                        print("==========\(success)")
                                     case .failure(let fail):
                                         let error = fail as! SeSACLoginError
                                         if error == SeSACLoginError.noSignup {

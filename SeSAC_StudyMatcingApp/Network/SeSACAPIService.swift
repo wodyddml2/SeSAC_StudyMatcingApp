@@ -149,7 +149,6 @@ class SeSACAPIService {
                 completion(.success(result))
             case .failure(_):
                 guard let statusCode = response.response?.statusCode else {return}
-                print(statusCode)
                 guard let error = SeSACLoginError(rawValue: statusCode) else {return}
                 completion(.failure(error))
             }

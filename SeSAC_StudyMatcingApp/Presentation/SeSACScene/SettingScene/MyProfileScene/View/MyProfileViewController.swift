@@ -195,7 +195,6 @@ extension MyProfileViewController: UITableViewDelegate {
 
 extension MyProfileViewController {
     private func bindViewModel() {
-        print(UserManager.idToken)
         let input = MyProfileViewModel.Input(viewDidLoadEvent: Observable.just(()), save: saveButton.rx.tap)
         let output = viewModel.transform(input: input)
       
