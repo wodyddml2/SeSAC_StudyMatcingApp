@@ -15,6 +15,7 @@ enum Router: URLRequestConvertible {
     case savePut(sesac: SeSACProfileGet, query: String)
     case withdrawPost(query: String)
     case searchPost(query: String, lat: Double, long: Double)
+    case matchGet(query: String)
     
     
     var baseURL: URL {
@@ -27,6 +28,8 @@ enum Router: URLRequestConvertible {
             return URL(string: SeSACAPI.withdrawURL)!
         case .searchPost:
             return URL(string: SeSACAPI.baseURL + "/v1/queue/search")!
+        case .matchGet:
+            return URL(string: SeSACAPI.baseURL + "/v1/queue/myQueueState")!
         }
         
     }
@@ -44,7 +47,7 @@ enum Router: URLRequestConvertible {
                 "Content-Type": SeSACLoginHeader.contentType,
                 "idtoken": UserManager.idToken
             ]
-        case .savePut( _ ,let query), .withdrawPost(let query), .searchPost(let query, _, _):
+        case .savePut( _ ,let query), .withdrawPost(let query), .searchPost(let query, _, _), .matchGet(let query):
             return [
                 "Content-Type": SeSACLoginHeader.contentType,
                 "idtoken": query
@@ -54,7 +57,7 @@ enum Router: URLRequestConvertible {
     
     var parameters: Parameters {
         switch self {
-        case .loginGet, .withdrawPost:
+        case .loginGet, .withdrawPost, .matchGet:
             return ["":""]
         case .signUpPost:
             guard let gender = UserManager.gender else {return Parameters()}
@@ -86,7 +89,7 @@ enum Router: URLRequestConvertible {
     
     var method: HTTPMethod {
         switch self {
-        case .loginGet:
+        case .loginGet, .matchGet:
             return .get
         case .signUpPost, .withdrawPost, .searchPost:
             return .post
@@ -102,7 +105,7 @@ enum Router: URLRequestConvertible {
         request.method = method
         request.headers = header
         switch self {
-        case .loginGet, .withdrawPost:
+        case .loginGet, .withdrawPost, .matchGet:
             return request
         case .signUpPost, .savePut, .searchPost:
             return try URLEncoding.default.encode(request, with: parameters)
@@ -111,7 +114,7 @@ enum Router: URLRequestConvertible {
     }
 }
 
-enum SeSACLoginError: Int, Error {
+enum SeSACError: Int, Error {
     case notNickname = 202
     case existingUsers = 201
     case firebaseTokenError = 401
@@ -121,7 +124,7 @@ enum SeSACLoginError: Int, Error {
     case success = 200
 }
 
-extension SeSACLoginError: LocalizedError {
+extension SeSACError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .firebaseTokenError, .serverError, .clientError:
@@ -141,7 +144,7 @@ class SeSACAPIService {
     
     private init() { }
     
-    func requestSeSACLogin<T: Codable>(type: T.Type = T.self, router: URLRequestConvertible ,completion: @escaping (Result<T, Error>) -> Void) {
+    func requestSeSACAPI<T: Codable>(type: T.Type = T.self, router: URLRequestConvertible ,completion: @escaping (Result<T, Error>) -> Void) {
         AF.request(router).responseDecodable(of: T.self) { response in
            
             switch response.result {
@@ -149,7 +152,7 @@ class SeSACAPIService {
                 completion(.success(result))
             case .failure(_):
                 guard let statusCode = response.response?.statusCode else {return}
-                guard let error = SeSACLoginError(rawValue: statusCode) else {return}
+                guard let error = SeSACError(rawValue: statusCode) else {return}
                 completion(.failure(error))
             }
         }

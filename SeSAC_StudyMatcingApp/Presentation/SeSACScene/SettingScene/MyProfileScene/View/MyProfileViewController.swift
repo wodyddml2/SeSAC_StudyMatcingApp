@@ -224,12 +224,12 @@ extension MyProfileViewController {
             .bind { vc, _ in
                 guard let sesacData = vc.sesacData else {return}
                 
-                SeSACAPIService.shared.requestSeSACLogin(type: SESACLoginDTO.self ,router: Router.savePut(sesac: sesacData, query: UserManager.idToken)) { result in
+                SeSACAPIService.shared.requestSeSACAPI(type: SESACLoginDTO.self ,router: Router.savePut(sesac: sesacData, query: UserManager.idToken)) { result in
                     switch result {
                     case .success(_):
                         print("성공해도 success를 안타네?")
                     case .failure(let fail):
-                        let error = fail as! SeSACLoginError
+                        let error = fail as! SeSACError
                         switch error {
                         case .success:
                             vc.view.makeToast("저장 완료!", position: .center)

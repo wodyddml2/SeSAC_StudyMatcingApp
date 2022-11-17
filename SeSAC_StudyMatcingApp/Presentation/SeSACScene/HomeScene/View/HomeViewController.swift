@@ -16,6 +16,7 @@ final class HomeViewController: BaseViewController {
     private let locationManager = CLLocationManager()
 
     let mainView = HomeView()
+    let viewModel = HomeViewModel()
     
     let disposeBag = DisposeBag()
     
@@ -88,6 +89,33 @@ extension HomeViewController {
 
 extension HomeViewController {
     func bindViewModel() {
+        let input = HomeViewModel.Input(viewDidLoadEvent: Observable.just(()))
+        let output = viewModel.transform(input: input)
+        
+        output.sesacInfo
+            .subscribe { s in
+                print(s)
+            }
+            .disposed(by: disposeBag)
+        
+        output.networkFailed
+            .asDriver(onErrorJustReturn: false)
+            .drive (onNext: { [weak self] error in
+                guard let self = self else {return}
+                if error == true {
+                    self.view.makeToast("사용자의 정보를 불러오는데 실패했습니다.")
+                }
+            }).disposed(by: disposeBag)
+        
+        output.normalStatus
+            .asDriver(onErrorJustReturn: false)
+            .drive (onNext: { [weak self] normal in
+                guard let self = self else {return}
+                if normal == true {
+                    self.view.makeToast("normal")
+                }
+            }).disposed(by: disposeBag)
+    
         mainView.matchingButton.rx.tap
             .withUnretained(self)
             .bind { vc, _ in
@@ -101,5 +129,7 @@ extension HomeViewController {
                 
             }
             .disposed(by: disposeBag)
+        
+        
     }
 }

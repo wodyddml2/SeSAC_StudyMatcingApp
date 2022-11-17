@@ -94,13 +94,13 @@ extension MessageViewController {
                             if error != nil { return }
                             
                             if let idToken = idToken {
-                                SeSACAPIService.shared.requestSeSACLogin(type: SESACLoginDTO.self ,router: Router.loginGet(query: idToken)) { result in
+                                SeSACAPIService.shared.requestSeSACAPI(type: SESACLoginDTO.self ,router: Router.loginGet(query: idToken)) { result in
                                     switch result {
                                     case .success(let success):
                                         UserManager.signupStatus = true
                                     case .failure(let fail):
-                                        let error = fail as! SeSACLoginError
-                                        if error == SeSACLoginError.noSignup {
+                                        let error = fail as! SeSACError
+                                        if error == SeSACError.noSignup {
                                             UserManager.idToken = idToken
                                             UserManager.signupStatus = false
                                             UserManager.nickError = false

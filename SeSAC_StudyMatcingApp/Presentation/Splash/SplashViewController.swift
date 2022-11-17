@@ -47,7 +47,7 @@ class SplashViewController: BaseViewController {
         let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
         let sceneDelegate = windowScene?.delegate as? SceneDelegate
         if UserManager.onboarding {
-            SeSACAPIService.shared.requestSeSACLogin(type: SESACLoginDTO.self ,router: Router.loginGet(query: UserManager.idToken)) { [weak self] result in
+            SeSACAPIService.shared.requestSeSACAPI(type: SESACLoginDTO.self ,router: Router.loginGet(query: UserManager.idToken)) { [weak self] result in
                 guard let self = self else {return}
                 switch result {
                 case .success(let success):
@@ -56,7 +56,7 @@ class SplashViewController: BaseViewController {
                     sceneDelegate?.window?.rootViewController = vc
                     
                 case .failure(let fail):
-                    let error = fail as! SeSACLoginError
+                    let error = fail as! SeSACError
                     switch error {
                     case .firebaseTokenError:
                         self.renewalRequest()
@@ -91,14 +91,14 @@ class SplashViewController: BaseViewController {
             if let idToken = idToken {
                 UserManager.idToken = idToken
                 
-                SeSACAPIService.shared.requestSeSACLogin(type: SESACLoginDTO.self,router: Router.loginGet(query: idToken)) { result in
+                SeSACAPIService.shared.requestSeSACAPI(type: SESACLoginDTO.self,router: Router.loginGet(query: idToken)) { result in
                     switch result {
                     case .success(let success):
                         UserManager.sesacImage = success.sesac
                         let vc = TabViewController()
                         sceneDelegate?.window?.rootViewController = vc
                     case .failure(let fail):
-                        let error = fail as! SeSACLoginError
+                        let error = fail as! SeSACError
                         switch error {
                         case .noSignup:
                             UserManager.signupStatus = false

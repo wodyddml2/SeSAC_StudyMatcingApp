@@ -80,7 +80,7 @@ extension GenderViewController {
             .bind { vc, _ in
                 if vc.mainView.authButton.backgroundColor == .sesacGreen {
                     UserManager.gender = vc.mainView.manView.backgroundColor == .sesacWhiteGreen ? Gender.man : Gender.woman
-                    SeSACAPIService.shared.requestSeSACLogin(type: SESACLoginDTO.self,router: Router.signUpPost) { result in
+                    SeSACAPIService.shared.requestSeSACAPI(type: SESACLoginDTO.self,router: Router.signUpPost) { result in
                         switch result {
                         case .success(_):
                             UserManager.signupStatus = true
@@ -90,7 +90,7 @@ extension GenderViewController {
                             sceneDelegate?.window?.rootViewController = vc
                             sceneDelegate?.window?.makeKeyAndVisible()
                         case .failure(let fail):
-                            let error = fail as! SeSACLoginError
+                            let error = fail as! SeSACError
                             switch error {
                             case .notNickname:
                                 vc.notNicknameError(error: error.errorDescription ?? "닉네임 불가")

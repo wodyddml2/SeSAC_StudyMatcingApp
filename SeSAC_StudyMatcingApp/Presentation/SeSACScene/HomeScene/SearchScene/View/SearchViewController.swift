@@ -62,12 +62,7 @@ class SearchViewController: BaseViewController, UIScrollViewDelegate {
                     
                 } else {
                     vc.viewModel.myStudyArr.remove(at: indexPath.item)
-                    var snapshot = NSDiffableDataSourceSnapshot<Int, String>()
-                    snapshot.appendSections([0, 1, 2])
-                    snapshot.appendItems(vc.viewModel.recommendArr, toSection: 0)
-                    snapshot.appendItems(vc.viewModel.arroundStudyArr, toSection: 1)
-                    snapshot.appendItems(vc.viewModel.myStudyArr, toSection: 2)
-                    vc.dataSource?.apply(snapshot, animatingDifferences: true)
+                    vc.studySnapshot()
                 }
         }
         .disposed(by: disposeBag)
@@ -86,12 +81,7 @@ extension SearchViewController {
             .subscribe(onNext: { vc, result in
                 vc.viewModel.recommendArr.append(contentsOf: result.fromRecommend)
                 vc.viewModel.arroundStudyArr.append(contentsOf: ["d"])
-                var snapshot = NSDiffableDataSourceSnapshot<Int, String>()
-                snapshot.appendSections([0, 1, 2])
-                snapshot.appendItems(vc.viewModel.recommendArr, toSection: 0)
-                snapshot.appendItems(vc.viewModel.arroundStudyArr, toSection: 1)
-                snapshot.appendItems(vc.viewModel.myStudyArr, toSection: 2)
-                vc.dataSource?.apply(snapshot, animatingDifferences: true)
+                vc.studySnapshot()
             })
             .disposed(by: disposeBag)
   
@@ -123,12 +113,7 @@ extension SearchViewController {
                         vc.view.makeToast("8개 이상 스터디를 등록할 수 없습니다.", position: .center)
                     } else {
                         vc.viewModel.myStudyArr.append(contentsOf: result)
-                        var snapshot = NSDiffableDataSourceSnapshot<Int, String>()
-                        snapshot.appendSections([0, 1, 2])
-                        snapshot.appendItems(vc.viewModel.recommendArr, toSection: 0)
-                        snapshot.appendItems(vc.viewModel.arroundStudyArr, toSection: 1)
-                        snapshot.appendItems(vc.viewModel.myStudyArr, toSection: 2)
-                        vc.dataSource?.apply(snapshot, animatingDifferences: true)
+                        vc.studySnapshot()
                         
                     }
                 }
@@ -158,7 +143,7 @@ extension SearchViewController {
                 
                 // boundarySupplementaryItems: 머리글 및 바닥글과 같이 섹션의 경계 가장자리와 연결된 보충 항목의 배열
                 section.boundarySupplementaryItems = [
-                    NSCollectionLayoutBoundarySupplementaryItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(40)), elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+                    NSCollectionLayoutBoundarySupplementaryItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(40)), elementKind: UICollectionView.elementKindSectionHeader, alignment: .top )
                 ]
              
                 return section
@@ -174,7 +159,7 @@ extension SearchViewController {
                 
                 let section = NSCollectionLayoutSection(group: group)
                 section.interGroupSpacing = 8
-                section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16)
+                section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 16, trailing: 16)
                 return section
             } else {
                 let size = NSCollectionLayoutSize(widthDimension: .estimated(60), heightDimension: .absolute(35))
@@ -251,6 +236,15 @@ extension SearchViewController {
         dataSource?.supplementaryViewProvider = { [weak self] headerView, elementKind, indexPath in
             return self?.collectionView.dequeueConfiguredReusableSupplementary(using: headerRegitration, for: indexPath)
         }
+    }
+    
+    private func studySnapshot() {
+        var snapshot = NSDiffableDataSourceSnapshot<Int, String>()
+        snapshot.appendSections([0, 1, 2])
+        snapshot.appendItems(viewModel.recommendArr, toSection: 0)
+        snapshot.appendItems(viewModel.arroundStudyArr, toSection: 1)
+        snapshot.appendItems(viewModel.myStudyArr, toSection: 2)
+        dataSource?.apply(snapshot, animatingDifferences: true)
     }
 }
 

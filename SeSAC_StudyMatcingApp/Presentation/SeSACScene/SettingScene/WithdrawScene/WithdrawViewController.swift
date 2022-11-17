@@ -123,12 +123,12 @@ class WithdrawViewController: BaseViewController {
                 UserManager.idToken = idToken
                 let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
                 let sceneDelegate = windowScene?.delegate as? SceneDelegate
-                SeSACAPIService.shared.requestSeSACLogin(type: SESACLoginDTO.self,router: Router.withdrawPost(query: UserManager.idToken)) { result in
+                SeSACAPIService.shared.requestSeSACAPI(type: SESACLoginDTO.self,router: Router.withdrawPost(query: UserManager.idToken)) { result in
                     switch result {
                     case .success(_):
                         print("성공을 안타")
                     case .failure(let fail):
-                        let error = fail as! SeSACLoginError
+                        let error = fail as! SeSACError
                         switch error {
                         case .success, .existingUsers:
                             UserManager.onboarding = false

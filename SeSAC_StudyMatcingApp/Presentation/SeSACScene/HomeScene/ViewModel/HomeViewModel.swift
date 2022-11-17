@@ -1,38 +1,30 @@
 //
-//  SearchViewModel.swift
+//  HomeViewModel.swift
 //  SeSAC_StudyMatcingApp
 //
-//  Created by J on 2022/11/17.
+//  Created by J on 2022/11/18.
 //
 
 import Foundation
-import CoreLocation
 import FirebaseAuth
 
 import RxSwift
 import RxCocoa
 
-class SearchViewModel {
-    var myStudyArr: [String] = []
-    var recommendArr: [String] = []
-    var arroundStudyArr: [String] = []
-    var locationValue: CLLocationCoordinate2D?
-   
+class HomeViewModel {
     let disposeBag = DisposeBag()
     
-    func arrCountLimit() -> Bool {
-        return myStudyArr.count > 8 ? true : false
-    }
     
-    private func requestSearchSeSAC(output: Output) {
-        guard let location = locationValue else {return}
-        SeSACAPIService.shared.requestSeSACAPI(type: SeSACSearchDTO.self, router: Router.searchPost(query: UserManager.idToken, lat: location.latitude, long: location.longitude)) { result in
+    private func requestMatchSeSAC(output: Output) {
+        SeSACAPIService.shared.requestSeSACAPI(type: SESACMatchDTO.self, router: Router.matchGet(query: UserManager.idToken)) { result in
             switch result {
             case .success(let success):
                 output.sesacInfo.onNext(success)
             case .failure(let fail):
                 let error = fail as! SeSACError
                 switch error {
+                case .existingUsers:
+                    output.normalStatus.accept(true)
                 case .firebaseTokenError:
                     self.renewalRequest(output: output)
                 default:
@@ -52,35 +44,35 @@ class SearchViewModel {
             if let idToken = idToken {
                 UserManager.idToken = idToken
                 
-                self.requestSearchSeSAC(output: output)
+                self.requestMatchSeSAC(output: output)
             }
         }
     }
-
 }
 
-extension SearchViewModel: ViewModelType {
+extension HomeViewModel: ViewModelType {
+    
+    
     struct Input {
         let viewDidLoadEvent: Observable<Void>
-        let searchTap: ControlEvent<Void>
     }
     
     struct Output {
-        var sesacInfo = PublishSubject<SeSACSearchDTO>()
+        var sesacInfo = PublishSubject<SESACMatchDTO>()
         var networkFailed = PublishRelay<Bool>()
-        let searchTap: ControlEvent<Void>
+        var normalStatus = PublishRelay<Bool>()
     }
     
     func transform(input: Input) -> Output {
-        let output = Output(searchTap: input.searchTap)
+        let output = Output()
         
         input.viewDidLoadEvent
             .withUnretained(self)
             .subscribe { vc, _ in
-                vc.requestSearchSeSAC(output: output)
+                vc.requestMatchSeSAC(output: output)
             }
             .disposed(by: disposeBag)
- 
+        
         return output
     }
 }
