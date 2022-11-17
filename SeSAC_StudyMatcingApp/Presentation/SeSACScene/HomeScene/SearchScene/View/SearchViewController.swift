@@ -64,6 +64,10 @@ class SearchViewController: BaseViewController {
             .disposed(by: disposeBag)
     }
     
+//    func setCollection() {
+//        
+//    }
+    
     override func configureUI() {
         view.addSubview(collectionView)
     }
@@ -78,10 +82,6 @@ class SearchViewController: BaseViewController {
 }
 
 extension SearchViewController {
-//    private func searchControllerSet() {
-//        navigationItem.searchController = searchController
-//        navigationItem.hidesSearchBarWhenScrolling = false
-//    }
     
     private func createLayout() -> UICollectionViewLayout {
         let size = NSCollectionLayoutSize(widthDimension: .estimated(60), heightDimension: .absolute(35))
@@ -110,9 +110,11 @@ extension SearchViewController {
         return layout
     }
     
+    
     private func configureDataSource() {
         let cellRegistration = UICollectionView.CellRegistration<SearchCollectionViewCell, String> { cell, indexPath, itemIdentifier in
-            cell.studyButton.setTitle(itemIdentifier, for: .normal)
+            cell.studyLabel.text = itemIdentifier
+            cell.outlineBorder()
             print(itemIdentifier)
         }
         
@@ -140,18 +142,4 @@ extension SearchViewController: UICollectionViewDelegate {
     
 }
 
-//extension SearchViewController: UISearchBarDelegate {
-//    func updateSearchResults(for searchController: UISearchController) { }
-//
-//    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-//
-//    }
-////    func removeDuplicate (_ array: [Int]) -> [Int] {
-////        var removedArray = [Int]()
-////        for i in array {
-////            if removedArray.contains(i) == false {
-////                removedArray.append(i)
-////            }
-////        }
-////    }
-//}
+

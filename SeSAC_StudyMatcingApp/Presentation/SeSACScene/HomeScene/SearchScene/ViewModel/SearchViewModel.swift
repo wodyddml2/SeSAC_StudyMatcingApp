@@ -18,4 +18,9 @@ class SearchViewModel {
     func arrCountLimit() -> Bool {
         return myStudyArr.count > 9 ? true : false
     }
+    
+    func removeStudy(text: String) {
+        guard let index = myStudyArr.firstIndex(of: text) else {return}
+        myStudyArr.remove(at: index)
+    }
 }
