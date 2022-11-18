@@ -82,10 +82,16 @@ final class SettingViewController: BaseViewController {
             .withUnretained(self)
             .subscribe { vc, index in
                 if index.row == 0 {
+                    
                     vc.transition(MyProfileViewController(), transitionStyle: .push)
                 }
             }
             .disposed(by: disposeBag)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        tabBarController?.tabBar.isHidden = false
     }
     
     override func configureUI() {

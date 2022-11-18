@@ -8,6 +8,7 @@
 import UIKit
 
 import RxSwift
+import RxKeyboard
 
 class SearchViewController: BaseViewController, UIScrollViewDelegate {
     
@@ -23,15 +24,23 @@ class SearchViewController: BaseViewController, UIScrollViewDelegate {
         return view
     }()
     
+    let searchButton: CommonButton = {
+        let view = CommonButton()
+        view.selectedStyle()
+        view.setTitle("새싹 찾기", for: .normal)
+        return view
+    }()
+    
     let disposeBag = DisposeBag()
     let viewModel = SearchViewModel()
     private var dataSource: UICollectionViewDiffableDataSource<Int, StudyTag>?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        navigationController?.navigationBar.isHidden = false
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: searchBar)
         navigationBackButton()
+        tabBarController?.tabBar.isHidden = true
         
         configureDataSource()
       
@@ -43,12 +52,19 @@ class SearchViewController: BaseViewController, UIScrollViewDelegate {
 
     
     override func configureUI() {
-        view.addSubview(collectionView)
+        [collectionView, searchButton].forEach {
+            view.addSubview($0)
+        }
     }
     
     override func setConstraints() {
         collectionView.snp.makeConstraints { make in
             make.edges.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        searchButton.snp.makeConstraints { make in
+            make.height.equalTo(48)
+            make.bottom.leading.trailing.equalToSuperview().inset(16)
         }
     }
     

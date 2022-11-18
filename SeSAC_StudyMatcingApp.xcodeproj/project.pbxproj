@@ -24,6 +24,7 @@
 		631DC94D2921194C00F23211 /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631DC94C2921194C00F23211 /* ProfileTableViewCell.swift */; };
 		631DC95029212CA300F23211 /* ReusableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631DC94F29212CA300F23211 /* ReusableProtocol.swift */; };
 		631DC9542921319F00F23211 /* SeSACProfileGet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631DC9532921319F00F23211 /* SeSACProfileGet.swift */; };
+		632564A72927726A003DDB9F /* RxKeyboard in Frameworks */ = {isa = PBXBuildFile; productRef = 632564A62927726A003DDB9F /* RxKeyboard */; };
 		6329D7CE291CA605004AC51C /* BirthCustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6329D7CD291CA605004AC51C /* BirthCustomView.swift */; };
 		63308F1529233379004B90A5 /* ProfileGenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63308F1429233379004B90A5 /* ProfileGenderView.swift */; };
 		63308F1729233460004B90A5 /* ProfileStudyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63308F1629233460004B90A5 /* ProfileStudyView.swift */; };
@@ -220,6 +221,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				63F3145E291D569500C31F59 /* FirebaseMessaging in Frameworks */,
+				632564A72927726A003DDB9F /* RxKeyboard in Frameworks */,
 				63F3145A291D569500C31F59 /* FirebaseAnalytics in Frameworks */,
 				63467DCD2918D4EA00E7D8AE /* RxSwift in Frameworks */,
 				631DC94429210BB600F23211 /* RxDataSources in Frameworks */,
@@ -943,6 +945,7 @@
 				63F3145D291D569500C31F59 /* FirebaseMessaging */,
 				631DC94329210BB600F23211 /* RxDataSources */,
 				637827AA29225A9F009E1424 /* MultiSlider */,
+				632564A62927726A003DDB9F /* RxKeyboard */,
 			);
 			productName = SeSAC_StudyMatcingApp;
 			productReference = 63467DAF2918D4AE00E7D8AE /* SeSAC_StudyMatcingApp.app */;
@@ -981,6 +984,7 @@
 				63F31458291D569500C31F59 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				631DC94229210BB600F23211 /* XCRemoteSwiftPackageReference "RxDataSources" */,
 				637827A929225A9F009E1424 /* XCRemoteSwiftPackageReference "MultiSlider" */,
+				632564A52927726A003DDB9F /* XCRemoteSwiftPackageReference "RxKeyboard" */,
 			);
 			productRefGroup = 63467DB02918D4AE00E7D8AE /* Products */;
 			projectDirPath = "";
@@ -1335,6 +1339,14 @@
 				minimumVersion = 5.0.0;
 			};
 		};
+		632564A52927726A003DDB9F /* XCRemoteSwiftPackageReference "RxKeyboard" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RxSwiftCommunity/RxKeyboard.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 		63467DC62918D4DC00E7D8AE /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
@@ -1398,6 +1410,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 631DC94229210BB600F23211 /* XCRemoteSwiftPackageReference "RxDataSources" */;
 			productName = RxDataSources;
+		};
+		632564A62927726A003DDB9F /* RxKeyboard */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 632564A52927726A003DDB9F /* XCRemoteSwiftPackageReference "RxKeyboard" */;
+			productName = RxKeyboard;
 		};
 		63467DC72918D4DC00E7D8AE /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;

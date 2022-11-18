@@ -32,6 +32,12 @@ final class HomeViewController: BaseViewController {
 
         bindViewModel()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        navigationController?.navigationBar.isHidden = true
+        tabBarController?.tabBar.isHidden = false
+    }
 }
 
 extension HomeViewController {
@@ -128,7 +134,6 @@ extension HomeViewController {
             .withUnretained(self)
             .bind { vc, _ in
                 let viewController = SearchViewController()
-                
                 vc.transition(viewController, transitionStyle: .push)
                 
                 if let coordinate = vc.locationManager.location?.coordinate {

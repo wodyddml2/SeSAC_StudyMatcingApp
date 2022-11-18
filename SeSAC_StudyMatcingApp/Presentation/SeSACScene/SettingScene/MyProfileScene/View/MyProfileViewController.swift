@@ -47,9 +47,11 @@ final class MyProfileViewController: BaseViewController {
     }
     
     override func configureUI() {
+        view.addSubview(tableView)
         navigationBarCommon(title: "정보 관리")
         navigationItem.rightBarButtonItem = saveButton
-        view.addSubview(tableView)
+        tabBarController?.tabBar.isHidden = true
+       
         bindViewModel()
     }
     
