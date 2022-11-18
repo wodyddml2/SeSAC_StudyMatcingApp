@@ -12,10 +12,17 @@ import FirebaseAuth
 import RxSwift
 import RxCocoa
 
+struct StudyTag: Hashable {
+    let id = UUID().uuidString
+    
+    var title: String
+}
+
 class SearchViewModel {
-    var myStudyArr: [String] = []
-    var recommendArr: [String] = []
-    var aroundStudyArr: [String] = []
+    
+    var myStudyArr: [StudyTag] = []
+    var recommendArr: [StudyTag] = []
+    var aroundStudyArr: [StudyTag] = []
     var setAround: [String] = []
     
     var locationValue: CLLocationCoordinate2D?
@@ -23,7 +30,7 @@ class SearchViewModel {
     let disposeBag = DisposeBag()
     
     func arrCountLimit() -> Bool {
-        return myStudyArr.count > 8 ? true : false
+        return myStudyArr.count >= 8 ? true : false
     }
     
     private func requestSearchSeSAC(output: Output) {

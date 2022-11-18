@@ -25,8 +25,7 @@ class SearchViewController: BaseViewController, UIScrollViewDelegate {
     
     let disposeBag = DisposeBag()
     let viewModel = SearchViewModel()
-    
-    private var dataSource: UICollectionViewDiffableDataSource<Int, String>?
+    private var dataSource: UICollectionViewDiffableDataSource<Int, StudyTag>?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,8 +58,32 @@ class SearchViewController: BaseViewController, UIScrollViewDelegate {
             .withUnretained(self)
             .subscribe { vc, indexPath in
                 if indexPath.section == 0 {
-                    
-                } else {
+                    let study = vc.viewModel.myStudyArr.map({$0.title})
+                    let text = vc.viewModel.recommendArr[indexPath.item].title
+                    if study.contains(text) {
+                        vc.view.makeToast("스터디를 중복해서 등록할 수 없습니다.", position: .center)
+                    } else {
+                        if vc.viewModel.arrCountLimit() {
+                            vc.view.makeToast("8개 이상 스터디를 등록할 수 없습니다.", position: .center)
+                        } else {
+                            vc.viewModel.myStudyArr.append(StudyTag(title: text))
+                            vc.studySnapshot()
+                        }
+                    }
+                } else if indexPath.section == 1 {
+                    let study = vc.viewModel.myStudyArr.map({$0.title})
+                    let text = vc.viewModel.aroundStudyArr[indexPath.item].title
+                    if study.contains(text) {
+                        vc.view.makeToast("스터디를 중복해서 등록할 수 없습니다.", position: .center)
+                    } else {
+                        if vc.viewModel.arrCountLimit() {
+                            vc.view.makeToast("8개 이상 스터디를 등록할 수 없습니다.", position: .center)
+                        } else {
+                            vc.viewModel.myStudyArr.append(StudyTag(title: text))
+                            vc.studySnapshot()
+                        }
+                    }
+                } else  {
                     vc.viewModel.myStudyArr.remove(at: indexPath.item)
                     vc.studySnapshot()
                 }
@@ -83,8 +106,12 @@ extension SearchViewController {
                 
                 result.fromQueueDBRequested.map({$0.studylist}).forEach({vc.viewModel.setAround.append(contentsOf: $0)})
                 
-                vc.viewModel.aroundStudyArr.append(contentsOf: Array(Set(vc.viewModel.setAround)))
-                vc.viewModel.recommendArr.append(contentsOf: result.fromRecommend)
+                let around = Array(Set(vc.viewModel.setAround))
+                                   
+                around.forEach { vc.viewModel.aroundStudyArr.append(StudyTag(title: $0)) }
+
+                result.fromRecommend.forEach { vc.viewModel.recommendArr.append(StudyTag(title: $0))}
+
                 vc.studySnapshot()
             })
             .disposed(by: disposeBag)
@@ -106,11 +133,14 @@ extension SearchViewController {
             .withUnretained(self)
             .bind { vc, _ in
                 guard let text = vc.searchBar.text else {return}
-                let separatedText = text.components(separatedBy: " ")
-                let result = separatedText.filter {$0 != ""}
-                if result.filter({$0.count > 8}).count != 0 {
+                let separatedText = text.components(separatedBy: " ").filter {$0 != ""}
+                let result = separatedText.map({StudyTag(title: $0)})
+                
+                let study = vc.viewModel.myStudyArr.map({$0.title})
+                
+                if separatedText.filter({$0.count > 8}).count != 0 {
                     vc.view.makeToast("최소 한 자 이상, 최대 8글자까지 작성 가능합니다", position: .center)
-                } else  if result.filter({ vc.viewModel.myStudyArr.contains($0)}).count != 0 || result.count != Set(result).count {
+                } else  if separatedText.filter({ study.contains($0)}).count != 0 || separatedText.count != Set(separatedText).count {
                     vc.view.makeToast("스터디를 중복해서 등록할 수 없습니다.", position: .center)
                 } else {
                     if vc.viewModel.arrCountLimit() {
@@ -118,7 +148,6 @@ extension SearchViewController {
                     } else {
                         vc.viewModel.myStudyArr.append(contentsOf: result)
                         vc.studySnapshot()
-                        
                     }
                 }
             }
@@ -198,8 +227,8 @@ extension SearchViewController {
     
     private func configureDataSource() {
         
-        let otherCellRegistration = UICollectionView.CellRegistration<SearchOtherStudyCollectionViewCell, String> { cell, indexPath, itemIdentifier in
-            cell.studyLabel.text = itemIdentifier
+        let otherCellRegistration = UICollectionView.CellRegistration<SearchOtherStudyCollectionViewCell, StudyTag> { cell, indexPath, itemIdentifier in
+            cell.studyLabel.text = itemIdentifier.title
             if indexPath.section == 0 {
                 cell.outlineBorder(color: UIColor.errorRed.cgColor)
                 cell.studyLabel.textColor = .errorRed
@@ -211,8 +240,8 @@ extension SearchViewController {
         }
         
         
-        let myCellRegistration = UICollectionView.CellRegistration<SearchMyStudyCollectionViewCell, String> { cell, indexPath, itemIdentifier in
-            cell.studyLabel.text = itemIdentifier
+        let myCellRegistration = UICollectionView.CellRegistration<SearchMyStudyCollectionViewCell, StudyTag> { cell, indexPath, itemIdentifier in
+            cell.studyLabel.text = itemIdentifier.title
             cell.outlineBorder()
         }
         
@@ -243,7 +272,7 @@ extension SearchViewController {
     }
     
     private func studySnapshot() {
-        var snapshot = NSDiffableDataSourceSnapshot<Int, String>()
+        var snapshot = NSDiffableDataSourceSnapshot<Int, StudyTag>()
         snapshot.appendSections([0, 1, 2])
         snapshot.appendItems(viewModel.recommendArr, toSection: 0)
         snapshot.appendItems(viewModel.aroundStudyArr, toSection: 1)
