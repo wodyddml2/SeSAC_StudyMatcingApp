@@ -126,7 +126,7 @@ class WithdrawViewController: BaseViewController {
                 SeSACAPIService.shared.requestSeSACAPI(type: SESACLoginDTO.self,router: Router.withdrawPost(query: UserManager.idToken)) { result in
                     switch result {
                     case .success(_):
-                        print("성공을 안타")
+                        print("String 출력")
                     case .failure(let fail):
                         let error = fail as! SeSACError
                         switch error {

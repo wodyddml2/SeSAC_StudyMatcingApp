@@ -21,15 +21,15 @@ enum Router: URLRequestConvertible {
     var baseURL: URL {
         switch self {
         case .loginGet, .signUpPost:
-            return URL(string: SeSACAPI.loginURL)!
+            return URL(string: SeSACAPI.baseURL + SeSACAPI.login)!
         case .savePut:
-            return URL(string: SeSACAPI.profileSaveURL)!
+            return URL(string: SeSACAPI.baseURL + SeSACAPI.profileSave)!
         case .withdrawPost:
-            return URL(string: SeSACAPI.withdrawURL)!
+            return URL(string: SeSACAPI.baseURL + SeSACAPI.withdraw)!
         case .searchPost:
-            return URL(string: SeSACAPI.baseURL + "/v1/queue/search")!
+            return URL(string: SeSACAPI.baseURL + SeSACAPI.search)!
         case .matchGet:
-            return URL(string: SeSACAPI.baseURL + "/v1/queue/myQueueState")!
+            return URL(string: SeSACAPI.baseURL + SeSACAPI.match)!
         }
         
     }

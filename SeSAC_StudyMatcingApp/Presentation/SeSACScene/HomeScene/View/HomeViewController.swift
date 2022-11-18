@@ -89,10 +89,18 @@ extension HomeViewController {
 
 extension HomeViewController {
     func bindViewModel() {
-        let input = HomeViewModel.Input(viewDidLoadEvent: Observable.just(()))
+        guard let coordinate = locationManager.location?.coordinate else {return}
+        let input = HomeViewModel.Input(viewDidLoadEvent: Observable.just(()), lat: coordinate.latitude, long: coordinate.longitude)
         let output = viewModel.transform(input: input)
         
-        output.sesacInfo
+        // 낼 다시
+        output.searchInfo
+            .subscribe { s in
+                print(s)
+            }
+            .disposed(by: disposeBag)
+        
+        output.matchInfo
             .subscribe { s in
                 print(s)
             }

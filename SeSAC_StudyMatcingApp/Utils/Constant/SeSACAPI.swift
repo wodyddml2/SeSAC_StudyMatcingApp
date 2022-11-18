@@ -8,10 +8,12 @@
 import Foundation
 
 enum SeSACAPI {
-    static let baseURL = "http://api.sesac.co.kr:1207"
-    static let loginURL = "http://api.sesac.co.kr:1207/v1/user"
-    static let profileSaveURL = "http://api.sesac.co.kr:1207/v1/user/mypage"
-    static let withdrawURL = "http://api.sesac.co.kr:1207/v1/user/withdraw"
+    static let baseURL = "http://api.sesac.co.kr:1210/v1"
+    static let login = "/user"
+    static let profileSave = "/user/mypage"
+    static let withdraw = "/user/withdraw"
+    static let search = "/queue/search"
+    static let match = "/queue/myQueueState"
 }
 
 // 알아보기

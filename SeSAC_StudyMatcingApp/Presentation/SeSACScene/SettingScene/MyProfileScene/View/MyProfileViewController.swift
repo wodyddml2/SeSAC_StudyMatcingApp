@@ -227,7 +227,7 @@ extension MyProfileViewController {
                 SeSACAPIService.shared.requestSeSACAPI(type: SESACLoginDTO.self ,router: Router.savePut(sesac: sesacData, query: UserManager.idToken)) { result in
                     switch result {
                     case .success(_):
-                        print("성공해도 success를 안타네?")
+                        print("String 출력")
                     case .failure(let fail):
                         let error = fail as! SeSACError
                         switch error {
