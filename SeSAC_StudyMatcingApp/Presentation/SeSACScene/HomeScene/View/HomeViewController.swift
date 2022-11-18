@@ -19,6 +19,7 @@ final class HomeViewController: BaseViewController {
     let viewModel = HomeViewModel()
     
     let disposeBag = DisposeBag()
+    var sesacUsers: [SeSACUser] = []
     
     override func loadView() {
         view = mainView
@@ -66,8 +67,8 @@ extension HomeViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let coordinate = locations.last?.coordinate else { return }
         locationManager.stopUpdatingLocation()
+       
         setRegionAnnotation(center: coordinate)
-
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
@@ -82,17 +83,19 @@ extension HomeViewController: CLLocationManagerDelegate {
 
 extension HomeViewController {
     func setRegionAnnotation(center: CLLocationCoordinate2D) {
-        let region = MKCoordinateRegion(center: center, latitudinalMeters: 700, longitudinalMeters: 700)
+        let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 37.517819364682694, longitude: 126.88647317074734), latitudinalMeters: 700, longitudinalMeters: 700)
         
         mainView.mapView.setRegion(region, animated: true)
 
-        let annotation = MKPointAnnotation()
+        var annotation: [MKPointAnnotation] = []
         
-        annotation.coordinate = center
-
-        mainView.mapView.addAnnotation(annotation)
+        for user in sesacUsers {
+            let point = MKPointAnnotation()
+            point.coordinate = CLLocationCoordinate2D(latitude: user.lat, longitude: user.long)
+            annotation.append(point)
+        }
         
-        
+        mainView.mapView.addAnnotations(annotation)
     }
 }
 
@@ -107,12 +110,15 @@ extension HomeViewController {
             match: mainView.matchingButton.rx.tap,
             currentLocation: mainView.currentLocationButton.rx.tap)
         let output = viewModel.transform(input: input)
-        
-        // 낼 다시
+
         output.searchInfo
-            .subscribe { s in
-                print(s)
-            }
+            .withUnretained(self)
+            .subscribe (onNext: { vc, result in
+                result.fromQueueDB.forEach {vc.sesacUsers.append(SeSACUser(lat: $0.lat, long: $0.long, sesac: $0.sesac, gender: $0.gender))}
+                result.fromQueueDBRequested.forEach {vc.sesacUsers.append(SeSACUser(lat: $0.lat, long: $0.long, sesac: $0.sesac, gender: $0.gender))}
+                let location = self.mainView.mapView.centerCoordinate
+                self.setRegionAnnotation(center: location)
+            })
             .disposed(by: disposeBag)
         
         output.matchInfo

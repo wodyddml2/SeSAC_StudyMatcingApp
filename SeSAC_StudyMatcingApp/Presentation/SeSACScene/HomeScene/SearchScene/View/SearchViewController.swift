@@ -15,7 +15,6 @@ class SearchViewController: BaseViewController, UIScrollViewDelegate {
     
     lazy var collectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
-        view.keyboardDismissMode = .onDrag
         return view
     }()
 
@@ -113,6 +112,7 @@ extension SearchViewController {
             .withUnretained(self)
             .observe(on: MainScheduler.asyncInstance)
             .bind(onNext: { vc, _ in
+                vc.searchBar.endEditing(true)
                 vc.searchButton.snp.updateConstraints { make in
                     make.bottom.equalTo(vc.view.safeAreaLayoutGuide).inset(16)
                     make.leading.trailing.equalToSuperview().inset(16)
