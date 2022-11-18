@@ -83,7 +83,7 @@ extension HomeViewController: CLLocationManagerDelegate {
 
 extension HomeViewController {
     func setRegionAnnotation(center: CLLocationCoordinate2D) {
-        let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 37.517819364682694, longitude: 126.88647317074734), latitudinalMeters: 700, longitudinalMeters: 700)
+        let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: center.latitude, longitude: center.longitude), latitudinalMeters: 700, longitudinalMeters: 700)
         
         mainView.mapView.setRegion(region, animated: true)
 
@@ -102,11 +102,11 @@ extension HomeViewController {
 extension HomeViewController {
     
     func bindViewModel() {
-        let coordinate = locationManager.location?.coordinate ?? CLLocationCoordinate2D(latitude: 37.517819364682694, longitude: 126.88647317074734) //
+        let coordinate = locationManager.location?.coordinate ?? CLLocationCoordinate2D(latitude: 37.517819364682694, longitude: 126.88647317074734)
         let input = HomeViewModel.Input(
             viewDidLoadEvent: Observable.just(()),
-            lat: 37.517819364682694,
-            long: 126.88647317074734,
+            lat: coordinate.latitude,
+            long: coordinate.longitude,
             match: mainView.matchingButton.rx.tap,
             currentLocation: mainView.currentLocationButton.rx.tap)
         let output = viewModel.transform(input: input)
@@ -114,6 +114,7 @@ extension HomeViewController {
         output.searchInfo
             .withUnretained(self)
             .subscribe (onNext: { vc, result in
+                print(result)
                 result.fromQueueDB.forEach {vc.sesacUsers.append(SeSACUser(lat: $0.lat, long: $0.long, sesac: $0.sesac, gender: $0.gender))}
                 result.fromQueueDBRequested.forEach {vc.sesacUsers.append(SeSACUser(lat: $0.lat, long: $0.long, sesac: $0.sesac, gender: $0.gender))}
                 let location = self.mainView.mapView.centerCoordinate
@@ -147,12 +148,13 @@ extension HomeViewController {
     
        
         output.mapCameraMove
+            .debounce(.milliseconds(500), scheduler: MainScheduler.asyncInstance)
             .asDriver(onErrorJustReturn: false)
             .drive (onNext: { [weak self] move in
                 guard let self = self else {return}
                 if move == true {
                     let location = self.mainView.mapView.centerCoordinate
-//                    self.viewModel.requestSearchSeSAC(output: output, lat: location.latitude, long: location.longitude)
+                    self.viewModel.requestSearchSeSAC(output: output, lat: location.latitude, long: location.longitude)
                 }
             }).disposed(by: disposeBag)
         
@@ -172,13 +174,10 @@ extension HomeViewController {
             .bind { vc, _ in
                 let viewController = SearchViewController()
                 vc.transition(viewController, transitionStyle: .push)
-                let coordinate = vc.locationManager.location?.coordinate ?? CLLocationCoordinate2D(latitude: 37.517819364682694, longitude: 126.88647317074734)
-                viewController.viewModel.locationValue = coordinate
-                
+                let location = self.mainView.mapView.centerCoordinate
+                viewController.viewModel.locationValue = location
             }
             .disposed(by: disposeBag)
-        
-        
     }
     
 }

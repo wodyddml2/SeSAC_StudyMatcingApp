@@ -15,6 +15,7 @@ class HomeViewModel {
     let disposeBag = DisposeBag()
     
     var mapCameraMove = PublishRelay<Bool>()
+
     
     func requestSearchSeSAC(output: Output, lat: Double, long: Double) {
         SeSACAPIService.shared.requestSeSACAPI(type: SeSACSearchDTO.self, router: Router.searchPost(query: UserManager.idToken, lat: lat, long: long)) { result in
@@ -112,7 +113,7 @@ extension HomeViewModel: ViewModelType {
             .withUnretained(self)
             .subscribe { vc, _ in
                 vc.requestMatchSeSAC(output: output)
-                vc.requestSearchSeSAC(output: output, lat: input.lat, long: input.long)
+//                vc.requestSearchSeSAC(output: output, lat: input.lat, long: input.long)
             }
             .disposed(by: disposeBag)
         
