@@ -40,7 +40,7 @@ enum Router: URLRequestConvertible {
     
     var header: HTTPHeaders {
         switch self {
-        case .loginGet(let query):
+        case .loginGet(let query), .matchGet(let query):
             return  [
                 "Content-Type": SeSACLoginHeader.contentType,
                 "accept": SeSACLoginHeader.accept,
@@ -51,7 +51,7 @@ enum Router: URLRequestConvertible {
                 "Content-Type": SeSACLoginHeader.contentType,
                 "idtoken": UserManager.idToken
             ]
-        case .savePut( _ ,let query), .withdrawPost(let query), .searchPost(let query, _, _), .matchGet(let query), .findPost(let query, _, _, _):
+        case .savePut( _ ,let query), .withdrawPost(let query), .searchPost(let query, _, _), .findPost(let query, _, _, _):
             return [
                 "Content-Type": SeSACLoginHeader.contentType,
                 "idtoken": query
@@ -167,7 +167,7 @@ class SeSACAPIService {
     
     func requestSeSACAPI<T: Codable>(type: T.Type = T.self, router: URLRequestConvertible ,completion: @escaping (Result<T, Error>) -> Void) {
         AF.request(router).responseDecodable(of: T.self) { response in
-           
+            dump(response)
             switch response.result {
             case .success(let result):
                 completion(.success(result))

@@ -70,7 +70,7 @@ class SearchViewModel {
         guard let location = locationValue else {return}
         var studylist: [String] = []
         if myStudyArr.isEmpty {
-            studylist.append("Anything")
+            studylist.append("anything")
         } else {
             myStudyArr.forEach { study in
                 studylist.append(study.title)

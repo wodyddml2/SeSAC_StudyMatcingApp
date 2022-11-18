@@ -138,7 +138,8 @@ extension HomeViewController {
             .drive (onNext: { [weak self] normal in
                 guard let self = self else {return}
                 if normal == true {
-                    self.view.makeToast("normal")
+                    print("Ssssssssss")
+                    self.mainView.matchingButton.setImage(UIImage(named: MatchImage.message), for: .normal)
                 }
             }).disposed(by: disposeBag)
     
