@@ -24,6 +24,7 @@ final class MyProfileViewController: BaseViewController {
         view.register(MyProfileImageTableViewCell.self, forCellReuseIdentifier: MyProfileImageTableViewCell.reusableIdentifier)
         view.separatorStyle = .none
         view.showsVerticalScrollIndicator = false
+        view.keyboardDismissMode = .onDrag
         return view
     }()
     

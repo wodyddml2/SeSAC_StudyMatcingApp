@@ -29,7 +29,7 @@ final class HomeViewController: BaseViewController {
         checkUserDeviceLocationSeviceAuthorization()
 
         locationManager.delegate = self
-       
+        mainView.mapView.delegate = self
         bindViewModel()
     }
     
@@ -67,8 +67,7 @@ extension HomeViewController: CLLocationManagerDelegate {
         guard let coordinate = locations.last?.coordinate else { return }
         locationManager.stopUpdatingLocation()
         setRegionAnnotation(center: coordinate)
-//        let c = mainView.mapView.centerCoordinate
-//        print(c)
+
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
@@ -98,6 +97,7 @@ extension HomeViewController {
 }
 
 extension HomeViewController {
+    
     func bindViewModel() {
         let coordinate = locationManager.location?.coordinate ?? CLLocationCoordinate2D(latitude: 37.517819364682694, longitude: 126.88647317074734) //
         let input = HomeViewModel.Input(
@@ -140,7 +140,16 @@ extension HomeViewController {
             }).disposed(by: disposeBag)
     
        
-        
+        output.mapCameraMove
+            .asDriver(onErrorJustReturn: false)
+            .drive (onNext: { [weak self] move in
+                guard let self = self else {return}
+                if move == true {
+                    let location = self.mainView.mapView.centerCoordinate
+                    print(location)
+                    self.viewModel.requestSearchSeSAC(output: output, lat: location.latitude, long: location.longitude)
+                }
+            }).disposed(by: disposeBag)
         
         buttonTap(output: output)
     }
@@ -163,6 +172,22 @@ extension HomeViewController {
                 
             }
             .disposed(by: disposeBag)
+        
+        
     }
     
+}
+
+extension HomeViewController: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        viewModel.mapCameraMove.accept(false)
+        mapView.isScrollEnabled = false
+        mapView.isZoomEnabled = false
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+            self.viewModel.mapCameraMove.accept(true)
+            mapView.isScrollEnabled = true
+            mapView.isZoomEnabled = true
+        }
+    }
 }

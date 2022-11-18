@@ -14,7 +14,9 @@ import RxCocoa
 class HomeViewModel {
     let disposeBag = DisposeBag()
     
-    private func requestSearchSeSAC(output: Output, lat: Double, long: Double) {
+    var mapCameraMove = PublishRelay<Bool>()
+    
+    func requestSearchSeSAC(output: Output, lat: Double, long: Double) {
         SeSACAPIService.shared.requestSeSACAPI(type: SeSACSearchDTO.self, router: Router.searchPost(query: UserManager.idToken, lat: lat, long: long)) { result in
             switch result {
             case .success(let success):
@@ -100,10 +102,11 @@ extension HomeViewModel: ViewModelType {
         var normalStatus = PublishRelay<Bool>()
         let match: ControlEvent<Void>
         let currentLocation: ControlEvent<Void>
+        var mapCameraMove: PublishRelay<Bool>
     }
     
     func transform(input: Input) -> Output {
-        let output = Output(match: input.match, currentLocation: input.currentLocation)
+        let output = Output(match: input.match, currentLocation: input.currentLocation, mapCameraMove: mapCameraMove)
         
         input.viewDidLoadEvent
             .withUnretained(self)
