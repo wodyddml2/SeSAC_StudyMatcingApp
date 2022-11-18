@@ -12,7 +12,7 @@ import MapKit
 class HomeView: BaseView {
     let mapView: MKMapView = {
         let view = MKMapView()
-      
+        view.cameraZoomRange = .init(minCenterCoordinateDistance: 50, maxCenterCoordinateDistance: 3000)
         return view
     }()
     

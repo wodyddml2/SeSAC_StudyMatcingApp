@@ -146,8 +146,7 @@ extension HomeViewController {
                 guard let self = self else {return}
                 if move == true {
                     let location = self.mainView.mapView.centerCoordinate
-                    print(location)
-                    self.viewModel.requestSearchSeSAC(output: output, lat: location.latitude, long: location.longitude)
+//                    self.viewModel.requestSearchSeSAC(output: output, lat: location.latitude, long: location.longitude)
                 }
             }).disposed(by: disposeBag)
         
