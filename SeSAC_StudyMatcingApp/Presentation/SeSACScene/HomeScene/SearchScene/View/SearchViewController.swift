@@ -8,12 +8,14 @@
 import UIKit
 
 import RxSwift
+import RxCocoa
 import RxKeyboard
 
 class SearchViewController: BaseViewController, UIScrollViewDelegate {
     
     lazy var collectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
+        view.keyboardDismissMode = .onDrag
         return view
     }()
 
@@ -109,8 +111,8 @@ class SearchViewController: BaseViewController, UIScrollViewDelegate {
 
         collectionView.rx.didScroll
             .withUnretained(self)
+            .observe(on: MainScheduler.asyncInstance)
             .bind(onNext: { vc, _ in
-               
                 vc.searchButton.snp.updateConstraints { make in
                     make.bottom.equalTo(vc.view.safeAreaLayoutGuide).inset(16)
                     make.leading.trailing.equalToSuperview().inset(16)
@@ -180,10 +182,10 @@ extension SearchViewController {
             })
             .disposed(by: disposeBag)
         
-        bindSearchTap(output: output)
+        bindSearchReturnTap(output: output)
     }
     
-    private func bindSearchTap(output: SearchViewModel.Output) {
+    private func bindSearchReturnTap(output: SearchViewModel.Output) {
         output.searchTap
             .withUnretained(self)
             .bind { vc, _ in
@@ -207,6 +209,10 @@ extension SearchViewController {
                 }
             }
             .disposed(by: disposeBag)
+    }
+    
+    private func bindSearchButtonTap(output: SearchViewModel.Output) {
+        
     }
 }
 

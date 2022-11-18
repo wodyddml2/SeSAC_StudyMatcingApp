@@ -123,24 +123,17 @@ class WithdrawViewController: BaseViewController {
                 UserManager.idToken = idToken
                 let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
                 let sceneDelegate = windowScene?.delegate as? SceneDelegate
-                SeSACAPIService.shared.requestSeSACAPI(type: SESACLoginDTO.self,router: Router.withdrawPost(query: UserManager.idToken)) { result in
-                    switch result {
-                    case .success(_):
-                        print("String 출력")
-                    case .failure(let fail):
-                        let error = fail as! SeSACError
-                        switch error {
-                        case .success, .existingUsers:
-                            UserManager.onboarding = false
-                            
-                            let vc = OnboardingViewController()
-                            sceneDelegate?.window?.rootViewController = vc
-                            sceneDelegate?.window?.makeKeyAndVisible()
-                        default:
-                            self.dismiss(animated: false)
-                            guard let viewController = (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.window?.rootViewController?.topViewController else { return }
-                            viewController.view.makeToast("응 못나가~", position: .center)
-                        }
+                SeSACAPIService.shared.requestStatusSeSACAPI(router: Router.withdrawPost(query: UserManager.idToken)) { value in
+                    switch StatusCode(rawValue: value) {
+                    case .success, .noSignup:
+                        UserManager.onboarding = false
+                        let vc = OnboardingViewController()
+                        sceneDelegate?.window?.rootViewController = vc
+                        sceneDelegate?.window?.makeKeyAndVisible()
+                    default:
+                        self.dismiss(animated: false)
+                        guard let viewController = (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.window?.rootViewController?.topViewController else { return }
+                        viewController.view.makeToast("응 못나가~", position: .center)
                     }
                 }
             }

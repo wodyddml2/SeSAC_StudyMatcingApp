@@ -9,6 +9,7 @@ import Foundation
 
 import Alamofire
 
+
 enum Router: URLRequestConvertible {
     case loginGet(query: String)
     case signUpPost
@@ -114,6 +115,14 @@ enum Router: URLRequestConvertible {
     }
 }
 
+enum StatusCode: Int {
+    case success = 200
+    case firebaseError = 401
+    case noSignup = 406
+    case ServerError = 500
+    case ClientError = 501
+}
+
 enum SeSACError: Int, Error {
     case notNickname = 202
     case existingUsers = 201
@@ -121,7 +130,6 @@ enum SeSACError: Int, Error {
     case noSignup = 406
     case serverError = 500
     case clientError = 501
-    case success = 200
 }
 
 extension SeSACError: LocalizedError {
@@ -129,7 +137,7 @@ extension SeSACError: LocalizedError {
         switch self {
         case .firebaseTokenError, .serverError, .clientError:
             return "에러가 발생했습니다. 다시 시도해주세요"
-        case .noSignup, .success:
+        case .noSignup:
             return ""
         case .notNickname:
             return "사용할 수 없는 닉네임입니다."
@@ -155,6 +163,15 @@ class SeSACAPIService {
                 guard let error = SeSACError(rawValue: statusCode) else {return}
                 completion(.failure(error))
             }
+        }
+    }
+    
+    func requestStatusSeSACAPI(router: URLRequestConvertible ,completion: @escaping (Int) -> Void) {
+        AF.request(router).responseDecodable(of: String.self) { response in
+           
+            guard let statusCode = response.response?.statusCode else {return}
+            
+            completion(statusCode)
         }
     }
     

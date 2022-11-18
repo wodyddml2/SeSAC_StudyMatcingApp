@@ -226,18 +226,12 @@ extension MyProfileViewController {
             .bind { vc, _ in
                 guard let sesacData = vc.sesacData else {return}
                 
-                SeSACAPIService.shared.requestSeSACAPI(type: SESACLoginDTO.self ,router: Router.savePut(sesac: sesacData, query: UserManager.idToken)) { result in
-                    switch result {
-                    case .success(_):
-                        print("String 출력")
-                    case .failure(let fail):
-                        let error = fail as! SeSACError
-                        switch error {
-                        case .success:
-                            vc.view.makeToast("저장 완료!", position: .center)
-                        default:
-                            vc.view.makeToast("저장에 실패했습니다.", position: .center)
-                        }
+                SeSACAPIService.shared.requestStatusSeSACAPI(router: Router.savePut(sesac: sesacData, query: UserManager.idToken)) { value in
+                    switch StatusCode(rawValue: value) {
+                    case .success:
+                        vc.view.makeToast("저장 완료!", position: .center)
+                    default:
+                        vc.view.makeToast("저장에 실패했습니다.", position: .center)
                     }
                 }
                 
@@ -245,6 +239,8 @@ extension MyProfileViewController {
             .disposed(by: disposeBag)
     }
     
-    
+ 
     
 }
+
+
