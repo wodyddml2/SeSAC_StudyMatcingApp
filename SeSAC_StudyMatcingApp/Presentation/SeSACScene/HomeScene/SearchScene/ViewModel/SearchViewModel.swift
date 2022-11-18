@@ -15,7 +15,9 @@ import RxCocoa
 class SearchViewModel {
     var myStudyArr: [String] = []
     var recommendArr: [String] = []
-    var arroundStudyArr: [String] = []
+    var aroundStudyArr: [String] = []
+    var setAround: [String] = []
+    
     var locationValue: CLLocationCoordinate2D?
    
     let disposeBag = DisposeBag()
@@ -26,7 +28,7 @@ class SearchViewModel {
     
     private func requestSearchSeSAC(output: Output) {
         guard let location = locationValue else {return}
-        SeSACAPIService.shared.requestSeSACAPI(type: SeSACSearchDTO.self, router: Router.searchPost(query: UserManager.idToken, lat: location.latitude, long: location.longitude)) { result in
+        SeSACAPIService.shared.requestSeSACAPI(type: SeSACSearchDTO.self, router: Router.searchPost(query: UserManager.idToken, lat: 37.517819364682694, long: 126.88647317074734)) { result in
             switch result {
             case .success(let success):
                 output.sesacInfo.onNext(success)

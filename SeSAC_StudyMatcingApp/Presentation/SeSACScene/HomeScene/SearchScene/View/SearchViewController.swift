@@ -18,7 +18,7 @@ class SearchViewController: BaseViewController, UIScrollViewDelegate {
 
     lazy var searchBar: UISearchBar = {
         let width = view.frame.width
-        let view = UISearchBar(frame: CGRect(x: 0, y: 0, width: width - 20, height: 0))
+        let view = UISearchBar(frame: CGRect(x: 0, y: 0, width: width - 10, height: 0))
         view.placeholder = "띄어쓰기로 복수 입력이 가능해요"
         return view
     }()
@@ -79,8 +79,12 @@ extension SearchViewController {
         output.sesacInfo
             .withUnretained(self)
             .subscribe(onNext: { vc, result in
+                result.fromQueueDB.map({$0.studylist}).forEach({vc.viewModel.setAround.append(contentsOf: $0)})
+                
+                result.fromQueueDBRequested.map({$0.studylist}).forEach({vc.viewModel.setAround.append(contentsOf: $0)})
+                
+                vc.viewModel.aroundStudyArr.append(contentsOf: Array(Set(vc.viewModel.setAround)))
                 vc.viewModel.recommendArr.append(contentsOf: result.fromRecommend)
-                vc.viewModel.arroundStudyArr.append(contentsOf: ["d"])
                 vc.studySnapshot()
             })
             .disposed(by: disposeBag)
@@ -242,7 +246,7 @@ extension SearchViewController {
         var snapshot = NSDiffableDataSourceSnapshot<Int, String>()
         snapshot.appendSections([0, 1, 2])
         snapshot.appendItems(viewModel.recommendArr, toSection: 0)
-        snapshot.appendItems(viewModel.arroundStudyArr, toSection: 1)
+        snapshot.appendItems(viewModel.aroundStudyArr, toSection: 1)
         snapshot.appendItems(viewModel.myStudyArr, toSection: 2)
         dataSource?.apply(snapshot, animatingDifferences: true)
     }

@@ -90,7 +90,7 @@ extension HomeViewController {
 extension HomeViewController {
     func bindViewModel() {
         guard let coordinate = locationManager.location?.coordinate else {return}
-        let input = HomeViewModel.Input(viewDidLoadEvent: Observable.just(()), lat: coordinate.latitude, long: coordinate.longitude)
+        let input = HomeViewModel.Input(viewDidLoadEvent: Observable.just(()), lat: 37.517819364682694, long: 126.88647317074734)
         let output = viewModel.transform(input: input)
         
         // 낼 다시
