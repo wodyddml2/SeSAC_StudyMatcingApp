@@ -90,8 +90,6 @@ extension HomeViewModel: ViewModelType {
     
     struct Input {
         let viewDidLoadEvent: Observable<Void>
-        let lat: Double
-        let long: Double
         let match: ControlEvent<Void>
         let currentLocation: ControlEvent<Void>
     }
@@ -113,7 +111,6 @@ extension HomeViewModel: ViewModelType {
             .withUnretained(self)
             .subscribe { vc, _ in
                 vc.requestMatchSeSAC(output: output)
-//                vc.requestSearchSeSAC(output: output, lat: input.lat, long: input.long)
             }
             .disposed(by: disposeBag)
         

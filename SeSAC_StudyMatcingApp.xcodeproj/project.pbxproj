@@ -26,6 +26,7 @@
 		631DC9542921319F00F23211 /* SeSACProfileGet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631DC9532921319F00F23211 /* SeSACProfileGet.swift */; };
 		632564A72927726A003DDB9F /* RxKeyboard in Frameworks */ = {isa = PBXBuildFile; productRef = 632564A62927726A003DDB9F /* RxKeyboard */; };
 		632564A92927BE08003DDB9F /* SeSACUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632564A82927BE08003DDB9F /* SeSACUser.swift */; };
+		632564AB2927F8CC003DDB9F /* CustomAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632564AA2927F8CC003DDB9F /* CustomAnnotationView.swift */; };
 		6329D7CE291CA605004AC51C /* BirthCustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6329D7CD291CA605004AC51C /* BirthCustomView.swift */; };
 		63308F1529233379004B90A5 /* ProfileGenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63308F1429233379004B90A5 /* ProfileGenderView.swift */; };
 		63308F1729233460004B90A5 /* ProfileStudyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63308F1629233460004B90A5 /* ProfileStudyView.swift */; };
@@ -134,6 +135,7 @@
 		631DC94F29212CA300F23211 /* ReusableProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableProtocol.swift; sourceTree = "<group>"; };
 		631DC9532921319F00F23211 /* SeSACProfileGet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACProfileGet.swift; sourceTree = "<group>"; };
 		632564A82927BE08003DDB9F /* SeSACUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACUser.swift; sourceTree = "<group>"; };
+		632564AA2927F8CC003DDB9F /* CustomAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotationView.swift; sourceTree = "<group>"; };
 		6329D7CD291CA605004AC51C /* BirthCustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthCustomView.swift; sourceTree = "<group>"; };
 		63308F1429233379004B90A5 /* ProfileGenderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileGenderView.swift; sourceTree = "<group>"; };
 		63308F1629233460004B90A5 /* ProfileStudyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileStudyView.swift; sourceTree = "<group>"; };
@@ -632,6 +634,7 @@
 			isa = PBXGroup;
 			children = (
 				6351B6842919772000B953BF /* LoginView.swift */,
+				632564AA2927F8CC003DDB9F /* CustomAnnotationView.swift */,
 				637827A329222A56009E1424 /* CommonButton.swift */,
 				6329D7CD291CA605004AC51C /* BirthCustomView.swift */,
 				63F31454291D37DF00C31F59 /* GenderButtonView.swift */,
@@ -1035,6 +1038,7 @@
 				637827A2292226BD009E1424 /* MyProfileTableViewCell.swift in Sources */,
 				63467DFF2918F04300E7D8AE /* NSAttributedString+CustomText.swift in Sources */,
 				637827A429222A56009E1424 /* CommonButton.swift in Sources */,
+				632564AB2927F8CC003DDB9F /* CustomAnnotationView.swift in Sources */,
 				6337F01E291A5B57002C81FA /* String+Custom.swift in Sources */,
 				63F31455291D37DF00C31F59 /* GenderButtonView.swift in Sources */,
 				63467DB32918D4AE00E7D8AE /* AppDelegate.swift in Sources */,

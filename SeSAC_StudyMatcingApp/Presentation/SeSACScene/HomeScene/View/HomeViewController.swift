@@ -83,15 +83,14 @@ extension HomeViewController: CLLocationManagerDelegate {
 
 extension HomeViewController {
     func setRegionAnnotation(center: CLLocationCoordinate2D) {
-        let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: center.latitude, longitude: center.longitude), latitudinalMeters: 700, longitudinalMeters: 700)
+        let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 37.517819364682694, longitude: 126.88647317074734), latitudinalMeters: 700, longitudinalMeters: 700)
         
         mainView.mapView.setRegion(region, animated: true)
 
-        var annotation: [MKPointAnnotation] = []
+        var annotation: [CustomAnnotation] = []
         
         for user in sesacUsers {
-            let point = MKPointAnnotation()
-            point.coordinate = CLLocationCoordinate2D(latitude: user.lat, longitude: user.long)
+            let point = CustomAnnotation(image: user.sesac, coordinate: CLLocationCoordinate2D(latitude: user.lat, longitude: user.long))
             annotation.append(point)
         }
         
@@ -102,11 +101,8 @@ extension HomeViewController {
 extension HomeViewController {
     
     func bindViewModel() {
-        let coordinate = locationManager.location?.coordinate ?? CLLocationCoordinate2D(latitude: 37.517819364682694, longitude: 126.88647317074734)
         let input = HomeViewModel.Input(
             viewDidLoadEvent: Observable.just(()),
-            lat: coordinate.latitude,
-            long: coordinate.longitude,
             match: mainView.matchingButton.rx.tap,
             currentLocation: mainView.currentLocationButton.rx.tap)
         let output = viewModel.transform(input: input)
@@ -194,4 +190,28 @@ extension HomeViewController: MKMapViewDelegate {
             mapView.isZoomEnabled = true
         }
     }
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard let annotation = annotation as? CustomAnnotation else {return nil}
+        
+        guard let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: CustomAnnotationView.indentifier) as? CustomAnnotationView else {return nil}
+        
+        annotationView.annotation = annotation
+        let size = CGSize(width: 95, height: 95)
+        
+        UIGraphicsBeginImageContext(size)
+        
+        let image = UIImage.sesacImage(num: annotation.image ?? 0)
+        
+        image.draw(in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
+        // draw: 이 메서드를 직접 호출하면 안 된다고 한다. - 강한 참조 때문? 나중에 한 번 더 찾아보자
+        
+        let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
+        annotationView.image = resizedImage
+        
+        UIGraphicsEndImageContext()
+        
+        return annotationView
+    }
 }
+
