@@ -89,6 +89,7 @@ extension HomeViewModel: ViewModelType {
         let viewDidLoadEvent: Observable<Void>
         let lat: Double
         let long: Double
+        let match: ControlEvent<Void>
         let currentLocation: ControlEvent<Void>
     }
     
@@ -97,11 +98,12 @@ extension HomeViewModel: ViewModelType {
         var matchInfo = PublishSubject<SeSACMatchDTO>()
         var networkFailed = PublishRelay<Bool>()
         var normalStatus = PublishRelay<Bool>()
+        let match: ControlEvent<Void>
         let currentLocation: ControlEvent<Void>
     }
     
     func transform(input: Input) -> Output {
-        let output = Output(currentLocation: input.currentLocation)
+        let output = Output(match: input.match, currentLocation: input.currentLocation)
         
         input.viewDidLoadEvent
             .withUnretained(self)

@@ -29,7 +29,7 @@ final class HomeViewController: BaseViewController {
         checkUserDeviceLocationSeviceAuthorization()
 
         locationManager.delegate = self
-
+       
         bindViewModel()
     }
     
@@ -51,6 +51,7 @@ extension HomeViewController {
             locationManager.desiredAccuracy = kCLLocationAccuracyBest
             locationManager.requestWhenInUseAuthorization()
         case .restricted, .denied:
+            setRegionAnnotation(center: CLLocationCoordinate2D(latitude: 37.517819364682694, longitude: 126.88647317074734))
             showSettingAlert(title: "위치정보 이용", message: "위치 서비스를 사용할 수 없습니다. 기기의 '설정>개인정보 보호'에서 위치 서비스를 켜주세요.")
         case .authorizedWhenInUse:
             locationManager.startUpdatingLocation()
@@ -98,8 +99,13 @@ extension HomeViewController {
 
 extension HomeViewController {
     func bindViewModel() {
-        guard let coordinate = locationManager.location?.coordinate else {return}
-        let input = HomeViewModel.Input(viewDidLoadEvent: Observable.just(()), lat: 37.517819364682694, long: 126.88647317074734, currentLocation: mainView.currentLocationButton.rx.tap)
+        let coordinate = locationManager.location?.coordinate ?? CLLocationCoordinate2D(latitude: 37.517819364682694, longitude: 126.88647317074734) //
+        let input = HomeViewModel.Input(
+            viewDidLoadEvent: Observable.just(()),
+            lat: 37.517819364682694,
+            long: 126.88647317074734,
+            match: mainView.matchingButton.rx.tap,
+            currentLocation: mainView.currentLocationButton.rx.tap)
         let output = viewModel.transform(input: input)
         
         // 낼 다시
@@ -133,18 +139,7 @@ extension HomeViewController {
                 }
             }).disposed(by: disposeBag)
     
-        mainView.matchingButton.rx.tap
-            .withUnretained(self)
-            .bind { vc, _ in
-                let viewController = SearchViewController()
-                vc.transition(viewController, transitionStyle: .push)
-                
-                if let coordinate = vc.locationManager.location?.coordinate {
-                    viewController.viewModel.locationValue = coordinate
-                }
-                
-            }
-            .disposed(by: disposeBag)
+       
         
         
         buttonTap(output: output)
@@ -155,6 +150,17 @@ extension HomeViewController {
             .withUnretained(self)
             .bind { vc, _ in
                 vc.checkUserDeviceLocationSeviceAuthorization()
+            }
+            .disposed(by: disposeBag)
+        
+        output.match
+            .withUnretained(self)
+            .bind { vc, _ in
+                let viewController = SearchViewController()
+                vc.transition(viewController, transitionStyle: .push)
+                let coordinate = vc.locationManager.location?.coordinate ?? CLLocationCoordinate2D(latitude: 37.517819364682694, longitude: 126.88647317074734)
+                viewController.viewModel.locationValue = coordinate
+                
             }
             .disposed(by: disposeBag)
     }
