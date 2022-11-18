@@ -65,6 +65,35 @@ class SearchViewModel {
             }
         }
     }
+    
+    func requestSeSACUser(completion: @escaping (Int) -> Void) {
+        guard let location = locationValue else {return}
+        var studylist: [String] = []
+        if myStudyArr.isEmpty {
+            studylist.append("Anything")
+        } else {
+            myStudyArr.forEach { study in
+                studylist.append(study.title)
+            }
+        }
+        SeSACAPIService.shared.requestStatusSeSACAPI(router: Router.findPost(query: UserManager.idToken, lat: 37.517819364682694, long: 126.88647317074734, list: studylist)) { value in
+            completion(value)
+        }
+    }
+    
+    func renewalSeSACUserRequest(completion: @escaping () -> Void) {
+        let currentUser = Auth.auth().currentUser
+        currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
+            if error != nil {
+                print("error")
+            }
+            if let idToken = idToken {
+                UserManager.idToken = idToken
+                
+                completion()
+            }
+        }
+    }
 
 }
 
@@ -72,16 +101,18 @@ extension SearchViewModel: ViewModelType {
     struct Input {
         let viewDidLoadEvent: Observable<Void>
         let searchTap: ControlEvent<Void>
+        let buttonTap: ControlEvent<Void>
     }
     
     struct Output {
         var sesacInfo = PublishSubject<SeSACSearchDTO>()
         var networkFailed = PublishRelay<Bool>()
         let searchTap: ControlEvent<Void>
+        let buttonTap: ControlEvent<Void>
     }
     
     func transform(input: Input) -> Output {
-        let output = Output(searchTap: input.searchTap)
+        let output = Output(searchTap: input.searchTap, buttonTap: input.buttonTap)
         
         input.viewDidLoadEvent
             .withUnretained(self)

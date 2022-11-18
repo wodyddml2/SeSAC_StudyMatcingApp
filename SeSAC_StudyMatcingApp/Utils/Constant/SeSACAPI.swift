@@ -14,6 +14,7 @@ enum SeSACAPI {
     static let withdraw = "/user/withdraw"
     static let search = "/queue/search"
     static let match = "/queue/myQueueState"
+    static let find = "/queue"
 }
 
 // 알아보기

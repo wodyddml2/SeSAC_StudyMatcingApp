@@ -17,6 +17,7 @@ enum Router: URLRequestConvertible {
     case withdrawPost(query: String)
     case searchPost(query: String, lat: Double, long: Double)
     case matchGet(query: String)
+    case findPost(query: String, lat: Double, long: Double, list: [String])
     
     
     var baseURL: URL {
@@ -31,6 +32,8 @@ enum Router: URLRequestConvertible {
             return URL(string: SeSACAPI.baseURL + SeSACAPI.search)!
         case .matchGet:
             return URL(string: SeSACAPI.baseURL + SeSACAPI.match)!
+        case .findPost:
+            return URL(string: SeSACAPI.baseURL + SeSACAPI.find)!
         }
         
     }
@@ -48,7 +51,7 @@ enum Router: URLRequestConvertible {
                 "Content-Type": SeSACLoginHeader.contentType,
                 "idtoken": UserManager.idToken
             ]
-        case .savePut( _ ,let query), .withdrawPost(let query), .searchPost(let query, _, _), .matchGet(let query):
+        case .savePut( _ ,let query), .withdrawPost(let query), .searchPost(let query, _, _), .matchGet(let query), .findPost(let query, _, _, _):
             return [
                 "Content-Type": SeSACLoginHeader.contentType,
                 "idtoken": query
@@ -84,6 +87,12 @@ enum Router: URLRequestConvertible {
                 "lat": "\(lat)",
                 "long": "\(long)"
             ]
+        case .findPost( _,let lat ,let long, let list):
+            return [
+                "lat": "\(lat)",
+                "long": "\(long)",
+                "studylist": "\(list)"
+            ]
         }
     }
     
@@ -92,7 +101,7 @@ enum Router: URLRequestConvertible {
         switch self {
         case .loginGet, .matchGet:
             return .get
-        case .signUpPost, .withdrawPost, .searchPost:
+        case .signUpPost, .withdrawPost, .searchPost, .findPost:
             return .post
         case .savePut:
             return .put
@@ -108,7 +117,7 @@ enum Router: URLRequestConvertible {
         switch self {
         case .loginGet, .withdrawPost, .matchGet:
             return request
-        case .signUpPost, .savePut, .searchPost:
+        case .signUpPost, .savePut, .searchPost, .findPost:
             return try URLEncoding.default.encode(request, with: parameters)
         }
         
@@ -117,6 +126,10 @@ enum Router: URLRequestConvertible {
 
 enum StatusCode: Int {
     case success = 200
+    case declarationOrMatch = 201
+    case cancelFirst = 203
+    case cancelSecond = 204
+    case cancelThird = 205
     case firebaseError = 401
     case noSignup = 406
     case ServerError = 500

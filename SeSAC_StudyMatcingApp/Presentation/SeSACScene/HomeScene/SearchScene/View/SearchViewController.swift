@@ -35,6 +35,7 @@ class SearchViewController: BaseViewController, UIScrollViewDelegate {
     
     let disposeBag = DisposeBag()
     let viewModel = SearchViewModel()
+    
     private var dataSource: UICollectionViewDiffableDataSource<Int, StudyTag>?
     
     override func viewDidLoad() {
@@ -50,9 +51,7 @@ class SearchViewController: BaseViewController, UIScrollViewDelegate {
         
         selectedCollection()
     }
-    
 
-    
     override func configureUI() {
         [collectionView, searchButton].forEach {
             view.addSubview($0)
@@ -70,7 +69,8 @@ class SearchViewController: BaseViewController, UIScrollViewDelegate {
             make.leading.trailing.equalToSuperview().inset(16)
         }
     }
-    
+}
+extension SearchViewController {
     func selectedCollection() {
       
         collectionView.rx.itemSelected
@@ -125,12 +125,10 @@ class SearchViewController: BaseViewController, UIScrollViewDelegate {
             .disposed(by: disposeBag)
 
     }
-
 }
-
 extension SearchViewController {
     private func bindViewModel() {
-        let input = SearchViewModel.Input(viewDidLoadEvent: Observable.just(()), searchTap: searchBar.rx.searchButtonClicked)
+        let input = SearchViewModel.Input(viewDidLoadEvent: Observable.just(()), searchTap: searchBar.rx.searchButtonClicked, buttonTap: searchButton.rx.tap)
         let output = viewModel.transform(input: input)
         
         let window = UIApplication.shared.connectedScenes
@@ -183,6 +181,7 @@ extension SearchViewController {
             .disposed(by: disposeBag)
         
         bindSearchReturnTap(output: output)
+        bindSearchButtonTap(output: output)
     }
     
     private func bindSearchReturnTap(output: SearchViewModel.Output) {
@@ -212,7 +211,44 @@ extension SearchViewController {
     }
     
     private func bindSearchButtonTap(output: SearchViewModel.Output) {
-        
+        output.buttonTap
+            .throttle(.seconds(5), scheduler: MainScheduler.asyncInstance)
+            .withUnretained(self)
+            .bind { vc, _ in
+                vc.requestUser()
+            }
+            .disposed(by: disposeBag)
+    }
+}
+
+extension SearchViewController {
+    private func requestUser() {
+        viewModel.requestSeSACUser { [weak self] value in
+            guard let self = self else {return}
+            switch StatusCode(rawValue: value) {
+            case .success:
+                print("success")
+            case .declarationOrMatch:
+                self.view.makeToast("신고가 누적되어 이용하실 수 없습니다", position: .center)
+            case .cancelFirst:
+                self.view.makeToast("스터디 취소 패널티로, 1분동안 이용하실 수 없습니다", position: .center)
+            case .cancelSecond:
+                self.view.makeToast("스터디 취소 패널티로, 2분동안 이용하실 수 없습니다", position: .center)
+            case .cancelThird:
+                self.view.makeToast("스터디 취소 패널티로, 3분동안 이용하실 수 없습니다", position: .center)
+            case .firebaseError:
+                self.renewalUser()
+            default:
+                print(value)
+                self.view.makeToast("에러가 발생했습니다.", position: .center)
+            }
+        }
+    }
+    
+    private func renewalUser() {
+        viewModel.renewalSeSACUserRequest {
+            self.requestUser()
+        }
     }
 }
 
