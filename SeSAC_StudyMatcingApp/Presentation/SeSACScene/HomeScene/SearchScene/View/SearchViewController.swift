@@ -64,7 +64,8 @@ class SearchViewController: BaseViewController, UIScrollViewDelegate {
         
         searchButton.snp.makeConstraints { make in
             make.height.equalTo(48)
-            make.bottom.leading.trailing.equalToSuperview().inset(16)
+            make.bottom.equalTo(view.safeAreaLayoutGuide).inset(16)
+            make.leading.trailing.equalToSuperview().inset(16)
         }
     }
     
@@ -106,6 +107,21 @@ class SearchViewController: BaseViewController, UIScrollViewDelegate {
         }
         .disposed(by: disposeBag)
 
+        collectionView.rx.didScroll
+            .withUnretained(self)
+            .bind(onNext: { vc, _ in
+               
+                vc.searchButton.snp.updateConstraints { make in
+                    make.bottom.equalTo(vc.view.safeAreaLayoutGuide).inset(16)
+                    make.leading.trailing.equalToSuperview().inset(16)
+                }
+                vc.searchButton.layer.cornerRadius = 8
+                UIView.animate(withDuration: 0) {
+                    vc.view.layoutIfNeeded()
+                }
+            })
+            .disposed(by: disposeBag)
+
     }
 
 }
@@ -114,6 +130,14 @@ extension SearchViewController {
     private func bindViewModel() {
         let input = SearchViewModel.Input(viewDidLoadEvent: Observable.just(()), searchTap: searchBar.rx.searchButtonClicked)
         let output = viewModel.transform(input: input)
+        
+        let window = UIApplication.shared.connectedScenes
+            .filter({$0.activationState == .foregroundActive})
+            .map({$0 as? UIWindowScene})
+            .compactMap({$0})
+            .first?.windows
+            .filter({$0.isKeyWindow}).first
+        let extra = window!.safeAreaInsets.bottom
         
         output.sesacInfo
             .withUnretained(self)
@@ -140,6 +164,21 @@ extension SearchViewController {
                     self.view.makeToast("사용자의 정보를 불러오는데 실패했습니다.")
                 }
             }).disposed(by: disposeBag)
+        
+        RxKeyboard.instance.visibleHeight
+            .skip(1)
+            .drive (onNext: { [weak self] height in
+                guard let self = self else {return}
+                UIView.animate(withDuration: 0) {
+                    self.searchButton.snp.updateConstraints { make in
+                        make.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(height - extra)
+                        make.leading.trailing.equalToSuperview()
+                    }
+                    self.searchButton.layer.cornerRadius = 0
+                }
+                self.view.layoutIfNeeded()
+            })
+            .disposed(by: disposeBag)
         
         bindSearchTap(output: output)
     }
