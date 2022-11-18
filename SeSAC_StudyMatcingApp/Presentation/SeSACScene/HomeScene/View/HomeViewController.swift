@@ -64,8 +64,10 @@ extension HomeViewController {
 extension HomeViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let coordinate = locations.last?.coordinate else { return }
-//        locationManager.stopUpdatingLocation()
+        locationManager.stopUpdatingLocation()
         setRegionAnnotation(center: coordinate)
+//        let c = mainView.mapView.centerCoordinate
+//        print(c)
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
@@ -87,16 +89,17 @@ extension HomeViewController {
         let annotation = MKPointAnnotation()
         
         annotation.coordinate = center
-        annotation.title = "현재 위치"
 
         mainView.mapView.addAnnotation(annotation)
+        
+        
     }
 }
 
 extension HomeViewController {
     func bindViewModel() {
         guard let coordinate = locationManager.location?.coordinate else {return}
-        let input = HomeViewModel.Input(viewDidLoadEvent: Observable.just(()), lat: 37.517819364682694, long: 126.88647317074734)
+        let input = HomeViewModel.Input(viewDidLoadEvent: Observable.just(()), lat: 37.517819364682694, long: 126.88647317074734, currentLocation: mainView.currentLocationButton.rx.tap)
         let output = viewModel.transform(input: input)
         
         // 낼 다시
@@ -144,5 +147,16 @@ extension HomeViewController {
             .disposed(by: disposeBag)
         
         
+        buttonTap(output: output)
     }
+    
+    private func buttonTap(output: HomeViewModel.Output) {
+        output.currentLocation
+            .withUnretained(self)
+            .bind { vc, _ in
+                vc.checkUserDeviceLocationSeviceAuthorization()
+            }
+            .disposed(by: disposeBag)
+    }
+    
 }

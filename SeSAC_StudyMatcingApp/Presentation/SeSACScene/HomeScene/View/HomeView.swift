@@ -69,13 +69,20 @@ class HomeView: BaseView {
         return view
     }()
     
+    let pinImageView: UIImageView = {
+        let view = UIImageView()
+        view.image = UIImage(named: "centerpin")
+        view.contentMode = .scaleAspectFit
+        return view
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
     
     override func configureUI() {
         self.addSubview(mapView)
-        [stackView, currentLocationButton, matchingButton].forEach {
+        [stackView, currentLocationButton, matchingButton, pinImageView].forEach {
             mapView.addSubview($0)
         }
         
@@ -105,5 +112,10 @@ class HomeView: BaseView {
             make.bottom.equalToSuperview().inset(100)
         }
         
+        pinImageView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.centerY.equalTo(self.snp.centerY).offset(-35)
+            make.height.width.equalTo(48)
+        }
     }
 }
