@@ -31,13 +31,12 @@ final class HomeViewController: BaseViewController {
 
         locationManager.delegate = self
         mainView.mapView.delegate = self
-        bindViewModel()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         viewModel.mapCameraMove.accept(true)
+        bindViewModel()
         navigationController?.navigationBar.isHidden = true
         tabBarController?.tabBar.isHidden = false
     }
@@ -54,7 +53,7 @@ extension HomeViewController {
             locationManager.desiredAccuracy = kCLLocationAccuracyBest
             locationManager.requestWhenInUseAuthorization()
         case .restricted, .denied:
-            setRegionAnnotation(center: CLLocationCoordinate2D(latitude: 37.517819364682694, longitude: 126.88647317074734))
+            setRegionAnnotation(center: CLLocationCoordinate2D(latitude: 37.517819364682694, longitude: 126.88647317074734), users: sesacUsers)
             showSettingAlert(title: "위치정보 이용", message: "위치 서비스를 사용할 수 없습니다. 기기의 '설정>개인정보 보호'에서 위치 서비스를 켜주세요.")
         case .authorizedWhenInUse:
             locationManager.startUpdatingLocation()
@@ -70,7 +69,7 @@ extension HomeViewController: CLLocationManagerDelegate {
         guard let coordinate = locations.last?.coordinate else { return }
         locationManager.stopUpdatingLocation()
        
-        setRegionAnnotation(center: coordinate)
+        setRegionAnnotation(center: coordinate, users: sesacUsers)
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
@@ -84,14 +83,14 @@ extension HomeViewController: CLLocationManagerDelegate {
 }
 
 extension HomeViewController {
-    func setRegionAnnotation(center: CLLocationCoordinate2D) {
-        let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 37.517819364682694, longitude: 126.88647317074734), latitudinalMeters: 700, longitudinalMeters: 700)
-        
+    func setRegionAnnotation(center: CLLocationCoordinate2D, users: [SeSACUser]) {
+        let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 37.517819364682694, longitude: 126.88647317074734), latitudinalMeters: 1400, longitudinalMeters: 1400)
+        mainView.mapView.removeAnnotations(mainView.mapView.annotations)
         mainView.mapView.setRegion(region, animated: true)
 
         var annotation: [CustomAnnotation] = []
         
-        for user in sesacUsers {
+        for user in users {
             let point = CustomAnnotation(image: user.sesac, coordinate: CLLocationCoordinate2D(latitude: user.lat, longitude: user.long))
             annotation.append(point)
         }
@@ -106,7 +105,11 @@ extension HomeViewController {
         let input = HomeViewModel.Input(
             viewDidLoadEvent: Observable.just(()),
             match: mainView.matchingButton.rx.tap,
-            currentLocation: mainView.currentLocationButton.rx.tap)
+            currentLocation: mainView.currentLocationButton.rx.tap,
+            all: mainView.allButton.rx.tap,
+            man: mainView.manButton.rx.tap,
+            woman: mainView.womanButton.rx.tap
+        )
         let output = viewModel.transform(input: input)
 
         output.searchInfo
@@ -116,13 +119,14 @@ extension HomeViewController {
                 result.fromQueueDB.forEach {vc.sesacUsers.append(SeSACUser(lat: $0.lat, long: $0.long, sesac: $0.sesac, gender: $0.gender))}
                 result.fromQueueDBRequested.forEach {vc.sesacUsers.append(SeSACUser(lat: $0.lat, long: $0.long, sesac: $0.sesac, gender: $0.gender))}
                 let location = self.mainView.mapView.centerCoordinate
-                self.setRegionAnnotation(center: location)
+                self.setRegionAnnotation(center: location, users: vc.sesacUsers)
             })
             .disposed(by: disposeBag)
         
         output.matchInfo
             .withUnretained(self)
             .subscribe (onNext: {vc, result in
+                print(result)
                 if result.matched == 0 {
                     vc.mainView.matchingButton.setImage(UIImage(named: MatchImage.antenna), for: .normal)
                 } else {
@@ -175,10 +179,37 @@ extension HomeViewController {
         output.match
             .withUnretained(self)
             .bind { vc, _ in
-                let viewController = SearchViewController()
-                vc.transition(viewController, transitionStyle: .push)
-                let location = self.mainView.mapView.centerCoordinate
-                viewController.viewModel.locationValue = location
+                if vc.locationManager.authorizationStatus == .denied {
+                    vc.showSettingAlert(title: "위치정보 이용", message: "위치 서비스를 사용할 수 없습니다. 기기의 '설정>개인정보 보호'에서 위치 서비스를 켜주세요.")
+                } else {
+                    let viewController = SearchViewController()
+                    vc.transition(viewController, transitionStyle: .push)
+                    let location = self.mainView.mapView.centerCoordinate
+                    viewController.viewModel.locationValue = location
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        output.genderButton
+            .withUnretained(self)
+            .bind { vc, gender in
+                let location = vc.mainView.mapView.centerCoordinate
+                vc.mainView.allButton.normalStyle(width: 0)
+                vc.mainView.womanButton.normalStyle(width: 0)
+                vc.mainView.manButton.normalStyle(width: 0)
+                switch gender {
+                case .all:
+                    vc.mainView.allButton.selectedStyle()
+                    vc.setRegionAnnotation(center: location, users: vc.sesacUsers)
+                case .man:
+                    vc.mainView.manButton.selectedStyle()
+                    let manUser = vc.sesacUsers.filter { $0.gender == 1 }
+                    vc.setRegionAnnotation(center: location, users: manUser)
+                case .woman:
+                    vc.mainView.womanButton.selectedStyle()
+                    let womanUser = vc.sesacUsers.filter { $0.gender == 0 }
+                    vc.setRegionAnnotation(center: location, users: womanUser)
+                }
             }
             .disposed(by: disposeBag)
     }

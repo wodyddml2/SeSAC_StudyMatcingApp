@@ -80,7 +80,7 @@ extension MyProfileReviewTableViewCell {
         if reputation[sender.tag] > 0 {
             sender.selectedStyle()
         } else {
-            sender.normalStyle()
+            sender.normalStyle(width: 1)
         }
     }
     

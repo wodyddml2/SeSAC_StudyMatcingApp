@@ -11,6 +11,12 @@ import FirebaseAuth
 import RxSwift
 import RxCocoa
 
+enum MapGenderButton {
+    case all
+    case man
+    case woman
+}
+
 class HomeViewModel {
     let disposeBag = DisposeBag()
     
@@ -92,6 +98,9 @@ extension HomeViewModel: ViewModelType {
         let viewDidLoadEvent: Observable<Void>
         let match: ControlEvent<Void>
         let currentLocation: ControlEvent<Void>
+        let all: ControlEvent<Void>
+        let man: ControlEvent<Void>
+        let woman: ControlEvent<Void>
     }
     
     struct Output {
@@ -102,11 +111,17 @@ extension HomeViewModel: ViewModelType {
         let match: ControlEvent<Void>
         let currentLocation: ControlEvent<Void>
         var mapCameraMove: PublishRelay<Bool>
+        let genderButton: Observable<MapGenderButton>
     }
     
     func transform(input: Input) -> Output {
-        let output = Output(match: input.match, currentLocation: input.currentLocation, mapCameraMove: mapCameraMove)
-        
+        let genderButton = Observable.merge(
+            input.all.map({_ in MapGenderButton.all}),
+            input.man.map({_ in MapGenderButton.man}),
+            input.woman.map({_ in MapGenderButton.woman})
+        )
+        let output = Output(match: input.match, currentLocation: input.currentLocation, mapCameraMove: mapCameraMove, genderButton: genderButton)
+    
         input.viewDidLoadEvent
             .withUnretained(self)
             .subscribe { vc, _ in

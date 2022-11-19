@@ -24,8 +24,8 @@ class CommonButton: UIButton {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func normalStyle() {
-        self.layer.borderWidth = 1
+    func normalStyle(width: CGFloat) {
+        self.layer.borderWidth = width
         self.backgroundColor = .white
         self.setTitleColor(.black, for: .normal)
     }
@@ -42,4 +42,5 @@ class CommonButton: UIButton {
         self.setTitleColor(.sesacGreen, for: .normal)
         self.backgroundColor = .white
     }
+  
 }

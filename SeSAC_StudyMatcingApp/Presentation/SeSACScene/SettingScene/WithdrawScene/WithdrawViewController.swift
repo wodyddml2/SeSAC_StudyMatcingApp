@@ -39,7 +39,7 @@ class WithdrawViewController: BaseViewController {
     
     let cancelButton: CommonButton = {
         let view = CommonButton()
-        view.normalStyle()
+        view.normalStyle(width: 1)
         view.setTitle("취소", for: .normal)
         return view
     }()

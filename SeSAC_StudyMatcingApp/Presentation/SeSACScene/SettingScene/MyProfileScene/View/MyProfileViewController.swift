@@ -88,7 +88,7 @@ final class MyProfileViewController: BaseViewController {
                     .withUnretained(self)
                     .bind { vc, _ in
                     cell.genderView.womanButton.selectedStyle()
-                    cell.genderView.manButton.normalStyle()
+                    cell.genderView.manButton.normalStyle(width: 1)
                     vc.sesacData?.gender = cell.genderView.womanButton.tag
                 }
                 .disposed(by: self.disposeBag)
@@ -96,7 +96,7 @@ final class MyProfileViewController: BaseViewController {
                 cell.genderView.manButton.rx.tap
                     .withUnretained(self)
                     .bind { vc, _ in
-                    cell.genderView.womanButton.normalStyle()
+                    cell.genderView.womanButton.normalStyle(width: 1)
                     cell.genderView.manButton.selectedStyle()
                     vc.sesacData?.gender = cell.genderView.manButton.tag
                 }

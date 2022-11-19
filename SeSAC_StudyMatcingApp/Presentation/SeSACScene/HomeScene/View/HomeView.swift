@@ -12,32 +12,32 @@ import MapKit
 class HomeView: BaseView {
     lazy var mapView: MKMapView = {
         let view = MKMapView()
-        view.cameraZoomRange = .init(minCenterCoordinateDistance: 50, maxCenterCoordinateDistance: 3000)
+//        view.cameraZoomRange = .init(minCenterCoordinateDistance: 50, maxCenterCoordinateDistance: 3000)
         view.register(CustomAnnotationView.self, forAnnotationViewWithReuseIdentifier: CustomAnnotationView.indentifier)
         return view
     }()
     
-    let allButton: UIButton = {
-        let view = UIButton(frame: CGRect(x: 0, y: 0, width: 48, height: 48))
-        let attributedTitle = NSAttributedString(string: "전체", attributes: [.font: UIFont.notoSans(size: 14, family: .Medium), .foregroundColor: UIColor.white])
-        view.setAttributedTitle(attributedTitle, for: .normal)
-        view.backgroundColor = .sesacGreen
+    let allButton: CommonButton = {
+        let view = CommonButton(frame: CGRect(x: 0, y: 0, width: 48, height: 48))
+        view.layer.cornerRadius = 0
+        view.selectedStyle()
+        view.setTitle("전체", for: .normal)
         return view
     }()
     
-    let manButton: UIButton = {
-        let view = UIButton(frame: CGRect(x: 0, y: 0, width: 48, height: 48))
-        let attributedTitle = NSAttributedString(string: "남자", attributes: [.font: UIFont.notoSans(size: 14, family: .Regular), .foregroundColor: UIColor.black])
-        view.setAttributedTitle(attributedTitle, for: .normal)
-        view.backgroundColor = .white
+    let manButton: CommonButton = {
+        let view = CommonButton(frame: CGRect(x: 0, y: 0, width: 48, height: 48))
+        view.layer.cornerRadius = 0
+        view.normalStyle(width: 0)
+        view.setTitle("남자", for: .normal)
         return view
     }()
     
-    let womanButton: UIButton = {
-        let view = UIButton(frame: CGRect(x: 0, y: 0, width: 48, height: 48))
-        let attributedTitle = NSAttributedString(string: "여자", attributes: [.font: UIFont.notoSans(size: 14, family: .Regular), .foregroundColor: UIColor.black])
-        view.setAttributedTitle(attributedTitle, for: .normal)
-        view.backgroundColor = .white
+    let womanButton: CommonButton = {
+        let view = CommonButton(frame: CGRect(x: 0, y: 0, width: 48, height: 48))
+        view.layer.cornerRadius = 0
+        view.normalStyle(width: 0)
+        view.setTitle("여자", for: .normal)
         return view
     }()
     
