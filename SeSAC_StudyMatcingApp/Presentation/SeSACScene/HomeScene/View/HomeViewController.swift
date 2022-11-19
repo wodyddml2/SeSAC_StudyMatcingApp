@@ -119,9 +119,14 @@ extension HomeViewController {
             .disposed(by: disposeBag)
         
         output.matchInfo
-            .subscribe { s in
-                print(s)
-            }
+            .withUnretained(self)
+            .subscribe (onNext: {vc, result in
+                if result.matched == 0 {
+                    vc.mainView.matchingButton.setImage(UIImage(named: MatchImage.antenna), for: .normal)
+                } else {
+                    vc.mainView.matchingButton.setImage(UIImage(named: MatchImage.message), for: .normal)
+                }
+            })
             .disposed(by: disposeBag)
         
         output.networkFailed
@@ -138,8 +143,7 @@ extension HomeViewController {
             .drive (onNext: { [weak self] normal in
                 guard let self = self else {return}
                 if normal == true {
-                    print("Ssssssssss")
-                    self.mainView.matchingButton.setImage(UIImage(named: MatchImage.message), for: .normal)
+                    self.mainView.matchingButton.setImage(UIImage(named: MatchImage.search), for: .normal)
                 }
             }).disposed(by: disposeBag)
     
