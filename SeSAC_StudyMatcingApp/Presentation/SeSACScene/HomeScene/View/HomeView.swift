@@ -12,7 +12,7 @@ import MapKit
 class HomeView: BaseView {
     lazy var mapView: MKMapView = {
         let view = MKMapView()
-//        view.cameraZoomRange = .init(minCenterCoordinateDistance: 50, maxCenterCoordinateDistance: 3000)
+        view.cameraZoomRange = .init(minCenterCoordinateDistance: 50, maxCenterCoordinateDistance: 3000)
         view.register(CustomAnnotationView.self, forAnnotationViewWithReuseIdentifier: CustomAnnotationView.indentifier)
         return view
     }()

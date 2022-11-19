@@ -80,6 +80,12 @@
 		635E162C291C2CF40042E8E4 /* BirthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635E162B291C2CF40042E8E4 /* BirthViewController.swift */; };
 		635E162E291C2CFE0042E8E4 /* BirthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635E162D291C2CFE0042E8E4 /* BirthView.swift */; };
 		635E1630291C2D090042E8E4 /* BirthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635E162F291C2D090042E8E4 /* BirthViewModel.swift */; };
+		63670CCA2928BEED00EAF29D /* SeSACFindViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63670CC92928BEED00EAF29D /* SeSACFindViewController.swift */; };
+		63670CCE2928BF3500EAF29D /* SeSACFindImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63670CCD2928BF3500EAF29D /* SeSACFindImageTableViewCell.swift */; };
+		63670CD02928BFA500EAF29D /* SeSACFindReviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63670CCF2928BFA500EAF29D /* SeSACFindReviewTableViewCell.swift */; };
+		63670CD52928C38400EAF29D /* SeSACFindViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63670CD42928C38400EAF29D /* SeSACFindViewModel.swift */; };
+		63670CD72928CCB600EAF29D /* SeSACFind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63670CD62928CCB600EAF29D /* SeSACFind.swift */; };
+		63670CD92928CDCC00EAF29D /* SeSACFindSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63670CD82928CDCC00EAF29D /* SeSACFindSectionModel.swift */; };
 		6378279E292225D3009E1424 /* MyProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6378279D292225D3009E1424 /* MyProfileViewController.swift */; };
 		637827A2292226BD009E1424 /* MyProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637827A1292226BD009E1424 /* MyProfileTableViewCell.swift */; };
 		637827A429222A56009E1424 /* CommonButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637827A329222A56009E1424 /* CommonButton.swift */; };
@@ -187,6 +193,12 @@
 		635E162B291C2CF40042E8E4 /* BirthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthViewController.swift; sourceTree = "<group>"; };
 		635E162D291C2CFE0042E8E4 /* BirthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthView.swift; sourceTree = "<group>"; };
 		635E162F291C2D090042E8E4 /* BirthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthViewModel.swift; sourceTree = "<group>"; };
+		63670CC92928BEED00EAF29D /* SeSACFindViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACFindViewController.swift; sourceTree = "<group>"; };
+		63670CCD2928BF3500EAF29D /* SeSACFindImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACFindImageTableViewCell.swift; sourceTree = "<group>"; };
+		63670CCF2928BFA500EAF29D /* SeSACFindReviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACFindReviewTableViewCell.swift; sourceTree = "<group>"; };
+		63670CD42928C38400EAF29D /* SeSACFindViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACFindViewModel.swift; sourceTree = "<group>"; };
+		63670CD62928CCB600EAF29D /* SeSACFind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACFind.swift; sourceTree = "<group>"; };
+		63670CD82928CDCC00EAF29D /* SeSACFindSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACFindSectionModel.swift; sourceTree = "<group>"; };
 		6378279D292225D3009E1424 /* MyProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileViewController.swift; sourceTree = "<group>"; };
 		637827A1292226BD009E1424 /* MyProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileTableViewCell.swift; sourceTree = "<group>"; };
 		637827A329222A56009E1424 /* CommonButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonButton.swift; sourceTree = "<group>"; };
@@ -281,6 +293,7 @@
 		6300492A291EC21E0046E6D3 /* HomeScene */ = {
 			isa = PBXGroup;
 			children = (
+				63670CC52928B19500EAF29D /* SeSACFindScene */,
 				637EDF3B29252F94009089E4 /* SearchScene */,
 				63004936291EC84B0046E6D3 /* View */,
 				63004937291EC8540046E6D3 /* ViewModel */,
@@ -672,6 +685,7 @@
 			isa = PBXGroup;
 			children = (
 				631DC9532921319F00F23211 /* SeSACProfileGet.swift */,
+				63670CD62928CCB600EAF29D /* SeSACFind.swift */,
 				632564A82927BE08003DDB9F /* SeSACUser.swift */,
 			);
 			path = Model;
@@ -736,6 +750,42 @@
 			isa = PBXGroup;
 			children = (
 				635E162F291C2D090042E8E4 /* BirthViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		63670CC52928B19500EAF29D /* SeSACFindScene */ = {
+			isa = PBXGroup;
+			children = (
+				63670CD22928C35400EAF29D /* View */,
+				63670CD32928C37000EAF29D /* ViewModel */,
+			);
+			path = SeSACFindScene;
+			sourceTree = "<group>";
+		};
+		63670CD12928C34400EAF29D /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				63670CCD2928BF3500EAF29D /* SeSACFindImageTableViewCell.swift */,
+				63670CCF2928BFA500EAF29D /* SeSACFindReviewTableViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		63670CD22928C35400EAF29D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				63670CC92928BEED00EAF29D /* SeSACFindViewController.swift */,
+				63670CD12928C34400EAF29D /* Cells */,
+				63670CD82928CDCC00EAF29D /* SeSACFindSectionModel.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		63670CD32928C37000EAF29D /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				63670CD42928C38400EAF29D /* SeSACFindViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1029,7 +1079,9 @@
 				63308F1D292334F3004B90A5 /* PrifileWithdrawView.swift in Sources */,
 				638B0746291AA49600E9D254 /* AuthComent.swift in Sources */,
 				63467DB72918D4AE00E7D8AE /* OnboardingViewController.swift in Sources */,
+				63670CCA2928BEED00EAF29D /* SeSACFindViewController.swift in Sources */,
 				638B074B291AB44200E9D254 /* FirebaseAPIService.swift in Sources */,
+				63670CD52928C38400EAF29D /* SeSACFindViewModel.swift in Sources */,
 				6300492F291EC27A0046E6D3 /* ShopViewController.swift in Sources */,
 				635E1630291C2D090042E8E4 /* BirthViewModel.swift in Sources */,
 				63004933291EC2950046E6D3 /* SettingViewController.swift in Sources */,
@@ -1064,6 +1116,7 @@
 				63308F19292334D0004B90A5 /* ProfilePermitView.swift in Sources */,
 				63F31446291D2A3500C31F59 /* EmailViewController.swift in Sources */,
 				637827B029229990009E1424 /* ReviewStackView.swift in Sources */,
+				63670CD92928CDCC00EAF29D /* SeSACFindSectionModel.swift in Sources */,
 				63467DD52918D80E00E7D8AE /* SecondViewController.swift in Sources */,
 				63467DD72918D81300E7D8AE /* ThirdViewController.swift in Sources */,
 				63F31448291D2A4000C31F59 /* EmailView.swift in Sources */,
@@ -1091,10 +1144,12 @@
 				63467E042918F9CE00E7D8AE /* NumberView.swift in Sources */,
 				637EDF362924F923009089E4 /* WithdrawViewController.swift in Sources */,
 				63004935291EC7020046E6D3 /* TabImage.swift in Sources */,
+				63670CD72928CCB600EAF29D /* SeSACFind.swift in Sources */,
 				63467DE02918D87F00E7D8AE /* BaseView.swift in Sources */,
 				63004924291EAAC70046E6D3 /* NetworkMonitor.swift in Sources */,
 				63467E0E291937B200E7D8AE /* MessageViewController.swift in Sources */,
 				635E1609291BD9D00042E8E4 /* SeSACAPIService.swift in Sources */,
+				63670CCE2928BF3500EAF29D /* SeSACFindImageTableViewCell.swift in Sources */,
 				63467DFA2918E7FC00E7D8AE /* ViewModelType.swift in Sources */,
 				637827A829222E30009E1424 /* MyProfileReviewTableViewCell.swift in Sources */,
 				637EDF3F29252FB0009089E4 /* SearchViewController.swift in Sources */,
@@ -1104,6 +1159,7 @@
 				63D01EEF29268E88007ADA35 /* SearchOtherStudyCollectionViewCell.swift in Sources */,
 				63467DFD2918EA8400E7D8AE /* NumberViewController.swift in Sources */,
 				631DC9542921319F00F23211 /* SeSACProfileGet.swift in Sources */,
+				63670CD02928BFA500EAF29D /* SeSACFindReviewTableViewCell.swift in Sources */,
 				63F3144A291D2A6300C31F59 /* EmailViewModel.swift in Sources */,
 				63467DD32918D80800E7D8AE /* FirstViewController.swift in Sources */,
 				63D01EEB2926152A007ADA35 /* SearchViewModel.swift in Sources */,

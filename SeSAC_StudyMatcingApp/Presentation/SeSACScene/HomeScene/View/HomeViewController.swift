@@ -28,7 +28,7 @@ final class HomeViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         checkUserDeviceLocationSeviceAuthorization()
-
+        bindViewModel()
         locationManager.delegate = self
         mainView.mapView.delegate = self
     }
@@ -36,7 +36,7 @@ final class HomeViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         viewModel.mapCameraMove.accept(true)
-        bindViewModel()
+       
         navigationController?.navigationBar.isHidden = true
         tabBarController?.tabBar.isHidden = false
     }
@@ -84,7 +84,7 @@ extension HomeViewController: CLLocationManagerDelegate {
 
 extension HomeViewController {
     func setRegionAnnotation(center: CLLocationCoordinate2D, users: [SeSACUser]) {
-        let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 37.517819364682694, longitude: 126.88647317074734), latitudinalMeters: 1400, longitudinalMeters: 1400)
+        let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: center.latitude, longitude: center.longitude), latitudinalMeters: 700, longitudinalMeters: 700)
         mainView.mapView.removeAnnotations(mainView.mapView.annotations)
         mainView.mapView.setRegion(region, animated: true)
 
@@ -126,7 +126,6 @@ extension HomeViewController {
         output.matchInfo
             .withUnretained(self)
             .subscribe (onNext: {vc, result in
-                print(result)
                 if result.matched == 0 {
                     vc.mainView.matchingButton.setImage(UIImage(named: MatchImage.antenna), for: .normal)
                 } else {
@@ -179,14 +178,18 @@ extension HomeViewController {
         output.match
             .withUnretained(self)
             .bind { vc, _ in
-                if vc.locationManager.authorizationStatus == .denied {
-                    vc.showSettingAlert(title: "위치정보 이용", message: "위치 서비스를 사용할 수 없습니다. 기기의 '설정>개인정보 보호'에서 위치 서비스를 켜주세요.")
-                } else {
-                    let viewController = SearchViewController()
-                    vc.transition(viewController, transitionStyle: .push)
-                    let location = self.mainView.mapView.centerCoordinate
-                    viewController.viewModel.locationValue = location
-                }
+//                if vc.locationManager.authorizationStatus == .denied {
+//                    vc.showSettingAlert(title: "위치정보 이용", message: "위치 서비스를 사용할 수 없습니다. 기기의 '설정>개인정보 보호'에서 위치 서비스를 켜주세요.")
+//                } else if vc.locationManager.authorizationStatus == .authorizedWhenInUse {
+//                    let viewController = SearchViewController()
+//                    vc.transition(viewController, transitionStyle: .push)
+//                    let location = self.mainView.mapView.centerCoordinate
+//                    viewController.viewModel.locationValue = location
+//                }
+                let viewController = SearchViewController()
+                vc.transition(viewController, transitionStyle: .push)
+                let location = self.mainView.mapView.centerCoordinate
+                viewController.viewModel.locationValue = location
             }
             .disposed(by: disposeBag)
         

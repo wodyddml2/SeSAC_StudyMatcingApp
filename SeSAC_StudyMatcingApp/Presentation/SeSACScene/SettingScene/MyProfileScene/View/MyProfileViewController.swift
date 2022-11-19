@@ -63,7 +63,7 @@ final class MyProfileViewController: BaseViewController {
         }
     }
     
-    private func setTableView(sesacInfo: SeSACProfileGet, output: MyProfileViewModel.Output) {
+    private func setTableView(sesacInfo: SeSACProfileGet) {
         
         dataSource = RxTableViewSectionedReloadDataSource<MyProfileSectionModel>(configureCell: { [weak self] dataSource, tableView, indexPath, item in
             guard let self = self else {return UITableViewCell()}
@@ -214,7 +214,7 @@ extension MyProfileViewController {
             .withUnretained(self)
             .subscribe { vc, sesac in
                 vc.sesacData = sesac
-                vc.setTableView(sesacInfo: sesac, output: output)
+                vc.setTableView(sesacInfo: sesac)
                 vc.bindSave(output: output)
             }
             .disposed(by: disposeBag)
