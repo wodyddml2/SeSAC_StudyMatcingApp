@@ -32,10 +32,12 @@ final class HomeViewController: BaseViewController {
         locationManager.delegate = self
         mainView.mapView.delegate = self
         bindViewModel()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        viewModel.mapCameraMove.accept(true)
         navigationController?.navigationBar.isHidden = true
         tabBarController?.tabBar.isHidden = false
     }
@@ -149,7 +151,7 @@ extension HomeViewController {
     
        
         output.mapCameraMove
-            .debounce(.milliseconds(500), scheduler: MainScheduler.asyncInstance)
+            .debounce(.milliseconds(300), scheduler: MainScheduler.asyncInstance)
             .asDriver(onErrorJustReturn: false)
             .drive (onNext: { [weak self] move in
                 guard let self = self else {return}
