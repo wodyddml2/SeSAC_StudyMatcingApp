@@ -36,7 +36,7 @@ final class HomeViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         viewModel.mapCameraMove.accept(true)
-       
+        viewModel.matchBind.accept(true)
         navigationController?.navigationBar.isHidden = true
         tabBarController?.tabBar.isHidden = false
     }
@@ -103,7 +103,6 @@ extension HomeViewController {
     
     func bindViewModel() {
         let input = HomeViewModel.Input(
-            viewDidLoadEvent: Observable.just(()),
             match: mainView.matchingButton.rx.tap,
             currentLocation: mainView.currentLocationButton.rx.tap,
             all: mainView.allButton.rx.tap,
@@ -164,6 +163,16 @@ extension HomeViewController {
                 }
             }).disposed(by: disposeBag)
         
+        output.matchBind
+            .asDriver(onErrorJustReturn: false)
+            .drive (onNext: { [weak self] match in
+                guard let self = self else {return}
+                if match == true {
+                    self.viewModel.requestMatchSeSAC(output: output)
+                }
+            })
+            .disposed(by: disposeBag)
+        
         buttonTap(output: output)
     }
     
@@ -178,18 +187,14 @@ extension HomeViewController {
         output.match
             .withUnretained(self)
             .bind { vc, _ in
-//                if vc.locationManager.authorizationStatus == .denied {
-//                    vc.showSettingAlert(title: "위치정보 이용", message: "위치 서비스를 사용할 수 없습니다. 기기의 '설정>개인정보 보호'에서 위치 서비스를 켜주세요.")
-//                } else if vc.locationManager.authorizationStatus == .authorizedWhenInUse {
-//                    let viewController = SearchViewController()
-//                    vc.transition(viewController, transitionStyle: .push)
-//                    let location = self.mainView.mapView.centerCoordinate
-//                    viewController.viewModel.locationValue = location
-//                }
-                let viewController = SearchViewController()
-                vc.transition(viewController, transitionStyle: .push)
-                let location = self.mainView.mapView.centerCoordinate
-                viewController.viewModel.locationValue = location
+                if vc.locationManager.authorizationStatus == .denied {
+                    vc.showSettingAlert(title: "위치정보 이용", message: "위치 서비스를 사용할 수 없습니다. 기기의 '설정>개인정보 보호'에서 위치 서비스를 켜주세요.")
+                } else {
+                    let viewController = SearchViewController()
+                    vc.transition(viewController, transitionStyle: .push)
+                    let location = self.mainView.mapView.centerCoordinate
+                    viewController.viewModel.locationValue = location
+                }
             }
             .disposed(by: disposeBag)
         

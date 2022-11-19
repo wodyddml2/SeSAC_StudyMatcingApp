@@ -21,6 +21,7 @@ class HomeViewModel {
     let disposeBag = DisposeBag()
     
     var mapCameraMove = PublishRelay<Bool>()
+    var matchBind = PublishRelay<Bool>()
 
     
     func requestSearchSeSAC(output: Output, lat: Double, long: Double) {
@@ -56,7 +57,7 @@ class HomeViewModel {
     }
     
     
-    private func requestMatchSeSAC(output: Output) {
+    func requestMatchSeSAC(output: Output) {
         SeSACAPIService.shared.requestSeSACAPI(type: SeSACMatchDTO.self, router: Router.matchGet(query: UserManager.idToken)) { result in
             switch result {
             case .success(let success):
@@ -95,7 +96,6 @@ extension HomeViewModel: ViewModelType {
     
     
     struct Input {
-        let viewDidLoadEvent: Observable<Void>
         let match: ControlEvent<Void>
         let currentLocation: ControlEvent<Void>
         let all: ControlEvent<Void>
@@ -111,6 +111,7 @@ extension HomeViewModel: ViewModelType {
         let match: ControlEvent<Void>
         let currentLocation: ControlEvent<Void>
         var mapCameraMove: PublishRelay<Bool>
+        var matchBind: PublishRelay<Bool>
         let genderButton: Observable<MapGenderButton>
     }
     
@@ -120,15 +121,8 @@ extension HomeViewModel: ViewModelType {
             input.man.map({_ in MapGenderButton.man}),
             input.woman.map({_ in MapGenderButton.woman})
         )
-        let output = Output(match: input.match, currentLocation: input.currentLocation, mapCameraMove: mapCameraMove, genderButton: genderButton)
-    
-        input.viewDidLoadEvent
-            .withUnretained(self)
-            .subscribe { vc, _ in
-                vc.requestMatchSeSAC(output: output)
-            }
-            .disposed(by: disposeBag)
+     
         
-        return output
+        return Output(match: input.match, currentLocation: input.currentLocation, mapCameraMove: mapCameraMove, matchBind: matchBind, genderButton: genderButton)
     }
 }
