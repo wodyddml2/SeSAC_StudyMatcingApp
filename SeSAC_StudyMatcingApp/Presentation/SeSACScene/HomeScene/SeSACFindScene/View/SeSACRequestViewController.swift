@@ -33,6 +33,11 @@ class SeSACRequestViewController: BaseViewController {
         super.viewDidLoad()
         bindViewModel()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        viewModel.searchSesac.accept(true)
+    }
 
     func setTableView(sesacInfo: SeSACSearchDTO) {
         dataSources = RxTableViewSectionedReloadDataSource<SeSACFindSectionModel>(configureCell: { dataSource, tableView, indexPath, item in
@@ -130,6 +135,7 @@ extension SeSACRequestViewController {
         output.sesacInfo
             .withUnretained(self)
             .subscribe (onNext: { vc, sesacInfo in
+                print(sesacInfo)
                 vc.setTableView(sesacInfo: sesacInfo)
             })
             .disposed(by: disposeBag)
@@ -141,6 +147,18 @@ extension SeSACRequestViewController {
                 vc.mainView.tableView.delegate = nil
                 vc.viewModel.requsetSearch(output: output)
             }
+            .disposed(by: disposeBag)
+        
+        output.searchSesac
+            .asDriver(onErrorJustReturn: false)
+            .drive (onNext: { [weak self] bool in
+                guard let self = self else {return}
+                if bool {
+                    self.mainView.tableView.dataSource = nil
+                    self.mainView.tableView.delegate = nil
+                    self.viewModel.requsetSearch(output: output)
+                }
+            })
             .disposed(by: disposeBag)
     }
     

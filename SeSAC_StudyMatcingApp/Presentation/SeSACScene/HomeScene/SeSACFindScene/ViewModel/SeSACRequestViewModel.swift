@@ -18,11 +18,13 @@ class SeSACRequestViewModel {
     
     var locationValue: CLLocationCoordinate2D?
     
+    var searchSesac = PublishRelay<Bool>()
+    
     func requsetSearch(output: Output) {
         
         guard let location = locationValue else {return}
         
-        SeSACAPIService.shared.requestSeSACAPI(type: SeSACSearchDTO.self ,router: Router.searchPost(query: UserManager.idToken, lat: 37.517819364682694, long: 126)) { [weak self] result in
+        SeSACAPIService.shared.requestSeSACAPI(type: SeSACSearchDTO.self ,router: Router.searchPost(query: UserManager.idToken, lat: 37.517819364682694, long: 126.88647317074734)) { [weak self] result in
             guard let self = self else {return}
             switch result {
             case .success(let success):
@@ -86,17 +88,18 @@ extension SeSACRequestViewModel: ViewModelType {
     struct Output {
         var sesacInfo = PublishSubject<SeSACSearchDTO>()
         var networkFailed = PublishRelay<Bool>()
+        var searchSesac: PublishRelay<Bool>
     }
     
     func transform(input: Input) -> Output {
-        let output = Output()
+        let output = Output(searchSesac: searchSesac)
         
-        input.viewDidLoadEvent
-            .withUnretained(self)
-            .subscribe { vc, _ in
-                vc.requsetSearch(output: output)
-            }
-            .disposed(by: disposeBag)
+//        input.viewDidLoadEvent
+//            .withUnretained(self)
+//            .subscribe { vc, _ in
+//                vc.requsetSearch(output: output)
+//            }
+//            .disposed(by: disposeBag)
  
         return output
     }

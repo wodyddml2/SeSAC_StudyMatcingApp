@@ -11,9 +11,11 @@ class SeSACAcceptViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
        
     }
-
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        print("aaaaaaaaa")
+    }
 
 }
