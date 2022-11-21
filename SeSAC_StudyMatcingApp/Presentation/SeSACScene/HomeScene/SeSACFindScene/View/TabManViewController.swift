@@ -7,6 +7,7 @@
 
 import UIKit
 
+import FirebaseAuth
 import Tabman
 import Pageboy
 
@@ -54,9 +55,46 @@ class TabManSeSACViewController: TabmanViewController {
     }
     
     @objc func cancelButtonTapped() {
-        
+        requestFindDelete()
     }
 
+    private func requestFindDelete() {
+        SeSACAPIService.shared.requestStatusSeSACAPI(router: Router.findDelete(query: UserManager.idToken)) { [weak self] value in
+            guard let self = self else {return}
+            switch StatusCode(rawValue: value) {
+            case .success:
+                let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
+
+                for viewController in viewControllers {
+                    if let rootVC = viewController as? HomeViewController {
+                        self.navigationController?.popToViewController(rootVC, animated: true)
+                        rootVC.checkUserDeviceLocationSeviceAuthorization()
+                    }
+                }
+            case .declarationOrMatch:
+                print("매칭 상태임")
+            case .firebaseError:
+                self.renewalFindDeleteRequest()
+            default:
+                self.view.makeToast("에러가 발생했습니다.", position: .center)
+            }
+        }
+    }
+    
+    private func renewalFindDeleteRequest() {
+        let currentUser = Auth.auth().currentUser
+        currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
+            if error != nil {
+                print("error")
+            }
+            if let idToken = idToken {
+                UserManager.idToken = idToken
+                
+                self.requestFindDelete()
+            }
+        }
+    }
+    
     private func setTabMan() {
       
         viewControllers.append(contentsOf: [firstVC, secondVC])

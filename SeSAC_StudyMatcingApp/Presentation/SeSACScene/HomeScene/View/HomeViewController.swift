@@ -43,7 +43,7 @@ final class HomeViewController: BaseViewController {
 }
 
 extension HomeViewController {
-    private func checkUserDeviceLocationSeviceAuthorization() {
+    func checkUserDeviceLocationSeviceAuthorization() {
         let authorizationStatus: CLAuthorizationStatus
         
         authorizationStatus = locationManager.authorizationStatus
