@@ -14,11 +14,6 @@ enum SeSACFindRow: Int {
     case image, review
 }
 
-struct abc {
-    var bool: Bool
-    var int: Int
-}
-
 class SeSACRequestViewController: BaseViewController {
     
     let mainView = SeSACFindView()
@@ -28,9 +23,8 @@ class SeSACRequestViewController: BaseViewController {
     
     var dataSources: RxTableViewSectionedReloadDataSource<SeSACFindSectionModel>?
 
-    var autoBool: Bool = false
-    var abcd: abc = abc(bool: false, int: 0)
-    
+    var heightChange: [Bool] = []
+
     override func loadView() {
         view = mainView
     }
@@ -51,7 +45,7 @@ class SeSACRequestViewController: BaseViewController {
             case .review:
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: SeSACFindReviewTableViewCell.reusableIdentifier, for: indexPath) as? SeSACFindReviewTableViewCell else {return UITableViewCell()}
                 cell.tag = indexPath.section
-                cell.sesacReviewImageView.image = self.abcd.bool ? UIImage(systemName: "chevron.up")! : UIImage(systemName: "chevron.down")!
+                cell.sesacReviewImageView.image = self.heightChange[indexPath.section] ? UIImage(systemName: "chevron.up")! : UIImage(systemName: "chevron.down")!
                 cell.setFindData(item: item)
                 return cell
             default: return UITableViewCell()
@@ -75,15 +69,11 @@ class SeSACRequestViewController: BaseViewController {
         mainView.tableView.rx.itemSelected
             .withUnretained(self)
             .subscribe { vc, index in
-                guard let cell = vc.mainView.tableView.cellForRow(at: index) as? SeSACFindReviewTableViewCell else {return}
-                print(cell.tag)
-                print(index.section)
-                print(vc.autoBool)
+                guard let cell =  vc.mainView.tableView.cellForRow(at: index) as? SeSACFindReviewTableViewCell else {return}
+               
                 if index.section == cell.tag {
                     if index.row == 1 {
-                        vc.abcd.bool.toggle()
-                        vc.abcd.int = cell.tag
-//                        vc.autoBool.toggle()
+                        vc.heightChange[cell.tag].toggle()
                         vc.mainView.tableView.reloadRows(at: [IndexPath(row: index.row, section: index.section)], with: .fade)
                     }
                 }
@@ -92,12 +82,8 @@ class SeSACRequestViewController: BaseViewController {
             .disposed(by: disposeBag)
          
         sections.isEmpty ? noSeSACHidden(bool: false) :  noSeSACHidden(bool: true)
-//        if  {
-//            noSeSACHidden(bool: false)
-//        } else {
-//            noSeSACHidden(bool: true)
-//        }
         
+        heightChange = Array(repeating: false, count: sections.count)
     }
     
     func noSeSACHidden(bool: Bool) {
@@ -117,12 +103,8 @@ extension SeSACRequestViewController: UITableViewDelegate {
         case .image:
             return 225
         case .review:
-            if abcd.bool == true && abcd.int == indexPath.section {
-                return UITableView.automaticDimension
-            } else {
-                return 58
-            }
-//            return autoBool ? UITableView.automaticDimension : 58
+
+            return heightChange[indexPath.section] ? UITableView.automaticDimension : 58
         default:
             return 0
         }
