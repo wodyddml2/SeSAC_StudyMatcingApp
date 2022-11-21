@@ -40,9 +40,9 @@ class MyProfileImageTableViewCell: BaseTableViewCell {
         
         sesacImageView.snp.makeConstraints { make in
             make.top.equalTo(10)
-            make.bottom.equalTo(self)
-            make.leading.equalTo(sesacBackgroundImageView.snp.leading).offset(75)
-            make.height.equalTo(sesacImageView.snp.width)
+            make.bottom.equalTo(8)
+            make.centerX.equalToSuperview().offset(-5)
+            make.width.equalTo(sesacImageView.snp.height)
         }
     }
 }

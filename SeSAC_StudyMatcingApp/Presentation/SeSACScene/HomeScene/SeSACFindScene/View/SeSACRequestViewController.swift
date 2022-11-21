@@ -94,6 +94,12 @@ class SeSACRequestViewController: BaseViewController {
         mainView.reloadButton.isHidden = bool
     }
     
+    func a() {
+        mainView.titleLabel.text = "아쉽게도 주변에 새싹이 없어요ㅠ"
+        mainView.subTitleLabel.text = "스터디를 변경하거나 조금만 더 기다려 주세요!"
+        
+    }
+    
 }
 
 extension SeSACRequestViewController: UITableViewDelegate {
@@ -103,7 +109,6 @@ extension SeSACRequestViewController: UITableViewDelegate {
         case .image:
             return 225
         case .review:
-
             return heightChange[indexPath.section] ? UITableView.automaticDimension : 58
         default:
             return 0
