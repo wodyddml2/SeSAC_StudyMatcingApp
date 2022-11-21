@@ -13,7 +13,7 @@ import RxSwift
 import RxCocoa
 
 
-class SeSACFindViewModel {
+class SeSACRequestViewModel {
     let disposeBag = DisposeBag()
     
     var locationValue: CLLocationCoordinate2D?
@@ -22,7 +22,7 @@ class SeSACFindViewModel {
         
         guard let location = locationValue else {return}
         
-        SeSACAPIService.shared.requestSeSACAPI(type: SeSACSearchDTO.self ,router: Router.searchPost(query: UserManager.idToken, lat: 37.517819364682694, long: 126.88647317074734)) { [weak self] result in
+        SeSACAPIService.shared.requestSeSACAPI(type: SeSACSearchDTO.self ,router: Router.searchPost(query: UserManager.idToken, lat: 37.517819364682694, long: 126)) { [weak self] result in
             guard let self = self else {return}
             switch result {
             case .success(let success):
@@ -54,9 +54,30 @@ class SeSACFindViewModel {
             }
         }
     }
+    
+    
+    func requestFindDelete(completion: @escaping (Int) -> Void) {
+        SeSACAPIService.shared.requestStatusSeSACAPI(router: Router.findDelete(query: UserManager.idToken)) { value in
+            completion(value)
+        }
+    }
+    
+    func renewalFindDeleteRequest(completion: @escaping () -> Void) {
+        let currentUser = Auth.auth().currentUser
+        currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
+            if error != nil {
+                print("error")
+            }
+            if let idToken = idToken {
+                UserManager.idToken = idToken
+                
+                completion()
+            }
+        }
+    }
 }
 
-extension SeSACFindViewModel: ViewModelType {
+extension SeSACRequestViewModel: ViewModelType {
     
     struct Input {
         let viewDidLoadEvent: Observable<Void>

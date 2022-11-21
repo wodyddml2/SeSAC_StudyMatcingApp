@@ -18,7 +18,7 @@ class SeSACRequestViewController: BaseViewController {
     
     let mainView = SeSACFindView()
     
-    let viewModel = SeSACFindViewModel()
+    let viewModel = SeSACRequestViewModel()
     let disposeBag = DisposeBag()
     
     var dataSources: RxTableViewSectionedReloadDataSource<SeSACFindSectionModel>?
@@ -82,6 +82,7 @@ class SeSACRequestViewController: BaseViewController {
             .disposed(by: disposeBag)
          
         sections.isEmpty ? noSeSACHidden(bool: false) :  noSeSACHidden(bool: true)
+        noSeSAC()
         
         heightChange = Array(repeating: false, count: sections.count)
     }
@@ -94,10 +95,14 @@ class SeSACRequestViewController: BaseViewController {
         mainView.reloadButton.isHidden = bool
     }
     
-    func a() {
+    func noSeSAC() {
         mainView.titleLabel.text = "아쉽게도 주변에 새싹이 없어요ㅠ"
         mainView.subTitleLabel.text = "스터디를 변경하거나 조금만 더 기다려 주세요!"
-        
+        mainView.changeButton.rx.tap
+            .subscribe { _ in
+                self.requestDelete(SearchViewController())
+            }.disposed(by: disposeBag)
+            
     }
     
 }
@@ -118,7 +123,7 @@ extension SeSACRequestViewController: UITableViewDelegate {
 
 extension SeSACRequestViewController {
     private func bindViewModel() {
-        let input = SeSACFindViewModel.Input(viewDidLoadEvent: Observable.just(()))
+        let input = SeSACRequestViewModel.Input(viewDidLoadEvent: Observable.just(()))
         let output = viewModel.transform(input: input)
         
         output.sesacInfo
@@ -127,5 +132,35 @@ extension SeSACRequestViewController {
                 vc.setTableView(sesacInfo: sesacInfo)
             })
             .disposed(by: disposeBag)
+    }
+    
+    
+    func requestDelete<T: UIViewController>(_ vc: T) {
+        viewModel.requestFindDelete {  [weak self] value in
+            guard let self = self else {return}
+            switch StatusCode(rawValue: value) {
+            case .success:
+                let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
+
+                for viewController in viewControllers {
+                    if let rootVC = viewController as? T {
+                        self.navigationController?.popToViewController(rootVC, animated: true)
+                    }
+                }
+            case .declarationOrMatch:
+                print("매칭 상태임")
+            case .firebaseError:
+                self.renewalDelete(T())
+            default:
+                self.mainView.makeToast("에러가 발생했습니다.", position: .center)
+            }
+        }
+    }
+    
+    func renewalDelete<T: UIViewController>(_ vc: T) {
+        viewModel.renewalFindDeleteRequest { [weak self] in
+            guard let self = self else {return}
+            self.requestDelete(T())
+        }
     }
 }

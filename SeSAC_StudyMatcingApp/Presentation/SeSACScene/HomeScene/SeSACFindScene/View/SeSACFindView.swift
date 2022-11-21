@@ -30,7 +30,6 @@ class SeSACFindView: BaseView {
         view.isHidden = true
         view.font = UIFont.notoSans(size: 20, family: .Regular)
         view.textAlignment = .center
-        view.text = "아쉽게도 주변에 새싹이 없어요ㅠ"
         return view
     }()
     
@@ -40,7 +39,6 @@ class SeSACFindView: BaseView {
         view.font = UIFont.notoSans(size: 14, family: .Regular)
         view.textAlignment = .center
         view.textColor = .gray7
-        view.text = "스터디를 변경하거나 조금만 더 기다려 주세요!"
         return view
     }()
     

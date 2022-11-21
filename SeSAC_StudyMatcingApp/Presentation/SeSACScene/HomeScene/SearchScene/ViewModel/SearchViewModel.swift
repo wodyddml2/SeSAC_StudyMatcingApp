@@ -69,12 +69,8 @@ class SearchViewModel {
     func requestSeSACUser(completion: @escaping (Int) -> Void) {
         guard let location = locationValue else {return}
         var studylist: [String] = []
-        if myStudyArr.isEmpty {
-            studylist.append("anything")
-        } else {
-            myStudyArr.forEach { study in
-                studylist.append(study.title)
-            }
+        myStudyArr.forEach { study in
+            studylist.append(study.title)
         }
         SeSACAPIService.shared.requestStatusSeSACAPI(router: Router.findPost(query: UserManager.idToken, lat: 37.517819364682694, long: 126.88647317074734, list: studylist)) { value in
             completion(value)

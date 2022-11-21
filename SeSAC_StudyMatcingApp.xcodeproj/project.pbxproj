@@ -83,7 +83,7 @@
 		63670CCA2928BEED00EAF29D /* SeSACRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63670CC92928BEED00EAF29D /* SeSACRequestViewController.swift */; };
 		63670CCE2928BF3500EAF29D /* SeSACFindImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63670CCD2928BF3500EAF29D /* SeSACFindImageTableViewCell.swift */; };
 		63670CD02928BFA500EAF29D /* SeSACFindReviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63670CCF2928BFA500EAF29D /* SeSACFindReviewTableViewCell.swift */; };
-		63670CD52928C38400EAF29D /* SeSACFindViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63670CD42928C38400EAF29D /* SeSACFindViewModel.swift */; };
+		63670CD52928C38400EAF29D /* SeSACRequestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63670CD42928C38400EAF29D /* SeSACRequestViewModel.swift */; };
 		63670CD72928CCB600EAF29D /* SeSACFind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63670CD62928CCB600EAF29D /* SeSACFind.swift */; };
 		63670CD92928CDCC00EAF29D /* SeSACFindSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63670CD82928CDCC00EAF29D /* SeSACFindSectionModel.swift */; };
 		6378279E292225D3009E1424 /* MyProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6378279D292225D3009E1424 /* MyProfileViewController.swift */; };
@@ -200,7 +200,7 @@
 		63670CC92928BEED00EAF29D /* SeSACRequestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACRequestViewController.swift; sourceTree = "<group>"; };
 		63670CCD2928BF3500EAF29D /* SeSACFindImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACFindImageTableViewCell.swift; sourceTree = "<group>"; };
 		63670CCF2928BFA500EAF29D /* SeSACFindReviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACFindReviewTableViewCell.swift; sourceTree = "<group>"; };
-		63670CD42928C38400EAF29D /* SeSACFindViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACFindViewModel.swift; sourceTree = "<group>"; };
+		63670CD42928C38400EAF29D /* SeSACRequestViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACRequestViewModel.swift; sourceTree = "<group>"; };
 		63670CD62928CCB600EAF29D /* SeSACFind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACFind.swift; sourceTree = "<group>"; };
 		63670CD82928CDCC00EAF29D /* SeSACFindSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACFindSectionModel.swift; sourceTree = "<group>"; };
 		6378279D292225D3009E1424 /* MyProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileViewController.swift; sourceTree = "<group>"; };
@@ -796,7 +796,7 @@
 		63670CD32928C37000EAF29D /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				63670CD42928C38400EAF29D /* SeSACFindViewModel.swift */,
+				63670CD42928C38400EAF29D /* SeSACRequestViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1094,7 +1094,7 @@
 				63467DB72918D4AE00E7D8AE /* OnboardingViewController.swift in Sources */,
 				63670CCA2928BEED00EAF29D /* SeSACRequestViewController.swift in Sources */,
 				638B074B291AB44200E9D254 /* FirebaseAPIService.swift in Sources */,
-				63670CD52928C38400EAF29D /* SeSACFindViewModel.swift in Sources */,
+				63670CD52928C38400EAF29D /* SeSACRequestViewModel.swift in Sources */,
 				6300492F291EC27A0046E6D3 /* ShopViewController.swift in Sources */,
 				635E1630291C2D090042E8E4 /* BirthViewModel.swift in Sources */,
 				63004933291EC2950046E6D3 /* SettingViewController.swift in Sources */,

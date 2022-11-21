@@ -18,6 +18,7 @@ enum Router: URLRequestConvertible {
     case searchPost(query: String, lat: Double, long: Double)
     case matchGet(query: String)
     case findPost(query: String, lat: Double, long: Double, list: [String])
+    case findDelete(query: String)
     
     
     var baseURL: URL {
@@ -33,6 +34,8 @@ enum Router: URLRequestConvertible {
         case .matchGet:
             return URL(string: SeSACAPI.baseURL + SeSACAPI.match)!
         case .findPost:
+            return URL(string: SeSACAPI.baseURL + SeSACAPI.find)!
+        case .findDelete:
             return URL(string: SeSACAPI.baseURL + SeSACAPI.find)!
         }
         
@@ -51,7 +54,7 @@ enum Router: URLRequestConvertible {
                 "Content-Type": SeSACLoginHeader.contentType,
                 "idtoken": UserManager.idToken
             ]
-        case .savePut( _ ,let query), .withdrawPost(let query), .searchPost(let query, _, _), .findPost(let query, _, _, _):
+        case .savePut( _ ,let query), .withdrawPost(let query), .searchPost(let query, _, _), .findPost(let query, _, _, _), .findDelete(let query):
             return [
                 "Content-Type": SeSACLoginHeader.contentType,
                 "idtoken": query
@@ -61,7 +64,7 @@ enum Router: URLRequestConvertible {
     
     var parameters: Parameters {
         switch self {
-        case .loginGet, .withdrawPost, .matchGet:
+        case .loginGet, .withdrawPost, .matchGet, .findDelete:
             return ["":""]
         case .signUpPost:
             guard let gender = UserManager.gender else {return Parameters()}
@@ -88,11 +91,20 @@ enum Router: URLRequestConvertible {
                 "long": "\(long)"
             ]
         case .findPost( _,let lat ,let long, let list):
-            return [
-                "lat": "\(lat)",
-                "long": "\(long)",
-                "studylist": "\(list)"
-            ]
+            if list.isEmpty {
+                return [
+                    "lat": "\(lat)",
+                    "long": "\(long)",
+                    "studylist": "anything"
+                ]
+            } else {
+                return [
+                    "lat": "\(lat)",
+                    "long": "\(long)",
+                    "studylist": "\(list)"
+                ]
+            }
+           
         }
     }
     
@@ -105,6 +117,8 @@ enum Router: URLRequestConvertible {
             return .post
         case .savePut:
             return .put
+        case .findDelete:
+            return .delete
         }
         
     }
@@ -115,7 +129,7 @@ enum Router: URLRequestConvertible {
         request.method = method
         request.headers = header
         switch self {
-        case .loginGet, .withdrawPost, .matchGet:
+        case .loginGet, .withdrawPost, .matchGet, .findDelete:
             return request
         case .signUpPost, .savePut, .searchPost, .findPost:
             return try URLEncoding.default.encode(request, with: parameters)
