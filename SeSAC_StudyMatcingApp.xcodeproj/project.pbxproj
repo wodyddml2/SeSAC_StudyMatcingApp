@@ -113,6 +113,9 @@
 		63E9113D292B72F40048180F /* TabManViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E9113C292B72F40048180F /* TabManViewController.swift */; };
 		63E9113F292B73CE0048180F /* SeSACAcceptViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E9113E292B73CE0048180F /* SeSACAcceptViewController.swift */; };
 		63E91144292B824A0048180F /* SeSACFindView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E91143292B824A0048180F /* SeSACFindView.swift */; };
+		63E91146292BC7430048180F /* SeSACAcceptViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E91145292BC7430048180F /* SeSACAcceptViewModel.swift */; };
+		63E91148292BC9470048180F /* PopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E91147292BC9470048180F /* PopupView.swift */; };
+		63E91152292BCD740048180F /* PopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E91151292BCD740048180F /* PopupViewController.swift */; };
 		63F31446291D2A3500C31F59 /* EmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F31445291D2A3500C31F59 /* EmailViewController.swift */; };
 		63F31448291D2A4000C31F59 /* EmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F31447291D2A4000C31F59 /* EmailView.swift */; };
 		63F3144A291D2A6300C31F59 /* EmailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F31449291D2A6300C31F59 /* EmailViewModel.swift */; };
@@ -228,6 +231,9 @@
 		63E9113C292B72F40048180F /* TabManViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabManViewController.swift; sourceTree = "<group>"; };
 		63E9113E292B73CE0048180F /* SeSACAcceptViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACAcceptViewController.swift; sourceTree = "<group>"; };
 		63E91143292B824A0048180F /* SeSACFindView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACFindView.swift; sourceTree = "<group>"; };
+		63E91145292BC7430048180F /* SeSACAcceptViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACAcceptViewModel.swift; sourceTree = "<group>"; };
+		63E91147292BC9470048180F /* PopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupView.swift; sourceTree = "<group>"; };
+		63E91151292BCD740048180F /* PopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupViewController.swift; sourceTree = "<group>"; };
 		63F31445291D2A3500C31F59 /* EmailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailViewController.swift; sourceTree = "<group>"; };
 		63F31447291D2A4000C31F59 /* EmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailView.swift; sourceTree = "<group>"; };
 		63F31449291D2A6300C31F59 /* EmailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailViewModel.swift; sourceTree = "<group>"; };
@@ -659,6 +665,7 @@
 				637827A329222A56009E1424 /* CommonButton.swift */,
 				6329D7CD291CA605004AC51C /* BirthCustomView.swift */,
 				63F31454291D37DF00C31F59 /* GenderButtonView.swift */,
+				63E91147292BC9470048180F /* PopupView.swift */,
 			);
 			path = CustomView;
 			sourceTree = "<group>";
@@ -765,8 +772,13 @@
 		63670CC52928B19500EAF29D /* SeSACFindScene */ = {
 			isa = PBXGroup;
 			children = (
-				63670CD22928C35400EAF29D /* View */,
-				63670CD32928C37000EAF29D /* ViewModel */,
+				63E9114F292BCD0D0048180F /* TabMan */,
+				63E9114A292BCCB00048180F /* SeSACAccpetScene */,
+				63E91149292BCC9B0048180F /* SeSACRequestScene */,
+				63E91150292BCD4F0048180F /* PopupScene */,
+				63670CD12928C34400EAF29D /* Cells */,
+				63E91143292B824A0048180F /* SeSACFindView.swift */,
+				63670CD82928CDCC00EAF29D /* SeSACFindSectionModel.swift */,
 			);
 			path = SeSACFindScene;
 			sourceTree = "<group>";
@@ -778,27 +790,6 @@
 				63670CCF2928BFA500EAF29D /* SeSACFindReviewTableViewCell.swift */,
 			);
 			path = Cells;
-			sourceTree = "<group>";
-		};
-		63670CD22928C35400EAF29D /* View */ = {
-			isa = PBXGroup;
-			children = (
-				63E9113C292B72F40048180F /* TabManViewController.swift */,
-				63670CC92928BEED00EAF29D /* SeSACRequestViewController.swift */,
-				63E9113E292B73CE0048180F /* SeSACAcceptViewController.swift */,
-				63E91143292B824A0048180F /* SeSACFindView.swift */,
-				63670CD12928C34400EAF29D /* Cells */,
-				63670CD82928CDCC00EAF29D /* SeSACFindSectionModel.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		63670CD32928C37000EAF29D /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				63670CD42928C38400EAF29D /* SeSACRequestViewModel.swift */,
-			);
-			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		6378279829222579009E1424 /* SettingView */ = {
@@ -930,6 +921,72 @@
 				63004922291EAAAC0046E6D3 /* NetworkMonitor */,
 			);
 			path = Network;
+			sourceTree = "<group>";
+		};
+		63E91149292BCC9B0048180F /* SeSACRequestScene */ = {
+			isa = PBXGroup;
+			children = (
+				63E9114D292BCCDF0048180F /* View */,
+				63E9114E292BCCE90048180F /* ViewModel */,
+			);
+			path = SeSACRequestScene;
+			sourceTree = "<group>";
+		};
+		63E9114A292BCCB00048180F /* SeSACAccpetScene */ = {
+			isa = PBXGroup;
+			children = (
+				63E9114C292BCCD70048180F /* View */,
+				63E9114B292BCCD00048180F /* ViewModel */,
+			);
+			path = SeSACAccpetScene;
+			sourceTree = "<group>";
+		};
+		63E9114B292BCCD00048180F /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				63E91145292BC7430048180F /* SeSACAcceptViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		63E9114C292BCCD70048180F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				63E9113E292B73CE0048180F /* SeSACAcceptViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		63E9114D292BCCDF0048180F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				63670CC92928BEED00EAF29D /* SeSACRequestViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		63E9114E292BCCE90048180F /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				63670CD42928C38400EAF29D /* SeSACRequestViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		63E9114F292BCD0D0048180F /* TabMan */ = {
+			isa = PBXGroup;
+			children = (
+				63E9113C292B72F40048180F /* TabManViewController.swift */,
+			);
+			path = TabMan;
+			sourceTree = "<group>";
+		};
+		63E91150292BCD4F0048180F /* PopupScene */ = {
+			isa = PBXGroup;
+			children = (
+				63E91151292BCD740048180F /* PopupViewController.swift */,
+			);
+			path = PopupScene;
 			sourceTree = "<group>";
 		};
 		63F31442291D2A0700C31F59 /* EmailScene */ = {
@@ -1089,6 +1146,7 @@
 				637827A629222E20009E1424 /* MyProfileImageTableViewCell.swift in Sources */,
 				637EDF422925301E009089E4 /* SearchMyStudyCollectionViewCell.swift in Sources */,
 				637EDF3A292528A5009089E4 /* MatchImage.swift in Sources */,
+				63E91146292BC7430048180F /* SeSACAcceptViewModel.swift in Sources */,
 				63308F1D292334F3004B90A5 /* PrifileWithdrawView.swift in Sources */,
 				638B0746291AA49600E9D254 /* AuthComent.swift in Sources */,
 				63467DB72918D4AE00E7D8AE /* OnboardingViewController.swift in Sources */,
@@ -1137,6 +1195,7 @@
 				6305E736291F7F9C001388DE /* HomeView.swift in Sources */,
 				6329D7CE291CA605004AC51C /* BirthCustomView.swift in Sources */,
 				63467DEE2918E0EF00E7D8AE /* UIImage+Extension.swift in Sources */,
+				63E91152292BCD740048180F /* PopupViewController.swift in Sources */,
 				632564A92927BE08003DDB9F /* SeSACUser.swift in Sources */,
 				635E162C291C2CF40042E8E4 /* BirthViewController.swift in Sources */,
 				637827AD29225C78009E1424 /* MyProfileSectionModel.swift in Sources */,
@@ -1160,6 +1219,7 @@
 				63670CD72928CCB600EAF29D /* SeSACFind.swift in Sources */,
 				63467DE02918D87F00E7D8AE /* BaseView.swift in Sources */,
 				63004924291EAAC70046E6D3 /* NetworkMonitor.swift in Sources */,
+				63E91148292BC9470048180F /* PopupView.swift in Sources */,
 				63467E0E291937B200E7D8AE /* MessageViewController.swift in Sources */,
 				635E1609291BD9D00042E8E4 /* SeSACAPIService.swift in Sources */,
 				63670CCE2928BF3500EAF29D /* SeSACFindImageTableViewCell.swift in Sources */,

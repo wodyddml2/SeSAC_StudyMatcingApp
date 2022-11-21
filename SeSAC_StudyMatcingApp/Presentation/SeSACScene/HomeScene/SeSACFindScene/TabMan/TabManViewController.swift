@@ -11,6 +11,10 @@ import FirebaseAuth
 import Tabman
 import Pageboy
 
+enum SeSACFindRow: Int {
+    case image, review
+}
+
 class TabManSeSACViewController: TabmanViewController {
     
     private let tabView: UIView = {

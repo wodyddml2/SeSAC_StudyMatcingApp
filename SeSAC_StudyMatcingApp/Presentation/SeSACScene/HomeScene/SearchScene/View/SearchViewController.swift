@@ -234,6 +234,7 @@ extension SearchViewController {
             case .success:
                 let vc = TabManSeSACViewController()
                 vc.firstVC.viewModel.locationValue = self.viewModel.locationValue
+                vc.secondVC.viewModel.locationValue = self.viewModel.locationValue
                 self.transition(vc, transitionStyle: .push)
             case .declarationOrMatch:
                 self.view.makeToast("신고가 누적되어 이용하실 수 없습니다", position: .center)

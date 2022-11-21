@@ -39,6 +39,7 @@ class SeSACFindView: BaseView {
         view.font = UIFont.notoSans(size: 14, family: .Regular)
         view.textAlignment = .center
         view.textColor = .gray7
+        view.text = "스터디를 변경하거나 조금만 더 기다려 주세요!"
         return view
     }()
     

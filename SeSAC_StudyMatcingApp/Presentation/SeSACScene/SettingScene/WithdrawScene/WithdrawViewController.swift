@@ -14,97 +14,30 @@ class WithdrawViewController: BaseViewController {
     
     let disposeBag = DisposeBag()
     
-    let popupView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .white
-        view.layer.cornerRadius = 16
-        return view
-    }()
+    let mainView = PopupView()
     
-    let titleLabel: UILabel = {
-        let view = UILabel()
-        view.text = "정말 탈퇴하시겠습니까?"
-        view.font = UIFont.notoSans(size: 16, family: .Medium)
-        view.textAlignment = .center
-        return view
-    }()
+    override func loadView() {
+        view = mainView
+    }
     
-    let subTitleLabel: UILabel = {
-        let view = UILabel()
-        view.text = "탈퇴하시면 새싹 스터디를 이용할 수 없어요ㅠ"
-        view.font = UIFont.notoSans(size: 14, family: .Regular)
-        view.textAlignment = .center
-        return view
-    }()
-    
-    let cancelButton: CommonButton = {
-        let view = CommonButton()
-        view.normalStyle(width: 1)
-        view.setTitle("취소", for: .normal)
-        return view
-    }()
-    
-    let okButton: CommonButton = {
-        let view = CommonButton()
-        view.selectedStyle()
-        view.setTitle("확인", for: .normal)
-        return view
-    }()
- 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        mainView.titleText(title: "정말 탈퇴하시겠습니까?", subTitle: "탈퇴하시면 새싹 스터디를 이용할 수 없어요ㅠ")
         view.layer.backgroundColor = UIColor.black.cgColor.copy(alpha: 0.5)
         bindTo()
     }
-    
-    override func configureUI() {
-        view.addSubview(popupView)
-        
-        [titleLabel, subTitleLabel, cancelButton, okButton].forEach {
-            popupView.addSubview($0)
-        }
-    }
-    
-    override func setConstraints() {
-        popupView.snp.makeConstraints { make in
-            make.center.equalToSuperview()
-            make.leading.trailing.equalToSuperview().inset(16)
-            make.height.equalToSuperview().multipliedBy(0.19)
-        }
-        
-        titleLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(18)
-            make.centerX.equalToSuperview()
-        }
-        
-        subTitleLabel.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(10)
-            make.centerX.equalToSuperview()
-        }
-        
-        cancelButton.snp.makeConstraints { make in
-            make.leading.bottom.equalToSuperview().inset(16)
-            make.trailing.equalTo(view.snp.centerX).offset(-4)
-            make.height.equalToSuperview().multipliedBy(0.3)
-        }
-        
-        okButton.snp.makeConstraints { make in
-            make.trailing.bottom.equalToSuperview().inset(16)
-            make.leading.equalTo(view.snp.centerX).offset(4)
-            make.height.equalToSuperview().multipliedBy(0.3)
-        }
-    }
+   
     
     func bindTo() {
-        cancelButton.rx.tap
+        mainView.cancelButton.rx.tap
             .withUnretained(self)
             .bind { vc, _ in
                 vc.dismiss(animated: false)
             }
             .disposed(by: disposeBag)
         
-        okButton.rx.tap
+        mainView.okButton.rx.tap
             .withUnretained(self)
             .bind { vc, _ in
                 vc.requestWithdraw()

@@ -10,10 +10,6 @@ import UIKit
 import RxSwift
 import RxDataSources
 
-enum SeSACFindRow: Int {
-    case image, review
-}
-
 class SeSACRequestViewController: BaseViewController {
     
     let mainView = SeSACFindView()
@@ -102,7 +98,6 @@ class SeSACRequestViewController: BaseViewController {
     
     func noSeSAC() {
         mainView.titleLabel.text = "아쉽게도 주변에 새싹이 없어요ㅠ"
-        mainView.subTitleLabel.text = "스터디를 변경하거나 조금만 더 기다려 주세요!"
         mainView.changeButton.rx.tap
             .withUnretained(self)
             .subscribe { vc, _ in
