@@ -21,14 +21,7 @@ struct abc {
 
 class SeSACRequestViewController: BaseViewController {
     
-    let tableView: UITableView = {
-        let view = UITableView()
-        view.register(SeSACFindImageTableViewCell.self, forCellReuseIdentifier: SeSACFindImageTableViewCell.reusableIdentifier)
-        view.register(SeSACFindReviewTableViewCell.self, forCellReuseIdentifier: SeSACFindReviewTableViewCell.reusableIdentifier)
-        view.separatorStyle = .none
-        view.showsVerticalScrollIndicator = false
-        return view
-    }()
+    let mainView = SeSACFindView()
     
     let viewModel = SeSACFindViewModel()
     let disposeBag = DisposeBag()
@@ -37,19 +30,14 @@ class SeSACRequestViewController: BaseViewController {
 
     var autoBool: Bool = false
     var abcd: abc = abc(bool: false, int: 0)
+    
+    override func loadView() {
+        view = mainView
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         bindViewModel()
-    }
-    
-    override func configureUI() {
-        view.addSubview(tableView)
-        tableView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(44)
-            make.bottom.equalTo(view.safeAreaLayoutGuide)
-            make.leading.trailing.equalToSuperview().inset(16)
-        }
-        
     }
 
     func setTableView(sesacInfo: SeSACSearchDTO) {
@@ -78,16 +66,16 @@ class SeSACRequestViewController: BaseViewController {
         let data = Observable<[SeSACFindSectionModel]>.just(sections)
         
         data
-            .bind(to: tableView.rx.items(dataSource: dataSources!))
+            .bind(to: mainView.tableView.rx.items(dataSource: dataSources!))
             .disposed(by: disposeBag)
         
-        tableView.rx.setDelegate(self)
+        mainView.tableView.rx.setDelegate(self)
             .disposed(by: disposeBag)
         
-        tableView.rx.itemSelected
+        mainView.tableView.rx.itemSelected
             .withUnretained(self)
             .subscribe { vc, index in
-                guard let cell = vc.tableView.cellForRow(at: index) as? SeSACFindReviewTableViewCell else {return}
+                guard let cell = vc.mainView.tableView.cellForRow(at: index) as? SeSACFindReviewTableViewCell else {return}
                 print(cell.tag)
                 print(index.section)
                 print(vc.autoBool)
@@ -96,15 +84,29 @@ class SeSACRequestViewController: BaseViewController {
                         vc.abcd.bool.toggle()
                         vc.abcd.int = cell.tag
 //                        vc.autoBool.toggle()
-                        vc.tableView.reloadRows(at: [IndexPath(row: index.row, section: index.section)], with: .fade)
+                        vc.mainView.tableView.reloadRows(at: [IndexPath(row: index.row, section: index.section)], with: .fade)
                     }
                 }
                 
             }
             .disposed(by: disposeBag)
+         
+        sections.isEmpty ? noSeSACHidden(bool: false) :  noSeSACHidden(bool: true)
+//        if  {
+//            noSeSACHidden(bool: false)
+//        } else {
+//            noSeSACHidden(bool: true)
+//        }
         
     }
     
+    func noSeSACHidden(bool: Bool) {
+        mainView.sesacImageView.isHidden = bool
+        mainView.titleLabel.isHidden = bool
+        mainView.subTitleLabel.isHidden = bool
+        mainView.changeButton.isHidden = bool
+        mainView.reloadButton.isHidden = bool
+    }
     
 }
 

@@ -17,7 +17,6 @@ class TabManSeSACViewController: TabmanViewController {
         return view
     }()
 
-    
     private var viewControllers: [UIViewController] = []
     
     let firstVC = SeSACRequestViewController()
@@ -41,6 +40,7 @@ class TabManSeSACViewController: TabmanViewController {
         
         navigationItem.hidesBackButton = true
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "arrow"), style: .plain, target: self, action: #selector(backbuttonTapped))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "찾기중단", style: .plain, target: self, action: #selector(cancelButtonTapped))
     }
     
     @objc func backbuttonTapped() {
@@ -51,6 +51,10 @@ class TabManSeSACViewController: TabmanViewController {
                 navigationController?.popToViewController(rootVC, animated: true)
             }
         }
+    }
+    
+    @objc func cancelButtonTapped() {
+        
     }
 
     private func setTabMan() {

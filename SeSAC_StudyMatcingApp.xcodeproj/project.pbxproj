@@ -112,6 +112,7 @@
 		63E9113B292B728A0048180F /* Tabman in Frameworks */ = {isa = PBXBuildFile; productRef = 63E9113A292B728A0048180F /* Tabman */; };
 		63E9113D292B72F40048180F /* TabManViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E9113C292B72F40048180F /* TabManViewController.swift */; };
 		63E9113F292B73CE0048180F /* SeSACAcceptViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E9113E292B73CE0048180F /* SeSACAcceptViewController.swift */; };
+		63E91144292B824A0048180F /* SeSACFindView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E91143292B824A0048180F /* SeSACFindView.swift */; };
 		63F31446291D2A3500C31F59 /* EmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F31445291D2A3500C31F59 /* EmailViewController.swift */; };
 		63F31448291D2A4000C31F59 /* EmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F31447291D2A4000C31F59 /* EmailView.swift */; };
 		63F3144A291D2A6300C31F59 /* EmailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F31449291D2A6300C31F59 /* EmailViewModel.swift */; };
@@ -226,6 +227,7 @@
 		63D01EF22926981F007ADA35 /* SeSACMatchDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACMatchDTO.swift; sourceTree = "<group>"; };
 		63E9113C292B72F40048180F /* TabManViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabManViewController.swift; sourceTree = "<group>"; };
 		63E9113E292B73CE0048180F /* SeSACAcceptViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACAcceptViewController.swift; sourceTree = "<group>"; };
+		63E91143292B824A0048180F /* SeSACFindView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACFindView.swift; sourceTree = "<group>"; };
 		63F31445291D2A3500C31F59 /* EmailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailViewController.swift; sourceTree = "<group>"; };
 		63F31447291D2A4000C31F59 /* EmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailView.swift; sourceTree = "<group>"; };
 		63F31449291D2A6300C31F59 /* EmailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailViewModel.swift; sourceTree = "<group>"; };
@@ -784,6 +786,7 @@
 				63E9113C292B72F40048180F /* TabManViewController.swift */,
 				63670CC92928BEED00EAF29D /* SeSACRequestViewController.swift */,
 				63E9113E292B73CE0048180F /* SeSACAcceptViewController.swift */,
+				63E91143292B824A0048180F /* SeSACFindView.swift */,
 				63670CD12928C34400EAF29D /* Cells */,
 				63670CD82928CDCC00EAF29D /* SeSACFindSectionModel.swift */,
 			);
@@ -1172,6 +1175,7 @@
 				631DC9542921319F00F23211 /* SeSACProfileGet.swift in Sources */,
 				63E9113F292B73CE0048180F /* SeSACAcceptViewController.swift in Sources */,
 				63670CD02928BFA500EAF29D /* SeSACFindReviewTableViewCell.swift in Sources */,
+				63E91144292B824A0048180F /* SeSACFindView.swift in Sources */,
 				63F3144A291D2A6300C31F59 /* EmailViewModel.swift in Sources */,
 				63467DD32918D80800E7D8AE /* FirstViewController.swift in Sources */,
 				63D01EEB2926152A007ADA35 /* SearchViewModel.swift in Sources */,
