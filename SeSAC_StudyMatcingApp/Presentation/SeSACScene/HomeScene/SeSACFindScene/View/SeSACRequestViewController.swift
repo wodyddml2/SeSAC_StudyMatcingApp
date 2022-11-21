@@ -99,10 +99,11 @@ class SeSACRequestViewController: BaseViewController {
         mainView.titleLabel.text = "아쉽게도 주변에 새싹이 없어요ㅠ"
         mainView.subTitleLabel.text = "스터디를 변경하거나 조금만 더 기다려 주세요!"
         mainView.changeButton.rx.tap
-            .subscribe { _ in
-                self.requestDelete(SearchViewController())
-            }.disposed(by: disposeBag)
-            
+            .withUnretained(self)
+            .subscribe { vc, _ in
+                vc.requestDelete(SearchViewController())
+            }
+            .disposed(by: disposeBag)
     }
     
 }
@@ -131,6 +132,15 @@ extension SeSACRequestViewController {
             .subscribe (onNext: { vc, sesacInfo in
                 vc.setTableView(sesacInfo: sesacInfo)
             })
+            .disposed(by: disposeBag)
+        
+        mainView.reloadButton.rx.tap
+            .withUnretained(self)
+            .bind { vc, _ in
+                vc.mainView.tableView.dataSource = nil
+                vc.mainView.tableView.delegate = nil
+                vc.viewModel.requsetSearch(output: output)
+            }
             .disposed(by: disposeBag)
     }
     

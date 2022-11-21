@@ -41,7 +41,7 @@ class SearchViewController: BaseViewController, UIScrollViewDelegate {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = false
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: searchBar)
-        navigationBackButton()
+        
         tabBarController?.tabBar.isHidden = true
         
         configureDataSource()
@@ -67,6 +67,11 @@ class SearchViewController: BaseViewController, UIScrollViewDelegate {
             make.bottom.equalTo(view.safeAreaLayoutGuide).inset(16)
             make.leading.trailing.equalToSuperview().inset(16)
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationBackButton()
     }
 }
 extension SearchViewController {
