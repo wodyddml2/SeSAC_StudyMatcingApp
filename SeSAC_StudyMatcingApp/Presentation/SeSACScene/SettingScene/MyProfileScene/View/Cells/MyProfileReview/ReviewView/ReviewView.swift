@@ -92,6 +92,4 @@ class ReviewView: BaseView {
             make.bottom.lessThanOrEqualToSuperview()
         }
     }
-    
-    
 }

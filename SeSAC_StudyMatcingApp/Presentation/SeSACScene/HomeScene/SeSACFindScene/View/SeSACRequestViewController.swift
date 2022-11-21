@@ -14,12 +14,19 @@ enum SeSACFindRow: Int {
     case image, review
 }
 
-class SeSACFindViewController: BaseViewController {
+struct abc {
+    var bool: Bool
+    var int: Int
+}
+
+class SeSACRequestViewController: BaseViewController {
     
     let tableView: UITableView = {
         let view = UITableView()
         view.register(SeSACFindImageTableViewCell.self, forCellReuseIdentifier: SeSACFindImageTableViewCell.reusableIdentifier)
         view.register(SeSACFindReviewTableViewCell.self, forCellReuseIdentifier: SeSACFindReviewTableViewCell.reusableIdentifier)
+        view.separatorStyle = .none
+        view.showsVerticalScrollIndicator = false
         return view
     }()
     
@@ -29,7 +36,7 @@ class SeSACFindViewController: BaseViewController {
     var dataSources: RxTableViewSectionedReloadDataSource<SeSACFindSectionModel>?
 
     var autoBool: Bool = false
-    
+    var abcd: abc = abc(bool: false, int: 0)
     override func viewDidLoad() {
         super.viewDidLoad()
         bindViewModel()
@@ -39,7 +46,8 @@ class SeSACFindViewController: BaseViewController {
         view.addSubview(tableView)
         
         tableView.snp.makeConstraints { make in
-            make.top.bottom.equalTo(view.safeAreaLayoutGuide)
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(44)
+            make.bottom.equalTo(view.safeAreaLayoutGuide)
             make.leading.trailing.equalToSuperview().inset(16)
         }
         
@@ -55,7 +63,8 @@ class SeSACFindViewController: BaseViewController {
                 return cell
             case .review:
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: SeSACFindReviewTableViewCell.reusableIdentifier, for: indexPath) as? SeSACFindReviewTableViewCell else {return UITableViewCell()}
-                cell.sesacReviewImageView.image = self.autoBool ? UIImage(systemName: "chevron.up")! : UIImage(systemName: "chevron.down")!
+                cell.tag = indexPath.section
+                cell.sesacReviewImageView.image = self.abcd.bool ? UIImage(systemName: "chevron.up")! : UIImage(systemName: "chevron.down")!
                 cell.setFindData(item: item)
                 return cell
             default: return UITableViewCell()
@@ -79,10 +88,19 @@ class SeSACFindViewController: BaseViewController {
         tableView.rx.itemSelected
             .withUnretained(self)
             .subscribe { vc, index in
-                if index.row == 1 {
-                    vc.autoBool.toggle()
-                    vc.tableView.reloadRows(at: [IndexPath(row: index.row, section: index.section)], with: .fade)
+                guard let cell = vc.tableView.cellForRow(at: index) as? SeSACFindReviewTableViewCell else {return}
+                print(cell.tag)
+                print(index.section)
+                print(vc.autoBool)
+                if index.section == cell.tag {
+                    if index.row == 1 {
+                        vc.abcd.bool.toggle()
+                        vc.abcd.int = cell.tag
+//                        vc.autoBool.toggle()
+                        vc.tableView.reloadRows(at: [IndexPath(row: index.row, section: index.section)], with: .fade)
+                    }
                 }
+                
             }
             .disposed(by: disposeBag)
         
@@ -91,21 +109,26 @@ class SeSACFindViewController: BaseViewController {
     
 }
 
-extension SeSACFindViewController: UITableViewDelegate {
+extension SeSACRequestViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch SeSACFindRow(rawValue: indexPath.row) {
         case .image:
             return 225
         case .review:
-            return autoBool ? UITableView.automaticDimension : 58
+            if abcd.bool == true && abcd.int == indexPath.section {
+                return UITableView.automaticDimension
+            } else {
+                return 58
+            }
+//            return autoBool ? UITableView.automaticDimension : 58
         default:
             return 0
         }
     }
 }
 
-extension SeSACFindViewController {
+extension SeSACRequestViewController {
     private func bindViewModel() {
         let input = SeSACFindViewModel.Input(viewDidLoadEvent: Observable.just(()))
         let output = viewModel.transform(input: input)

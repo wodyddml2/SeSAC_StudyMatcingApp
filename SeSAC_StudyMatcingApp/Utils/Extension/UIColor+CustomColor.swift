@@ -56,5 +56,9 @@ extension UIColor {
     static var errorRed: UIColor {
         return UIColor(red: 233 / 255, green: 102 / 255, blue: 107 / 255, alpha: 1)
     }
+    
+    static var successBlue: UIColor {
+        return UIColor(red: 0.384, green: 0.559, blue: 0.9, alpha: 1)
+    }
 }
 

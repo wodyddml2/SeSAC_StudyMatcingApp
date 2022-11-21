@@ -42,5 +42,19 @@ class CommonButton: UIButton {
         self.setTitleColor(.sesacGreen, for: .normal)
         self.backgroundColor = .white
     }
+    
+    func redButton() {
+        self.layer.borderWidth = 0
+        self.setTitleColor(.white, for: .normal)
+        self.backgroundColor = .errorRed
+        self.titleLabel?.font = UIFont.notoSans(size: 14, family: .Medium)
+    }
+    
+    func blueButton() {
+        self.layer.borderWidth = 0
+        self.setTitleColor(.white, for: .normal)
+        self.backgroundColor = .successBlue
+        self.titleLabel?.font = UIFont.notoSans(size: 14, family: .Medium)
+    }
   
 }
