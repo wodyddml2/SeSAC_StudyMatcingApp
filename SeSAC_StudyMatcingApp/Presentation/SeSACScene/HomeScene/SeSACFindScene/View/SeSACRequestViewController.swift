@@ -44,7 +44,6 @@ class SeSACRequestViewController: BaseViewController {
     
     override func configureUI() {
         view.addSubview(tableView)
-        
         tableView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(44)
             make.bottom.equalTo(view.safeAreaLayoutGuide)

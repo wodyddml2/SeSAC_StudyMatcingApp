@@ -16,6 +16,7 @@ class TabManSeSACViewController: TabmanViewController {
         let view = UIView()
         return view
     }()
+
     
     private var viewControllers: [UIViewController] = []
     
@@ -26,6 +27,30 @@ class TabManSeSACViewController: TabmanViewController {
         super.viewDidLoad()
         configureUI()
         setTabMan()
+        
+        navigationBarStyle()
+    }
+    
+    private func navigationBarStyle() {
+        navigationItem.title = "새싹 찾기"
+        navigationController?.navigationBar.tintColor = .black
+    
+        let navigationAppearance = UINavigationBarAppearance()
+        navigationController?.navigationBar.scrollEdgeAppearance = navigationAppearance
+        navigationController?.navigationBar.standardAppearance = navigationAppearance
+        
+        navigationItem.hidesBackButton = true
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "arrow"), style: .plain, target: self, action: #selector(backbuttonTapped))
+    }
+    
+    @objc func backbuttonTapped() {
+        let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
+
+        for viewController in viewControllers {
+            if let rootVC = viewController as? HomeViewController {
+                navigationController?.popToViewController(rootVC, animated: true)
+            }
+        }
     }
 
     private func setTabMan() {
