@@ -12,3 +12,9 @@ enum MatchImage {
     static let message = "message"
     static let search = "search"
 }
+
+enum MatchStatus: Int {
+    case antenna = 0
+    case message = 1
+    case search = 201
+}

@@ -38,7 +38,7 @@ struct SESACLoginDTO: Codable {
 }
 
 extension SESACLoginDTO {
-    func toDomain() -> SeSACProfileGet {
+    func toDomain() -> SeSACProfile {
         return .init(backgroundImage: background, image: sesac, nickname: nick, sesacTitle: reputation, comment: comment, gender: gender, study: study, searchable: searchable, ageMin: ageMin, ageMax: ageMax)
     }
 }

@@ -81,6 +81,11 @@ class HomeView: BaseView {
         super.init(frame: frame)
     }
     
+    func matchButtonSet(_ image: UIImage,_ status: Int) {
+        matchingButton.setImage(image, for: .normal)
+        matchingButton.tag = status
+    }
+    
     override func configureUI() {
         self.addSubview(mapView)
         [stackView, currentLocationButton, matchingButton, pinImageView].forEach {

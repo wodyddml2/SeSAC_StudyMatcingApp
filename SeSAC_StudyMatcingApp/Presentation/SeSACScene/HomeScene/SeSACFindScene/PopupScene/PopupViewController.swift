@@ -12,8 +12,9 @@ import RxSwift
 class PopupViewController: BaseViewController {
     
     let mainView = PopupView()
-    
     let disposeBag = DisposeBag()
+    
+    var request = true
     
     override func loadView() {
         view = mainView
@@ -50,14 +51,19 @@ class PopupViewController: BaseViewController {
     }
     
     func popupCustom() {
-        mainView.titleText(
-            title: "스터디를 요청할게요!",
-            subTitle:
-                    """
-                    상대방이 요청을 수락하면
-                    채팅창에서 대화를 나눌 수 있어요
-                    """
-        )
+        if request {
+            mainView.titleText(
+                title: "스터디를 요청할게요!",
+                subTitle:
+                        """
+                        상대방이 요청을 수락하면
+                        채팅창에서 대화를 나눌 수 있어요
+                        """
+            )
+        } else {
+            mainView.titleText(title: "스터디를 수락할까요?", subTitle: "요청을 수락하면 채팅창에서 대화를 나눌 수 있어요")
+        }
+        
         
         mainView.subTitleLabel.textColor = .gray7
         mainView.cancelButton.backgroundColor = .gray2
@@ -72,5 +78,12 @@ class PopupViewController: BaseViewController {
                 vc.dismiss(animated: false)
             }
             .disposed(by: disposeBag)
+        
+//        mainView.okButton.rx.tap
+//            .withUnretained(self)
+//            .bind { vc, _ in
+//
+//            }
+//            .disposed(by: disposeBag)
     }
 }

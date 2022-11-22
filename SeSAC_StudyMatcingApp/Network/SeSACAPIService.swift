@@ -13,7 +13,7 @@ import Alamofire
 enum Router: URLRequestConvertible {
     case loginGet(query: String)
     case signUpPost
-    case savePut(sesac: SeSACProfileGet, query: String)
+    case savePut(sesac: SeSACProfile, query: String)
     case withdrawPost(query: String)
     case searchPost(query: String, lat: Double, long: Double)
     case matchGet(query: String)
@@ -33,9 +33,7 @@ enum Router: URLRequestConvertible {
             return URL(string: SeSACAPI.baseURL + SeSACAPI.search)!
         case .matchGet:
             return URL(string: SeSACAPI.baseURL + SeSACAPI.match)!
-        case .findPost:
-            return URL(string: SeSACAPI.baseURL + SeSACAPI.find)!
-        case .findDelete:
+        case .findPost, .findDelete:
             return URL(string: SeSACAPI.baseURL + SeSACAPI.find)!
         }
         
@@ -43,21 +41,15 @@ enum Router: URLRequestConvertible {
     
     var header: HTTPHeaders {
         switch self {
-        case .loginGet(let query), .matchGet(let query):
+        case .loginGet(let query), .matchGet(let query), .savePut( _ ,let query), .withdrawPost(let query), .searchPost(let query, _, _), .findPost(let query, _, _, _), .findDelete(let query):
             return  [
                 "Content-Type": SeSACLoginHeader.contentType,
-                "accept": SeSACLoginHeader.accept,
                 "idtoken": query
             ]
         case .signUpPost:
             return [
                 "Content-Type": SeSACLoginHeader.contentType,
                 "idtoken": UserManager.idToken
-            ]
-        case .savePut( _ ,let query), .withdrawPost(let query), .searchPost(let query, _, _), .findPost(let query, _, _, _), .findDelete(let query):
-            return [
-                "Content-Type": SeSACLoginHeader.contentType,
-                "idtoken": query
             ]
         }
     }
@@ -198,6 +190,7 @@ class SeSACAPIService {
             guard let statusCode = response.response?.statusCode else {return}
             
             completion(statusCode)
+            
         }
     }
     

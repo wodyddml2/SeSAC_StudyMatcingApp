@@ -23,7 +23,7 @@
 		631DC94B29210FB300F23211 /* SettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631DC94A29210FB300F23211 /* SettingTableViewCell.swift */; };
 		631DC94D2921194C00F23211 /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631DC94C2921194C00F23211 /* ProfileTableViewCell.swift */; };
 		631DC95029212CA300F23211 /* ReusableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631DC94F29212CA300F23211 /* ReusableProtocol.swift */; };
-		631DC9542921319F00F23211 /* SeSACProfileGet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631DC9532921319F00F23211 /* SeSACProfileGet.swift */; };
+		631DC9542921319F00F23211 /* SeSACProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631DC9532921319F00F23211 /* SeSACProfile.swift */; };
 		632564A72927726A003DDB9F /* RxKeyboard in Frameworks */ = {isa = PBXBuildFile; productRef = 632564A62927726A003DDB9F /* RxKeyboard */; };
 		632564A92927BE08003DDB9F /* SeSACUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632564A82927BE08003DDB9F /* SeSACUser.swift */; };
 		632564AB2927F8CC003DDB9F /* CustomAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632564AA2927F8CC003DDB9F /* CustomAnnotationView.swift */; };
@@ -98,7 +98,7 @@
 		637827B229229FD2009E1424 /* ReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637827B129229FD2009E1424 /* ReviewView.swift */; };
 		637EDF362924F923009089E4 /* WithdrawViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637EDF352924F923009089E4 /* WithdrawViewController.swift */; };
 		637EDF38292522C5009089E4 /* UIView+Shadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637EDF37292522C5009089E4 /* UIView+Shadow.swift */; };
-		637EDF3A292528A5009089E4 /* MatchImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637EDF39292528A5009089E4 /* MatchImage.swift */; };
+		637EDF3A292528A5009089E4 /* Match.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637EDF39292528A5009089E4 /* Match.swift */; };
 		637EDF3F29252FB0009089E4 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637EDF3E29252FB0009089E4 /* SearchViewController.swift */; };
 		637EDF422925301E009089E4 /* SearchMyStudyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637EDF412925301E009089E4 /* SearchMyStudyCollectionViewCell.swift */; };
 		637EDF4429253039009089E4 /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637EDF4329253039009089E4 /* BaseCollectionViewCell.swift */; };
@@ -146,7 +146,7 @@
 		631DC94A29210FB300F23211 /* SettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableViewCell.swift; sourceTree = "<group>"; };
 		631DC94C2921194C00F23211 /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
 		631DC94F29212CA300F23211 /* ReusableProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableProtocol.swift; sourceTree = "<group>"; };
-		631DC9532921319F00F23211 /* SeSACProfileGet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACProfileGet.swift; sourceTree = "<group>"; };
+		631DC9532921319F00F23211 /* SeSACProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACProfile.swift; sourceTree = "<group>"; };
 		632564A82927BE08003DDB9F /* SeSACUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACUser.swift; sourceTree = "<group>"; };
 		632564AA2927F8CC003DDB9F /* CustomAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotationView.swift; sourceTree = "<group>"; };
 		6329D7CD291CA605004AC51C /* BirthCustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthCustomView.swift; sourceTree = "<group>"; };
@@ -217,7 +217,7 @@
 		637827B129229FD2009E1424 /* ReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewView.swift; sourceTree = "<group>"; };
 		637EDF352924F923009089E4 /* WithdrawViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawViewController.swift; sourceTree = "<group>"; };
 		637EDF37292522C5009089E4 /* UIView+Shadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Shadow.swift"; sourceTree = "<group>"; };
-		637EDF39292528A5009089E4 /* MatchImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchImage.swift; sourceTree = "<group>"; };
+		637EDF39292528A5009089E4 /* Match.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Match.swift; sourceTree = "<group>"; };
 		637EDF3E29252FB0009089E4 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		637EDF412925301E009089E4 /* SearchMyStudyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMyStudyCollectionViewCell.swift; sourceTree = "<group>"; };
 		637EDF4329253039009089E4 /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -699,7 +699,7 @@
 		635E1616291BF64C0042E8E4 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				631DC9532921319F00F23211 /* SeSACProfileGet.swift */,
+				631DC9532921319F00F23211 /* SeSACProfile.swift */,
 				63670CD62928CCB600EAF29D /* SeSACFind.swift */,
 				632564A82927BE08003DDB9F /* SeSACUser.swift */,
 			);
@@ -907,7 +907,7 @@
 				63308F242923A7BF004B90A5 /* SeSACTitle.swift */,
 				63F31456291D39F300C31F59 /* Gender.swift */,
 				63004934291EC7020046E6D3 /* TabImage.swift */,
-				637EDF39292528A5009089E4 /* MatchImage.swift */,
+				637EDF39292528A5009089E4 /* Match.swift */,
 				638B0745291AA49600E9D254 /* AuthComent.swift */,
 				635E1625291C2BFC0042E8E4 /* SignupCommet.swift */,
 				635E1611291BF26B0042E8E4 /* SeSACAPI.swift */,
@@ -1129,7 +1129,7 @@
 				63467E12291937CF00E7D8AE /* MessageViewModel.swift in Sources */,
 				637827A629222E20009E1424 /* MyProfileImageTableViewCell.swift in Sources */,
 				637EDF422925301E009089E4 /* SearchMyStudyCollectionViewCell.swift in Sources */,
-				637EDF3A292528A5009089E4 /* MatchImage.swift in Sources */,
+				637EDF3A292528A5009089E4 /* Match.swift in Sources */,
 				63308F1D292334F3004B90A5 /* PrifileWithdrawView.swift in Sources */,
 				638B0746291AA49600E9D254 /* AuthComent.swift in Sources */,
 				63467DB72918D4AE00E7D8AE /* OnboardingViewController.swift in Sources */,
@@ -1216,7 +1216,7 @@
 				635E1626291C2BFC0042E8E4 /* SignupCommet.swift in Sources */,
 				63D01EEF29268E88007ADA35 /* SearchOtherStudyCollectionViewCell.swift in Sources */,
 				63467DFD2918EA8400E7D8AE /* NumberViewController.swift in Sources */,
-				631DC9542921319F00F23211 /* SeSACProfileGet.swift in Sources */,
+				631DC9542921319F00F23211 /* SeSACProfile.swift in Sources */,
 				63E9113F292B73CE0048180F /* SeSACAcceptViewController.swift in Sources */,
 				63670CD02928BFA500EAF29D /* SeSACFindReviewTableViewCell.swift in Sources */,
 				63E91144292B824A0048180F /* SeSACFindView.swift in Sources */,

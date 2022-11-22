@@ -84,7 +84,7 @@ extension HomeViewController: CLLocationManagerDelegate {
 
 extension HomeViewController {
     func setRegionAnnotation(center: CLLocationCoordinate2D, users: [SeSACUser]) {
-        let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: center.latitude, longitude: center.longitude), latitudinalMeters: 700, longitudinalMeters: 700)
+        let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 37.517819364682694, longitude: 126.88647317074734), latitudinalMeters: 700, longitudinalMeters: 700)
         mainView.mapView.removeAnnotations(mainView.mapView.annotations)
         mainView.mapView.setRegion(region, animated: false)
 
@@ -126,9 +126,9 @@ extension HomeViewController {
             .withUnretained(self)
             .subscribe (onNext: {vc, result in
                 if result.matched == 0 {
-                    vc.mainView.matchingButton.setImage(UIImage(named: MatchImage.antenna), for: .normal)
+                    vc.mainView.matchButtonSet(UIImage(named: MatchImage.antenna)!, MatchStatus.antenna.rawValue)
                 } else {
-                    vc.mainView.matchingButton.setImage(UIImage(named: MatchImage.message), for: .normal)
+                    vc.mainView.matchButtonSet(UIImage(named: MatchImage.message)!, MatchStatus.message.rawValue)
                 }
             })
             .disposed(by: disposeBag)
@@ -147,7 +147,7 @@ extension HomeViewController {
             .drive (onNext: { [weak self] normal in
                 guard let self = self else {return}
                 if normal == true {
-                    self.mainView.matchingButton.setImage(UIImage(named: MatchImage.search), for: .normal)
+                    self.mainView.matchButtonSet(UIImage(named: MatchImage.search)!, MatchStatus.search.rawValue)
                 }
             }).disposed(by: disposeBag)
     
@@ -190,10 +190,23 @@ extension HomeViewController {
                 if vc.locationManager.authorizationStatus == .denied {
                     vc.showSettingAlert(title: "위치정보 이용", message: "위치 서비스를 사용할 수 없습니다. 기기의 '설정>개인정보 보호'에서 위치 서비스를 켜주세요.")
                 } else {
-                    let viewController = SearchViewController()
-                    vc.transition(viewController, transitionStyle: .push)
                     let location = self.mainView.mapView.centerCoordinate
-                    viewController.viewModel.locationValue = location
+                    switch MatchStatus(rawValue: vc.mainView.matchingButton.tag) {
+                    case .search:
+                        let viewController = SearchViewController()
+                        vc.transition(viewController, transitionStyle: .push)
+                        viewController.viewModel.locationValue = location
+                    case .antenna:
+                        let viewController = TabManSeSACViewController()
+                        vc.transition(viewController, transitionStyle: .push)
+                        viewController.firstVC.viewModel.locationValue = location
+                        viewController.secondVC.viewModel.locationValue = location
+                    case .message:
+                        print("아직")
+                    default:
+                        print("아직")
+                    }
+                    
                 }
             }
             .disposed(by: disposeBag)

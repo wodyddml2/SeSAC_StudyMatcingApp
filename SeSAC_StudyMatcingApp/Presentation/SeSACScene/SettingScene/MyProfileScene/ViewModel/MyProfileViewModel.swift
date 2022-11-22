@@ -60,7 +60,7 @@ extension MyProfileViewModel: ViewModelType {
     }
     
     struct Output {
-        var sesacInfo = PublishSubject<SeSACProfileGet>()
+        var sesacInfo = PublishSubject<SeSACProfile>()
         var networkFailed = PublishRelay<Bool>()
         let save: ControlEvent<Void>
     }

@@ -41,7 +41,7 @@ final class MyProfileViewController: BaseViewController {
     var dataSource: RxTableViewSectionedReloadDataSource<MyProfileSectionModel>?
     
     var autoBool: Bool = false
-    var sesacData: SeSACProfileGet?
+    var sesacData: SeSACProfile?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,7 +63,7 @@ final class MyProfileViewController: BaseViewController {
         }
     }
     
-    private func setTableView(sesacInfo: SeSACProfileGet) {
+    private func setTableView(sesacInfo: SeSACProfile) {
         
         dataSource = RxTableViewSectionedReloadDataSource<MyProfileSectionModel>(configureCell: { [weak self] dataSource, tableView, indexPath, item in
             guard let self = self else {return UITableViewCell()}
@@ -145,14 +145,14 @@ final class MyProfileViewController: BaseViewController {
        
         
         let sections = [
-            MyProfileSectionModel(items: [SeSACProfileGet(
+            MyProfileSectionModel(items: [SeSACProfile(
                 backgroundImage: sesacInfo.backgroundImage,
                 image: sesacInfo.image)]),
-            MyProfileSectionModel(items: [SeSACProfileGet(
+            MyProfileSectionModel(items: [SeSACProfile(
                 nickname: sesacInfo.nickname,
                 sesacTitle: sesacInfo.sesacTitle,
                 comment: sesacInfo.comment)]),
-            MyProfileSectionModel(items: [SeSACProfileGet(
+            MyProfileSectionModel(items: [SeSACProfile(
                 
                 gender: sesacInfo.gender,
                 study: sesacInfo.study,

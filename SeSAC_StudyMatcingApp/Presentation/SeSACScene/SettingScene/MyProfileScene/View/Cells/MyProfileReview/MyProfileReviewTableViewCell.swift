@@ -83,7 +83,7 @@ extension MyProfileReviewTableViewCell {
         }
     }
     
-    func setData(item: SeSACProfileGet) {
+    func setData(item: SeSACProfile) {
         nicknameLabel.text = item.nickname
         if item.comment.isEmpty {
             reviewView.sesacReviewLabel.text = "첫 리뷰를 기다리는 중이에요"

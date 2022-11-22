@@ -46,6 +46,9 @@ class TabManSeSACViewController: TabmanViewController {
     }
     
     private func navigationBarStyle() {
+        navigationController?.navigationBar.isHidden = false
+        tabBarController?.tabBar.isHidden = true
+        
         navigationItem.title = "새싹 찾기"
         navigationItem.backButtonTitle = ""
         navigationController?.navigationBar.tintColor = .black

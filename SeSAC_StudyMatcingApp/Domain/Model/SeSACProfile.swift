@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct SeSACProfileGet {
+struct SeSACProfile {
     let backgroundImage: Int
     let image: Int
     let nickname: String

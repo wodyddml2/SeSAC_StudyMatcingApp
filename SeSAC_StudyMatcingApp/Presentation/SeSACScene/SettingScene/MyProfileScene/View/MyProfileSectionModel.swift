@@ -14,7 +14,7 @@ struct MyProfileSectionModel {
 
 extension MyProfileSectionModel: SectionModelType {
     
-    typealias Item = SeSACProfileGet
+    typealias Item = SeSACProfile
 
     init(original: MyProfileSectionModel, items: [Item]) {
         self = original

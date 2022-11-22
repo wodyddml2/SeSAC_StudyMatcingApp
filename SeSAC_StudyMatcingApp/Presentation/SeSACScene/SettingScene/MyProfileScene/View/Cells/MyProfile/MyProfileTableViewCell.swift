@@ -97,7 +97,7 @@ extension MyProfileTableViewCell {
         permitView.permitSwitch.isOn = permit == 0 ? false : true
     }
     
-    func setData(item: SeSACProfileGet) {
+    func setData(item: SeSACProfile) {
         configureGender(gender: item.gender)
         configurePermit(permit: item.searchable)
         studyView.studyTextField.text = item.study
