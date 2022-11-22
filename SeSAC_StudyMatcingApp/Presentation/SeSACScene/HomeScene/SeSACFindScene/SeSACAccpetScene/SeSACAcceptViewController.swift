@@ -35,11 +35,6 @@ class SeSACAcceptViewController: BaseViewController {
         viewModel.searchSesac.accept(true)
         
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        viewModel.searchSesac.accept(false)
-    }
 
     func setTableView(sesacInfo: SeSACSearchDTO) {
         dataSources = RxTableViewSectionedReloadDataSource<SeSACFindSectionModel>(configureCell: { dataSource, tableView, indexPath, item in
@@ -81,21 +76,6 @@ class SeSACAcceptViewController: BaseViewController {
         
         mainView.tableView.rx.setDelegate(self)
             .disposed(by: disposeBag)
-        
-        mainView.tableView.rx.itemSelected
-            .withUnretained(self)
-            .subscribe { vc, index in
-                guard let cell =  vc.mainView.tableView.cellForRow(at: index) as? SeSACFindReviewTableViewCell else {return}
-               
-                if index.section == cell.tag {
-                    if index.row == 1 {
-                        vc.heightChange[cell.tag].toggle()
-                        vc.mainView.tableView.reloadRows(at: [IndexPath(row: index.row, section: index.section)], with: .fade)
-                    }
-                }
-                
-            }
-            .disposed(by: disposeBag)
          
         sections.isEmpty ? noSeSACHidden(bool: false) :  noSeSACHidden(bool: true)
         
@@ -132,7 +112,9 @@ extension SeSACAcceptViewController {
         let input = SeSACRequestViewModel.Input(
             viewDidLoadEvent: Observable.just(()),
             reload: mainView.reloadButton.rx.tap,
-            change: mainView.changeButton.rx.tap
+            change: mainView.changeButton.rx.tap,
+            refresh:  mainView.refreshControl.rx.controlEvent(.valueChanged),
+            tableItem: mainView.tableView.rx.itemSelected
         )
         
         let output = viewModel.transform(input: input)
@@ -180,6 +162,33 @@ extension SeSACAcceptViewController {
                     self.viewModel.requsetSearch(output: output)
                 }
             })
+            .disposed(by: disposeBag)
+        
+        output.refresh
+            .withUnretained(self)
+            .bind {vc, _ in
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                    vc.mainView.tableView.dataSource = nil
+                    vc.mainView.tableView.delegate = nil
+                    vc.viewModel.requsetSearch(output: output)
+                    vc.mainView.refreshControl.endRefreshing()
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        output.tableItem
+            .withUnretained(self)
+            .subscribe { vc, index in
+                guard let cell =  vc.mainView.tableView.cellForRow(at: index) as? SeSACFindReviewTableViewCell else {return}
+               
+                if index.section == cell.tag {
+                    if index.row == 1 {
+                        vc.heightChange[cell.tag].toggle()
+                        vc.mainView.tableView.reloadRows(at: [IndexPath(row: index.row, section: index.section)], with: .fade)
+                    }
+                }
+                
+            }
             .disposed(by: disposeBag)
     }
     

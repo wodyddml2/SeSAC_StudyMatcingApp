@@ -120,6 +120,8 @@ extension SeSACRequestViewModel: ViewModelType {
         let viewDidLoadEvent: Observable<Void>
         let reload: ControlEvent<Void>
         let change: ControlEvent<Void>
+        let refresh: ControlEvent<Void>
+        let tableItem: ControlEvent<IndexPath>
     }
     
     struct Output {
@@ -128,10 +130,12 @@ extension SeSACRequestViewModel: ViewModelType {
         var searchSesac: PublishRelay<Bool>
         let reload: ControlEvent<Void>
         let change: ControlEvent<Void>
+        let refresh: ControlEvent<Void>
+        let tableItem: ControlEvent<IndexPath>
     }
     
     func transform(input: Input) -> Output {
-        let output = Output(searchSesac: searchSesac, reload: input.reload, change: input.change) 
+        let output = Output(searchSesac: searchSesac, reload: input.reload, change: input.change, refresh: input.refresh, tableItem: input.tableItem) 
        
         return output
     }

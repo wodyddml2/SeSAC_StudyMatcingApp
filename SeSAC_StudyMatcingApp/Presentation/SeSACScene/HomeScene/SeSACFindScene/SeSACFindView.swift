@@ -59,8 +59,16 @@ class SeSACFindView: BaseView {
         return view
     }()
     
+    let refreshControl: UIRefreshControl = {
+        let view = UIRefreshControl()
+        view.backgroundColor = .white
+        view.tintColor = .sesacGreen
+        return view
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
+        tableView.refreshControl = refreshControl
     }
     
     override func configureUI() {
