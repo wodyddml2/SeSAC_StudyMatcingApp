@@ -8,13 +8,15 @@
 import UIKit
 
 import RxSwift
+import FirebaseAuth
 
 class PopupViewController: BaseViewController {
     
     let mainView = PopupView()
     let disposeBag = DisposeBag()
     
-    var request = true
+    var request: Bool = true
+    var uid: String?
     
     override func loadView() {
         view = mainView
@@ -79,11 +81,94 @@ class PopupViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
         
-//        mainView.okButton.rx.tap
-//            .withUnretained(self)
-//            .bind { vc, _ in
-//
-//            }
-//            .disposed(by: disposeBag)
+        mainView.okButton.rx.tap
+            .withUnretained(self)
+            .bind { vc, _ in
+                if vc.request {
+                    vc.requestPost()
+                } else {
+                    vc.acceptPost()
+                }
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    func requestPost() {
+        guard let uid = uid else {return}
+        SeSACAPIService.shared.requestStatusSeSACAPI(router: Router.requestPost(query: UserManager.idToken, uid: uid)) { [weak self] value in
+            guard let self = self else {return}
+            
+            switch StatusCode(rawValue: value) {
+            case .success:
+                self.dismissToast(message: "스터디 요청을 보냈습니다")
+            case .declarationOrMatch:
+                self.acceptPost()
+            case .stopFind:
+                self.dismissToast(message: "상대방이 스터디 찾기를 그만두었습니다")
+            case .firebaseError:
+                self.renewalRequest()
+            default:
+                self.view.makeToast("에러가 발생했습니다")
+            }
+        }
+    }
+    
+    func renewalRequest() {
+        let currentUser = Auth.auth().currentUser
+        currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
+            if error != nil {
+                print("error")
+            }
+            if let idToken = idToken {
+                UserManager.idToken = idToken
+                
+                self.requestPost()
+            }
+        }
+    }
+    
+    
+    func acceptPost() {
+        guard let uid = uid else {return}
+        SeSACAPIService.shared.requestStatusSeSACAPI(router: Router.acceptPost(query: UserManager.idToken, uid: uid)) { [weak self] value in
+            guard let self = self else {return}
+            switch StatusCode(rawValue: value) {
+            case .success:
+                self.dismiss(animated: false)
+                // 사용자 현재 상태를 매칭 상태로 변경하고, 팝업 화면을 dismiss 한 뒤, 채팅 화면(1_5_chatting)으로 화면을 전환합니다.
+            case .declarationOrMatch:
+                self.dismissToast(message: "상대방이 이미 다른 새싹과 스터디를 함께 하는 중입니다")
+            case .stopFind:
+                self.dismissToast(message: "상대방이 스터디 찾기를 그만두었습니다")
+            case .cancelFirst:
+                self.dismissToast(message: "앗! 누군가가 나의 스터디를 수락하였어요!")
+                // myQueue 호출해야함
+            case .firebaseError:
+                self.renewalAccpet()
+            default:
+                self.view.makeToast("에러가 발생했습니다")
+            }
+        }
+    }
+    
+    func renewalAccpet() {
+        let currentUser = Auth.auth().currentUser
+        currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
+            if error != nil {
+                print("error")
+            }
+            if let idToken = idToken {
+                UserManager.idToken = idToken
+                
+                self.acceptPost()
+            }
+        }
+    }
+    
+    func dismissToast(message: String) {
+        self.dismiss(animated: false) {
+            guard let vc = (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.window?.rootViewController?.topViewController else { return }
+            vc.view.makeToast(message)
+        }
     }
 }

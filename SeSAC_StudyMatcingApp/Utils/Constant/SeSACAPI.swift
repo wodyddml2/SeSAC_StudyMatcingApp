@@ -15,6 +15,8 @@ enum SeSACAPI {
     static let search = "/queue/search"
     static let match = "/queue/myQueueState"
     static let find = "/queue"
+    static let request = "/queue/studyrequest"
+    static let accept = "/queue/studyaccept"
 }
 
 // 알아보기

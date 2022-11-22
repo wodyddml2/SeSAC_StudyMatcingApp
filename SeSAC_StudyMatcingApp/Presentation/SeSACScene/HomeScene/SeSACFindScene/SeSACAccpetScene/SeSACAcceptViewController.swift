@@ -50,7 +50,10 @@ class SeSACAcceptViewController: BaseViewController {
                 cell.multiButton.rx.tap
                     .withUnretained(self)
                     .bind { vc, _ in
-                        vc.transition(PopupViewController(), transitionStyle: .presentOverFull)
+                        let viewController = PopupViewController()
+                        viewController.request = false
+                        viewController.uid = item.uid
+                        vc.transition(viewController, transitionStyle: .presentOverFull)
                     }
                     .disposed(by: self.disposeBag)
                 return cell
@@ -72,7 +75,7 @@ class SeSACAcceptViewController: BaseViewController {
         var sections: [SeSACFindSectionModel] = []
         
         for i in sesacInfo.fromQueueDBRequested {
-            sections.append(SeSACFindSectionModel(items: [SeSACFind(backgroundImage: i.background, image: i.sesac), SeSACFind(nickname: i.nick, sesacTitle: i.reputation, comment: i.reviews, studyList: i.studylist)]))
+            sections.append(SeSACFindSectionModel(items: [SeSACFind(uid: i.uid, backgroundImage: i.background, image: i.sesac), SeSACFind(nickname: i.nick, sesacTitle: i.reputation, comment: i.reviews, studyList: i.studylist)]))
         }
         
         let data = Observable<[SeSACFindSectionModel]>.just(sections)

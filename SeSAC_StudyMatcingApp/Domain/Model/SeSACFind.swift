@@ -8,6 +8,7 @@
 import Foundation
 
 struct SeSACFind {
+    let uid: String
     let backgroundImage: Int
     let image: Int
     let nickname: String
@@ -15,7 +16,8 @@ struct SeSACFind {
     let comment: [String]
     let studyList: [String]
     
-    init(backgroundImage: Int = 0 , image: Int = 0, nickname: String = "", sesacTitle: [Int] = [], comment: [String] = [], studyList: [String] = []) {
+    init(uid: String = "", backgroundImage: Int = 0 , image: Int = 0, nickname: String = "", sesacTitle: [Int] = [], comment: [String] = [], studyList: [String] = []) {
+        self.uid = uid
         self.backgroundImage = backgroundImage
         self.image = image
         self.nickname = nickname

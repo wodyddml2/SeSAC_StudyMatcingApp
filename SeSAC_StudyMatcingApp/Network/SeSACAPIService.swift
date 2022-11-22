@@ -19,6 +19,8 @@ enum Router: URLRequestConvertible {
     case matchGet(query: String)
     case findPost(query: String, lat: Double, long: Double, list: [String])
     case findDelete(query: String)
+    case requestPost(query: String, uid: String)
+    case acceptPost(query: String, uid: String)
     
     
     var baseURL: URL {
@@ -35,13 +37,17 @@ enum Router: URLRequestConvertible {
             return URL(string: SeSACAPI.baseURL + SeSACAPI.match)!
         case .findPost, .findDelete:
             return URL(string: SeSACAPI.baseURL + SeSACAPI.find)!
+        case .requestPost:
+            return URL(string: SeSACAPI.baseURL + SeSACAPI.request)!
+        case .acceptPost:
+            return URL(string: SeSACAPI.baseURL + SeSACAPI.accept)!
         }
         
     }
     
     var header: HTTPHeaders {
         switch self {
-        case .loginGet(let query), .matchGet(let query), .savePut( _ ,let query), .withdrawPost(let query), .searchPost(let query, _, _), .findPost(let query, _, _, _), .findDelete(let query):
+        case .loginGet(let query), .matchGet(let query), .savePut( _ ,let query), .withdrawPost(let query), .searchPost(let query, _, _), .findPost(let query, _, _, _), .findDelete(let query), .requestPost(query: let query, _), .acceptPost(let query, _):
             return  [
                 "Content-Type": SeSACLoginHeader.contentType,
                 "idtoken": query
@@ -97,6 +103,8 @@ enum Router: URLRequestConvertible {
                 ]
             }
            
+        case .requestPost( _, let uid), .acceptPost( _, let uid):
+            return ["otheruid": uid]
         }
     }
     
@@ -105,7 +113,7 @@ enum Router: URLRequestConvertible {
         switch self {
         case .loginGet, .matchGet:
             return .get
-        case .signUpPost, .withdrawPost, .searchPost, .findPost:
+        case .signUpPost, .withdrawPost, .searchPost, .findPost, .requestPost, .acceptPost:
             return .post
         case .savePut:
             return .put
@@ -123,7 +131,7 @@ enum Router: URLRequestConvertible {
         switch self {
         case .loginGet, .withdrawPost, .matchGet, .findDelete:
             return request
-        case .signUpPost, .savePut, .searchPost, .findPost:
+        case .signUpPost, .savePut, .searchPost, .findPost, .requestPost, .acceptPost:
             return try URLEncoding(arrayEncoding: .noBrackets).encode(request, with: parameters)
         }
         
@@ -133,6 +141,7 @@ enum Router: URLRequestConvertible {
 enum StatusCode: Int {
     case success = 200
     case declarationOrMatch = 201
+    case stopFind = 202
     case cancelFirst = 203
     case cancelSecond = 204
     case cancelThird = 205

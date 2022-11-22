@@ -49,7 +49,10 @@ class SeSACRequestViewController: BaseViewController {
                 cell.multiButton.rx.tap
                     .withUnretained(self)
                     .bind { vc, _ in
-                        vc.transition(PopupViewController(), transitionStyle: .presentOverFull)
+                        let viewController = PopupViewController()
+                        print(item.uid)
+                        viewController.uid = item.uid
+                        vc.transition(viewController, transitionStyle: .presentOverFull)
                     }
                     .disposed(by: self.disposeBag)
                 return cell
@@ -69,7 +72,7 @@ class SeSACRequestViewController: BaseViewController {
         var sections: [SeSACFindSectionModel] = []
         
         for i in sesacInfo.fromQueueDB {
-            sections.append(SeSACFindSectionModel(items: [SeSACFind(backgroundImage: i.background, image: i.sesac), SeSACFind(nickname: i.nick, sesacTitle: i.reputation, comment: i.reviews, studyList: i.studylist)]))
+            sections.append(SeSACFindSectionModel(items: [SeSACFind(uid: i.uid, backgroundImage: i.background, image: i.sesac), SeSACFind(nickname: i.nick, sesacTitle: i.reputation, comment: i.reviews, studyList: i.studylist)]))
         }
         
         let data = Observable<[SeSACFindSectionModel]>.just(sections)
