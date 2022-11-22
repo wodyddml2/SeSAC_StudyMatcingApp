@@ -86,6 +86,7 @@
 		63670CD52928C38400EAF29D /* SeSACRequestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63670CD42928C38400EAF29D /* SeSACRequestViewModel.swift */; };
 		63670CD72928CCB600EAF29D /* SeSACFind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63670CD62928CCB600EAF29D /* SeSACFind.swift */; };
 		63670CD92928CDCC00EAF29D /* SeSACFindSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63670CD82928CDCC00EAF29D /* SeSACFindSectionModel.swift */; };
+		636B6E4B292CDA6A00CED2F2 /* ReviewTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636B6E4A292CDA6A00CED2F2 /* ReviewTableViewController.swift */; };
 		6378279E292225D3009E1424 /* MyProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6378279D292225D3009E1424 /* MyProfileViewController.swift */; };
 		637827A2292226BD009E1424 /* MyProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637827A1292226BD009E1424 /* MyProfileTableViewCell.swift */; };
 		637827A429222A56009E1424 /* CommonButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637827A329222A56009E1424 /* CommonButton.swift */; };
@@ -205,6 +206,7 @@
 		63670CD42928C38400EAF29D /* SeSACRequestViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACRequestViewModel.swift; sourceTree = "<group>"; };
 		63670CD62928CCB600EAF29D /* SeSACFind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACFind.swift; sourceTree = "<group>"; };
 		63670CD82928CDCC00EAF29D /* SeSACFindSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACFindSectionModel.swift; sourceTree = "<group>"; };
+		636B6E4A292CDA6A00CED2F2 /* ReviewTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewTableViewController.swift; sourceTree = "<group>"; };
 		6378279D292225D3009E1424 /* MyProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileViewController.swift; sourceTree = "<group>"; };
 		637827A1292226BD009E1424 /* MyProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileTableViewCell.swift; sourceTree = "<group>"; };
 		637827A329222A56009E1424 /* CommonButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonButton.swift; sourceTree = "<group>"; };
@@ -770,6 +772,7 @@
 		63670CC52928B19500EAF29D /* SeSACFindScene */ = {
 			isa = PBXGroup;
 			children = (
+				636B6E49292CDA5500CED2F2 /* ReviewScene */,
 				63E9114F292BCD0D0048180F /* TabMan */,
 				63E9114A292BCCB00048180F /* SeSACAccpetScene */,
 				63E91149292BCC9B0048180F /* SeSACRequestScene */,
@@ -789,6 +792,14 @@
 				63670CCF2928BFA500EAF29D /* SeSACFindReviewTableViewCell.swift */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		636B6E49292CDA5500CED2F2 /* ReviewScene */ = {
+			isa = PBXGroup;
+			children = (
+				636B6E4A292CDA6A00CED2F2 /* ReviewTableViewController.swift */,
+			);
+			path = ReviewScene;
 			sourceTree = "<group>";
 		};
 		6378279829222579009E1424 /* SettingView */ = {
@@ -1146,6 +1157,7 @@
 				6300491D291E4F570046E6D3 /* SplashViewController.swift in Sources */,
 				635E1624291C23CE0042E8E4 /* NicknameViewModel.swift in Sources */,
 				631DC94B29210FB300F23211 /* SettingTableViewCell.swift in Sources */,
+				636B6E4B292CDA6A00CED2F2 /* ReviewTableViewController.swift in Sources */,
 				637EDF4429253039009089E4 /* BaseCollectionViewCell.swift in Sources */,
 				631DC95029212CA300F23211 /* ReusableProtocol.swift in Sources */,
 				63308F232923A64C004B90A5 /* MyProfileViewModel.swift in Sources */,

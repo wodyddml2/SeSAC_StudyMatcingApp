@@ -20,6 +20,7 @@ class SeSACAcceptViewController: BaseViewController {
     var dataSources: RxTableViewSectionedReloadDataSource<SeSACFindSectionModel>?
 
     var heightChange: [Bool] = []
+    var info: [FromQueueDB] = []
 
     override func loadView() {
         view = mainView
@@ -58,6 +59,10 @@ class SeSACAcceptViewController: BaseViewController {
                 cell.tag = indexPath.section
                 cell.sesacReviewImageView.image = self.heightChange[indexPath.section] ? UIImage(systemName: "chevron.up")! : UIImage(systemName: "chevron.down")!
                 cell.setFindData(item: item)
+                
+                cell.reviewView.sesacReviewButton.tag = indexPath.section
+                
+                cell.reviewView.sesacReviewButton.addTarget(self, action: #selector(self.reviewButtonTapped), for: .touchUpInside)
                 return cell
             default: return UITableViewCell()
             }
@@ -80,6 +85,12 @@ class SeSACAcceptViewController: BaseViewController {
         sections.isEmpty ? noSeSACHidden(bool: false) :  noSeSACHidden(bool: true)
         
         heightChange = Array(repeating: false, count: sections.count)
+    }
+    
+    @objc func reviewButtonTapped(_ sender: UIButton) {
+        let vc = ReviewTableViewController()
+        vc.reviewList = info[sender.tag].reviews
+        transition(vc, transitionStyle: .push)
     }
     
     func noSeSACHidden(bool: Bool) {
@@ -122,7 +133,7 @@ extension SeSACAcceptViewController {
         output.sesacInfo
             .withUnretained(self)
             .subscribe (onNext: { vc, sesacInfo in
-                print(sesacInfo)
+                vc.info = sesacInfo.fromQueueDBRequested
                 vc.setTableView(sesacInfo: sesacInfo)
             })
             .disposed(by: disposeBag)

@@ -81,7 +81,6 @@ class BaseViewController: UIViewController {
         let navigationAppearance = UINavigationBarAppearance()
         navigationController?.navigationBar.scrollEdgeAppearance = navigationAppearance
         navigationController?.navigationBar.standardAppearance = navigationAppearance
-        
     }
 }
 

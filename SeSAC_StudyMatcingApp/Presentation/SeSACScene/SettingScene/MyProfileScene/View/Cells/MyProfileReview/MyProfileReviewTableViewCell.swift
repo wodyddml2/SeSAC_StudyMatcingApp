@@ -89,9 +89,9 @@ extension MyProfileReviewTableViewCell {
             reviewView.sesacReviewLabel.text = "첫 리뷰를 기다리는 중이에요"
             reviewView.sesacReviewLabel.textColor = .gray5
         } else if item.comment.count == 1 {
-            reviewView.sesacReviewLabel.text = item.comment.first
+            reviewView.sesacReviewLabel.text = item.comment.last
         } else {
-            reviewView.sesacReviewLabel.text = item.comment.first
+            reviewView.sesacReviewLabel.text = item.comment.last
             reviewView.sesacReviewButton.isHidden = false
         }
         
