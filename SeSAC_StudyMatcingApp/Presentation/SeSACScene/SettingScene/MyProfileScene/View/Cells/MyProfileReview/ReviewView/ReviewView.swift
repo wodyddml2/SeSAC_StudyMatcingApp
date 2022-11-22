@@ -28,18 +28,11 @@ class ReviewView: BaseView {
         return view
     }()
     
-    let sesacReviewImageView: UIImageView = {
-        let view = UIImageView()
-        view.image = UIImage(systemName: "chevron.right")
-        view.tintColor = .gray7
-        view.isHidden = true
-        view.contentMode = .scaleAspectFit
-        return view
-    }()
-    
     let sesacReviewButton: UIButton = {
         let view = UIButton()
         view.isHidden = true
+        view.setImage(UIImage(systemName: "chevron.right"), for: .normal)
+        view.tintColor = .gray7
         return view
     }()
     
@@ -55,7 +48,7 @@ class ReviewView: BaseView {
     }
     
     override func configureUI() {
-        [sesacTitleLabel,reviewStackView, sesacReviewTitleLabel, sesacReviewImageView, sesacReviewButton, sesacReviewLabel].forEach {
+        [sesacTitleLabel,reviewStackView, sesacReviewTitleLabel, sesacReviewButton, sesacReviewLabel].forEach {
             self.addSubview($0)
         }
     }
@@ -75,14 +68,10 @@ class ReviewView: BaseView {
             make.leading.equalToSuperview()
         }
         
-        sesacReviewImageView.snp.makeConstraints { make in
-            make.top.equalTo(reviewStackView.snp.bottom).offset(24)
-            make.width.height.equalTo(16)
-            make.trailing.equalToSuperview().inset(16)
-        }
-        
         sesacReviewButton.snp.makeConstraints { make in
-            make.edges.equalTo(sesacReviewImageView)
+            make.top.equalTo(reviewStackView.snp.bottom).offset(24)
+            make.bottom.equalTo(sesacReviewLabel.snp.top).offset(-16)
+            make.trailing.equalToSuperview().inset(16)
         }
         
         sesacReviewLabel.snp.makeConstraints { make in

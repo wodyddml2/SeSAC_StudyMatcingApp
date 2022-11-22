@@ -11,8 +11,8 @@ class MyProfileImageTableViewCell: BaseTableViewCell {
     let sesacBackgroundImageView: UIImageView = {
         let view = UIImageView()
         view.layer.masksToBounds = true
-        view .layer.cornerRadius = 8
-        view.contentMode = .scaleAspectFit
+        view.layer.cornerRadius = 8
+        view.contentMode = .scaleToFill
         return view
     }()
     

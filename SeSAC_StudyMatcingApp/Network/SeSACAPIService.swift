@@ -101,7 +101,7 @@ enum Router: URLRequestConvertible {
                 return [
                     "lat": "\(lat)",
                     "long": "\(long)",
-                    "studylist": "\(list)"
+                    "studylist": list
                 ]
             }
            
@@ -132,7 +132,7 @@ enum Router: URLRequestConvertible {
         case .loginGet, .withdrawPost, .matchGet, .findDelete:
             return request
         case .signUpPost, .savePut, .searchPost, .findPost:
-            return try URLEncoding.default.encode(request, with: parameters)
+            return try URLEncoding(arrayEncoding: .noBrackets).encode(request, with: parameters)
         }
         
     }

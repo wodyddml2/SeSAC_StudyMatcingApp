@@ -35,7 +35,6 @@ class SeSACFindReviewTableViewCell: MyProfileReviewTableViewCell {
             reviewView.sesacReviewLabel.text = item.comment.first
         } else {
             reviewView.sesacReviewLabel.text = item.comment.first
-            reviewView.sesacReviewImageView.isHidden = false
             reviewView.sesacReviewButton.isHidden = false
         }
         

@@ -50,7 +50,6 @@ class MyProfileReviewTableViewCell: BaseTableViewCell {
     
     override func setConstraints() {
         nicknameLabel.snp.makeConstraints { make in
-            make.height.equalTo(24)
             make.leading.equalTo(16)
             make.top.equalTo(16)
         }
@@ -93,7 +92,6 @@ extension MyProfileReviewTableViewCell {
             reviewView.sesacReviewLabel.text = item.comment.first
         } else {
             reviewView.sesacReviewLabel.text = item.comment.first
-            reviewView.sesacReviewImageView.isHidden = false
             reviewView.sesacReviewButton.isHidden = false
         }
         

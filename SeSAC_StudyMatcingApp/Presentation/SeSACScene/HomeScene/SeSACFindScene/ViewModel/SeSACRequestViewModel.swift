@@ -27,7 +27,7 @@ class SeSACRequestViewModel {
         
         guard let location = locationValue else {return}
         
-        SeSACAPIService.shared.requestSeSACAPI(type: SeSACSearchDTO.self ,router: Router.searchPost(query: UserManager.idToken, lat: 37.517819364682694, long: 126.88647317074734)) { [weak self] result in
+        SeSACAPIService.shared.requestSeSACAPI(type: SeSACSearchDTO.self ,router: Router.searchPost(query: UserManager.idToken, lat: location.latitude, long: location.longitude)) { [weak self] result in
             guard let self = self else {return}
             switch result {
             case .success(let success):
