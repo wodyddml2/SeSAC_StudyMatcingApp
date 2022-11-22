@@ -63,6 +63,8 @@ class SeSACAcceptViewController: BaseViewController {
                 cell.reviewView.sesacReviewButton.tag = indexPath.section
                 
                 cell.reviewView.sesacReviewButton.addTarget(self, action: #selector(self.reviewButtonTapped), for: .touchUpInside)
+                
+                cell.reviewView.sesacStudyLabel.text = cell.wishStudyLabel(item: item)
                 return cell
             default: return UITableViewCell()
             }
@@ -70,7 +72,7 @@ class SeSACAcceptViewController: BaseViewController {
         var sections: [SeSACFindSectionModel] = []
         
         for i in sesacInfo.fromQueueDBRequested {
-            sections.append(SeSACFindSectionModel(items: [SeSACFind(backgroundImage: i.background, image: i.sesac), SeSACFind(nickname: i.nick, sesacTitle: i.reputation, comment: i.reviews)]))
+            sections.append(SeSACFindSectionModel(items: [SeSACFind(backgroundImage: i.background, image: i.sesac), SeSACFind(nickname: i.nick, sesacTitle: i.reputation, comment: i.reviews, studyList: i.studylist)]))
         }
         
         let data = Observable<[SeSACFindSectionModel]>.just(sections)

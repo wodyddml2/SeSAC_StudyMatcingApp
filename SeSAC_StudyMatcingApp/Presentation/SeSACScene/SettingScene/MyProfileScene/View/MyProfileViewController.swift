@@ -78,7 +78,6 @@ final class MyProfileViewController: BaseViewController {
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: MyProfileReviewTableViewCell.reusableIdentifier, for: indexPath) as? MyProfileReviewTableViewCell else { return UITableViewCell() }
                 cell.sesacReviewImageView.image = self.autoBool ? UIImage(systemName: "chevron.up")! : UIImage(systemName: "chevron.down")!
                 cell.setData(item: item)
-                
                 cell.reviewView.sesacReviewButton.addTarget(self, action: #selector(self.reviewButtonTapped), for: .touchUpInside)
                 return cell
             case .info:

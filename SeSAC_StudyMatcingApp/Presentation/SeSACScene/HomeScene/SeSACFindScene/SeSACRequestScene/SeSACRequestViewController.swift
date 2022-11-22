@@ -59,8 +59,9 @@ class SeSACRequestViewController: BaseViewController {
                 cell.sesacReviewImageView.image = self.heightChange[indexPath.section] ? UIImage(systemName: "chevron.up")! : UIImage(systemName: "chevron.down")!
                 cell.setFindData(item: item)
                 cell.reviewView.sesacReviewButton.tag = indexPath.section
-                
                 cell.reviewView.sesacReviewButton.addTarget(self, action: #selector(self.reviewButtonTapped), for: .touchUpInside)
+                
+                cell.reviewView.sesacStudyLabel.text = cell.wishStudyLabel(item: item)
                 return cell
             default: return UITableViewCell()
             }
@@ -68,7 +69,7 @@ class SeSACRequestViewController: BaseViewController {
         var sections: [SeSACFindSectionModel] = []
         
         for i in sesacInfo.fromQueueDB {
-            sections.append(SeSACFindSectionModel(items: [SeSACFind(backgroundImage: i.background, image: i.sesac), SeSACFind(nickname: i.nick, sesacTitle: i.reputation, comment: i.reviews)]))
+            sections.append(SeSACFindSectionModel(items: [SeSACFind(backgroundImage: i.background, image: i.sesac), SeSACFind(nickname: i.nick, sesacTitle: i.reputation, comment: i.reviews, studyList: i.studylist)]))
         }
         
         let data = Observable<[SeSACFindSectionModel]>.just(sections)
@@ -128,6 +129,7 @@ extension SeSACRequestViewController {
             .withUnretained(self)
             .subscribe (onNext: { vc, sesacInfo in
                 vc.info = sesacInfo.fromQueueDB
+                print(sesacInfo)
                 vc.setTableView(sesacInfo: sesacInfo)
             })
             .disposed(by: disposeBag)
