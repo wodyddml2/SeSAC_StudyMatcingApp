@@ -20,6 +20,9 @@ class SeSACRequestViewModel {
     
     var searchSesac = PublishRelay<Bool>()
     
+    var match = PublishSubject<SeSACMatchDTO>()
+    var matchError = PublishRelay<Bool>()
+    
     func requsetSearch(output: Output) {
         
         guard let location = locationValue else {return}
@@ -77,30 +80,59 @@ class SeSACRequestViewModel {
             }
         }
     }
+    
+    func requestMYQueue() {
+        SeSACAPIService.shared.requestSeSACAPI(type: SeSACMatchDTO.self, router: Router.matchGet(query: UserManager.idToken)) { [weak self] result in
+            guard let self = self else {return}
+            switch result {
+            case .success(let success):
+                self.match.onNext(success)
+            case .failure(let fail):
+                let error = fail as! SeSACError
+                switch error {
+                case .firebaseTokenError:
+                    self.renewalMyQueueRequest()
+                default:
+                    self.matchError.accept(true)
+                }
+            }
+        }
+    }
+    
+    func renewalMyQueueRequest() {
+        let currentUser = Auth.auth().currentUser
+        currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
+            if error != nil {
+                print("error")
+            }
+            if let idToken = idToken {
+                UserManager.idToken = idToken
+                
+                self.requestMYQueue()
+            }
+        }
+    }
 }
 
 extension SeSACRequestViewModel: ViewModelType {
     
     struct Input {
         let viewDidLoadEvent: Observable<Void>
+        let reload: ControlEvent<Void>
+        let change: ControlEvent<Void>
     }
     
     struct Output {
         var sesacInfo = PublishSubject<SeSACSearchDTO>()
         var networkFailed = PublishRelay<Bool>()
         var searchSesac: PublishRelay<Bool>
+        let reload: ControlEvent<Void>
+        let change: ControlEvent<Void>
     }
     
     func transform(input: Input) -> Output {
-        let output = Output(searchSesac: searchSesac)
-        
-//        input.viewDidLoadEvent
-//            .withUnretained(self)
-//            .subscribe { vc, _ in
-//                vc.requsetSearch(output: output)
-//            }
-//            .disposed(by: disposeBag)
- 
+        let output = Output(searchSesac: searchSesac, reload: input.reload, change: input.change) 
+       
         return output
     }
 }

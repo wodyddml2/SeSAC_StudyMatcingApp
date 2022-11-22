@@ -1,8 +1,8 @@
 //
-//  SeSACFindViewController.swift
+//  SeSACAcceptViewController.swift
 //  SeSAC_StudyMatcingApp
 //
-//  Created by J on 2022/11/19.
+//  Created by J on 2022/11/21.
 //
 
 import UIKit
@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 import RxDataSources
 
-class SeSACRequestViewController: BaseViewController {
+class SeSACAcceptViewController: BaseViewController {
     
     let mainView = SeSACFindView()
     
@@ -33,6 +33,12 @@ class SeSACRequestViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         viewModel.searchSesac.accept(true)
+        
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        viewModel.searchSesac.accept(false)
     }
 
     func setTableView(sesacInfo: SeSACSearchDTO) {
@@ -40,8 +46,17 @@ class SeSACRequestViewController: BaseViewController {
             switch SeSACFindRow(rawValue: indexPath.row) {
             case .image:
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: SeSACFindImageTableViewCell.reusableIdentifier, for: indexPath) as? SeSACFindImageTableViewCell else {return UITableViewCell()}
+                cell.multiButton.setTitle("수락하기", for: .normal)
+                cell.multiButton.blueButton()
                 cell.sesacBackgroundImageView.image = UIImage.sesacBackgroundImage(num: item.backgroundImage)
                 cell.sesacImageView.image = UIImage.sesacImage(num: item.image)
+                
+                cell.multiButton.rx.tap
+                    .withUnretained(self)
+                    .bind { vc, _ in
+                        vc.transition(PopupViewController(), transitionStyle: .presentOverFull)
+                    }
+                    .disposed(by: self.disposeBag)
                 return cell
             case .review:
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: SeSACFindReviewTableViewCell.reusableIdentifier, for: indexPath) as? SeSACFindReviewTableViewCell else {return UITableViewCell()}
@@ -54,7 +69,7 @@ class SeSACRequestViewController: BaseViewController {
         })
         var sections: [SeSACFindSectionModel] = []
         
-        for i in sesacInfo.fromQueueDB {
+        for i in sesacInfo.fromQueueDBRequested {
             sections.append(SeSACFindSectionModel(items: [SeSACFind(backgroundImage: i.background, image: i.sesac), SeSACFind(nickname: i.nick, sesacTitle: i.reputation, comment: i.reviews)]))
         }
         
@@ -83,7 +98,6 @@ class SeSACRequestViewController: BaseViewController {
             .disposed(by: disposeBag)
          
         sections.isEmpty ? noSeSACHidden(bool: false) :  noSeSACHidden(bool: true)
-        noSeSAC()
         
         heightChange = Array(repeating: false, count: sections.count)
     }
@@ -94,21 +108,12 @@ class SeSACRequestViewController: BaseViewController {
         mainView.subTitleLabel.isHidden = bool
         mainView.changeButton.isHidden = bool
         mainView.reloadButton.isHidden = bool
+        mainView.titleLabel.text = "아직 받은 요청이 없어요ㅠ"
     }
-    
-    func noSeSAC() {
-        mainView.titleLabel.text = "아쉽게도 주변에 새싹이 없어요ㅠ"
-        mainView.changeButton.rx.tap
-            .withUnretained(self)
-            .subscribe { vc, _ in
-                vc.requestDelete(SearchViewController())
-            }
-            .disposed(by: disposeBag)
-    }
-    
+
 }
 
-extension SeSACRequestViewController: UITableViewDelegate {
+extension SeSACAcceptViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch SeSACFindRow(rawValue: indexPath.row) {
@@ -122,9 +127,14 @@ extension SeSACRequestViewController: UITableViewDelegate {
     }
 }
 
-extension SeSACRequestViewController {
+extension SeSACAcceptViewController {
     private func bindViewModel() {
-        let input = SeSACRequestViewModel.Input(viewDidLoadEvent: Observable.just(()))
+        let input = SeSACRequestViewModel.Input(
+            viewDidLoadEvent: Observable.just(()),
+            reload: mainView.reloadButton.rx.tap,
+            change: mainView.changeButton.rx.tap
+        )
+        
         let output = viewModel.transform(input: input)
         
         output.sesacInfo
@@ -135,12 +145,28 @@ extension SeSACRequestViewController {
             })
             .disposed(by: disposeBag)
         
-        mainView.reloadButton.rx.tap
+        output.networkFailed
+            .asDriver(onErrorJustReturn: false)
+            .drive (onNext: { [weak self] error in
+                guard let self = self else {return}
+                if error == true {
+                    self.view.makeToast("사용자의 정보를 불러오는데 실패했습니다.")
+                }
+            }).disposed(by: disposeBag)
+        
+        output.reload
             .withUnretained(self)
             .bind { vc, _ in
                 vc.mainView.tableView.dataSource = nil
                 vc.mainView.tableView.delegate = nil
                 vc.viewModel.requsetSearch(output: output)
+            }
+            .disposed(by: disposeBag)
+        
+        output.change
+            .withUnretained(self)
+            .subscribe { vc, _ in
+                vc.requestDelete(SearchViewController())
             }
             .disposed(by: disposeBag)
         

@@ -10,6 +10,7 @@ import UIKit
 import FirebaseAuth
 import Tabman
 import Pageboy
+import RxSwift
 
 enum SeSACFindRow: Int {
     case image, review
@@ -26,13 +27,22 @@ class TabManSeSACViewController: TabmanViewController {
     
     let firstVC = SeSACRequestViewController()
     let secondVC = SeSACAcceptViewController()
+    
+    let viewModel = SeSACRequestViewModel()
+    
+    let disposeBag = DisposeBag()
+    var timerDisposable: Disposable?
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
         configureUI()
         setTabMan()
         
         navigationBarStyle()
+        
+        bindViewModel()
     }
     
     private func navigationBarStyle() {
@@ -59,11 +69,11 @@ class TabManSeSACViewController: TabmanViewController {
     }
     
     @objc func cancelButtonTapped() {
-        requestFindDelete()
+        requestDelete()
     }
 
-    private func requestFindDelete() {
-        SeSACAPIService.shared.requestStatusSeSACAPI(router: Router.findDelete(query: UserManager.idToken)) { [weak self] value in
+    func requestDelete() {
+        viewModel.requestFindDelete {  [weak self] value in
             guard let self = self else {return}
             switch StatusCode(rawValue: value) {
             case .success:
@@ -72,31 +82,48 @@ class TabManSeSACViewController: TabmanViewController {
                 for viewController in viewControllers {
                     if let rootVC = viewController as? HomeViewController {
                         self.navigationController?.popToViewController(rootVC, animated: true)
-                        rootVC.checkUserDeviceLocationSeviceAuthorization()
                     }
                 }
             case .declarationOrMatch:
                 print("매칭 상태임")
             case .firebaseError:
-                self.renewalFindDeleteRequest()
+                self.renewalDelete()
             default:
                 self.view.makeToast("에러가 발생했습니다.", position: .center)
             }
         }
     }
     
-    private func renewalFindDeleteRequest() {
-        let currentUser = Auth.auth().currentUser
-        currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
-            if error != nil {
-                print("error")
-            }
-            if let idToken = idToken {
-                UserManager.idToken = idToken
-                
-                self.requestFindDelete()
-            }
+    func renewalDelete() {
+        viewModel.renewalFindDeleteRequest { [weak self] in
+            guard let self = self else {return}
+            self.requestDelete()
         }
+    }
+    
+    func bindViewModel() {
+        viewModel.match
+            .bind (onNext: { result in
+                if result.matched == 1 {
+                    print("매칭됨")
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.matchError
+            .withUnretained(self)
+            .bind { vc, bool in
+                if bool {
+                    vc.view.makeToast("에러가 발생했습니다.", position: .center)
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        timerDisposable = Observable<Int>.timer(.milliseconds(0), period: .seconds(5), scheduler: MainScheduler.instance)
+            .withUnretained(self)
+            .subscribe(onNext: { vc, _ in
+                vc.viewModel.requestMYQueue()
+            })
     }
     
     private func setTabMan() {

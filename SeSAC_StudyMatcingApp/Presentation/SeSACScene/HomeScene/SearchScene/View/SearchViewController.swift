@@ -75,37 +75,29 @@ class SearchViewController: BaseViewController, UIScrollViewDelegate {
     }
 }
 extension SearchViewController {
+    func validCheck(text: String) {
+        let study = viewModel.myStudyArr.map({$0.title})
+        if study.contains(text) {
+            view.makeToast("스터디를 중복해서 등록할 수 없습니다.", position: .center)
+        } else {
+            if viewModel.arrCountLimit() {
+                view.makeToast("8개 이상 스터디를 등록할 수 없습니다.", position: .center)
+            } else {
+                viewModel.myStudyArr.append(StudyTag(title: text))
+                studySnapshot()
+            }
+        }
+    }
+    
     func selectedCollection() {
       
         collectionView.rx.itemSelected
             .withUnretained(self)
             .subscribe { vc, indexPath in
                 if indexPath.section == 0 {
-                    let study = vc.viewModel.myStudyArr.map({$0.title})
-                    let text = vc.viewModel.recommendArr[indexPath.item].title
-                    if study.contains(text) {
-                        vc.view.makeToast("스터디를 중복해서 등록할 수 없습니다.", position: .center)
-                    } else {
-                        if vc.viewModel.arrCountLimit() {
-                            vc.view.makeToast("8개 이상 스터디를 등록할 수 없습니다.", position: .center)
-                        } else {
-                            vc.viewModel.myStudyArr.append(StudyTag(title: text))
-                            vc.studySnapshot()
-                        }
-                    }
+                    vc.validCheck(text: vc.viewModel.recommendArr[indexPath.item].title)
                 } else if indexPath.section == 1 {
-                    let study = vc.viewModel.myStudyArr.map({$0.title})
-                    let text = vc.viewModel.aroundStudyArr[indexPath.item].title
-                    if study.contains(text) {
-                        vc.view.makeToast("스터디를 중복해서 등록할 수 없습니다.", position: .center)
-                    } else {
-                        if vc.viewModel.arrCountLimit() {
-                            vc.view.makeToast("8개 이상 스터디를 등록할 수 없습니다.", position: .center)
-                        } else {
-                            vc.viewModel.myStudyArr.append(StudyTag(title: text))
-                            vc.studySnapshot()
-                        }
-                    }
+                    vc.validCheck(text: vc.viewModel.aroundStudyArr[indexPath.item].title)
                 } else  {
                     vc.viewModel.myStudyArr.remove(at: indexPath.item)
                     vc.studySnapshot()
@@ -262,63 +254,39 @@ extension SearchViewController {
 
 extension SearchViewController {
     
+    private func collectionViewLayoutSection(top: CGFloat, bottom: CGFloat, header: [NSCollectionLayoutBoundarySupplementaryItem]) -> NSCollectionLayoutSection {
+        let size = NSCollectionLayoutSize(widthDimension: .estimated(60), heightDimension: .absolute(35))
+
+        let item = NSCollectionLayoutItem(layoutSize: size)
+        
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(35))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+
+        group.interItemSpacing = .fixed(8)
+        
+        let section = NSCollectionLayoutSection(group: group)
+        section.interGroupSpacing = 8
+        section.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)
+        
+        // boundarySupplementaryItems: 머리글 및 바닥글과 같이 섹션의 경계 가장자리와 연결된 보충 항목의 배열
+        section.boundarySupplementaryItems = header
+     
+        return section
+    }
+    
     private func createLayout() -> UICollectionViewLayout {
         // UICollectionViewCompositionalLayoutSectionProvider
-        let sectionProvider = { (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+        let sectionProvider = { [weak self] (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+            guard let self = self else {return nil}
+            let header = [
+                NSCollectionLayoutBoundarySupplementaryItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(40)), elementKind: UICollectionView.elementKindSectionHeader, alignment: .top )
+            ]
             if sectionIndex == 0 {
-                let size = NSCollectionLayoutSize(widthDimension: .estimated(60), heightDimension: .absolute(35))
-
-                let item = NSCollectionLayoutItem(layoutSize: size)
-                
-                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(35))
-                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-
-                group.interItemSpacing = .fixed(8)
-                
-                let section = NSCollectionLayoutSection(group: group)
-                section.interGroupSpacing = 8
-                section.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)
-                
-                // boundarySupplementaryItems: 머리글 및 바닥글과 같이 섹션의 경계 가장자리와 연결된 보충 항목의 배열
-                section.boundarySupplementaryItems = [
-                    NSCollectionLayoutBoundarySupplementaryItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(40)), elementKind: UICollectionView.elementKindSectionHeader, alignment: .top )
-                ]
-             
-                return section
+                return self.collectionViewLayoutSection(top: 8, bottom: 8, header: header)
             } else if sectionIndex == 1 {
-                let size = NSCollectionLayoutSize(widthDimension: .estimated(60), heightDimension: .absolute(35))
-
-                let item = NSCollectionLayoutItem(layoutSize: size)
-                
-                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(35))
-                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-
-                group.interItemSpacing = .fixed(8)
-                
-                let section = NSCollectionLayoutSection(group: group)
-                section.interGroupSpacing = 8
-                section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 16, trailing: 16)
-                return section
+                return self.collectionViewLayoutSection(top: 0, bottom: 16, header: [])
             } else {
-                let size = NSCollectionLayoutSize(widthDimension: .estimated(60), heightDimension: .absolute(35))
-
-                let item = NSCollectionLayoutItem(layoutSize: size)
-                
-                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(35))
-                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-
-                group.interItemSpacing = .fixed(8)
-                
-                let section = NSCollectionLayoutSection(group: group)
-                section.interGroupSpacing = 8
-                section.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)
-                
-                // boundarySupplementaryItems: 머리글 및 바닥글과 같이 섹션의 경계 가장자리와 연결된 보충 항목의 배열
-                section.boundarySupplementaryItems = [
-                    NSCollectionLayoutBoundarySupplementaryItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(40)), elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
-                ]
-                
-                return section
+                return self.collectionViewLayoutSection(top: 8, bottom: 8, header: header)
             }
         }
         let config = UICollectionViewCompositionalLayoutConfiguration()

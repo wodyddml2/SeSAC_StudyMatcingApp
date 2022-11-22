@@ -27,6 +27,7 @@ class PopupView: BaseView {
     let subTitleLabel: UILabel = {
         let view = UILabel()
         view.text = "탈퇴하시면 새싹 스터디를 이용할 수 없어요ㅠ"
+        view.numberOfLines = 0
         view.font = UIFont.notoSans(size: 14, family: .Regular)
         view.textAlignment = .center
         return view

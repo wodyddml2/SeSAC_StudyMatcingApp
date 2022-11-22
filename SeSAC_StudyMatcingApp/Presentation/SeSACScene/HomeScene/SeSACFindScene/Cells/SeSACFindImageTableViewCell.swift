@@ -23,7 +23,7 @@ class SeSACFindImageTableViewCell: MyProfileImageTableViewCell {
     
     override func configureUI() {
         super.configureUI()
-        self.addSubview(multiButton)
+        contentView.addSubview(multiButton)
     }
     
     override func setConstraints() {

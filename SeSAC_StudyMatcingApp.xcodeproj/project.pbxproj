@@ -113,7 +113,6 @@
 		63E9113D292B72F40048180F /* TabManViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E9113C292B72F40048180F /* TabManViewController.swift */; };
 		63E9113F292B73CE0048180F /* SeSACAcceptViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E9113E292B73CE0048180F /* SeSACAcceptViewController.swift */; };
 		63E91144292B824A0048180F /* SeSACFindView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E91143292B824A0048180F /* SeSACFindView.swift */; };
-		63E91146292BC7430048180F /* SeSACAcceptViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E91145292BC7430048180F /* SeSACAcceptViewModel.swift */; };
 		63E91148292BC9470048180F /* PopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E91147292BC9470048180F /* PopupView.swift */; };
 		63E91152292BCD740048180F /* PopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E91151292BCD740048180F /* PopupViewController.swift */; };
 		63F31446291D2A3500C31F59 /* EmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F31445291D2A3500C31F59 /* EmailViewController.swift */; };
@@ -231,7 +230,6 @@
 		63E9113C292B72F40048180F /* TabManViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabManViewController.swift; sourceTree = "<group>"; };
 		63E9113E292B73CE0048180F /* SeSACAcceptViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACAcceptViewController.swift; sourceTree = "<group>"; };
 		63E91143292B824A0048180F /* SeSACFindView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACFindView.swift; sourceTree = "<group>"; };
-		63E91145292BC7430048180F /* SeSACAcceptViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACAcceptViewModel.swift; sourceTree = "<group>"; };
 		63E91147292BC9470048180F /* PopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupView.swift; sourceTree = "<group>"; };
 		63E91151292BCD740048180F /* PopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupViewController.swift; sourceTree = "<group>"; };
 		63F31445291D2A3500C31F59 /* EmailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailViewController.swift; sourceTree = "<group>"; };
@@ -777,6 +775,7 @@
 				63E91149292BCC9B0048180F /* SeSACRequestScene */,
 				63E91150292BCD4F0048180F /* PopupScene */,
 				63670CD12928C34400EAF29D /* Cells */,
+				63E9114E292BCCE90048180F /* ViewModel */,
 				63E91143292B824A0048180F /* SeSACFindView.swift */,
 				63670CD82928CDCC00EAF29D /* SeSACFindSectionModel.swift */,
 			);
@@ -926,8 +925,7 @@
 		63E91149292BCC9B0048180F /* SeSACRequestScene */ = {
 			isa = PBXGroup;
 			children = (
-				63E9114D292BCCDF0048180F /* View */,
-				63E9114E292BCCE90048180F /* ViewModel */,
+				63670CC92928BEED00EAF29D /* SeSACRequestViewController.swift */,
 			);
 			path = SeSACRequestScene;
 			sourceTree = "<group>";
@@ -935,34 +933,9 @@
 		63E9114A292BCCB00048180F /* SeSACAccpetScene */ = {
 			isa = PBXGroup;
 			children = (
-				63E9114C292BCCD70048180F /* View */,
-				63E9114B292BCCD00048180F /* ViewModel */,
-			);
-			path = SeSACAccpetScene;
-			sourceTree = "<group>";
-		};
-		63E9114B292BCCD00048180F /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				63E91145292BC7430048180F /* SeSACAcceptViewModel.swift */,
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		63E9114C292BCCD70048180F /* View */ = {
-			isa = PBXGroup;
-			children = (
 				63E9113E292B73CE0048180F /* SeSACAcceptViewController.swift */,
 			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		63E9114D292BCCDF0048180F /* View */ = {
-			isa = PBXGroup;
-			children = (
-				63670CC92928BEED00EAF29D /* SeSACRequestViewController.swift */,
-			);
-			path = View;
+			path = SeSACAccpetScene;
 			sourceTree = "<group>";
 		};
 		63E9114E292BCCE90048180F /* ViewModel */ = {
@@ -1146,7 +1119,6 @@
 				637827A629222E20009E1424 /* MyProfileImageTableViewCell.swift in Sources */,
 				637EDF422925301E009089E4 /* SearchMyStudyCollectionViewCell.swift in Sources */,
 				637EDF3A292528A5009089E4 /* MatchImage.swift in Sources */,
-				63E91146292BC7430048180F /* SeSACAcceptViewModel.swift in Sources */,
 				63308F1D292334F3004B90A5 /* PrifileWithdrawView.swift in Sources */,
 				638B0746291AA49600E9D254 /* AuthComent.swift in Sources */,
 				63467DB72918D4AE00E7D8AE /* OnboardingViewController.swift in Sources */,

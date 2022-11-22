@@ -86,7 +86,7 @@ extension HomeViewController {
     func setRegionAnnotation(center: CLLocationCoordinate2D, users: [SeSACUser]) {
         let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: center.latitude, longitude: center.longitude), latitudinalMeters: 700, longitudinalMeters: 700)
         mainView.mapView.removeAnnotations(mainView.mapView.annotations)
-        mainView.mapView.setRegion(region, animated: true)
+        mainView.mapView.setRegion(region, animated: false)
 
         var annotation: [CustomAnnotation] = []
         
