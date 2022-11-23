@@ -37,6 +37,8 @@ class ChattingView: BaseView {
     let messageTextView: UITextView = {
         let view = UITextView()
         view.backgroundColor = .gray1
+        view.textColor = .gray7
+        view.text = "메세지를 입력하세요"
         view.isScrollEnabled = false
         return view
     }()
@@ -120,6 +122,28 @@ class ChattingView: BaseView {
                     vc.layoutIfNeeded()
                 }
             })
+            .disposed(by: disposeBag)
+    }
+    
+    func bindTextViewPlaceholder() {
+        messageTextView.rx.didBeginEditing
+            .withUnretained(self)
+            .bind { vc, _ in
+                if vc.messageTextView.textColor == .gray7 {
+                    vc.messageTextView.text = nil
+                    vc.messageTextView.textColor = .black
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        messageTextView.rx.didEndEditing
+            .withUnretained(self)
+            .bind { vc, _ in
+                if vc.messageTextView.text == "" {
+                    vc.messageTextView.text = "메세지를 입력하세요"
+                    vc.messageTextView.textColor = .gray7
+                }
+            }
             .disposed(by: disposeBag)
     }
 }

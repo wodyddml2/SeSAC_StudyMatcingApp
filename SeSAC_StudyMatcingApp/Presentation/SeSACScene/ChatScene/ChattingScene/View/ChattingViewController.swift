@@ -57,9 +57,7 @@ final class ChattingViewController: BaseViewController {
     }
     
     private func bindViewModel() {
-        
-        
-        
+   
         mainView.backButton.rx.tap
             .withUnretained(self)
             .bind { vc, _ in
@@ -68,9 +66,8 @@ final class ChattingViewController: BaseViewController {
             .disposed(by: disposeBag)
         
         mainView.bindKeyboard()
-       
+        mainView.bindTextViewPlaceholder()
     }
-    
 }
 
 extension ChattingViewController: UITableViewDelegate {
