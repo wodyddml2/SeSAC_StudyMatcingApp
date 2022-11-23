@@ -7,7 +7,12 @@
 
 import UIKit
 
+import RxSwift
+import RxKeyboard
+
 class ChattingView: BaseView {
+    
+    let disposeBag = DisposeBag()
     
     let backButton = UIBarButtonItem(image: UIImage(named: "arrow")!, style: .plain, target: ChattingViewController.self, action: nil)
     
@@ -76,5 +81,45 @@ class ChattingView: BaseView {
             make.trailing.equalTo(messageView.snp.trailing).inset(12)
             make.height.width.equalTo(24)
         }
+    }
+    
+    func bindKeyboard() {
+        let window = UIApplication.shared.connectedScenes
+            .filter({$0.activationState == .foregroundActive})
+            .map({$0 as? UIWindowScene})
+            .compactMap({$0})
+            .first?.windows
+            .filter({$0.isKeyWindow}).first
+        let extra = window!.safeAreaInsets.bottom - 32
+        
+        RxKeyboard.instance.visibleHeight
+            .skip(1)
+            .drive (onNext: { [weak self] height in
+                guard let self = self else {return}
+                UIView.animate(withDuration: 0) {
+                    self.sendButton.setImage(UIImage(named: "act"), for: .normal)
+                    self.messageTextView.snp.updateConstraints { make in
+                        make.bottom.equalTo(self.safeAreaLayoutGuide).inset(height - extra)
+                    }
+                }
+                self.layoutIfNeeded()
+            })
+            .disposed(by: disposeBag)
+        
+        tableView.rx.didScroll
+            .withUnretained(self)
+            .observe(on: MainScheduler.asyncInstance)
+            .bind(onNext: { vc, _ in
+                self.endEditing(true)
+                self.sendButton.setImage(UIImage(named: "inact"), for: .normal)
+                vc.messageTextView.snp.updateConstraints { make in
+                    make.bottom.equalTo(self.safeAreaLayoutGuide).inset(30)
+                }
+                
+                UIView.animate(withDuration: 0) {
+                    vc.layoutIfNeeded()
+                }
+            })
+            .disposed(by: disposeBag)
     }
 }

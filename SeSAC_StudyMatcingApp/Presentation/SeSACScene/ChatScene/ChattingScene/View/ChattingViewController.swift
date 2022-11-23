@@ -57,12 +57,18 @@ final class ChattingViewController: BaseViewController {
     }
     
     private func bindViewModel() {
+        
+        
+        
         mainView.backButton.rx.tap
             .withUnretained(self)
             .bind { vc, _ in
                 vc.navigationPopToViewController(HomeViewController())
             }
             .disposed(by: disposeBag)
+        
+        mainView.bindKeyboard()
+       
     }
     
 }
