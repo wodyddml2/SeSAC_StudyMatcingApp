@@ -11,7 +11,8 @@ final class YourChatTableViewCell: BaseTableViewCell {
 
     let chatView: UIView = {
         let view = UIView()
-        view.makeCornerStyle(width: 1, color: UIColor.gray4.cgColor, radius: 8)
+        view.makeCornerStyle(radius: 8)
+        view.backgroundColor = .sesacWhiteGreen
         return view
     }()
     

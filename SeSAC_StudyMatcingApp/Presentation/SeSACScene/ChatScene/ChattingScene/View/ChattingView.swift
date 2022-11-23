@@ -68,7 +68,7 @@ class ChattingView: BaseView {
             make.bottom.equalTo(self.safeAreaLayoutGuide).inset(30)
             make.leading.equalTo(28)
             make.trailing.equalToSuperview().inset(60)
-            make.height.lessThanOrEqualTo(58)
+            make.height.lessThanOrEqualTo(48)
         }
 
         messageView.snp.makeConstraints { make in
@@ -125,7 +125,7 @@ class ChattingView: BaseView {
             .disposed(by: disposeBag)
     }
     
-    func bindTextViewPlaceholder() {
+    func bindTextView() {
         messageTextView.rx.didBeginEditing
             .withUnretained(self)
             .bind { vc, _ in
@@ -143,6 +143,19 @@ class ChattingView: BaseView {
                     vc.messageTextView.text = "메세지를 입력하세요"
                     vc.messageTextView.textColor = .gray7
                 }
+            }
+            .disposed(by: disposeBag)
+        
+        messageTextView.rx.didChange
+            .withUnretained(self)
+            .bind { vc, _ in
+                let size = CGSize(width: vc.messageTextView.frame.width, height: .infinity)
+                // sizeThatFits -> 지정된 크기를 계산하고 반환
+                let estimatedSize = vc.messageTextView.sizeThatFits(size)
+                let isOverHeight = estimatedSize.height >= 48
+
+                vc.messageTextView.isScrollEnabled = isOverHeight
+                vc.setNeedsUpdateConstraints()
             }
             .disposed(by: disposeBag)
     }

@@ -66,7 +66,7 @@ final class ChattingViewController: BaseViewController {
             .disposed(by: disposeBag)
         
         mainView.bindKeyboard()
-        mainView.bindTextViewPlaceholder()
+        mainView.bindTextView()
     }
 }
 
