@@ -10,7 +10,7 @@ import UIKit
 import FirebaseAuth
 import RxSwift
 
-class WithdrawViewController: BaseViewController {
+final class WithdrawViewController: BaseViewController {
     
     let disposeBag = DisposeBag()
     
@@ -29,7 +29,7 @@ class WithdrawViewController: BaseViewController {
     }
    
     
-    func bindTo() {
+    private func bindTo() {
         mainView.cancelButton.rx.tap
             .withUnretained(self)
             .bind { vc, _ in
@@ -45,7 +45,7 @@ class WithdrawViewController: BaseViewController {
             .disposed(by: disposeBag)
     }
     
-    func requestWithdraw() {
+    private func requestWithdraw() {
         let currentUser = Auth.auth().currentUser
         currentUser?.getIDTokenForcingRefresh(true) { [weak self] idToken, error in
             guard let self = self else {return}
@@ -71,8 +71,5 @@ class WithdrawViewController: BaseViewController {
                 }
             }
         }
-        
     }
-    
-  
 }

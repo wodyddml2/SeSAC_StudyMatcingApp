@@ -57,4 +57,31 @@ extension UIViewController {
             return currentViewController
         }
     }
+    
+    func navigationPopToViewController<T: UIViewController>(_ vc: T) {
+        let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
+
+        for viewController in viewControllers {
+            if let rootVC = viewController as? T {
+                self.navigationController?.popToViewController(rootVC, animated: true)
+            }
+        }
+    }
+}
+
+extension UIViewController {
+    func tabBarAndNaviHidden(hidden: Bool) {
+        navigationController?.navigationBar.isHidden = !hidden
+        tabBarController?.tabBar.isHidden = hidden
+    }
+    
+    func navigationBarCommon(title: String) {
+        navigationItem.backButtonTitle = ""
+        navigationItem.title = title
+        navigationController?.navigationBar.tintColor = .black
+    
+        let navigationAppearance = UINavigationBarAppearance()
+        navigationController?.navigationBar.scrollEdgeAppearance = navigationAppearance
+        navigationController?.navigationBar.standardAppearance = navigationAppearance
+    }
 }

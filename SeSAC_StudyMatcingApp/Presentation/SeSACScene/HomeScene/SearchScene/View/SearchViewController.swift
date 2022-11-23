@@ -11,21 +11,21 @@ import RxSwift
 import RxCocoa
 import RxKeyboard
 
-class SearchViewController: BaseViewController, UIScrollViewDelegate {
+final class SearchViewController: BaseViewController, UIScrollViewDelegate {
     
-    lazy var collectionView: UICollectionView = {
+    private lazy var collectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
         return view
     }()
-
-    lazy var searchBar: UISearchBar = {
+    
+    private lazy var searchBar: UISearchBar = {
         let width = view.frame.width
         let view = UISearchBar(frame: CGRect(x: 0, y: 0, width: width - 10, height: 0))
         view.placeholder = "띄어쓰기로 복수 입력이 가능해요"
         return view
     }()
     
-    let searchButton: CommonButton = {
+    private let searchButton: CommonButton = {
         let view = CommonButton()
         view.selectedStyle()
         view.setTitle("새싹 찾기", for: .normal)
@@ -39,18 +39,17 @@ class SearchViewController: BaseViewController, UIScrollViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBar.isHidden = false
+        
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: searchBar)
         
-        tabBarController?.tabBar.isHidden = true
-        
+        tabBarAndNaviHidden(hidden: true)
         configureDataSource()
-      
+        
         bindViewModel()
         
         selectedCollection()
     }
-
+    
     override func configureUI() {
         [collectionView, searchButton].forEach {
             view.addSubview($0)
@@ -75,13 +74,13 @@ class SearchViewController: BaseViewController, UIScrollViewDelegate {
     }
 }
 extension SearchViewController {
-    func validCheck(text: String) {
+    private func validCheck(text: String) {
         let study = viewModel.myStudyArr.map({$0.title})
         if study.contains(text) {
-            view.makeToast("스터디를 중복해서 등록할 수 없습니다.", position: .center)
+            view.makeToast(StudyRegistration.overlap, position: .center)
         } else {
             if viewModel.arrCountLimit() {
-                view.makeToast("8개 이상 스터디를 등록할 수 없습니다.", position: .center)
+                view.makeToast(StudyRegistration.overStudy, position: .center)
             } else {
                 viewModel.myStudyArr.append(StudyTag(title: text))
                 studySnapshot()
@@ -89,8 +88,7 @@ extension SearchViewController {
         }
     }
     
-    func selectedCollection() {
-      
+    private func selectedCollection() {
         collectionView.rx.itemSelected
             .withUnretained(self)
             .subscribe { vc, indexPath in
@@ -102,9 +100,9 @@ extension SearchViewController {
                     vc.viewModel.myStudyArr.remove(at: indexPath.item)
                     vc.studySnapshot()
                 }
-        }
-        .disposed(by: disposeBag)
-
+            }
+            .disposed(by: disposeBag)
+        
         collectionView.rx.didScroll
             .withUnretained(self)
             .observe(on: MainScheduler.asyncInstance)
@@ -120,7 +118,7 @@ extension SearchViewController {
                 }
             })
             .disposed(by: disposeBag)
-
+        
     }
 }
 extension SearchViewController {
@@ -144,15 +142,15 @@ extension SearchViewController {
                 result.fromQueueDBRequested.map({$0.studylist}).forEach({vc.viewModel.setAround.append(contentsOf: $0)})
                 
                 let around = Array(Set(vc.viewModel.setAround))
-                                   
+                
                 around.forEach { vc.viewModel.aroundStudyArr.append(StudyTag(title: $0)) }
-
+                
                 result.fromRecommend.forEach { vc.viewModel.recommendArr.append(StudyTag(title: $0))}
-
+                
                 vc.studySnapshot()
             })
             .disposed(by: disposeBag)
-  
+        
         output.networkFailed
             .asDriver(onErrorJustReturn: false)
             .drive (onNext: { [weak self] error in
@@ -192,12 +190,12 @@ extension SearchViewController {
                 let study = vc.viewModel.myStudyArr.map({$0.title})
                 
                 if separatedText.filter({$0.count > 8}).count != 0 {
-                    vc.view.makeToast("최소 한 자 이상, 최대 8글자까지 작성 가능합니다", position: .center)
+                    vc.view.makeToast(StudyRegistration.characterLimit, position: .center)
                 } else  if separatedText.filter({ study.contains($0)}).count != 0 || separatedText.count != Set(separatedText).count {
-                    vc.view.makeToast("스터디를 중복해서 등록할 수 없습니다.", position: .center)
+                    vc.view.makeToast(StudyRegistration.overlap, position: .center)
                 } else {
                     if vc.viewModel.arrCountLimit() {
-                        vc.view.makeToast("8개 이상 스터디를 등록할 수 없습니다.", position: .center)
+                        vc.view.makeToast(StudyRegistration.overStudy, position: .center)
                     } else {
                         vc.viewModel.myStudyArr.append(contentsOf: result)
                         vc.studySnapshot()
@@ -229,17 +227,16 @@ extension SearchViewController {
                 vc.secondVC.viewModel.locationValue = self.viewModel.locationValue
                 self.transition(vc, transitionStyle: .push)
             case .declarationOrMatch:
-                self.view.makeToast("신고가 누적되어 이용하실 수 없습니다", position: .center)
+                self.view.makeToast(Penalty.unavailable, position: .center)
             case .cancelFirst:
-                self.view.makeToast("스터디 취소 패널티로, 1분동안 이용하실 수 없습니다", position: .center)
+                self.view.makeToast(Penalty.oneMinute, position: .center)
             case .cancelSecond:
-                self.view.makeToast("스터디 취소 패널티로, 2분동안 이용하실 수 없습니다", position: .center)
+                self.view.makeToast(Penalty.twoMinute, position: .center)
             case .cancelThird:
-                self.view.makeToast("스터디 취소 패널티로, 3분동안 이용하실 수 없습니다", position: .center)
+                self.view.makeToast(Penalty.threeMintue, position: .center)
             case .firebaseError:
                 self.renewalUser()
             default:
-                print(value)
                 self.view.makeToast("에러가 발생했습니다.", position: .center)
             }
         }
@@ -256,12 +253,12 @@ extension SearchViewController {
     
     private func collectionViewLayoutSection(top: CGFloat, bottom: CGFloat, header: [NSCollectionLayoutBoundarySupplementaryItem]) -> NSCollectionLayoutSection {
         let size = NSCollectionLayoutSize(widthDimension: .estimated(60), heightDimension: .absolute(35))
-
+        
         let item = NSCollectionLayoutItem(layoutSize: size)
         
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(35))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-
+        
         group.interItemSpacing = .fixed(8)
         
         let section = NSCollectionLayoutSection(group: group)
@@ -270,7 +267,7 @@ extension SearchViewController {
         
         // boundarySupplementaryItems: 머리글 및 바닥글과 같이 섹션의 경계 가장자리와 연결된 보충 항목의 배열
         section.boundarySupplementaryItems = header
-     
+        
         return section
     }
     
@@ -309,9 +306,7 @@ extension SearchViewController {
                 cell.outlineBorder(color: UIColor.gray4.cgColor)
                 cell.studyLabel.textColor = .black
             }
-            
         }
-        
         
         let myCellRegistration = UICollectionView.CellRegistration<SearchMyStudyCollectionViewCell, StudyTag> { cell, indexPath, itemIdentifier in
             cell.studyLabel.text = itemIdentifier.title
@@ -321,7 +316,7 @@ extension SearchViewController {
         let headerRegitration = UICollectionView.SupplementaryRegistration<UICollectionViewListCell>(elementKind: UICollectionView.elementKindSectionHeader) { headerView, elementKind, indexPath in
             var configuration = headerView.defaultContentConfiguration()
             configuration.text = indexPath.section == 0 ? "지금 주변에는" : "내가 하고 싶은"
-             
+            
             configuration.textProperties.font = UIFont.notoSans(size: 12, family: .Regular)
             configuration.textProperties.color = .black
             headerView.contentConfiguration = configuration

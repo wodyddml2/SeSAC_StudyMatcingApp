@@ -8,17 +8,6 @@
 import Foundation
 
 extension String {
-
-//    func validPhone(idx: Int) -> String? {
-//        guard (0..<count).contains(idx) else {
-//            return nil
-//        }
-//        
-//        let result = index(startIndex, offsetBy: idx)
-//        
-//        return String(self[result])
-//        
-//    }
     
     func validMessage(idx: Int) -> String? {
         guard (0..<count).contains(idx) else {
@@ -31,8 +20,8 @@ extension String {
     }
     
     func saveNumber() -> String {
-            let saveText = self.components(separatedBy: [" ","-"]).joined()
-            return saveText
+        let saveText = self.components(separatedBy: [" ","-"]).joined()
+        return saveText
     }
     
     

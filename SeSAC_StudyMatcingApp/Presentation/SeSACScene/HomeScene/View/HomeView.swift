@@ -9,7 +9,7 @@ import UIKit
 
 import MapKit
 
-class HomeView: BaseView {
+final class HomeView: BaseView {
     lazy var mapView: MKMapView = {
         let view = MKMapView()
         view.cameraZoomRange = .init(minCenterCoordinateDistance: 50, maxCenterCoordinateDistance: 3000)
@@ -43,7 +43,7 @@ class HomeView: BaseView {
     
     lazy var stackView: UIStackView = {
         let view = UIStackView(arrangedSubviews: [allButton, manButton, womanButton])
-//        view.makeShadow(radius: 8, offset: CGSize(width: 10, height: 10), opacity: 1)
+        //        view.makeShadow(radius: 8, offset: CGSize(width: 10, height: 10), opacity: 1)
         view.axis = .vertical
         view.alignment = .fill
         view.distribution = .fillEqually

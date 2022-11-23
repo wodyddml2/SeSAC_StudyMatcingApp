@@ -16,7 +16,7 @@ struct SeSACFindSectionModel {
 extension SeSACFindSectionModel: SectionModelType {
     
     typealias Item = SeSACFind
-
+    
     init(original: SeSACFindSectionModel, items: [Item]) {
         self = original
         self.items = items

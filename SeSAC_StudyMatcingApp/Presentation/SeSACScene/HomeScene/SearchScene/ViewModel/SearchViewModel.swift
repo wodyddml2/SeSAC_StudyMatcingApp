@@ -18,7 +18,7 @@ struct StudyTag: Hashable {
     var title: String
 }
 
-class SearchViewModel {
+final class SearchViewModel {
     
     var myStudyArr: [StudyTag] = []
     var recommendArr: [StudyTag] = []
@@ -26,7 +26,7 @@ class SearchViewModel {
     var setAround: [String] = []
     
     var locationValue: CLLocationCoordinate2D?
-   
+    
     let disposeBag = DisposeBag()
     
     func arrCountLimit() -> Bool {
@@ -90,7 +90,7 @@ class SearchViewModel {
             }
         }
     }
-
+    
 }
 
 extension SearchViewModel: ViewModelType {
@@ -116,7 +116,7 @@ extension SearchViewModel: ViewModelType {
                 vc.requestSearchSeSAC(output: output)
             }
             .disposed(by: disposeBag)
- 
+        
         return output
     }
 }

@@ -18,3 +18,8 @@ enum MatchStatus: Int {
     case message = 1
     case search = 201
 }
+
+enum MatchComment {
+    static let alreadyPromised = "누군가와 스터디를 함께하기로 약속하셨어요!"
+    static let togetherMatch = "상대방도 스터디를 요청하여 매칭되었습니다. 잠시 후 채팅방으로 이동합니다"
+}

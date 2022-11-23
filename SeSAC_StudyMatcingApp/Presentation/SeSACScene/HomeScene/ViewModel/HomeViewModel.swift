@@ -17,12 +17,12 @@ enum MapGenderButton {
     case woman
 }
 
-class HomeViewModel {
+final class HomeViewModel {
     let disposeBag = DisposeBag()
     
     var mapCameraMove = PublishRelay<Bool>()
     var matchBind = PublishRelay<Bool>()
-
+    
     
     func requestSearchSeSAC(output: Output, lat: Double, long: Double) {
         SeSACAPIService.shared.requestSeSACAPI(type: SeSACSearchDTO.self, router: Router.searchPost(query: UserManager.idToken, lat: lat, long: long)) { result in
@@ -93,8 +93,6 @@ class HomeViewModel {
 }
 
 extension HomeViewModel: ViewModelType {
-    
-    
     struct Input {
         let match: ControlEvent<Void>
         let currentLocation: ControlEvent<Void>
@@ -121,7 +119,7 @@ extension HomeViewModel: ViewModelType {
             input.man.map({_ in MapGenderButton.man}),
             input.woman.map({_ in MapGenderButton.woman})
         )
-     
+        
         
         return Output(match: input.match, currentLocation: input.currentLocation, mapCameraMove: mapCameraMove, matchBind: matchBind, genderButton: genderButton)
     }

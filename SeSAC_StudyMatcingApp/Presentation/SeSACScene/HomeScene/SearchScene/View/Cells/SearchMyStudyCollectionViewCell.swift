@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SearchMyStudyCollectionViewCell: BaseCollectionViewCell {
+final class SearchMyStudyCollectionViewCell: BaseCollectionViewCell {
     
     let studyLabel: UILabel = {
         let view = UILabel()
@@ -35,7 +35,6 @@ class SearchMyStudyCollectionViewCell: BaseCollectionViewCell {
     }
     
     override func setConstraints() {
-
         studyLabel.snp.makeConstraints { make in
             make.leading.equalTo(16)
             make.centerY.equalToSuperview()

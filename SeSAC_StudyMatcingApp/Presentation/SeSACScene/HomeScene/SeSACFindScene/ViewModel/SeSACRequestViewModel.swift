@@ -13,7 +13,7 @@ import RxSwift
 import RxCocoa
 
 
-class SeSACRequestViewModel {
+final class SeSACRequestViewModel {
     let disposeBag = DisposeBag()
     
     var locationValue: CLLocationCoordinate2D?
@@ -22,7 +22,9 @@ class SeSACRequestViewModel {
     
     var match = PublishSubject<SeSACMatchDTO>()
     var matchError = PublishRelay<Bool>()
-    
+}
+
+extension SeSACRequestViewModel {
     func requsetSearch(output: Output) {
         
         guard let location = locationValue else {return}
@@ -59,7 +61,6 @@ class SeSACRequestViewModel {
             }
         }
     }
-    
     
     func requestFindDelete(completion: @escaping (Int) -> Void) {
         SeSACAPIService.shared.requestStatusSeSACAPI(router: Router.findDelete(query: UserManager.idToken)) { value in
@@ -135,8 +136,8 @@ extension SeSACRequestViewModel: ViewModelType {
     }
     
     func transform(input: Input) -> Output {
-        let output = Output(searchSesac: searchSesac, reload: input.reload, change: input.change, refresh: input.refresh, tableItem: input.tableItem) 
-       
+        let output = Output(searchSesac: searchSesac, reload: input.reload, change: input.change, refresh: input.refresh, tableItem: input.tableItem)
+        
         return output
     }
 }

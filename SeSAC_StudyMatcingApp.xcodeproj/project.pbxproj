@@ -110,6 +110,10 @@
 		63D01EEF29268E88007ADA35 /* SearchOtherStudyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D01EEE29268E88007ADA35 /* SearchOtherStudyCollectionViewCell.swift */; };
 		63D01EF1292697E4007ADA35 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D01EF0292697E4007ADA35 /* HomeViewModel.swift */; };
 		63D01EF32926981F007ADA35 /* SeSACMatchDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D01EF22926981F007ADA35 /* SeSACMatchDTO.swift */; };
+		63DACA63292E2BC800D0CDB6 /* SeSACError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DACA62292E2BC800D0CDB6 /* SeSACError.swift */; };
+		63DACA65292E2D2300D0CDB6 /* StatusCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DACA64292E2D2300D0CDB6 /* StatusCode.swift */; };
+		63DACA67292E2DBA00D0CDB6 /* Penalty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DACA66292E2DBA00D0CDB6 /* Penalty.swift */; };
+		63DACA69292E353000D0CDB6 /* StudyRegistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DACA68292E353000D0CDB6 /* StudyRegistration.swift */; };
 		63E9113B292B728A0048180F /* Tabman in Frameworks */ = {isa = PBXBuildFile; productRef = 63E9113A292B728A0048180F /* Tabman */; };
 		63E9113D292B72F40048180F /* TabManViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E9113C292B72F40048180F /* TabManViewController.swift */; };
 		63E9113F292B73CE0048180F /* SeSACAcceptViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E9113E292B73CE0048180F /* SeSACAcceptViewController.swift */; };
@@ -229,6 +233,10 @@
 		63D01EEE29268E88007ADA35 /* SearchOtherStudyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchOtherStudyCollectionViewCell.swift; sourceTree = "<group>"; };
 		63D01EF0292697E4007ADA35 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		63D01EF22926981F007ADA35 /* SeSACMatchDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACMatchDTO.swift; sourceTree = "<group>"; };
+		63DACA62292E2BC800D0CDB6 /* SeSACError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACError.swift; sourceTree = "<group>"; };
+		63DACA64292E2D2300D0CDB6 /* StatusCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusCode.swift; sourceTree = "<group>"; };
+		63DACA66292E2DBA00D0CDB6 /* Penalty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Penalty.swift; sourceTree = "<group>"; };
+		63DACA68292E353000D0CDB6 /* StudyRegistration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyRegistration.swift; sourceTree = "<group>"; };
 		63E9113C292B72F40048180F /* TabManViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabManViewController.swift; sourceTree = "<group>"; };
 		63E9113E292B73CE0048180F /* SeSACAcceptViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACAcceptViewController.swift; sourceTree = "<group>"; };
 		63E91143292B824A0048180F /* SeSACFindView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACFindView.swift; sourceTree = "<group>"; };
@@ -370,6 +378,7 @@
 		631DC94E29212C8000F23211 /* Protocol */ = {
 			isa = PBXGroup;
 			children = (
+				63467DF92918E7FC00E7D8AE /* ViewModelType.swift */,
 				631DC94F29212CA300F23211 /* ReusableProtocol.swift */,
 			);
 			path = Protocol;
@@ -500,8 +509,6 @@
 			isa = PBXGroup;
 			children = (
 				631DC94729210F3700F23211 /* Cell */,
-				6351B6832919770F00B953BF /* CustomView */,
-				63467DF82918E7F300E7D8AE /* ViewModel */,
 				63467DDC2918D83600E7D8AE /* View */,
 				63467DDB2918D82F00E7D8AE /* ViewController */,
 			);
@@ -520,6 +527,7 @@
 			isa = PBXGroup;
 			children = (
 				63467DDF2918D87F00E7D8AE /* BaseView.swift */,
+				6351B6832919770F00B953BF /* CustomView */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -586,14 +594,6 @@
 				63467DF42918E6E300E7D8AE /* UserDefault.swift */,
 			);
 			path = PropertyWrapper;
-			sourceTree = "<group>";
-		};
-		63467DF82918E7F300E7D8AE /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				63467DF92918E7FC00E7D8AE /* ViewModelType.swift */,
-			);
-			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		63467DFB2918EA4C00E7D8AE /* LoginScene */ = {
@@ -904,13 +904,15 @@
 		638B0744291AA05D00E9D254 /* Constant */ = {
 			isa = PBXGroup;
 			children = (
-				63308F242923A7BF004B90A5 /* SeSACTitle.swift */,
+				63DACA61292E2B7B00D0CDB6 /* API */,
+				635E1625291C2BFC0042E8E4 /* SignupCommet.swift */,
+				638B0745291AA49600E9D254 /* AuthComent.swift */,
 				63F31456291D39F300C31F59 /* Gender.swift */,
 				63004934291EC7020046E6D3 /* TabImage.swift */,
+				63308F242923A7BF004B90A5 /* SeSACTitle.swift */,
 				637EDF39292528A5009089E4 /* Match.swift */,
-				638B0745291AA49600E9D254 /* AuthComent.swift */,
-				635E1625291C2BFC0042E8E4 /* SignupCommet.swift */,
-				635E1611291BF26B0042E8E4 /* SeSACAPI.swift */,
+				63DACA66292E2DBA00D0CDB6 /* Penalty.swift */,
+				63DACA68292E353000D0CDB6 /* StudyRegistration.swift */,
 			);
 			path = Constant;
 			sourceTree = "<group>";
@@ -919,6 +921,7 @@
 			isa = PBXGroup;
 			children = (
 				638B074C291ABB9E00E9D254 /* FirebaseError.swift */,
+				63DACA62292E2BC800D0CDB6 /* SeSACError.swift */,
 			);
 			path = Error;
 			sourceTree = "<group>";
@@ -931,6 +934,15 @@
 				63004922291EAAAC0046E6D3 /* NetworkMonitor */,
 			);
 			path = Network;
+			sourceTree = "<group>";
+		};
+		63DACA61292E2B7B00D0CDB6 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				635E1611291BF26B0042E8E4 /* SeSACAPI.swift */,
+				63DACA64292E2D2300D0CDB6 /* StatusCode.swift */,
+			);
+			path = API;
 			sourceTree = "<group>";
 		};
 		63E91149292BCC9B0048180F /* SeSACRequestScene */ = {
@@ -1152,7 +1164,9 @@
 				63004927291EC1290046E6D3 /* TabViewController.swift in Sources */,
 				6351B6852919772000B953BF /* LoginView.swift in Sources */,
 				63467DB52918D4AE00E7D8AE /* SceneDelegate.swift in Sources */,
+				63DACA65292E2D2300D0CDB6 /* StatusCode.swift in Sources */,
 				63308F252923A7BF004B90A5 /* SeSACTitle.swift in Sources */,
+				63DACA67292E2DBA00D0CDB6 /* Penalty.swift in Sources */,
 				637827B229229FD2009E1424 /* ReviewView.swift in Sources */,
 				6300491D291E4F570046E6D3 /* SplashViewController.swift in Sources */,
 				635E1624291C23CE0042E8E4 /* NicknameViewModel.swift in Sources */,
@@ -1208,6 +1222,8 @@
 				635E1609291BD9D00042E8E4 /* SeSACAPIService.swift in Sources */,
 				63670CCE2928BF3500EAF29D /* SeSACFindImageTableViewCell.swift in Sources */,
 				63467DFA2918E7FC00E7D8AE /* ViewModelType.swift in Sources */,
+				63DACA69292E353000D0CDB6 /* StudyRegistration.swift in Sources */,
+				63DACA63292E2BC800D0CDB6 /* SeSACError.swift in Sources */,
 				637827A829222E30009E1424 /* MyProfileReviewTableViewCell.swift in Sources */,
 				637EDF3F29252FB0009089E4 /* SearchViewController.swift in Sources */,
 				63D01EF1292697E4007ADA35 /* HomeViewModel.swift in Sources */,

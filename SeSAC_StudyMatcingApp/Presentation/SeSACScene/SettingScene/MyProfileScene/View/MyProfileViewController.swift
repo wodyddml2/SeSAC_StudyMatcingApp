@@ -16,8 +16,8 @@ enum ProfileSection: Int {
 }
 
 final class MyProfileViewController: BaseViewController {
-
-    let tableView: UITableView = {
+    
+    private let tableView: UITableView = {
         let view = UITableView()
         view.register(MyProfileTableViewCell.self, forCellReuseIdentifier: MyProfileTableViewCell.reusableIdentifier)
         view.register(MyProfileReviewTableViewCell.self, forCellReuseIdentifier: MyProfileReviewTableViewCell.reusableIdentifier)
@@ -28,7 +28,7 @@ final class MyProfileViewController: BaseViewController {
         return view
     }()
     
-    let saveButton: UIBarButtonItem = {
+    private let saveButton: UIBarButtonItem = {
         let view = UIBarButtonItem(title: "저장", style: .plain, target: MyProfileViewController.self, action: nil)
         
         return view
@@ -38,10 +38,10 @@ final class MyProfileViewController: BaseViewController {
     
     let viewModel = MyProfileViewModel()
     
-    var dataSource: RxTableViewSectionedReloadDataSource<MyProfileSectionModel>?
+    private var dataSource: RxTableViewSectionedReloadDataSource<MyProfileSectionModel>?
     
-    var autoBool: Bool = false
-    var sesacData: SeSACProfile?
+    private var autoBool: Bool = false
+    private var sesacData: SeSACProfile?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,7 +52,7 @@ final class MyProfileViewController: BaseViewController {
         navigationBarCommon(title: "정보 관리")
         navigationItem.rightBarButtonItem = saveButton
         tabBarController?.tabBar.isHidden = true
-       
+        
         bindViewModel()
     }
     
@@ -88,20 +88,20 @@ final class MyProfileViewController: BaseViewController {
                 cell.genderView.womanButton.rx.tap
                     .withUnretained(self)
                     .bind { vc, _ in
-                    cell.genderView.womanButton.selectedStyle()
-                    cell.genderView.manButton.normalStyle(width: 1)
-                    vc.sesacData?.gender = cell.genderView.womanButton.tag
-                }
-                .disposed(by: self.disposeBag)
+                        cell.genderView.womanButton.selectedStyle()
+                        cell.genderView.manButton.normalStyle(width: 1)
+                        vc.sesacData?.gender = cell.genderView.womanButton.tag
+                    }
+                    .disposed(by: self.disposeBag)
                 
                 cell.genderView.manButton.rx.tap
                     .withUnretained(self)
                     .bind { vc, _ in
-                    cell.genderView.womanButton.normalStyle(width: 1)
-                    cell.genderView.manButton.selectedStyle()
-                    vc.sesacData?.gender = cell.genderView.manButton.tag
-                }
-                .disposed(by: self.disposeBag)
+                        cell.genderView.womanButton.normalStyle(width: 1)
+                        cell.genderView.manButton.selectedStyle()
+                        vc.sesacData?.gender = cell.genderView.manButton.tag
+                    }
+                    .disposed(by: self.disposeBag)
                 
                 cell.studyView.studyTextField.rx.text
                     .orEmpty
@@ -142,7 +142,7 @@ final class MyProfileViewController: BaseViewController {
             }
         })
         
-       
+        
         
         let sections = [
             MyProfileSectionModel(items: [SeSACProfile(
@@ -160,7 +160,7 @@ final class MyProfileViewController: BaseViewController {
                 ageMin: sesacInfo.ageMin,
                 ageMax: sesacInfo.ageMax)])
         ]
-    
+        
         let data = Observable<[MyProfileSectionModel]>.just(sections)
         
         data
@@ -190,7 +190,7 @@ final class MyProfileViewController: BaseViewController {
 }
 
 extension MyProfileViewController: UITableViewDelegate {
-
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch ProfileSection(rawValue: indexPath.section) {
         case .image:
@@ -209,7 +209,7 @@ extension MyProfileViewController {
     private func bindViewModel() {
         let input = MyProfileViewModel.Input(viewDidLoadEvent: Observable.just(()), save: saveButton.rx.tap)
         let output = viewModel.transform(input: input)
-      
+        
         output.networkFailed
             .asDriver(onErrorJustReturn: false)
             .drive (onNext: { [weak self] error in
@@ -229,7 +229,6 @@ extension MyProfileViewController {
             .disposed(by: disposeBag)
     }
     
-    
     func bindSave(output: MyProfileViewModel.Output) {
         output.save
             .withUnretained(self)
@@ -248,9 +247,6 @@ extension MyProfileViewController {
             }
             .disposed(by: disposeBag)
     }
-    
- 
-    
 }
 
 

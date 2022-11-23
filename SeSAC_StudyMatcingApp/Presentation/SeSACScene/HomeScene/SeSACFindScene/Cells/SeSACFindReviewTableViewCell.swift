@@ -7,8 +7,8 @@
 
 import UIKit
 
-class SeSACFindReviewTableViewCell: MyProfileReviewTableViewCell {
-
+final class SeSACFindReviewTableViewCell: MyProfileReviewTableViewCell {
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         reviewView.sesacStudyTitleLabel.text = "하고 싶은 스터디"
@@ -29,7 +29,7 @@ class SeSACFindReviewTableViewCell: MyProfileReviewTableViewCell {
             make.top.equalTo(reviewView.reviewStackView.snp.bottom).offset(24)
             make.leading.equalToSuperview()
         }
-
+        
         reviewView.sesacStudyLabel.snp.remakeConstraints { make in
             make.top.equalTo(reviewView.sesacStudyTitleLabel.snp.bottom).offset(16)
             make.leading.equalToSuperview()
@@ -37,7 +37,7 @@ class SeSACFindReviewTableViewCell: MyProfileReviewTableViewCell {
             make.bottom.lessThanOrEqualToSuperview()
         }
     }
-
+    
     func reviewText(text: String, color: UIColor = .black, bool: Bool = true) {
         reviewView.sesacReviewLabel.text = text
         reviewView.sesacReviewLabel.textColor = color
@@ -53,10 +53,7 @@ class SeSACFindReviewTableViewCell: MyProfileReviewTableViewCell {
         } else {
             reviewText(text: item.comment.last!, bool: false)
         }
-        
         configureReputation(reputation: item.sesacTitle)
-        
-       
     }
     
     func wishStudyLabel(item: SeSACFind) -> String {

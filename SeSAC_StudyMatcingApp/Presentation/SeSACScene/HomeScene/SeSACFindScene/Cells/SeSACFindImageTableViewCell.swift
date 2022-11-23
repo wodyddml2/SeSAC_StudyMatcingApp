@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SeSACFindImageTableViewCell: MyProfileImageTableViewCell {
+final class SeSACFindImageTableViewCell: MyProfileImageTableViewCell {
     
     let multiButton: CommonButton = {
         let view = CommonButton()
@@ -15,12 +15,11 @@ class SeSACFindImageTableViewCell: MyProfileImageTableViewCell {
         view.setTitle("요청하기", for: .normal)
         return view
     }()
-
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
 
-    
     override func configureUI() {
         super.configureUI()
         contentView.addSubview(multiButton)

@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 import FirebaseAuth
 
-class PopupViewController: BaseViewController {
+final class PopupViewController: BaseViewController {
     
     let mainView = PopupView()
     let disposeBag = DisposeBag()
@@ -26,9 +26,7 @@ class PopupViewController: BaseViewController {
         super.viewDidLoad()
         
         view.layer.backgroundColor = UIColor.black.cgColor.copy(alpha: 0.5)
-        
         popupCustom()
-        
         bindTo()
     }
     
@@ -52,7 +50,7 @@ class PopupViewController: BaseViewController {
         }
     }
     
-    func popupCustom() {
+    private func popupCustom() {
         if request {
             mainView.titleText(
                 title: "스터디를 요청할게요!",
@@ -66,14 +64,13 @@ class PopupViewController: BaseViewController {
             mainView.titleText(title: "스터디를 수락할까요?", subTitle: "요청을 수락하면 채팅창에서 대화를 나눌 수 있어요")
         }
         
-        
         mainView.subTitleLabel.textColor = .gray7
         mainView.cancelButton.backgroundColor = .gray2
         mainView.cancelButton.layer.borderWidth = 0
         
     }
     
-    func bindTo() {
+    private func bindTo() {
         mainView.cancelButton.rx.tap
             .withUnretained(self)
             .bind { vc, _ in
@@ -93,13 +90,23 @@ class PopupViewController: BaseViewController {
             .disposed(by: disposeBag)
     }
     
-    func requestPost() {
+    func dismissToast(message: String) {
+        self.dismiss(animated: false) {
+            guard let vc = (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.window?.rootViewController?.topViewController else { return }
+            vc.view.makeToast(message)
+        }
+    }
+}
+
+extension PopupViewController {
+    private func requestPost() {
         guard let uid = uid else {return}
         SeSACAPIService.shared.requestStatusSeSACAPI(router: Router.requestPost(query: UserManager.idToken, uid: uid)) { [weak self] value in
             guard let self = self else {return}
             
             switch StatusCode(rawValue: value) {
             case .success:
+                print(uid)
                 self.dismissToast(message: "스터디 요청을 보냈습니다")
             case .declarationOrMatch:
                 self.acceptPost()
@@ -113,7 +120,7 @@ class PopupViewController: BaseViewController {
         }
     }
     
-    func renewalRequest() {
+    private func renewalRequest() {
         let currentUser = Auth.auth().currentUser
         currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
             if error != nil {
@@ -126,15 +133,31 @@ class PopupViewController: BaseViewController {
             }
         }
     }
-    
-    
-    func acceptPost() {
+}
+
+extension PopupViewController {
+    private func acceptPost() {
         guard let uid = uid else {return}
         SeSACAPIService.shared.requestStatusSeSACAPI(router: Router.acceptPost(query: UserManager.idToken, uid: uid)) { [weak self] value in
             guard let self = self else {return}
             switch StatusCode(rawValue: value) {
             case .success:
-                self.dismiss(animated: false)
+                NotificationCenter.default.post(name: NSNotification.Name("dispose"), object: self)
+                self.dismiss(animated: false) { [weak self] in
+                    guard let self = self else {return}
+                    if self.request {
+                        guard let vc = (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.window?.rootViewController?.topViewController else { return }
+                        vc.view.makeToast(MatchComment.togetherMatch, duration: 1) { _ in
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                vc.transition(ChattingViewController(), transitionStyle: .push)
+                            }
+                        }
+                    } else {
+                        guard let vc = (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.window?.rootViewController?.topViewController else { return }
+                        vc.transition(ChattingViewController(), transitionStyle: .push)
+                    }
+                    
+                }
                 // 사용자 현재 상태를 매칭 상태로 변경하고, 팝업 화면을 dismiss 한 뒤, 채팅 화면(1_5_chatting)으로 화면을 전환합니다.
             case .declarationOrMatch:
                 self.dismissToast(message: "상대방이 이미 다른 새싹과 스터디를 함께 하는 중입니다")
@@ -151,7 +174,7 @@ class PopupViewController: BaseViewController {
         }
     }
     
-    func renewalAccpet() {
+    private func renewalAccpet() {
         let currentUser = Auth.auth().currentUser
         currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
             if error != nil {
@@ -162,13 +185,6 @@ class PopupViewController: BaseViewController {
                 
                 self.acceptPost()
             }
-        }
-    }
-    
-    func dismissToast(message: String) {
-        self.dismiss(animated: false) {
-            guard let vc = (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.window?.rootViewController?.topViewController else { return }
-            vc.view.makeToast(message)
         }
     }
 }

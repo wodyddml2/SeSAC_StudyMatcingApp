@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SettingTableViewCell: BaseTableViewCell {
+final class SettingTableViewCell: BaseTableViewCell {
     
     let iconImage: UIImageView = {
         let view = UIImageView()

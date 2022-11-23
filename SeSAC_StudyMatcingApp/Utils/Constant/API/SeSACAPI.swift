@@ -19,7 +19,6 @@ enum SeSACAPI {
     static let accept = "/queue/studyaccept"
 }
 
-// 알아보기
 enum SeSACLoginHeader {
     static let contentType = "application/x-www-form-urlencoded"
     static let accept = "application/json"

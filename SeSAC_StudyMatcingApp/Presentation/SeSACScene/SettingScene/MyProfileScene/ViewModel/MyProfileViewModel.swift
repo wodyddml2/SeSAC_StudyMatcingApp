@@ -11,7 +11,7 @@ import FirebaseAuth
 import RxSwift
 import RxCocoa
 
-class MyProfileViewModel {
+final class MyProfileViewModel {
 
     let disposeBag = DisposeBag()
     

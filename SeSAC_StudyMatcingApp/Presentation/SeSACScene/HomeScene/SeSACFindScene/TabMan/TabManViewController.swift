@@ -16,7 +16,7 @@ enum SeSACFindRow: Int {
     case image, review
 }
 
-class TabManSeSACViewController: TabmanViewController {
+final class TabManSeSACViewController: TabmanViewController {
     
     private let tabView: UIView = {
         let view = UIView()
@@ -43,19 +43,28 @@ class TabManSeSACViewController: TabmanViewController {
         navigationBarStyle()
         
         bindViewModel()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(timerDispose), name: NSNotification.Name("dispose"), object: nil)
+    }
+    
+    @objc func timerDispose() {
+        timerDisposable?.dispose()
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name("dispose"), object: nil)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        bindTimerMatch()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        timerDisposable?.dispose()
     }
     
     private func navigationBarStyle() {
-        navigationController?.navigationBar.isHidden = false
-        tabBarController?.tabBar.isHidden = true
-        
-        navigationItem.title = "새싹 찾기"
-        navigationItem.backButtonTitle = ""
-        navigationController?.navigationBar.tintColor = .black
-    
-        let navigationAppearance = UINavigationBarAppearance()
-        navigationController?.navigationBar.scrollEdgeAppearance = navigationAppearance
-        navigationController?.navigationBar.standardAppearance = navigationAppearance
+        tabBarAndNaviHidden(hidden: true)
+        navigationBarCommon(title: "새싹 찾기")
         
         navigationItem.hidesBackButton = true
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "arrow"), style: .plain, target: self, action: #selector(backbuttonTapped))
@@ -63,33 +72,24 @@ class TabManSeSACViewController: TabmanViewController {
     }
     
     @objc func backbuttonTapped() {
-        let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
-
-        for viewController in viewControllers {
-            if let rootVC = viewController as? HomeViewController {
-                navigationController?.popToViewController(rootVC, animated: true)
-            }
-        }
+        navigationPopToViewController(HomeViewController())
     }
     
     @objc func cancelButtonTapped() {
         requestDelete()
     }
 
-    func requestDelete() {
+    private func requestDelete() {
         viewModel.requestFindDelete {  [weak self] value in
             guard let self = self else {return}
             switch StatusCode(rawValue: value) {
             case .success:
-                let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
-
-                for viewController in viewControllers {
-                    if let rootVC = viewController as? HomeViewController {
-                        self.navigationController?.popToViewController(rootVC, animated: true)
-                    }
-                }
+                self.navigationPopToViewController(HomeViewController())
             case .declarationOrMatch:
-                print("매칭 상태임")
+                self.view.makeToast(MatchComment.alreadyPromised, duration: 1) { _ in
+                    self.timerDisposable?.dispose()
+                    self.bindTimerMatch()
+                }
             case .firebaseError:
                 self.renewalDelete()
             default:
@@ -98,18 +98,24 @@ class TabManSeSACViewController: TabmanViewController {
         }
     }
     
-    func renewalDelete() {
+    private func renewalDelete() {
         viewModel.renewalFindDeleteRequest { [weak self] in
             guard let self = self else {return}
             self.requestDelete()
         }
     }
     
-    func bindViewModel() {
+    private func bindViewModel() {
         viewModel.match
-            .bind (onNext: { result in
+            .withUnretained(self)
+            .bind (onNext: { vc, result in
+                print(result)
                 if result.matched == 1 {
-                    print("매칭됨")
+                    vc.view.makeToast("\(result.matchedNick ?? "")님과 매칭되셨습니다. 잠시 후 채팅방으로 이동합니다.", duration: 1) { _ in
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                            vc.transition(ChattingViewController(), transitionStyle: .push)
+                        }
+                    }
                 }
             })
             .disposed(by: disposeBag)
@@ -122,7 +128,9 @@ class TabManSeSACViewController: TabmanViewController {
                 }
             }
             .disposed(by: disposeBag)
-        
+    }
+    
+    private func bindTimerMatch() {
         timerDisposable = Observable<Int>.timer(.milliseconds(0), period: .seconds(5), scheduler: MainScheduler.instance)
             .withUnretained(self)
             .subscribe(onNext: { vc, _ in
@@ -155,7 +163,7 @@ class TabManSeSACViewController: TabmanViewController {
         addBar(bar, dataSource: self, at: .custom(view: tabView, layout: nil))
     }
     
-    func configureUI() {
+    private func configureUI() {
         view.addSubview(tabView)
         
         tabView.snp.makeConstraints { make in

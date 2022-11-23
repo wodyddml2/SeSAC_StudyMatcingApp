@@ -19,7 +19,7 @@ final class HomeViewController: BaseViewController {
     let viewModel = HomeViewModel()
     
     let disposeBag = DisposeBag()
-    var sesacUsers: [SeSACUser] = []
+    private var sesacUsers: [SeSACUser] = []
     
     override func loadView() {
         view = mainView
@@ -37,8 +37,7 @@ final class HomeViewController: BaseViewController {
         super.viewWillAppear(true)
         viewModel.mapCameraMove.accept(true)
         viewModel.matchBind.accept(true)
-        navigationController?.navigationBar.isHidden = true
-        tabBarController?.tabBar.isHidden = false
+        tabBarAndNaviHidden(hidden: false)
     }
 }
 
@@ -114,7 +113,6 @@ extension HomeViewController {
         output.searchInfo
             .withUnretained(self)
             .subscribe (onNext: { vc, result in
-                print(result)
                 result.fromQueueDB.forEach {vc.sesacUsers.append(SeSACUser(lat: $0.lat, long: $0.long, sesac: $0.sesac, gender: $0.gender))}
                 result.fromQueueDBRequested.forEach {vc.sesacUsers.append(SeSACUser(lat: $0.lat, long: $0.long, sesac: $0.sesac, gender: $0.gender))}
                 let location = self.mainView.mapView.centerCoordinate
@@ -125,6 +123,7 @@ extension HomeViewController {
         output.matchInfo
             .withUnretained(self)
             .subscribe (onNext: {vc, result in
+                print(result)
                 if result.matched == 0 {
                     vc.mainView.matchButtonSet(UIImage(named: MatchImage.antenna)!, MatchStatus.antenna.rawValue)
                 } else {
@@ -197,14 +196,17 @@ extension HomeViewController {
                         vc.transition(viewController, transitionStyle: .push)
                         viewController.viewModel.locationValue = location
                     case .antenna:
-                        let viewController = TabManSeSACViewController()
-                        vc.transition(viewController, transitionStyle: .push)
-                        viewController.firstVC.viewModel.locationValue = location
-                        viewController.secondVC.viewModel.locationValue = location
+                        let search = SearchViewController()
+                        let tab = TabManSeSACViewController()
+                        vc.transition(search, transitionStyle: .noAnimatedPush)
+                        search.transition(tab, transitionStyle: .noAnimatedPush)
+                        search.viewModel.locationValue = location
+                        tab.firstVC.viewModel.locationValue = location
+                        tab.secondVC.viewModel.locationValue = location
                     case .message:
-                        print("아직")
+                        vc.transition(ChattingViewController(), transitionStyle: .push)
                     default:
-                        print("아직")
+                        break
                     }
                     
                 }

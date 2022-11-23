@@ -10,18 +10,18 @@ import UIKit
 import RxSwift
 import RxDataSources
 
-class SeSACRequestViewController: BaseViewController {
+final class SeSACRequestViewController: BaseViewController {
     
     let mainView = SeSACFindView()
     
     let viewModel = SeSACRequestViewModel()
     let disposeBag = DisposeBag()
     
-    var dataSources: RxTableViewSectionedReloadDataSource<SeSACFindSectionModel>?
-
-    var heightChange: [Bool] = []
-    var info: [FromQueueDB] = []
-
+    private var dataSources: RxTableViewSectionedReloadDataSource<SeSACFindSectionModel>?
+    
+    private var heightChange: [Bool] = []
+    private var info: [FromQueueDB] = []
+    
     override func loadView() {
         view = mainView
     }
@@ -29,32 +29,23 @@ class SeSACRequestViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         bindViewModel()
-       
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        
         viewModel.searchSesac.accept(true)
     }
-
-    func setTableView(sesacInfo: SeSACSearchDTO) {
+    
+    private func setTableView(sesacInfo: SeSACSearchDTO) {
         dataSources = RxTableViewSectionedReloadDataSource<SeSACFindSectionModel>(configureCell: { dataSource, tableView, indexPath, item in
             switch SeSACFindRow(rawValue: indexPath.row) {
             case .image:
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: SeSACFindImageTableViewCell.reusableIdentifier, for: indexPath) as? SeSACFindImageTableViewCell else {return UITableViewCell()}
                 cell.sesacBackgroundImageView.image = UIImage.sesacBackgroundImage(num: item.backgroundImage)
                 cell.sesacImageView.image = UIImage.sesacImage(num: item.image)
-                
-                cell.multiButton.rx.tap
-                    .withUnretained(self)
-                    .bind { vc, _ in
-                        let viewController = PopupViewController()
-                        print(item.uid)
-                        viewController.uid = item.uid
-                        vc.transition(viewController, transitionStyle: .presentOverFull)
-                    }
-                    .disposed(by: self.disposeBag)
+              
+                cell.multiButton.tag = indexPath.section
+                cell.multiButton.addTarget(self, action: #selector(self.requestButtonTapped), for: .touchUpInside)
                 return cell
             case .review:
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: SeSACFindReviewTableViewCell.reusableIdentifier, for: indexPath) as? SeSACFindReviewTableViewCell else {return UITableViewCell()}
@@ -72,7 +63,12 @@ class SeSACRequestViewController: BaseViewController {
         var sections: [SeSACFindSectionModel] = []
         
         for i in sesacInfo.fromQueueDB {
-            sections.append(SeSACFindSectionModel(items: [SeSACFind(uid: i.uid, backgroundImage: i.background, image: i.sesac), SeSACFind(nickname: i.nick, sesacTitle: i.reputation, comment: i.reviews, studyList: i.studylist)]))
+            sections.append(
+                SeSACFindSectionModel(items: [
+                    SeSACFind(uid: i.uid, backgroundImage: i.background, image: i.sesac),
+                    SeSACFind(nickname: i.nick, sesacTitle: i.reputation, comment: i.reviews, studyList: i.studylist)
+                ])
+            )
         }
         
         let data = Observable<[SeSACFindSectionModel]>.just(sections)
@@ -83,7 +79,7 @@ class SeSACRequestViewController: BaseViewController {
         
         mainView.tableView.rx.setDelegate(self)
             .disposed(by: disposeBag)
-         
+        
         sections.isEmpty ? noSeSACHidden(bool: false) : noSeSACHidden(bool: true)
         heightChange = Array(repeating: false, count: sections.count)
     }
@@ -94,7 +90,13 @@ class SeSACRequestViewController: BaseViewController {
         transition(vc, transitionStyle: .push)
     }
     
-    func noSeSACHidden(bool: Bool) {
+    @objc func requestButtonTapped(_ sender: UIButton) {
+        let vc = PopupViewController()
+        vc.uid = info[sender.tag].uid
+        transition(vc, transitionStyle: .presentOverFull)
+    }
+    
+    private func noSeSACHidden(bool: Bool) {
         mainView.sesacImageView.isHidden = bool
         mainView.titleLabel.isHidden = bool
         mainView.subTitleLabel.isHidden = bool
@@ -105,7 +107,7 @@ class SeSACRequestViewController: BaseViewController {
 }
 
 extension SeSACRequestViewController: UITableViewDelegate {
-
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch SeSACFindRow(rawValue: indexPath.row) {
         case .image:
@@ -131,8 +133,8 @@ extension SeSACRequestViewController {
         output.sesacInfo
             .withUnretained(self)
             .subscribe (onNext: { vc, sesacInfo in
-                vc.info = sesacInfo.fromQueueDB
                 print(sesacInfo)
+                vc.info = sesacInfo.fromQueueDB
                 vc.setTableView(sesacInfo: sesacInfo)
             })
             .disposed(by: disposeBag)
@@ -146,23 +148,24 @@ extension SeSACRequestViewController {
                 }
             }).disposed(by: disposeBag)
         
-        output.reload
+        output.tableItem
             .withUnretained(self)
-            .bind { vc, _ in
-                vc.mainView.tableView.dataSource = nil
-                vc.mainView.tableView.delegate = nil
-                
-                vc.viewModel.requsetSearch(output: output)
+            .subscribe { vc, index in
+                guard let cell =  vc.mainView.tableView.cellForRow(at: index) as? SeSACFindReviewTableViewCell else {return}
+                if index.section == cell.tag {
+                    if index.row == 1 {
+                        vc.heightChange[cell.tag].toggle()
+                        vc.mainView.tableView.reloadRows(at: [IndexPath(row: index.row, section: index.section)], with: .fade)
+                    }
+                }
             }
             .disposed(by: disposeBag)
         
-        output.change
-            .withUnretained(self)
-            .subscribe { vc, _ in
-                vc.requestDelete(SearchViewController())
-            }
-            .disposed(by: disposeBag)
-        
+        bindEmptyScreen(output: output)
+        bindSearchRequest(output: output)
+    }
+    
+    private func bindSearchRequest(output: SeSACRequestViewModel.Output) {
         output.searchSesac
             .asDriver(onErrorJustReturn: false)
             .drive (onNext: { [weak self] bool in
@@ -186,36 +189,36 @@ extension SeSACRequestViewController {
                 }
             }
             .disposed(by: disposeBag)
-
-        output.tableItem
+    }
+    
+    private func bindEmptyScreen(output: SeSACRequestViewModel.Output) {
+        output.reload
+            .throttle(.seconds(5), scheduler: MainScheduler.asyncInstance)
             .withUnretained(self)
-            .subscribe { vc, index in
-                guard let cell =  vc.mainView.tableView.cellForRow(at: index) as? SeSACFindReviewTableViewCell else {return}
-               
-                if index.section == cell.tag {
-                    if index.row == 1 {
-                        vc.heightChange[cell.tag].toggle()
-                        vc.mainView.tableView.reloadRows(at: [IndexPath(row: index.row, section: index.section)], with: .fade)
-                    }
-                }
+            .bind { vc, _ in
+                vc.mainView.tableView.dataSource = nil
+                vc.mainView.tableView.delegate = nil
                 
+                vc.viewModel.requsetSearch(output: output)
+            }
+            .disposed(by: disposeBag)
+        
+        output.change
+            .withUnretained(self)
+            .subscribe { vc, _ in
+                vc.requestDelete(SearchViewController())
             }
             .disposed(by: disposeBag)
     }
+}
 
-    
-    func requestDelete<T: UIViewController>(_ vc: T) {
+extension SeSACRequestViewController {
+    private func requestDelete<T: UIViewController>(_ vc: T) {
         viewModel.requestFindDelete {  [weak self] value in
             guard let self = self else {return}
             switch StatusCode(rawValue: value) {
             case .success:
-                let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
-
-                for viewController in viewControllers {
-                    if let rootVC = viewController as? T {
-                        self.navigationController?.popToViewController(rootVC, animated: true)
-                    }
-                }
+                self.navigationPopToViewController(T())
             case .declarationOrMatch:
                 print("매칭 상태임")
             case .firebaseError:
@@ -226,7 +229,7 @@ extension SeSACRequestViewController {
         }
     }
     
-    func renewalDelete<T: UIViewController>(_ vc: T) {
+    private func renewalDelete<T: UIViewController>(_ vc: T) {
         viewModel.renewalFindDeleteRequest { [weak self] in
             guard let self = self else {return}
             self.requestDelete(T())

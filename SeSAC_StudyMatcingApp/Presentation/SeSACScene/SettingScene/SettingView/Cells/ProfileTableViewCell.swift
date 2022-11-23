@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ProfileTableViewCell: BaseTableViewCell {
+final class ProfileTableViewCell: BaseTableViewCell {
     
     let profileImage: UIImageView = {
         let view = UIImageView(frame: CGRect(x: 0, y: 0, width: 48, height: 48))

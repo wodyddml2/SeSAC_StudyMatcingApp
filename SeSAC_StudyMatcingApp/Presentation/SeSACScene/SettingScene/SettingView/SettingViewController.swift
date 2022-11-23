@@ -28,8 +28,8 @@ enum SettingText {
 }
 
 final class SettingViewController: BaseViewController {
-
-    let tableView: UITableView = {
+    
+    private let tableView: UITableView = {
         let view = UITableView()
         view.register(ProfileTableViewCell.self, forCellReuseIdentifier: ProfileTableViewCell.reusableIdentifier)
         view.register(SettingTableViewCell.self, forCellReuseIdentifier: SettingTableViewCell.reusableIdentifier)
@@ -38,7 +38,7 @@ final class SettingViewController: BaseViewController {
     
     let disposeBag = DisposeBag()
     
-    var dataSource: RxTableViewSectionedReloadDataSource<SettingSectionModel>?
+    private var dataSource: RxTableViewSectionedReloadDataSource<SettingSectionModel>?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,8 +67,8 @@ final class SettingViewController: BaseViewController {
             SettingModel(leftImage: .commonImage(name: SettingImage.qna), title: SettingText.qna),
             SettingModel(leftImage: .commonImage(name: SettingImage.alarm), title: SettingText.alarm),
             SettingModel(leftImage: .commonImage(name: SettingImage.permit), title: SettingText.permit)
-            ])
-    
+        ])
+        
         let data = Observable<[SettingSectionModel]>.just([sections])
         
         data
@@ -101,13 +101,9 @@ final class SettingViewController: BaseViewController {
         }
         
     }
-    
-    
-
 }
 
 extension SettingViewController: UITableViewDelegate {
-
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return indexPath.row == 0 ? 96 : 74
     }

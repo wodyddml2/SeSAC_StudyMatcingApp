@@ -54,7 +54,7 @@ class SplashViewController: BaseViewController {
                     UserManager.sesacImage = success.sesac
                     let vc = TabViewController()
                     sceneDelegate?.window?.rootViewController = vc
-                    
+                    print(UserManager.idToken)
                 case .failure(let fail):
                     let error = fail as! SeSACError
                     switch error {

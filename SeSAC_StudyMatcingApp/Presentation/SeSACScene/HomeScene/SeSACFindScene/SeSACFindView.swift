@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SeSACFindView: BaseView {
+final class SeSACFindView: BaseView {
     let tableView: UITableView = {
         let view = UITableView()
         view.register(SeSACFindImageTableViewCell.self, forCellReuseIdentifier: SeSACFindImageTableViewCell.reusableIdentifier)
@@ -106,8 +106,7 @@ class SeSACFindView: BaseView {
             make.leading.equalToSuperview().inset(16)
             make.trailing.equalTo(reloadButton.snp.leading).offset(-8)
         }
-        
-        
+
         reloadButton.snp.makeConstraints { make in
             make.height.width.equalTo(changeButton.snp.height)
             make.centerY.equalTo(changeButton.snp.centerY)
