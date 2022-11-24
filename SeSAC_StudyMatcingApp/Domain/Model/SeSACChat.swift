@@ -9,4 +9,8 @@ import Foundation
 
 struct SeSACChat {
     var message: String
+    
+    init(message: String = "") {
+        self.message = message
+    }
 }

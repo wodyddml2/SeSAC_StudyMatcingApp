@@ -22,6 +22,7 @@ class ChattingView: BaseView {
         let view = UITableView()
         view.register(MyChatTableViewCell.self, forCellReuseIdentifier: MyChatTableViewCell.reusableIdentifier)
         view.register(YourChatTableViewCell.self, forCellReuseIdentifier: YourChatTableViewCell.reusableIdentifier)
+        view.register(ChattingDateTableViewCell.self, forCellReuseIdentifier: ChattingDateTableViewCell.reusableIdentifier)
         view.separatorStyle = .none
         view.showsVerticalScrollIndicator = false
         return view
@@ -49,14 +50,70 @@ class ChattingView: BaseView {
         return view
     }()
     
+    let menuView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        return view
+    }()
+    
+    let blurView: UIButton = {
+        let view = UIButton()
+        view.layer.backgroundColor = UIColor.black.cgColor.copy(alpha: 0.5)
+        return view
+    }()
+    
+    lazy var declarationButton: UIButton = {
+        let view = UIButton()
+        view.configuration = buttonCofigure(image: ChatMenuImage.siren.image, title: "새싹 신고")
+        view.tintColor = .black
+        return view
+    }()
+    
+    lazy var cancelButton: UIButton = {
+        let view = UIButton()
+        view.configuration = buttonCofigure(image: ChatMenuImage.cancel.image, title: "스터디 취소")
+        view.tintColor = .black
+        return view
+    }()
+    
+    lazy var writeButton: UIButton = {
+        let view = UIButton()
+        view.configuration = buttonCofigure(image: ChatMenuImage.write.image, title: "리뷰 등록")
+        view.tintColor = .black
+        return view
+    }()
+    
+    lazy var stackView: UIStackView = {
+        let view = UIStackView(arrangedSubviews: [declarationButton, cancelButton, writeButton])
+        view.alignment = .fill
+        view.distribution = .fillEqually
+        view.axis = .horizontal
+        view.isHidden = true
+        return view
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
     
+    func buttonCofigure(image: UIImage?, title: String) -> UIButton.Configuration  {
+        var config = UIButton.Configuration.plain()
+        config.image = image
+        config.imagePlacement = .top
+        config.imagePadding = 4
+        var titleAttr = AttributedString.init(title)
+        titleAttr.font = .notoSans(size: 14, family: .Medium)
+        config.attributedTitle = titleAttr
+        return config
+    }
+    
     override func configureUI() {
-        [tableView, messageView, messageTextView, sendButton].forEach {
+        [tableView, messageView, messageTextView, sendButton, blurView].forEach {
             self.addSubview($0)
         }
+        
+        blurView.addSubview(menuView)
+        menuView.addSubview(stackView)
     }
     
     override func setConstraints() {
@@ -83,8 +140,23 @@ class ChattingView: BaseView {
             make.trailing.equalTo(messageView.snp.trailing).inset(12)
             make.height.width.equalTo(24)
         }
+        
+        blurView.snp.makeConstraints { make in
+            make.top.leading.trailing.equalTo(self.safeAreaLayoutGuide)
+            make.height.equalTo(0)
+        }
+        menuView.snp.makeConstraints { make in
+            make.top.leading.trailing.equalTo(blurView)
+            make.height.equalTo(0)
+        }
+        
+        stackView.snp.makeConstraints { make in
+            make.edges.equalTo(menuView)
+        }
     }
-    
+}
+
+extension ChattingView {
     func bindKeyboard() {
         let window = UIApplication.shared.connectedScenes
             .filter({$0.activationState == .foregroundActive})
@@ -156,6 +228,44 @@ class ChattingView: BaseView {
 
                 vc.messageTextView.isScrollEnabled = isOverHeight
                 vc.setNeedsUpdateConstraints()
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    func bindMenuBar() {
+        editButton.rx.tap
+            .withUnretained(self)
+            .bind { vc, _ in
+                vc.menuView.snp.remakeConstraints { make in
+                    make.top.leading.trailing.equalTo(vc.blurView)
+                    make.height.equalTo(72)
+                }
+                UIView.animate(withDuration: 0.3) {
+                    vc.layoutIfNeeded()
+
+                    vc.blurView.snp.remakeConstraints { make in
+                        make.top.leading.trailing.equalTo(vc.safeAreaLayoutGuide)
+                        make.bottom.equalToSuperview()
+                    }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                        vc.stackView.isHidden = false
+                    }
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        blurView.rx.tap
+            .withUnretained(self)
+            .bind { vc, _ in
+                vc.stackView.isHidden = true
+                vc.menuView.snp.remakeConstraints { make in
+                    make.top.leading.trailing.equalTo(vc.blurView)
+                    make.height.equalTo(0)
+                }
+                vc.blurView.snp.remakeConstraints { make in
+                    make.top.leading.trailing.equalTo(vc.safeAreaLayoutGuide)
+                    make.height.equalTo(0)
+                }
             }
             .disposed(by: disposeBag)
     }

@@ -15,8 +15,7 @@ final class ChattingViewController: BaseViewController {
     let mainView = ChattingView()
     let viewModel = ChattingViewModel()
     let disposeBag = DisposeBag()
-    
-    
+  
     private var dataSources: RxTableViewSectionedReloadDataSource<ChattingSectionModel>?
     
     override func loadView() {
@@ -42,11 +41,17 @@ final class ChattingViewController: BaseViewController {
     
     private func setTableView() {
         dataSources = RxTableViewSectionedReloadDataSource<ChattingSectionModel>(configureCell: { dataSource, tableView, indexPath, item in
-            guard let myCell = tableView.dequeueReusableCell(withIdentifier: MyChatTableViewCell.reusableIdentifier, for: indexPath) as? MyChatTableViewCell else {return UITableViewCell()}
-            myCell.chatLabel.text = item.message
-            return myCell
+            if indexPath.row == 0 {
+                guard let dateCell = tableView.dequeueReusableCell(withIdentifier: ChattingDateTableViewCell.reusableIdentifier, for: indexPath) as? ChattingDateTableViewCell else {return UITableViewCell()}
+                
+                return dateCell
+            } else {
+                guard let myCell = tableView.dequeueReusableCell(withIdentifier: MyChatTableViewCell.reusableIdentifier, for: indexPath) as? MyChatTableViewCell else {return UITableViewCell()}
+                myCell.chatLabel.text = item.message
+                return myCell
+            }
         })
-        let sections: [ChattingSectionModel] = [ChattingSectionModel(items: [SeSACChat(message: "새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집")])]
+        let sections: [ChattingSectionModel] = [ChattingSectionModel(items: [SeSACChat(), SeSACChat(message: "새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집")])]
  
         let data = Observable<[ChattingSectionModel]>.just(sections)
         
@@ -57,7 +62,9 @@ final class ChattingViewController: BaseViewController {
         mainView.tableView.rx.setDelegate(self)
             .disposed(by: disposeBag)
     }
-    
+}
+
+extension ChattingViewController {
     private func bindViewModel() {
         
         let input = ChattingViewModel.Input(
@@ -92,9 +99,20 @@ final class ChattingViewController: BaseViewController {
         
         mainView.bindKeyboard()
         mainView.bindTextView()
+        mainView.bindMenuBar()
     }
 }
 
 extension ChattingViewController: UITableViewDelegate {
+//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//
+//    }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.row == 0 {
+            return 110
+        } else {
+            return UITableView.automaticDimension
+        }
+    }
 }
