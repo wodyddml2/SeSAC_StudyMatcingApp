@@ -38,6 +38,7 @@ final class WithdrawViewController: BaseViewController {
             .disposed(by: disposeBag)
         
         mainView.okButton.rx.tap
+            .throttle(.seconds(5), scheduler: MainScheduler.asyncInstance)
             .withUnretained(self)
             .bind { vc, _ in
                 vc.requestWithdraw()
@@ -50,7 +51,8 @@ final class WithdrawViewController: BaseViewController {
         currentUser?.getIDTokenForcingRefresh(true) { [weak self] idToken, error in
             guard let self = self else {return}
             if error != nil {
-                print("error")
+                self.view.makeToast("에러가 발생했습니다.")
+                return
             }
             if let idToken = idToken {
                 UserManager.idToken = idToken

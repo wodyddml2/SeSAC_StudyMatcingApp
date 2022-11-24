@@ -206,6 +206,7 @@ extension SeSACAcceptViewController {
             .disposed(by: disposeBag)
         
         output.change
+            .throttle(.seconds(5), scheduler: MainScheduler.asyncInstance)
             .withUnretained(self)
             .subscribe { vc, _ in
                 vc.requestDelete(SearchViewController())

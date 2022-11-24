@@ -17,6 +17,7 @@ enum SeSACAPI {
     static let find = "/queue"
     static let request = "/queue/studyrequest"
     static let accept = "/queue/studyaccept"
+    static let dodge = "/queue/dodge"
 }
 
 enum SeSACLoginHeader {

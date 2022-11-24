@@ -57,6 +57,7 @@ final class SearchViewModel {
             guard let self = self else {return}
             if error != nil {
                 output.networkFailed.accept(true)
+                return
             }
             if let idToken = idToken {
                 UserManager.idToken = idToken
@@ -82,6 +83,7 @@ final class SearchViewModel {
         currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
             if error != nil {
                 print("error")
+                return
             }
             if let idToken = idToken {
                 UserManager.idToken = idToken

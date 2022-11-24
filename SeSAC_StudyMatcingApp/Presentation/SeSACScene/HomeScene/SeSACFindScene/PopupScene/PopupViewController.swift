@@ -79,6 +79,7 @@ final class PopupViewController: BaseViewController {
             .disposed(by: disposeBag)
         
         mainView.okButton.rx.tap
+            .throttle(.seconds(5), scheduler: MainScheduler.asyncInstance)
             .withUnretained(self)
             .bind { vc, _ in
                 if vc.request {
@@ -122,9 +123,11 @@ extension PopupViewController {
     
     private func renewalRequest() {
         let currentUser = Auth.auth().currentUser
-        currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
+        currentUser?.getIDTokenForcingRefresh(true) { [weak self] idToken, error in
+            guard let self = self else {return}
             if error != nil {
-                print("error")
+                self.view.makeToast("에러가 발생했습니다.")
+                return
             }
             if let idToken = idToken {
                 UserManager.idToken = idToken
@@ -137,7 +140,9 @@ extension PopupViewController {
 
 extension PopupViewController {
     private func acceptPost() {
-        guard let uid = uid else {return}
+        guard let uid = uid else {
+            view.makeToast("에러가 발생했습니다.")
+            return}
         SeSACAPIService.shared.requestStatusSeSACAPI(router: Router.acceptPost(query: UserManager.idToken, uid: uid)) { [weak self] value in
             guard let self = self else {return}
             switch StatusCode(rawValue: value) {
@@ -176,9 +181,11 @@ extension PopupViewController {
     
     private func renewalAccpet() {
         let currentUser = Auth.auth().currentUser
-        currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
+        currentUser?.getIDTokenForcingRefresh(true) { [weak self] idToken, error in
+            guard let self = self else {return}
             if error != nil {
-                print("error")
+                self.view.makeToast("에러가 발생했습니다.")
+                return
             }
             if let idToken = idToken {
                 UserManager.idToken = idToken

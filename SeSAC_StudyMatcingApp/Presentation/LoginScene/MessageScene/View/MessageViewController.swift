@@ -91,7 +91,10 @@ extension MessageViewController {
                     switch result {
                     case .success(let success):
                         success.user.getIDTokenForcingRefresh(true) { idToken, error in
-                            if error != nil { return }
+                            if error != nil {
+                                vc.view.makeToast("에러가 발생했습니다.")
+                                return
+                            }
                             
                             if let idToken = idToken {
                                 SeSACAPIService.shared.requestSeSACAPI(type: SESACLoginDTO.self ,router: Router.loginGet(query: idToken)) { result in

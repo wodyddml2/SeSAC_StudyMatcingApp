@@ -76,6 +76,7 @@ extension GenderViewController {
         
         
         output.nextButton
+            .throttle(.seconds(3), scheduler: MainScheduler.asyncInstance)
             .withUnretained(self)
             .bind { vc, _ in
                 if vc.mainView.authButton.backgroundColor == .sesacGreen {

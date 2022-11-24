@@ -47,6 +47,7 @@ final class HomeViewModel {
             guard let self = self else {return}
             if error != nil {
                 output.networkFailed.accept(true)
+                return
             }
             if let idToken = idToken {
                 UserManager.idToken = idToken
@@ -82,6 +83,7 @@ final class HomeViewModel {
             guard let self = self else {return}
             if error != nil {
                 output.networkFailed.accept(true)
+                return
             }
             if let idToken = idToken {
                 UserManager.idToken = idToken

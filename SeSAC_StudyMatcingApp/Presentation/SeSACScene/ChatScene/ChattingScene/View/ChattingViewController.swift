@@ -13,7 +13,9 @@ import RxDataSources
 final class ChattingViewController: BaseViewController {
 
     let mainView = ChattingView()
+    let viewModel = ChattingViewModel()
     let disposeBag = DisposeBag()
+    
     
     private var dataSources: RxTableViewSectionedReloadDataSource<ChattingSectionModel>?
     
@@ -23,14 +25,14 @@ final class ChattingViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
-        navigationBarStyle()
+        
         bindViewModel()
         setTableView()
+        navigationBarStyle()
     }
 
     private func navigationBarStyle() {
-        navigationBarCommon(title: "홍")
+        navigationBarCommon(title: "")
         tabBarAndNaviHidden(hidden: true)
         
         navigationItem.hidesBackButton = true
@@ -44,7 +46,7 @@ final class ChattingViewController: BaseViewController {
             myCell.chatLabel.text = item.message
             return myCell
         })
-        let sections: [ChattingSectionModel] = [ChattingSectionModel(items: [SeSACChat(message: "dfsdfsdfsdfsdfsdfsdfsfsfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsfsdfsdfsdfsdfdsfsdfdsfdsfsdfdsfdsfdsfds")])]
+        let sections: [ChattingSectionModel] = [ChattingSectionModel(items: [SeSACChat(message: "새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집")])]
  
         let data = Observable<[ChattingSectionModel]>.just(sections)
         
@@ -57,8 +59,31 @@ final class ChattingViewController: BaseViewController {
     }
     
     private func bindViewModel() {
-   
-        mainView.backButton.rx.tap
+        
+        let input = ChattingViewModel.Input(
+            viewDidLoadEvent: Observable.just(()),
+            backButton: mainView.backButton.rx.tap
+        )
+        let output = viewModel.transform(input: input)
+        
+        output.matchInfo
+            .withUnretained(self)
+            .subscribe (onNext: { vc, info in
+                guard let nick = info.matchedNick else {return}
+                vc.navigationItem.title = nick // 늦게 뜸 시점;;
+            })
+            .disposed(by: disposeBag)
+        
+        output.networkFailed
+            .asDriver(onErrorJustReturn: false)
+            .drive (onNext: { [weak self] error in
+                guard let self = self else {return}
+                if error == true {
+                    self.view.makeToast("사용자의 정보를 불러오는데 실패했습니다.")
+                }
+            }).disposed(by: disposeBag)
+    
+        output.backButton
             .withUnretained(self)
             .bind { vc, _ in
                 vc.navigationPopToViewController(HomeViewController())

@@ -53,6 +53,7 @@ extension SeSACRequestViewModel {
             guard let self = self else {return}
             if error != nil {
                 output.networkFailed.accept(true)
+                return
             }
             if let idToken = idToken {
                 UserManager.idToken = idToken
@@ -102,7 +103,8 @@ extension SeSACRequestViewModel {
     
     func renewalMyQueueRequest() {
         let currentUser = Auth.auth().currentUser
-        currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
+        currentUser?.getIDTokenForcingRefresh(true) { [weak self] idToken, error in
+            guard let self = self else {return}
             if error != nil {
                 print("error")
             }

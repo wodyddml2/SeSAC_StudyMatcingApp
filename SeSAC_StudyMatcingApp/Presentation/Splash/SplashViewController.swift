@@ -51,10 +51,10 @@ class SplashViewController: BaseViewController {
                 guard let self = self else {return}
                 switch result {
                 case .success(let success):
+                    print(UserManager.idToken)
                     UserManager.sesacImage = success.sesac
                     let vc = TabViewController()
                     sceneDelegate?.window?.rootViewController = vc
-                    print(UserManager.idToken)
                 case .failure(let fail):
                     let error = fail as! SeSACError
                     switch error {
@@ -87,6 +87,7 @@ class SplashViewController: BaseViewController {
             guard let self = self else {return}
             if error != nil {
                 self.view.makeToast("에러가 발생했습니다.")
+                return
             }
             if let idToken = idToken {
                 UserManager.idToken = idToken

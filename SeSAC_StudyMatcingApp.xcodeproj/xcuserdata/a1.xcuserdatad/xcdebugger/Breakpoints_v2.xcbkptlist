@@ -3,22 +3,4 @@
    uuid = "6EE251E4-3F84-4956-B1FC-52963CF41580"
    type = "1"
    version = "2.0">
-   <Breakpoints>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "B37F15B1-D00A-450B-9A70-1BF061824BC8"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "SeSAC_StudyMatcingApp/Presentation/SeSACScene/HomeScene/SeSACFindScene/ViewModel/SeSACRequestViewModel.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "97"
-            endingLineNumber = "97"
-            landmarkName = "requestMYQueue()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-   </Breakpoints>
 </Bucket>
