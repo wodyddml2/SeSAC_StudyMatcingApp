@@ -14,7 +14,7 @@ final class WithdrawViewController: BaseViewController {
     
     let disposeBag = DisposeBag()
     
-    let mainView = PopupView()
+    let mainView = AlertView()
     
     override func loadView() {
         view = mainView

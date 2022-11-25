@@ -51,7 +51,7 @@ final class ChattingViewController: BaseViewController {
                 return myCell
             }
         })
-        let sections: [ChattingSectionModel] = [ChattingSectionModel(items: [SeSACChat(), SeSACChat(message: "새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집")])]
+        let sections: [ChattingSectionModel] = [ChattingSectionModel(items: [SeSACChat(), SeSACChat(message: "새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집"),  SeSACChat(message: "새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집"),  SeSACChat(message: "새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집"),  SeSACChat(message: "새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집"),  SeSACChat(message: "새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집"),  SeSACChat(message: "새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집")])]
  
         let data = Observable<[ChattingSectionModel]>.just(sections)
         
@@ -100,13 +100,18 @@ extension ChattingViewController {
         mainView.bindKeyboard()
         mainView.bindTextView()
         mainView.bindMenuBar()
+        
+        mainView.declarationButton.rx.tap
+            .withUnretained(self)
+            .bind { vc, _ in
+                let viewController = SeSACReviewViewController()
+                vc.transition(viewController, transitionStyle: .presentOverFull)
+            }
+            .disposed(by: disposeBag)
     }
 }
 
 extension ChattingViewController: UITableViewDelegate {
-//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//
-//    }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row == 0 {

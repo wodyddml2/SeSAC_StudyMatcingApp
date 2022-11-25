@@ -24,6 +24,7 @@
 		631DC94D2921194C00F23211 /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631DC94C2921194C00F23211 /* ProfileTableViewCell.swift */; };
 		631DC95029212CA300F23211 /* ReusableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631DC94F29212CA300F23211 /* ReusableProtocol.swift */; };
 		631DC9542921319F00F23211 /* SeSACProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631DC9532921319F00F23211 /* SeSACProfile.swift */; };
+		63209A922930A5F400C17AA3 /* ChattingAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63209A912930A5F400C17AA3 /* ChattingAPIService.swift */; };
 		632564A72927726A003DDB9F /* RxKeyboard in Frameworks */ = {isa = PBXBuildFile; productRef = 632564A62927726A003DDB9F /* RxKeyboard */; };
 		632564A92927BE08003DDB9F /* SeSACUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632564A82927BE08003DDB9F /* SeSACUser.swift */; };
 		632564AB2927F8CC003DDB9F /* CustomAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632564AA2927F8CC003DDB9F /* CustomAnnotationView.swift */; };
@@ -42,6 +43,12 @@
 		633AC68C292F698D00A3249B /* ChattingTableViewHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633AC68B292F698D00A3249B /* ChattingTableViewHeaderFooterView.swift */; };
 		633AC68E292F6F2100A3249B /* ChattingDateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633AC68D292F6F2100A3249B /* ChattingDateTableViewCell.swift */; };
 		633AC693292F850A00A3249B /* ChatMenuImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633AC692292F850A00A3249B /* ChatMenuImage.swift */; };
+		633AC695292FC1FC00A3249B /* PopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633AC694292FC1FC00A3249B /* PopupView.swift */; };
+		633AC698292FC7F000A3249B /* SeSACReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633AC697292FC7F000A3249B /* SeSACReviewViewController.swift */; };
+		633AC69C292FC82800A3249B /* DeclarationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633AC69B292FC82800A3249B /* DeclarationViewController.swift */; };
+		633AC69E292FC83000A3249B /* CancelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633AC69D292FC83000A3249B /* CancelViewController.swift */; };
+		633AC6A0292FC88400A3249B /* DeclarationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633AC69F292FC88400A3249B /* DeclarationView.swift */; };
+		633AC6A2292FD18500A3249B /* SeSACReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633AC6A1292FD18500A3249B /* SeSACReviewView.swift */; };
 		63467DB32918D4AE00E7D8AE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63467DB22918D4AE00E7D8AE /* AppDelegate.swift */; };
 		63467DB52918D4AE00E7D8AE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63467DB42918D4AE00E7D8AE /* SceneDelegate.swift */; };
 		63467DB72918D4AE00E7D8AE /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63467DB62918D4AE00E7D8AE /* OnboardingViewController.swift */; };
@@ -130,7 +137,7 @@
 		63E9113D292B72F40048180F /* TabManViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E9113C292B72F40048180F /* TabManViewController.swift */; };
 		63E9113F292B73CE0048180F /* SeSACAcceptViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E9113E292B73CE0048180F /* SeSACAcceptViewController.swift */; };
 		63E91144292B824A0048180F /* SeSACFindView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E91143292B824A0048180F /* SeSACFindView.swift */; };
-		63E91148292BC9470048180F /* PopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E91147292BC9470048180F /* PopupView.swift */; };
+		63E91148292BC9470048180F /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E91147292BC9470048180F /* AlertView.swift */; };
 		63E91152292BCD740048180F /* PopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E91151292BCD740048180F /* PopupViewController.swift */; };
 		63F31446291D2A3500C31F59 /* EmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F31445291D2A3500C31F59 /* EmailViewController.swift */; };
 		63F31448291D2A4000C31F59 /* EmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F31447291D2A4000C31F59 /* EmailView.swift */; };
@@ -163,6 +170,7 @@
 		631DC94C2921194C00F23211 /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
 		631DC94F29212CA300F23211 /* ReusableProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableProtocol.swift; sourceTree = "<group>"; };
 		631DC9532921319F00F23211 /* SeSACProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACProfile.swift; sourceTree = "<group>"; };
+		63209A912930A5F400C17AA3 /* ChattingAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingAPIService.swift; sourceTree = "<group>"; };
 		632564A82927BE08003DDB9F /* SeSACUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACUser.swift; sourceTree = "<group>"; };
 		632564AA2927F8CC003DDB9F /* CustomAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotationView.swift; sourceTree = "<group>"; };
 		6329D7CD291CA605004AC51C /* BirthCustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthCustomView.swift; sourceTree = "<group>"; };
@@ -179,6 +187,12 @@
 		633AC68B292F698D00A3249B /* ChattingTableViewHeaderFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingTableViewHeaderFooterView.swift; sourceTree = "<group>"; };
 		633AC68D292F6F2100A3249B /* ChattingDateTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingDateTableViewCell.swift; sourceTree = "<group>"; };
 		633AC692292F850A00A3249B /* ChatMenuImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMenuImage.swift; sourceTree = "<group>"; };
+		633AC694292FC1FC00A3249B /* PopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupView.swift; sourceTree = "<group>"; };
+		633AC697292FC7F000A3249B /* SeSACReviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACReviewViewController.swift; sourceTree = "<group>"; };
+		633AC69B292FC82800A3249B /* DeclarationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeclarationViewController.swift; sourceTree = "<group>"; };
+		633AC69D292FC83000A3249B /* CancelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelViewController.swift; sourceTree = "<group>"; };
+		633AC69F292FC88400A3249B /* DeclarationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeclarationView.swift; sourceTree = "<group>"; };
+		633AC6A1292FD18500A3249B /* SeSACReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACReviewView.swift; sourceTree = "<group>"; };
 		63467DAF2918D4AE00E7D8AE /* SeSAC_StudyMatcingApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SeSAC_StudyMatcingApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		63467DB22918D4AE00E7D8AE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		63467DB42918D4AE00E7D8AE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -263,7 +277,7 @@
 		63E9113C292B72F40048180F /* TabManViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabManViewController.swift; sourceTree = "<group>"; };
 		63E9113E292B73CE0048180F /* SeSACAcceptViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACAcceptViewController.swift; sourceTree = "<group>"; };
 		63E91143292B824A0048180F /* SeSACFindView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACFindView.swift; sourceTree = "<group>"; };
-		63E91147292BC9470048180F /* PopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupView.swift; sourceTree = "<group>"; };
+		63E91147292BC9470048180F /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		63E91151292BCD740048180F /* PopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupViewController.swift; sourceTree = "<group>"; };
 		63F31445291D2A3500C31F59 /* EmailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailViewController.swift; sourceTree = "<group>"; };
 		63F31447291D2A4000C31F59 /* EmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailView.swift; sourceTree = "<group>"; };
@@ -357,6 +371,9 @@
 		6300492C291EC2520046E6D3 /* ChatScene */ = {
 			isa = PBXGroup;
 			children = (
+				633AC69A292FC81400A3249B /* DeclarationScene */,
+				633AC699292FC7F700A3249B /* CancelScene */,
+				633AC696292FC7B900A3249B /* ReviewScene */,
 				63DACA6B292E54E700D0CDB6 /* ChattingScene */,
 			);
 			path = ChatScene;
@@ -458,9 +475,36 @@
 			isa = PBXGroup;
 			children = (
 				633AC683292F56E100A3249B /* ChattingSocketService.swift */,
+				63209A912930A5F400C17AA3 /* ChattingAPIService.swift */,
 				633AC689292F5BBD00A3249B /* SocketKey.swift */,
 			);
 			path = Socket;
+			sourceTree = "<group>";
+		};
+		633AC696292FC7B900A3249B /* ReviewScene */ = {
+			isa = PBXGroup;
+			children = (
+				633AC697292FC7F000A3249B /* SeSACReviewViewController.swift */,
+				633AC6A1292FD18500A3249B /* SeSACReviewView.swift */,
+			);
+			path = ReviewScene;
+			sourceTree = "<group>";
+		};
+		633AC699292FC7F700A3249B /* CancelScene */ = {
+			isa = PBXGroup;
+			children = (
+				633AC69D292FC83000A3249B /* CancelViewController.swift */,
+			);
+			path = CancelScene;
+			sourceTree = "<group>";
+		};
+		633AC69A292FC81400A3249B /* DeclarationScene */ = {
+			isa = PBXGroup;
+			children = (
+				633AC69B292FC82800A3249B /* DeclarationViewController.swift */,
+				633AC69F292FC88400A3249B /* DeclarationView.swift */,
+			);
+			path = DeclarationScene;
 			sourceTree = "<group>";
 		};
 		63467DA62918D4AE00E7D8AE = {
@@ -697,7 +741,8 @@
 				637827A329222A56009E1424 /* CommonButton.swift */,
 				6329D7CD291CA605004AC51C /* BirthCustomView.swift */,
 				63F31454291D37DF00C31F59 /* GenderButtonView.swift */,
-				63E91147292BC9470048180F /* PopupView.swift */,
+				63E91147292BC9470048180F /* AlertView.swift */,
+				633AC694292FC1FC00A3249B /* PopupView.swift */,
 			);
 			path = CustomView;
 			sourceTree = "<group>";
@@ -1243,6 +1288,7 @@
 				63467DFF2918F04300E7D8AE /* NSAttributedString+CustomText.swift in Sources */,
 				637827A429222A56009E1424 /* CommonButton.swift in Sources */,
 				632564AB2927F8CC003DDB9F /* CustomAnnotationView.swift in Sources */,
+				63209A922930A5F400C17AA3 /* ChattingAPIService.swift in Sources */,
 				6337F01E291A5B57002C81FA /* String+Custom.swift in Sources */,
 				63F31455291D37DF00C31F59 /* GenderButtonView.swift in Sources */,
 				63467DB32918D4AE00E7D8AE /* AppDelegate.swift in Sources */,
@@ -1268,12 +1314,15 @@
 				63308F1B292334E0004B90A5 /* ProfileAgeView.swift in Sources */,
 				63467DF22918E57E00E7D8AE /* UIViewController+Transition.swift in Sources */,
 				63467E062918FA2E00E7D8AE /* NumberViewModel.swift in Sources */,
+				633AC695292FC1FC00A3249B /* PopupView.swift in Sources */,
 				633AC68E292F6F2100A3249B /* ChattingDateTableViewCell.swift in Sources */,
+				633AC69C292FC82800A3249B /* DeclarationViewController.swift in Sources */,
 				631DC94629210DB500F23211 /* SettingSectionModel.swift in Sources */,
 				635E1618291BF65B0042E8E4 /* SeSACLoginDTO.swift in Sources */,
 				63004931291EC28E0046E6D3 /* ChattingViewController.swift in Sources */,
 				63308F19292334D0004B90A5 /* ProfilePermitView.swift in Sources */,
 				63F31446291D2A3500C31F59 /* EmailViewController.swift in Sources */,
+				633AC6A0292FC88400A3249B /* DeclarationView.swift in Sources */,
 				637827B029229990009E1424 /* ReviewStackView.swift in Sources */,
 				63670CD92928CDCC00EAF29D /* SeSACFindSectionModel.swift in Sources */,
 				63467DD52918D80E00E7D8AE /* SecondViewController.swift in Sources */,
@@ -1287,6 +1336,7 @@
 				632564A92927BE08003DDB9F /* SeSACUser.swift in Sources */,
 				635E162C291C2CF40042E8E4 /* BirthViewController.swift in Sources */,
 				637827AD29225C78009E1424 /* MyProfileSectionModel.swift in Sources */,
+				633AC698292FC7F000A3249B /* SeSACReviewViewController.swift in Sources */,
 				631DC94929210F5100F23211 /* BaseTableViewCell.swift in Sources */,
 				63467DDE2918D85800E7D8AE /* BaseViewController.swift in Sources */,
 				63D01EED292649BC007ADA35 /* SeSACSearchDTO.swift in Sources */,
@@ -1307,10 +1357,11 @@
 				63467E042918F9CE00E7D8AE /* NumberView.swift in Sources */,
 				637EDF362924F923009089E4 /* WithdrawViewController.swift in Sources */,
 				63004935291EC7020046E6D3 /* TabImage.swift in Sources */,
+				633AC6A2292FD18500A3249B /* SeSACReviewView.swift in Sources */,
 				63670CD72928CCB600EAF29D /* SeSACFind.swift in Sources */,
 				63467DE02918D87F00E7D8AE /* BaseView.swift in Sources */,
 				63004924291EAAC70046E6D3 /* NetworkMonitor.swift in Sources */,
-				63E91148292BC9470048180F /* PopupView.swift in Sources */,
+				63E91148292BC9470048180F /* AlertView.swift in Sources */,
 				63467E0E291937B200E7D8AE /* MessageViewController.swift in Sources */,
 				635E1609291BD9D00042E8E4 /* SeSACAPIService.swift in Sources */,
 				63670CCE2928BF3500EAF29D /* SeSACFindImageTableViewCell.swift in Sources */,
@@ -1335,6 +1386,7 @@
 				63D01EEB2926152A007ADA35 /* SearchViewModel.swift in Sources */,
 				635E1622291C1A440042E8E4 /* NicknameView.swift in Sources */,
 				63DACA74292E5DB500D0CDB6 /* ChattingSectionModel.swift in Sources */,
+				633AC69E292FC83000A3249B /* CancelViewController.swift in Sources */,
 				63DACA70292E55D700D0CDB6 /* MyChatTableViewCell.swift in Sources */,
 				63467DF02918E2F900E7D8AE /* UIColor+CustomColor.swift in Sources */,
 				6378279E292225D3009E1424 /* MyProfileViewController.swift in Sources */,

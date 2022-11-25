@@ -120,7 +120,6 @@ extension SeSACRequestViewModel {
 extension SeSACRequestViewModel: ViewModelType {
     
     struct Input {
-        let viewDidLoadEvent: Observable<Void>
         let reload: ControlEvent<Void>
         let change: ControlEvent<Void>
         let refresh: ControlEvent<Void>

@@ -9,6 +9,7 @@ import UIKit
 
 import RxSwift
 import RxKeyboard
+import RxGesture
 
 class ChattingView: BaseView {
     
@@ -118,7 +119,8 @@ class ChattingView: BaseView {
     
     override func setConstraints() {
         tableView.snp.makeConstraints { make in
-            make.edges.equalTo(self.safeAreaLayoutGuide)
+            make.leading.top.trailing.equalTo(self.safeAreaLayoutGuide)
+            make.bottom.equalTo(messageTextView.snp.top).offset(-12)
         }
         
         messageTextView.snp.makeConstraints { make in
@@ -171,16 +173,21 @@ extension ChattingView {
             .drive (onNext: { [weak self] height in
                 guard let self = self else {return}
                 UIView.animate(withDuration: 0) {
+                   
                     self.sendButton.setImage(UIImage(named: "act"), for: .normal)
                     self.messageTextView.snp.updateConstraints { make in
                         make.bottom.equalTo(self.safeAreaLayoutGuide).inset(height - extra)
                     }
+//                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+//                        self.tableView.scrollToRow(at: IndexPath(row: 5, section: 0), at: .bottom, animated: true)
+//                    }
                 }
                 self.layoutIfNeeded()
             })
             .disposed(by: disposeBag)
         
-        tableView.rx.didScroll
+        tableView.rx.tapGesture()
+            .when(.recognized)
             .withUnretained(self)
             .observe(on: MainScheduler.asyncInstance)
             .bind(onNext: { vc, _ in

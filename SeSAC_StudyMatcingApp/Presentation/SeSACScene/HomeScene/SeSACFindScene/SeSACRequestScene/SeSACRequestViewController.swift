@@ -123,7 +123,6 @@ extension SeSACRequestViewController: UITableViewDelegate {
 extension SeSACRequestViewController {
     private func bindViewModel() {
         let input = SeSACRequestViewModel.Input(
-            viewDidLoadEvent: Observable.just(()),
             reload: mainView.reloadButton.rx.tap,
             change: mainView.changeButton.rx.tap,
             refresh: mainView.refreshControl.rx.controlEvent(.valueChanged),

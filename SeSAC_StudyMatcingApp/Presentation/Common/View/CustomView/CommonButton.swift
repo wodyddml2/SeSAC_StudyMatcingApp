@@ -56,5 +56,11 @@ class CommonButton: UIButton {
         self.backgroundColor = .successBlue
         self.titleLabel?.font = UIFont.notoSans(size: 14, family: .Medium)
     }
+    
+    func blockButton() {
+        self.layer.borderWidth = 0
+        self.backgroundColor = .gray6
+        self.setTitleColor(.gray3, for: .normal)
+    }
   
 }

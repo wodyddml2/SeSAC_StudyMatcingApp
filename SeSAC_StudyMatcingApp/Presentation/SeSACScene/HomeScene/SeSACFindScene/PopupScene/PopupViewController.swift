@@ -12,7 +12,7 @@ import FirebaseAuth
 
 final class PopupViewController: BaseViewController {
     
-    let mainView = PopupView()
+    let mainView = AlertView()
     let disposeBag = DisposeBag()
     
     var request: Bool = true
@@ -31,7 +31,7 @@ final class PopupViewController: BaseViewController {
     }
     
     override func setConstraints() {
-        mainView.popupView.snp.remakeConstraints { make in
+        mainView.alertView.snp.remakeConstraints { make in
             make.center.equalToSuperview()
             make.leading.trailing.equalToSuperview().inset(16)
             make.height.equalToSuperview().multipliedBy(0.22)
