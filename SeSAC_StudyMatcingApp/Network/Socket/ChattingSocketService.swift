@@ -10,7 +10,7 @@ import Foundation
 import SocketIO
 
 class ChattingSocketService {
-    static let shared = ChattingViewController()
+    static let shared = ChattingSocketService()
     
     var manager: SocketManager!
     
@@ -18,9 +18,8 @@ class ChattingSocketService {
     
     private init() {
         
-        manager = SocketManager(socketURL: URL(string: "")!, config: [
-            .log(true),
-            .extraHeaders(["": ""])
+        manager = SocketManager(socketURL: URL(string: SocketKey.baseURL + SocketKey.chat)!, config: [
+            .log(true)
         ])
         
         socket = manager.defaultSocket
@@ -36,11 +35,19 @@ class ChattingSocketService {
         socket.on("sesac") { dataArray, ack in
             print("SESAC RECEIVED", dataArray, ack)
             
-//            NotificationCenter.default.post(
-//                name: Notification.Name("getMessage"),
-//                object: self,
-//                userInfo: ["chat": chat, "name": name, "createdAt": createdAt, "userId": userId]
-//            )
+           let data = dataArray[0] as! NSDictionary
+            let chat = data["chat"] as! String
+            let otherId = data["to"] as! String
+            let userId = data["from"] as! String
+            let createdAt = data["createdAt"] as! String
+            
+            print("CHECK >>>", chat, userId, createdAt)
+            
+            NotificationCenter.default.post(
+                name: Notification.Name("getMessage"),
+                object: self,
+                userInfo: ["chat": chat, "otherId": otherId, "createdAt": createdAt, "userId": userId]
+            )
         }
     }
     

@@ -76,8 +76,16 @@ extension ChattingViewController {
         output.matchInfo
             .withUnretained(self)
             .subscribe (onNext: { vc, info in
+                vc.viewModel.uid = info.matchedUid ?? ""
                 guard let nick = info.matchedNick else {return}
                 vc.navigationItem.title = nick // 늦게 뜸 시점;;
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.chatInfo
+            .withUnretained(self)
+            .subscribe (onNext: { vc, info in
+                
             })
             .disposed(by: disposeBag)
         
@@ -87,6 +95,15 @@ extension ChattingViewController {
                 guard let self = self else {return}
                 if error == true {
                     self.view.makeToast("사용자의 정보를 불러오는데 실패했습니다.")
+                }
+            }).disposed(by: disposeBag)
+        
+        viewModel.postFailed
+            .asDriver(onErrorJustReturn: false)
+            .drive (onNext: { [weak self] error in
+                guard let self = self else {return}
+                if error == true {
+                    self.view.makeToast("상대방에게 채팅을 보낼 수 없습니다", position: .center)
                 }
             }).disposed(by: disposeBag)
     
@@ -106,6 +123,13 @@ extension ChattingViewController {
             .bind { vc, _ in
                 let viewController = SeSACReviewViewController()
                 vc.transition(viewController, transitionStyle: .presentOverFull)
+            }
+            .disposed(by: disposeBag)
+        
+        mainView.sendButton.rx.tap
+            .withUnretained(self)
+            .bind { vc, _ in
+                vc.viewModel.requestChatPost(chat: vc.mainView.messageTextView.text)
             }
             .disposed(by: disposeBag)
     }

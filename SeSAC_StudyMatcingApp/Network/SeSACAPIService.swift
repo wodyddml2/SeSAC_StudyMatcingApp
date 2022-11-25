@@ -52,12 +52,12 @@ enum Router: URLRequestConvertible {
         switch self {
         case .loginGet(let query), .matchGet(let query), .savePut( _ ,let query), .withdrawPost(let query), .searchPost(let query, _, _), .findPost(let query, _, _, _), .findDelete(let query), .requestPost(query: let query, _), .acceptPost(let query, _), .dodgePost(let query, _):
             return  [
-                "Content-Type": SeSACLoginHeader.contentType,
+                "Content-Type": SeSACHeader.contentType,
                 "idtoken": query
             ]
         case .signUpPost:
             return [
-                "Content-Type": SeSACLoginHeader.contentType,
+                "Content-Type": SeSACHeader.contentType,
                 "idtoken": UserManager.idToken
             ]
         }

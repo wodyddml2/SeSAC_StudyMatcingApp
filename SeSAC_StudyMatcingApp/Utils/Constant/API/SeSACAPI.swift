@@ -21,7 +21,7 @@ enum SeSACAPI {
     static let chat = "/chat"
 }
 
-enum SeSACLoginHeader {
+enum SeSACHeader {
     static let contentType = "application/x-www-form-urlencoded"
     static let accept = "application/json"
 }
