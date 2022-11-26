@@ -19,6 +19,9 @@ class ChattingViewModel {
     var postFailed = PublishRelay<Bool>()
     var getFailed = PublishRelay<Bool>()
     
+    var chat = PublishSubject<[ChattingSectionModel]>()
+    var sections: [ChattingSectionModel] = [ChattingSectionModel(items: [SeSACChat()])]
+    
     var uid: String = ""
     var lastDate: Date = Date()
     

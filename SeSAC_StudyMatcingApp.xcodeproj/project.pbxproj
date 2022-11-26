@@ -129,8 +129,8 @@
 		63DACA65292E2D2300D0CDB6 /* StatusCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DACA64292E2D2300D0CDB6 /* StatusCode.swift */; };
 		63DACA67292E2DBA00D0CDB6 /* Penalty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DACA66292E2DBA00D0CDB6 /* Penalty.swift */; };
 		63DACA69292E353000D0CDB6 /* StudyRegistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DACA68292E353000D0CDB6 /* StudyRegistration.swift */; };
-		63DACA70292E55D700D0CDB6 /* MyChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DACA6F292E55D700D0CDB6 /* MyChatTableViewCell.swift */; };
-		63DACA72292E55EC00D0CDB6 /* YourChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DACA71292E55EC00D0CDB6 /* YourChatTableViewCell.swift */; };
+		63DACA70292E55D700D0CDB6 /* YourChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DACA6F292E55D700D0CDB6 /* YourChatTableViewCell.swift */; };
+		63DACA72292E55EC00D0CDB6 /* MyChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DACA71292E55EC00D0CDB6 /* MyChatTableViewCell.swift */; };
 		63DACA74292E5DB500D0CDB6 /* ChattingSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DACA73292E5DB500D0CDB6 /* ChattingSectionModel.swift */; };
 		63DACA76292E5EF900D0CDB6 /* SeSACChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DACA75292E5EF900D0CDB6 /* SeSACChat.swift */; };
 		63DACA78292E627C00D0CDB6 /* ChattingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DACA77292E627C00D0CDB6 /* ChattingView.swift */; };
@@ -272,8 +272,8 @@
 		63DACA64292E2D2300D0CDB6 /* StatusCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusCode.swift; sourceTree = "<group>"; };
 		63DACA66292E2DBA00D0CDB6 /* Penalty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Penalty.swift; sourceTree = "<group>"; };
 		63DACA68292E353000D0CDB6 /* StudyRegistration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyRegistration.swift; sourceTree = "<group>"; };
-		63DACA6F292E55D700D0CDB6 /* MyChatTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyChatTableViewCell.swift; sourceTree = "<group>"; };
-		63DACA71292E55EC00D0CDB6 /* YourChatTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YourChatTableViewCell.swift; sourceTree = "<group>"; };
+		63DACA6F292E55D700D0CDB6 /* YourChatTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YourChatTableViewCell.swift; sourceTree = "<group>"; };
+		63DACA71292E55EC00D0CDB6 /* MyChatTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyChatTableViewCell.swift; sourceTree = "<group>"; };
 		63DACA73292E5DB500D0CDB6 /* ChattingSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingSectionModel.swift; sourceTree = "<group>"; };
 		63DACA75292E5EF900D0CDB6 /* SeSACChat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACChat.swift; sourceTree = "<group>"; };
 		63DACA77292E627C00D0CDB6 /* ChattingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingView.swift; sourceTree = "<group>"; };
@@ -1072,8 +1072,8 @@
 		63DACA6E292E557C00D0CDB6 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				63DACA6F292E55D700D0CDB6 /* MyChatTableViewCell.swift */,
-				63DACA71292E55EC00D0CDB6 /* YourChatTableViewCell.swift */,
+				63DACA71292E55EC00D0CDB6 /* MyChatTableViewCell.swift */,
+				63DACA6F292E55D700D0CDB6 /* YourChatTableViewCell.swift */,
 				633AC68D292F6F2100A3249B /* ChattingDateTableViewCell.swift */,
 			);
 			path = Cells;
@@ -1349,7 +1349,7 @@
 				63308F1529233379004B90A5 /* ProfileGenderView.swift in Sources */,
 				63DACA76292E5EF900D0CDB6 /* SeSACChat.swift in Sources */,
 				631DC94D2921194C00F23211 /* ProfileTableViewCell.swift in Sources */,
-				63DACA72292E55EC00D0CDB6 /* YourChatTableViewCell.swift in Sources */,
+				63DACA72292E55EC00D0CDB6 /* MyChatTableViewCell.swift in Sources */,
 				63308F1729233460004B90A5 /* ProfileStudyView.swift in Sources */,
 				63F31451291D36E600C31F59 /* GenderView.swift in Sources */,
 				633AC693292F850A00A3249B /* ChatMenuImage.swift in Sources */,
@@ -1394,7 +1394,7 @@
 				635E1622291C1A440042E8E4 /* NicknameView.swift in Sources */,
 				63DACA74292E5DB500D0CDB6 /* ChattingSectionModel.swift in Sources */,
 				633AC69E292FC83000A3249B /* CancelViewController.swift in Sources */,
-				63DACA70292E55D700D0CDB6 /* MyChatTableViewCell.swift in Sources */,
+				63DACA70292E55D700D0CDB6 /* YourChatTableViewCell.swift in Sources */,
 				63209A982930DA3F00C17AA3 /* SeSACChatPostDTO.swift in Sources */,
 				63467DF02918E2F900E7D8AE /* UIColor+CustomColor.swift in Sources */,
 				6378279E292225D3009E1424 /* MyProfileViewController.swift in Sources */,

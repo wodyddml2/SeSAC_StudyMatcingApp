@@ -9,10 +9,12 @@ import Foundation
 
 struct SeSACChat {
     var message: String
-    var createdAt: Date
+    var createdAt: String
+    var uid: String
     
-    init(message: String = "", createdAt: Date = Date()) {
+    init(message: String = "", createdAt: String = "", uid: String = "") {
         self.message = message
         self.createdAt = createdAt
+        self.uid = uid
     }
 }

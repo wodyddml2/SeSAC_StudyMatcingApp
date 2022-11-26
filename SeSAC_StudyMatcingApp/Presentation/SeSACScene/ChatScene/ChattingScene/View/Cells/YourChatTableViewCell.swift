@@ -1,5 +1,5 @@
 //
-//  YourChatTableViewCell.swift
+//  MyChatTableViewCell.swift
 //  SeSAC_StudyMatcingApp
 //
 //  Created by J on 2022/11/23.
@@ -8,11 +8,10 @@
 import UIKit
 
 final class YourChatTableViewCell: BaseTableViewCell {
-
+    
     let chatView: UIView = {
         let view = UIView()
-        view.makeCornerStyle(radius: 8)
-        view.backgroundColor = .sesacWhiteGreen
+        view.makeCornerStyle(width: 1, color: UIColor.gray4.cgColor, radius: 8)
         return view
     }()
     
@@ -43,9 +42,9 @@ final class YourChatTableViewCell: BaseTableViewCell {
     
     override func setConstraints() {
         chatLabel.snp.makeConstraints { make in
-            make.trailing.equalTo(-32)
+            make.leading.equalTo(32)
             make.top.bottom.equalToSuperview().inset(22)
-            make.leading.greaterThanOrEqualToSuperview().offset(110)
+            make.trailing.lessThanOrEqualToSuperview().inset(110)
         }
         
         chatView.snp.makeConstraints { make in
@@ -56,7 +55,7 @@ final class YourChatTableViewCell: BaseTableViewCell {
         }
         
         timeLabel.snp.makeConstraints { make in
-            make.trailing.equalTo(chatView.snp.leading).offset(-8)
+            make.leading.equalTo(chatView.snp.trailing).offset(8)
             make.bottom.equalTo(chatView.snp.bottom)
         }
     }

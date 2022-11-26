@@ -14,4 +14,12 @@ extension Date {
         formatter.locale = Locale(identifier: "ko_KR")
         return formatter.string(from: self)
     }
+    
+    func dateStringFormat() -> String {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "ko_KR")
+        formatter.timeZone = TimeZone(identifier: "UTC+18")
+        formatter.dateFormat = "yyyy.MM.dd a hh시 mm분"
+        return formatter.string(from: self)
+    }
 }

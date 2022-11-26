@@ -46,23 +46,32 @@ final class ChattingViewController: BaseViewController {
                 
                 return dateCell
             } else {
-                guard let myCell = tableView.dequeueReusableCell(withIdentifier: MyChatTableViewCell.reusableIdentifier, for: indexPath) as? MyChatTableViewCell else {return UITableViewCell()}
-                myCell.chatLabel.text = item.message
-                return myCell
+                if UserManager.myUid == item.uid {
+                    guard let myCell = tableView.dequeueReusableCell(withIdentifier: MyChatTableViewCell.reusableIdentifier, for: indexPath) as? MyChatTableViewCell else {return UITableViewCell()}
+                    myCell.chatLabel.text = item.message
+                    myCell.timeLabel.text = item.createdAt
+                    return myCell
+                } else {
+                    guard let yourCell = tableView.dequeueReusableCell(withIdentifier: YourChatTableViewCell.reusableIdentifier, for: indexPath) as? YourChatTableViewCell else {return UITableViewCell()}
+                    yourCell.chatLabel.text = item.message
+                    yourCell.timeLabel.text = item.createdAt
+                    return yourCell
+                }
+               
             }
         })
-        let sections: [ChattingSectionModel] = [ChattingSectionModel(items: [SeSACChat(), SeSACChat(message: "새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집"),  SeSACChat(message: "새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집"),  SeSACChat(message: "새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집"),  SeSACChat(message: "새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집"),  SeSACChat(message: "새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집"),  SeSACChat(message: "새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집 새벽반 모집")])]
  
-        let data = Observable<[ChattingSectionModel]>.just(sections)
-        
-        data
-            .bind(to: mainView.tableView.rx.items(dataSource: dataSources!))
-            .disposed(by: disposeBag)
-        
         mainView.tableView.rx.setDelegate(self)
             .disposed(by: disposeBag)
     }
+    private func bindDataSource(chat: [ChattingSectionModel]) {
+        Observable<[ChattingSectionModel]>.just(chat)
+            .bind(to: mainView.tableView.rx.items(dataSource: dataSources!))
+            .disposed(by: disposeBag)
+    }
 }
+
+
 
 extension ChattingViewController {
     private func bindViewModel() {
@@ -73,19 +82,29 @@ extension ChattingViewController {
         )
         let output = viewModel.transform(input: input)
         
+        viewModel.chat.subscribe { chat in
+            self.bindDataSource(chat: chat)
+        }.disposed(by: disposeBag)
+        
         output.matchInfo
             .withUnretained(self)
             .subscribe (onNext: { vc, info in
                 vc.viewModel.uid = info.matchedUid ?? ""
+                vc.viewModel.requestChatGet(lastchatDate: "2000-01-01T00:00:00.000Z")
                 guard let nick = info.matchedNick else {return}
                 vc.navigationItem.title = nick // 늦게 뜸 시점;;
+                
             })
             .disposed(by: disposeBag)
         
         viewModel.chatInfo
             .withUnretained(self)
-            .subscribe (onNext: { vc, info in
+            .subscribe (onNext: { vc, info in 
+                info.payload.forEach { list in
+                    vc.viewModel.sections[0].items.append(SeSACChat(message:  list.chat, createdAt: list.createdAt.toDate().dateStringFormat(), uid: list.from))
+                }
                 
+                vc.viewModel.chat.onNext(vc.viewModel.sections)
             })
             .disposed(by: disposeBag)
         
