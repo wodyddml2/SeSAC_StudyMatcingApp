@@ -12,10 +12,10 @@ import RxDataSources
 
 final class ChattingViewController: BaseViewController {
 
-    let mainView = ChattingView()
-    let viewModel = ChattingViewModel()
-    let disposeBag = DisposeBag()
-  
+    private let mainView = ChattingView()
+    private let viewModel = ChattingViewModel()
+    private let disposeBag = DisposeBag()
+
     private var dataSources: RxTableViewSectionedReloadDataSource<ChattingSectionModel>?
     
     override func loadView() {
@@ -26,10 +26,11 @@ final class ChattingViewController: BaseViewController {
         super.viewDidLoad()
         
         bindViewModel()
-        setTableView()
         navigationBarStyle()
     }
+}
 
+extension ChattingViewController {
     private func navigationBarStyle() {
         navigationBarCommon(title: "")
         tabBarAndNaviHidden(hidden: true)
@@ -39,14 +40,16 @@ final class ChattingViewController: BaseViewController {
         navigationItem.rightBarButtonItem = mainView.editButton
     }
     
-    private func setTableView() {
+    private func setTableView(uid: String, nick: String) {
         dataSources = RxTableViewSectionedReloadDataSource<ChattingSectionModel>(configureCell: { dataSource, tableView, indexPath, item in
             if indexPath.row == 0 {
                 guard let dateCell = tableView.dequeueReusableCell(withIdentifier: ChattingDateTableViewCell.reusableIdentifier, for: indexPath) as? ChattingDateTableViewCell else {return UITableViewCell()}
+                dateCell.dateLabel.text = item.sectionDate
+                dateCell.sectionSet(index: indexPath.section, text: nick)
                 
                 return dateCell
             } else {
-                if UserManager.myUid == item.uid {
+                if uid == item.uid {
                     guard let myCell = tableView.dequeueReusableCell(withIdentifier: MyChatTableViewCell.reusableIdentifier, for: indexPath) as? MyChatTableViewCell else {return UITableViewCell()}
                     myCell.chatLabel.text = item.message
                     myCell.timeLabel.text = item.createdAt
@@ -57,34 +60,46 @@ final class ChattingViewController: BaseViewController {
                     yourCell.timeLabel.text = item.createdAt
                     return yourCell
                 }
-               
             }
         })
- 
         mainView.tableView.rx.setDelegate(self)
             .disposed(by: disposeBag)
     }
-    private func bindDataSource(chat: [ChattingSectionModel]) {
-        Observable<[ChattingSectionModel]>.just(chat)
-            .bind(to: mainView.tableView.rx.items(dataSource: dataSources!))
-            .disposed(by: disposeBag)
-    }
 }
-
-
 
 extension ChattingViewController {
     private func bindViewModel() {
         
         let input = ChattingViewModel.Input(
             viewDidLoadEvent: Observable.just(()),
-            backButton: mainView.backButton.rx.tap
+            backButton: mainView.backButton.rx.tap,
+            declarationTap: mainView.declarationButton.rx.tap,
+            sendTap: mainView.sendButton.rx.tap
         )
         let output = viewModel.transform(input: input)
+
+        mainView.bindKeyboard()
+        mainView.bindTextView()
+        mainView.bindMenuBar()
         
-        viewModel.chat.subscribe { chat in
-            self.bindDataSource(chat: chat)
-        }.disposed(by: disposeBag)
+        bindInfo(output: output)
+        bindFailed(output: output)
+        bindButtonTapped(output: output)
+    }
+    
+    private func bindDataSource(chat: [ChattingSectionModel]) {
+        Observable<[ChattingSectionModel]>.just(chat)
+            .bind(to: mainView.tableView.rx.items(dataSource: dataSources!))
+            .disposed(by: disposeBag)
+    }
+    
+    private func bindInfo(output: ChattingViewModel.Output) {
+        viewModel.chat
+            .withUnretained(self)
+            .subscribe(onNext: { vc, chat in
+                vc.bindDataSource(chat: chat)
+            })
+            .disposed(by: disposeBag)
         
         output.matchInfo
             .withUnretained(self)
@@ -92,22 +107,16 @@ extension ChattingViewController {
                 vc.viewModel.uid = info.matchedUid ?? ""
                 vc.viewModel.requestChatGet(lastchatDate: "2000-01-01T00:00:00.000Z")
                 guard let nick = info.matchedNick else {return}
-                vc.navigationItem.title = nick // 늦게 뜸 시점;;
+                vc.setTableView(uid: info.matchedUid ?? "", nick: nick)
                 
+                vc.navigationItem.title = nick
             })
             .disposed(by: disposeBag)
         
-        viewModel.chatInfo
-            .withUnretained(self)
-            .subscribe (onNext: { vc, info in 
-                info.payload.forEach { list in
-                    vc.viewModel.sections[0].items.append(SeSACChat(message:  list.chat, createdAt: list.createdAt.toDate().dateStringFormat(), uid: list.from))
-                }
-                
-                vc.viewModel.chat.onNext(vc.viewModel.sections)
-            })
-            .disposed(by: disposeBag)
-        
+        viewModel.bindChatInfo()
+    }
+    
+    private func bindFailed(output: ChattingViewModel.Output) {
         output.networkFailed
             .asDriver(onErrorJustReturn: false)
             .drive (onNext: { [weak self] error in
@@ -125,7 +134,9 @@ extension ChattingViewController {
                     self.view.makeToast("상대방에게 채팅을 보낼 수 없습니다", position: .center)
                 }
             }).disposed(by: disposeBag)
-    
+    }
+
+    private func bindButtonTapped(output: ChattingViewModel.Output) {
         output.backButton
             .withUnretained(self)
             .bind { vc, _ in
@@ -133,11 +144,7 @@ extension ChattingViewController {
             }
             .disposed(by: disposeBag)
         
-        mainView.bindKeyboard()
-        mainView.bindTextView()
-        mainView.bindMenuBar()
-        
-        mainView.declarationButton.rx.tap
+        output.declarationTap
             .withUnretained(self)
             .bind { vc, _ in
                 let viewController = SeSACReviewViewController()
@@ -145,20 +152,21 @@ extension ChattingViewController {
             }
             .disposed(by: disposeBag)
         
-        mainView.sendButton.rx.tap
+        output.sendTap
             .withUnretained(self)
             .bind { vc, _ in
                 vc.viewModel.requestChatPost(chat: vc.mainView.messageTextView.text)
             }
             .disposed(by: disposeBag)
     }
+    
 }
 
 extension ChattingViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row == 0 {
-            return 110
+            return indexPath.section == 0 ? 110 : 60
         } else {
             return UITableView.automaticDimension
         }

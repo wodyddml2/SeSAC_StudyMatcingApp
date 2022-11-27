@@ -107,7 +107,6 @@ extension PopupViewController {
             
             switch StatusCode(rawValue: value) {
             case .success:
-                print(uid)
                 self.dismissToast(message: "스터디 요청을 보냈습니다")
             case .declarationOrMatch:
                 self.acceptPost()
@@ -161,7 +160,6 @@ extension PopupViewController {
                         guard let vc = (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.window?.rootViewController?.topViewController else { return }
                         vc.transition(ChattingViewController(), transitionStyle: .push)
                     }
-                    
                 }
                 // 사용자 현재 상태를 매칭 상태로 변경하고, 팝업 화면을 dismiss 한 뒤, 채팅 화면(1_5_chatting)으로 화면을 전환합니다.
             case .declarationOrMatch:
@@ -170,7 +168,6 @@ extension PopupViewController {
                 self.dismissToast(message: "상대방이 스터디 찾기를 그만두었습니다")
             case .cancelFirst:
                 self.dismissToast(message: "앗! 누군가가 나의 스터디를 수락하였어요!")
-                // myQueue 호출해야함
             case .firebaseError:
                 self.renewalAccpet()
             default:

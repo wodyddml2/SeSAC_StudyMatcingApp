@@ -53,7 +53,6 @@ class SplashViewController: BaseViewController {
                 case .success(let success):
                     print(UserManager.idToken)
                     UserManager.sesacImage = success.sesac
-                    UserManager.myUid = success.uid
                     let vc = TabViewController()
                     sceneDelegate?.window?.rootViewController = vc
                 case .failure(let fail):

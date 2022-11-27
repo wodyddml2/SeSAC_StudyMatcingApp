@@ -89,4 +89,18 @@ class ChattingDateTableViewCell: BaseTableViewCell {
         }
     }
 
+    func labelHidden(hidden: Bool) {
+        alarmImageView.isHidden = hidden
+        alarmLabel.isHidden = hidden
+        infoLabel.isHidden = hidden
+    }
+    
+    func sectionSet(index: Int, text: String) {
+        if index == 0 {
+            labelHidden(hidden: false)
+            alarmLabel.text = text
+        } else {
+            labelHidden(hidden: true)
+        }
+    }
 }

@@ -20,7 +20,7 @@ class ChattingViewModel {
     var getFailed = PublishRelay<Bool>()
     
     var chat = PublishSubject<[ChattingSectionModel]>()
-    var sections: [ChattingSectionModel] = [ChattingSectionModel(items: [SeSACChat()])]
+    var sections: [ChattingSectionModel] = []
     
     var uid: String = ""
     var lastDate: Date = Date()
@@ -147,16 +147,24 @@ extension ChattingViewModel: ViewModelType {
     struct Input {
         let viewDidLoadEvent: Observable<Void>
         let backButton: ControlEvent<Void>
+        let declarationTap: ControlEvent<Void>
+        let sendTap: ControlEvent<Void>
     }
     
     struct Output {
         var matchInfo = PublishSubject<SeSACMatchDTO>()
         var networkFailed = PublishRelay<Bool>()
         let backButton: ControlEvent<Void>
+        let declarationTap: ControlEvent<Void>
+        let sendTap: ControlEvent<Void>
     }
     
     func transform(input: Input) -> Output {
-        let output = Output(backButton: input.backButton)
+        let output = Output(
+            backButton: input.backButton,
+            declarationTap: input.declarationTap,
+            sendTap: input.sendTap
+        )
         
         input.viewDidLoadEvent
             .withUnretained(self)
@@ -166,5 +174,48 @@ extension ChattingViewModel: ViewModelType {
             .disposed(by: disposeBag)
         
         return output
+    }
+}
+
+extension ChattingViewModel {
+    func sectionItems(_ payload: Payload) -> SeSACChat {
+        var dateFormat: String = ""
+        if Date().nowDateFormat(date: "yyyy/M/d") == payload.createdAt.toDate().dateStringFormat(date: "yyyy/M/d") {
+            dateFormat = "a HH:mm"
+        } else {
+            dateFormat = "M/d a HH:mm"
+        }
+        return SeSACChat(
+            message: payload.chat,
+            createdAt: payload.createdAt.toDate().dateStringFormat(date: dateFormat),
+            sectionDate: payload.createdAt.toDate().dateStringFormat(date: "M월 d일 EEEE"),
+            uid: payload.to
+        )
+    }
+    
+    func bindChatInfo() {
+        chatInfo
+            .withUnretained(self)
+            .subscribe (onNext: { vc, info in
+                var sectionCount = 0
+                for i in 0...info.payload.count - 1 {
+                    let sectionItem = vc.sectionItems(info.payload[i])
+                    
+                    if i == 0 {
+                        vc.sections.append(ChattingSectionModel(items: [SeSACChat(sectionDate: info.payload[i].createdAt.toDate().dateStringFormat(date: "M월 d일 EEEE"))]))
+                        vc.sections[sectionCount].items.append(sectionItem)
+                    } else {
+                        if info.payload[i].createdAt.toDate().dateStringFormat(date: "yyyy/M/d") == info.payload[i-1].createdAt.toDate().dateStringFormat(date: "yyyy/M/d") {
+                            vc.sections[sectionCount].items.append(sectionItem)
+                        } else {
+                            sectionCount += 1
+                            vc.sections.append(ChattingSectionModel(items: [SeSACChat(sectionDate: info.payload[i].createdAt.toDate().dateStringFormat(date: "M월 d일 EEEE"))]))
+                            vc.sections[sectionCount].items.append(sectionItem)
+                        }
+                    }
+                }
+                vc.chat.onNext(vc.sections)
+            })
+            .disposed(by: disposeBag)
     }
 }

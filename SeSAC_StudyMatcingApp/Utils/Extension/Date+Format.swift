@@ -15,11 +15,19 @@ extension Date {
         return formatter.string(from: self)
     }
     
-    func dateStringFormat() -> String {
+    func dateStringFormat(date: String) -> String {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "ko_KR")
         formatter.timeZone = TimeZone(identifier: "UTC+18")
-        formatter.dateFormat = "yyyy.MM.dd a hh시 mm분"
+        formatter.dateFormat = date
+        return formatter.string(from: self)
+    }
+    
+    func nowDateFormat(date: String) -> String {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "ko_KR")
+        formatter.timeZone = TimeZone(abbreviation: "KST")
+        formatter.dateFormat = date
         return formatter.string(from: self)
     }
 }

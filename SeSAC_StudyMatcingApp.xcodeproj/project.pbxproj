@@ -42,7 +42,6 @@
 		633AC684292F56E100A3249B /* ChattingSocketService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633AC683292F56E100A3249B /* ChattingSocketService.swift */; };
 		633AC687292F573B00A3249B /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = 633AC686292F573B00A3249B /* SocketIO */; };
 		633AC68A292F5BBD00A3249B /* SocketKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633AC689292F5BBD00A3249B /* SocketKey.swift */; };
-		633AC68C292F698D00A3249B /* ChattingTableViewHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633AC68B292F698D00A3249B /* ChattingTableViewHeaderFooterView.swift */; };
 		633AC68E292F6F2100A3249B /* ChattingDateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633AC68D292F6F2100A3249B /* ChattingDateTableViewCell.swift */; };
 		633AC693292F850A00A3249B /* ChatMenuImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633AC692292F850A00A3249B /* ChatMenuImage.swift */; };
 		633AC695292FC1FC00A3249B /* PopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633AC694292FC1FC00A3249B /* PopupView.swift */; };
@@ -188,7 +187,6 @@
 		6337F01D291A5B57002C81FA /* String+Custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Custom.swift"; sourceTree = "<group>"; };
 		633AC683292F56E100A3249B /* ChattingSocketService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingSocketService.swift; sourceTree = "<group>"; };
 		633AC689292F5BBD00A3249B /* SocketKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketKey.swift; sourceTree = "<group>"; };
-		633AC68B292F698D00A3249B /* ChattingTableViewHeaderFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingTableViewHeaderFooterView.swift; sourceTree = "<group>"; };
 		633AC68D292F6F2100A3249B /* ChattingDateTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingDateTableViewCell.swift; sourceTree = "<group>"; };
 		633AC692292F850A00A3249B /* ChatMenuImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMenuImage.swift; sourceTree = "<group>"; };
 		633AC694292FC1FC00A3249B /* PopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupView.swift; sourceTree = "<group>"; };
@@ -1055,7 +1053,6 @@
 			children = (
 				63004930291EC28E0046E6D3 /* ChattingViewController.swift */,
 				63DACA77292E627C00D0CDB6 /* ChattingView.swift */,
-				633AC68B292F698D00A3249B /* ChattingTableViewHeaderFooterView.swift */,
 				63DACA6E292E557C00D0CDB6 /* Cells */,
 			);
 			path = View;
@@ -1310,7 +1307,6 @@
 				6300491D291E4F570046E6D3 /* SplashViewController.swift in Sources */,
 				63DACA7A292E895F00D0CDB6 /* ChattingViewModel.swift in Sources */,
 				635E1624291C23CE0042E8E4 /* NicknameViewModel.swift in Sources */,
-				633AC68C292F698D00A3249B /* ChattingTableViewHeaderFooterView.swift in Sources */,
 				631DC94B29210FB300F23211 /* SettingTableViewCell.swift in Sources */,
 				636B6E4B292CDA6A00CED2F2 /* ReviewTableViewController.swift in Sources */,
 				637EDF4429253039009089E4 /* BaseCollectionViewCell.swift in Sources */,
