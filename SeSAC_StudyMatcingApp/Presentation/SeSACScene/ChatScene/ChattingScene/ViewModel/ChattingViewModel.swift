@@ -193,6 +193,24 @@ extension ChattingViewModel {
         )
     }
     
+    func sectionItem(item: SeSACChat) {
+        var sectionCount = sections.isEmpty ? 0 : sections.count - 1
+        let rowCount = sections[sectionCount].items.count - 1
+
+        if sections.isEmpty {
+            sections.append(ChattingSectionModel(items: [SeSACChat(sectionDate: item.sectionDate)]))
+            sections[sectionCount].items.append(item)
+        } else {
+            if sections[sectionCount].items[rowCount].sectionDate == item.sectionDate {
+                sections[sectionCount].items.append(item)
+            } else {
+                sectionCount += 1
+                sections.append(ChattingSectionModel(items: [SeSACChat(sectionDate: item.sectionDate)]))
+                sections[sectionCount].items.append(item)
+            }
+        }
+    }
+    
     
     func bindChatInfo() {
         chatInfo
@@ -223,24 +241,10 @@ extension ChattingViewModel {
     func bindPostInfo() {
         postInfo
             .withUnretained(self)
-            .subscribe { vc, info in
-                var sectionCount = vc.sections.isEmpty ? 0 : vc.sections.count - 1
-                let rowCount = vc.sections[sectionCount].items.count - 1
-
-                if vc.sections.isEmpty {
-                    vc.sections.append(ChattingSectionModel(items: [SeSACChat(sectionDate: info.createdAt.toDate().dateStringFormat(date: "M월 d일 EEEE"))]))
-                    vc.sections[sectionCount].items.append(info.toDomain(dateFormat: "a HH:mm"))
-                } else {
-                    if vc.sections[sectionCount].items[rowCount].sectionDate == info.createdAt.toDate().dateStringFormat(date: "M월 d일 EEEE") {
-                        vc.sections[sectionCount].items.append(info.toDomain(dateFormat: "a HH:mm"))
-                    } else {
-                        sectionCount += 1
-                        vc.sections.append(ChattingSectionModel(items: [SeSACChat(sectionDate: info.createdAt.toDate().dateStringFormat(date: "M월 d일 EEEE"))]))
-                        vc.sections[sectionCount].items.append(info.toDomain(dateFormat: "a HH:mm"))
-                    }
-                }
+            .subscribe(onNext: { vc, info in
+                vc.sectionItem(item: info.toDomain(dateFormat: "a HH:mm"))
                 vc.chat.onNext(vc.sections)
-            }
-            .disposed(by: disposeBag)
+            })
+            .disposed(by: disposeBag) 
     }
 }

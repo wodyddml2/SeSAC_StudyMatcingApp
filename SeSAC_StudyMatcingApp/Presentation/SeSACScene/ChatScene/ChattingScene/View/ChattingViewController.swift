@@ -37,13 +37,19 @@ final class ChattingViewController: BaseViewController {
     }
     @objc func getMessage(notification: NSNotification) {
         
-//        let id = notification.userInfo!["id"] as! String
+
         let chat = notification.userInfo!["chat"] as! String
         let otherId = notification.userInfo!["otherId"] as! String
-//        let userId = notification.userInfo!["userId"] as! String
+        let userId = notification.userInfo!["userId"] as! String
         let createdAt = notification.userInfo!["createdAt"] as! String
-        
-        viewModel.sections[viewModel.sections.count - 1].items.append(SeSACChat(message: chat, createdAt: createdAt.toDate().dateStringFormat(date: "M/d"), uid: otherId))
+  
+        let sesacChat = SeSACChat(
+            message: chat,
+            createdAt: createdAt.toDate().dateStringFormat(date: "a HH:mm"),
+            sectionDate: createdAt.toDate().dateStringFormat(date: "M월 d일 EEEE"),
+            from: userId,
+            uid: otherId)
+        viewModel.sectionItem(item: sesacChat)
         
         viewModel.chat.onNext(viewModel.sections)
         
