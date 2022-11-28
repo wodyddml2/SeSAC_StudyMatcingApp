@@ -18,35 +18,35 @@ class ChattingSocketService {
     
     private init() {
         
-        manager = SocketManager(socketURL: URL(string: SocketKey.baseURL + SocketKey.chat)!, config: [
-            .log(true)
+        manager = SocketManager(socketURL: URL(string: SocketKey.baseURL)!, config: [
+            .log(true),
+            .forceWebsockets(true)
         ])
         
         socket = manager.defaultSocket
         
-        socket.on(clientEvent: .connect) { data, ack in
+        socket.on(clientEvent: .connect) { [weak self] data, ack in
+            guard let self = self else {return}
             print("SOCKET IS CONNECTED", data, ack)
+            self.socket.emit("changesocketid", "UbZabmbKOXUXcn35j042RepmtBG3")
         }
         
         socket.on(clientEvent: .disconnect) { data, ack in
             print("SOCKET IS DISCONNECTED", data, ack)
         }
-        
-        socket.on("sesac") { dataArray, ack in
-            print("SESAC RECEIVED", dataArray, ack)
-            
-           let data = dataArray[0] as! NSDictionary
+
+        socket.on("chat") { dataArray, ack in
+            let data = dataArray[0] as! NSDictionary
+            let id = data["_id"] as! String
             let chat = data["chat"] as! String
             let otherId = data["to"] as! String
             let userId = data["from"] as! String
             let createdAt = data["createdAt"] as! String
-            
-            print("CHECK >>>", chat, userId, createdAt)
-            
+
             NotificationCenter.default.post(
                 name: Notification.Name("getMessage"),
                 object: self,
-                userInfo: ["chat": chat, "otherId": otherId, "createdAt": createdAt, "userId": userId]
+                userInfo: ["id": id, "chat": chat, "otherId": otherId, "createdAt": createdAt, "userId": userId]
             )
         }
     }
@@ -58,4 +58,13 @@ class ChattingSocketService {
     func closeConnection() {
         socket.disconnect()
     }
+}
+
+enum SocketNotificationName {
+    static let id = "id"
+    static let chat = "chat"
+    static let otherId = "otherId"
+    static let userId = "userId"
+    static let createdAt = "createdAt"
+    static let getMessage = "getMessage"
 }

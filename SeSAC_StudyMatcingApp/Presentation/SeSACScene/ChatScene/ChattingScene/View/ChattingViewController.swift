@@ -27,7 +27,29 @@ final class ChattingViewController: BaseViewController {
         
         bindViewModel()
         navigationBarStyle()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(getMessage(notification:)), name: NSNotification.Name("getMessage"), object: nil)
     }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        ChattingSocketService.shared.closeConnection()
+    }
+    @objc func getMessage(notification: NSNotification) {
+        
+//        let id = notification.userInfo!["id"] as! String
+        let chat = notification.userInfo!["chat"] as! String
+        let otherId = notification.userInfo!["otherId"] as! String
+//        let userId = notification.userInfo!["userId"] as! String
+        let createdAt = notification.userInfo!["createdAt"] as! String
+        
+        viewModel.sections[viewModel.sections.count - 1].items.append(SeSACChat(message: chat, createdAt: createdAt.toDate().dateStringFormat(date: "M/d"), uid: otherId))
+        
+        viewModel.chat.onNext(viewModel.sections)
+        
+//        mainView.tableView.scrollToRow(at: IndexPath(row: viewModel.sections[viewModel.sections.count - 1].items.count - 1, section: viewModel.sections.count - 1), at: .bottom, animated: false)
+    }
+    
 }
 
 extension ChattingViewController {
@@ -69,7 +91,6 @@ extension ChattingViewController {
 
 extension ChattingViewController {
     private func bindViewModel() {
-        
         let input = ChattingViewModel.Input(
             viewDidLoadEvent: Observable.just(()),
             backButton: mainView.backButton.rx.tap,
@@ -87,19 +108,13 @@ extension ChattingViewController {
         bindButtonTapped(output: output)
     }
     
-    private func bindDataSource(chat: [ChattingSectionModel]) {
-        Observable<[ChattingSectionModel]>.just(chat)
+    private func bindDataSource() {
+        viewModel.chat
             .bind(to: mainView.tableView.rx.items(dataSource: dataSources!))
             .disposed(by: disposeBag)
     }
     
     private func bindInfo(output: ChattingViewModel.Output) {
-        viewModel.chat
-            .withUnretained(self)
-            .subscribe(onNext: { vc, chat in
-                vc.bindDataSource(chat: chat)
-            })
-            .disposed(by: disposeBag)
         
         output.matchInfo
             .withUnretained(self)
@@ -108,12 +123,13 @@ extension ChattingViewController {
                 vc.viewModel.requestChatGet(lastchatDate: "2000-01-01T00:00:00.000Z")
                 guard let nick = info.matchedNick else {return}
                 vc.setTableView(uid: info.matchedUid ?? "", nick: nick)
-                
+                vc.bindDataSource()
                 vc.navigationItem.title = nick
             })
             .disposed(by: disposeBag)
         
         viewModel.bindChatInfo()
+        viewModel.bindPostInfo()
     }
     
     private func bindFailed(output: ChattingViewModel.Output) {

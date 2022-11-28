@@ -16,3 +16,15 @@ struct SeSACChatPostDTO: Codable {
         case to, from, chat, createdAt
     }
 }
+
+extension SeSACChatPostDTO {
+    func toDomain(dateFormat: String) -> SeSACChat {
+        return .init(
+            message: chat,
+            createdAt: createdAt.toDate().dateStringFormat(date: dateFormat),
+            sectionDate: createdAt.toDate().dateStringFormat(date: "M월 d일 EEEE"),
+            from: from,
+            uid: to
+        )
+    }
+}

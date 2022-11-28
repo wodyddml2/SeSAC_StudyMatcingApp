@@ -16,6 +16,7 @@ class ChattingViewModel {
     let disposeBag = DisposeBag()
     
     var chatInfo = PublishSubject<SeSACChatGetDTO>()
+    var postInfo = PublishSubject<SeSACChatPostDTO>()
     var postFailed = PublishRelay<Bool>()
     var getFailed = PublishRelay<Bool>()
     
@@ -72,12 +73,11 @@ class ChattingViewModel {
             
             guard let self = self else {return}
             switch result {
-            case .success(let ss):
-                ChattingSocketService.shared.establishConnection()
-                print("=======\(ss)")
+            case .success(let success):
+                self.postInfo.onNext(success)
+                print("=======\(success)")
             case .failure(let fail):
                 let error = fail as! SeSACError
-                print(error.rawValue)
                 switch error {
                 case .firebaseTokenError:
                     self.renewalChatPost(chat: chat)
@@ -98,7 +98,6 @@ class ChattingViewModel {
             }
             if let idToken = idToken {
                 UserManager.idToken = idToken
-                
                 self.requestChatPost(chat: chat)
             }
         }
@@ -110,10 +109,10 @@ class ChattingViewModel {
             guard let self = self else {return}
             switch result {
             case .success(let success):
+                ChattingSocketService.shared.establishConnection()
                 self.chatInfo.onNext(success)
             case .failure(let fail):
                 let error = fail as! SeSACError
-                print(error.rawValue)
                 switch error {
                 case .firebaseTokenError:
                     self.renewalChatGet(lastchatDate: lastchatDate)
@@ -189,9 +188,11 @@ extension ChattingViewModel {
             message: payload.chat,
             createdAt: payload.createdAt.toDate().dateStringFormat(date: dateFormat),
             sectionDate: payload.createdAt.toDate().dateStringFormat(date: "M월 d일 EEEE"),
+            from: payload.from,
             uid: payload.to
         )
     }
+    
     
     func bindChatInfo() {
         chatInfo
@@ -216,6 +217,30 @@ extension ChattingViewModel {
                 }
                 vc.chat.onNext(vc.sections)
             })
+            .disposed(by: disposeBag)
+    }
+    
+    func bindPostInfo() {
+        postInfo
+            .withUnretained(self)
+            .subscribe { vc, info in
+                var sectionCount = vc.sections.isEmpty ? 0 : vc.sections.count - 1
+                let rowCount = vc.sections[sectionCount].items.count - 1
+
+                if vc.sections.isEmpty {
+                    vc.sections.append(ChattingSectionModel(items: [SeSACChat(sectionDate: info.createdAt.toDate().dateStringFormat(date: "M월 d일 EEEE"))]))
+                    vc.sections[sectionCount].items.append(info.toDomain(dateFormat: "a HH:mm"))
+                } else {
+                    if vc.sections[sectionCount].items[rowCount].sectionDate == info.createdAt.toDate().dateStringFormat(date: "M월 d일 EEEE") {
+                        vc.sections[sectionCount].items.append(info.toDomain(dateFormat: "a HH:mm"))
+                    } else {
+                        sectionCount += 1
+                        vc.sections.append(ChattingSectionModel(items: [SeSACChat(sectionDate: info.createdAt.toDate().dateStringFormat(date: "M월 d일 EEEE"))]))
+                        vc.sections[sectionCount].items.append(info.toDomain(dateFormat: "a HH:mm"))
+                    }
+                }
+                vc.chat.onNext(vc.sections)
+            }
             .disposed(by: disposeBag)
     }
 }

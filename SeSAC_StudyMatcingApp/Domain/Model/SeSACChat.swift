@@ -11,12 +11,14 @@ struct SeSACChat {
     var message: String
     var createdAt: String
     var sectionDate: String
+    var from: String
     var uid: String
     
-    init(message: String = "", createdAt: String = "", sectionDate: String = "", uid: String = "") {
+    init(message: String = "", createdAt: String = "", sectionDate: String = "", from: String = "",uid: String = "") {
         self.message = message
         self.createdAt = createdAt
         self.sectionDate = sectionDate
+        self.from = from
         self.uid = uid
     }
 }
