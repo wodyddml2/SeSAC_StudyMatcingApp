@@ -183,23 +183,31 @@ extension ChattingViewModel: ViewModelType {
 
 extension ChattingViewModel {
     
-    func dataChatItems(chat: List<ChatData>) {
-        
-        var dateFormat: String = ""
-        
-        if Date().nowDateFormat(date: "yyyy/M/d") == chat[0].createdAt.toDate().dateStringFormat(date: "yyyy/M/d") {
-            dateFormat = "a HH:mm"
-        } else {
-            dateFormat = "M/d a HH:mm"
-        }
-        
-        chat
-    }
+//    func dataChatItems(list: Results<ChatListData>) {
+//
+//        var dateFormat: String = ""
+//
+//        for chatList in list {
+//            if Date().nowDateFormat(date: "yyyy/M/d") == chatList.chatInfo[0].createdAt.toDate().dateStringFormat(date: "yyyy/M/d") {
+//                dateFormat = "a HH:mm"
+//            } else {
+//                dateFormat = "M/d a HH:mm"
+//            }
+//            do {
+//                try repository.updateChat(list: <#T##ChatListData#>, <#T##index: Int##Int#>, date: <#T##String#>)
+//            } catch {
+//                print("Ssss")
+//            }
+//        }
+//
+//
+//    }
     
     func fetchChat(list: Results<ChatListData>) {
         var sectionCount = 0
         for i in 0...list.count - 1 {
-            let sectionItem = dataChatItems(chat: list[i].chatInfo)
+           
+//            let sectionItem = dataChatItems(list: list)
             
 //            if i == 0 {
 //                vc.sections.append(ChattingSectionModel(items: [SeSACChat(sectionDate: info.payload[i].createdAt.toDate().dateStringFormat(date: "M월 d일 EEEE"))]))
@@ -240,15 +248,13 @@ extension ChattingViewModel {
         let rowCount = sections[sectionCount].items.count - 1
     
         if sections.isEmpty {
-            sections.append(ChattingSectionModel(items: [SeSACChat(sectionDate: item.sectionDate)]))
-            sections[sectionCount].items.append(item)
+            sections.append(ChattingSectionModel(items: [item, item]))
         } else {
             if sections[sectionCount].items[rowCount].sectionDate == item.sectionDate {
                 sections[sectionCount].items.append(item)
             } else {
                 sectionCount += 1
-                sections.append(ChattingSectionModel(items: [SeSACChat(sectionDate: item.sectionDate)]))
-                sections[sectionCount].items.append(item)
+                sections.append(ChattingSectionModel(items: [item, item]))
             }
         }
     }
@@ -293,34 +299,32 @@ extension ChattingViewModel {
 }
 
 extension ChattingViewModel {
-    func addChats() {
-        do {
-            try repository.deleteRealm()
-        } catch {
-            print("ss")
-        }
-
-        for section in sections {
-            let task = ChatListData()
-            for item in section.items {
-                task.chatInfo.append(ChatData(message: item.message, createdAt: item.createdAt, sectionDate: item.sectionDate, from: item.from, uid: item.uid, originCreated: item.originCreated))
-            }
-            do {
-                try repository.addRealm(item: task)
-            } catch {
-                print("ee")
-            }
-        }
-    }
+//    func addChats() {
+//        do {
+//            try repository.deleteRealm()
+//        } catch {
+//            print("ss")
+//        }
+//
+//        for section in sections {
+//            let task = ChatListData()
+//            for item in section.items {
+//                task.chatInfo.append(ChatData(message: item.message, createdAt: item.createdAt, from: item.from, uid: item.uid))
+//            }
+//            do {
+//                try repository.addRealm(item: task)
+//            } catch {
+//                print("ee")
+//            }
+//        }
+//    }
     
     func addChat(item: SeSACChat) {
         guard let tasks = tasks else {return}
-        
-        let outSectionCount = tasks.count - 1
-        let inSectionCount = tasks[outSectionCount].chatInfo.count - 1
-        
+        print(tasks.isEmpty)
+
         let task = ChatListData()
-        let chat = ChatData(message: item.message, createdAt: item.createdAt, sectionDate: item.sectionDate, from: item.from, uid: item.uid, originCreated: item.originCreated)
+        let chat = ChatData(message: item.message, createdAt: item.createdAt, from: item.from, uid: item.uid)
         if tasks.isEmpty {
             for _ in 0...1 {
                 task.chatInfo.append(chat)
@@ -332,7 +336,9 @@ extension ChattingViewModel {
                 print("SSSSSS")
             }
         } else {
-            if Date().nowDateFormat(date: "M월 d일 EEEE") == tasks[outSectionCount].chatInfo[inSectionCount].sectionDate {
+            let outSectionCount = tasks.count - 1
+            let inSectionCount = tasks[outSectionCount].chatInfo.count - 1
+            if Date().nowDateFormat(date: "M월 d일 EEEE") == tasks[outSectionCount].chatInfo[inSectionCount].createdAt.toDate().dateStringFormat(date: "M월 d일 EEEE") {
                 do {
                     try repository.appendChat(list: tasks[outSectionCount], item: chat)
                 } catch {

@@ -33,9 +33,9 @@ class ChatRepository {
         }
     }
     
-//    func updateChat(list: ChatListData, _ index: Int, item: ChatData) throws {
+//    func updateChat(list: ChatListData, _ index: Int, date: String) throws {
 //        try localRealm.write({
-//            list.chatInfo[index].createdAt = 
+//            list.chatInfo[index].createdAt = list.chatInfo[index].originCreated.toDate().dateStringFormat(date: date)
 //        })
 //    }
 }
