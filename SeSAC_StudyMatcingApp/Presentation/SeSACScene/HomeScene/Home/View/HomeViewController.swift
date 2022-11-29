@@ -14,6 +14,7 @@ import RxSwift
 final class HomeViewController: BaseViewController {
     
     private let locationManager = CLLocationManager()
+    let repository = ChatRepository()
 
     let mainView = HomeView()
     let viewModel = HomeViewModel()
@@ -27,6 +28,7 @@ final class HomeViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("FileURL: \(repository.localRealm.configuration.fileURL!)")
         checkUserDeviceLocationSeviceAuthorization()
         bindViewModel()
         locationManager.delegate = self

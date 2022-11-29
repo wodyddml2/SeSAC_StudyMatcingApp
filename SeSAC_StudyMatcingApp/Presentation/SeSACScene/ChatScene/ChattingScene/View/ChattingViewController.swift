@@ -9,6 +9,7 @@ import UIKit
 
 import RxSwift
 import RxDataSources
+import RealmSwift
 
 final class ChattingViewController: BaseViewController {
 
@@ -29,14 +30,17 @@ final class ChattingViewController: BaseViewController {
         navigationBarStyle()
         
         NotificationCenter.default.addObserver(self, selector: #selector(getMessage(notification:)), name: NSNotification.Name("getMessage"), object: nil)
+        
+        
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         ChattingSocketService.shared.closeConnection()
+        viewModel.addChats()
     }
+   
     @objc func getMessage(notification: NSNotification) {
-        
 
         let chat = notification.userInfo!["chat"] as! String
         let otherId = notification.userInfo!["otherId"] as! String
@@ -48,13 +52,15 @@ final class ChattingViewController: BaseViewController {
             createdAt: createdAt.toDate().dateStringFormat(date: "a HH:mm"),
             sectionDate: createdAt.toDate().dateStringFormat(date: "M월 d일 EEEE"),
             from: userId,
-            uid: otherId)
+            uid: otherId,
+            originCreated: createdAt
+        )
         viewModel.sectionItem(item: sesacChat)
         
         viewModel.chat.onNext(viewModel.sections)
         
-//        mainView.tableView.scrollToRow(at: IndexPath(row: viewModel.sections[viewModel.sections.count - 1].items.count - 1, section: viewModel.sections.count - 1), at: .bottom, animated: false)
-    }
+        viewModel.addChat(item: sesacChat)
+   }
     
 }
 
@@ -93,6 +99,13 @@ extension ChattingViewController {
         mainView.tableView.rx.setDelegate(self)
             .disposed(by: disposeBag)
     }
+    
+    func scrollToBottom() {
+        let sectionCount = viewModel.sections.count - 1
+        if sectionCount >= 0 {
+            mainView.tableView.scrollToRow(at: IndexPath(row: viewModel.sections[sectionCount].items.count - 1, section: sectionCount), at: .bottom, animated: false)
+        }
+    }
 }
 
 extension ChattingViewController {
@@ -128,14 +141,18 @@ extension ChattingViewController {
                 vc.viewModel.uid = info.matchedUid ?? ""
                 vc.viewModel.requestChatGet(lastchatDate: "2000-01-01T00:00:00.000Z")
                 guard let nick = info.matchedNick else {return}
+                vc.navigationItem.title = nick
                 vc.setTableView(uid: info.matchedUid ?? "", nick: nick)
                 vc.bindDataSource()
-                vc.navigationItem.title = nick
             })
             .disposed(by: disposeBag)
         
         viewModel.bindChatInfo()
-        viewModel.bindPostInfo()
+        viewModel.bindPostInfo { [weak self] in
+            guard let self = self else {return}
+            
+            self.scrollToBottom()
+        }
     }
     
     private func bindFailed(output: ChattingViewModel.Output) {
@@ -178,6 +195,7 @@ extension ChattingViewController {
             .withUnretained(self)
             .bind { vc, _ in
                 vc.viewModel.requestChatPost(chat: vc.mainView.messageTextView.text)
+                vc.scrollToBottom()
             }
             .disposed(by: disposeBag)
     }

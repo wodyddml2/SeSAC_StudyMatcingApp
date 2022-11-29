@@ -99,8 +99,14 @@ extension MessageViewController {
                             if let idToken = idToken {
                                 SeSACAPIService.shared.requestSeSACAPI(type: SESACLoginDTO.self ,router: Router.loginGet(query: idToken)) { result in
                                     switch result {
-                                    case .success(let success):
+                                    case .success(_):
                                         UserManager.signupStatus = true
+                                        UserManager.idToken = idToken
+                                        let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+                                        let sceneDelegate = windowScene?.delegate as? SceneDelegate
+                                        let vc = TabViewController()
+                                        sceneDelegate?.window?.rootViewController = vc
+                                        sceneDelegate?.window?.makeKeyAndVisible()
                                     case .failure(let fail):
                                         let error = fail as! SeSACError
                                         if error == SeSACError.noSignup {

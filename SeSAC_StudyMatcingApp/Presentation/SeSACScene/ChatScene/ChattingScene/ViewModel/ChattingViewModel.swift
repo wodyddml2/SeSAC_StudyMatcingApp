@@ -10,10 +10,13 @@ import Foundation
 import FirebaseAuth
 import RxSwift
 import RxCocoa
+import RealmSwift
 
 class ChattingViewModel {
     
     let disposeBag = DisposeBag()
+    let repository = ChatRepository()
+    private var tasks: Results<ChatListData>?
     
     var chatInfo = PublishSubject<SeSACChatGetDTO>()
     var postInfo = PublishSubject<SeSACChatPostDTO>()
@@ -75,7 +78,7 @@ class ChattingViewModel {
             switch result {
             case .success(let success):
                 self.postInfo.onNext(success)
-                print("=======\(success)")
+                self.addChat(item: success.toDomain(dateFormat: "a HH:mm"))
             case .failure(let fail):
                 let error = fail as! SeSACError
                 switch error {
@@ -169,6 +172,8 @@ extension ChattingViewModel: ViewModelType {
             .withUnretained(self)
             .subscribe { vc, _ in
                 vc.requestMyQueue(output: output)
+                vc.tasks = vc.repository.fetch()
+//                vc.sections = vc.tasks
             }
             .disposed(by: disposeBag)
         
@@ -177,6 +182,42 @@ extension ChattingViewModel: ViewModelType {
 }
 
 extension ChattingViewModel {
+    
+    func dataChatItems(chat: List<ChatData>) {
+        
+        var dateFormat: String = ""
+        
+        if Date().nowDateFormat(date: "yyyy/M/d") == chat[0].createdAt.toDate().dateStringFormat(date: "yyyy/M/d") {
+            dateFormat = "a HH:mm"
+        } else {
+            dateFormat = "M/d a HH:mm"
+        }
+        
+        chat
+    }
+    
+    func fetchChat(list: Results<ChatListData>) {
+        var sectionCount = 0
+        for i in 0...list.count - 1 {
+            let sectionItem = dataChatItems(chat: list[i].chatInfo)
+            
+//            if i == 0 {
+//                vc.sections.append(ChattingSectionModel(items: [SeSACChat(sectionDate: info.payload[i].createdAt.toDate().dateStringFormat(date: "M월 d일 EEEE"))]))
+//                vc.sections[sectionCount].items.append(sectionItem)
+//            } else {
+//                if info.payload[i].createdAt.toDate().dateStringFormat(date: "yyyy/M/d") == info.payload[i-1].createdAt.toDate().dateStringFormat(date: "yyyy/M/d") {
+//                    vc.sections[sectionCount].items.append(sectionItem)
+//                } else {
+//                    sectionCount += 1
+//                    vc.sections.append(ChattingSectionModel(items: [SeSACChat(sectionDate: info.payload[i].createdAt.toDate().dateStringFormat(date: "M월 d일 EEEE"))]))
+//                    vc.sections[sectionCount].items.append(sectionItem)
+//                }
+//            }
+        }
+//        vc.chat.onNext(vc.sections)
+    }
+    
+    
     func sectionItems(_ payload: Payload) -> SeSACChat {
         var dateFormat: String = ""
         if Date().nowDateFormat(date: "yyyy/M/d") == payload.createdAt.toDate().dateStringFormat(date: "yyyy/M/d") {
@@ -189,14 +230,15 @@ extension ChattingViewModel {
             createdAt: payload.createdAt.toDate().dateStringFormat(date: dateFormat),
             sectionDate: payload.createdAt.toDate().dateStringFormat(date: "M월 d일 EEEE"),
             from: payload.from,
-            uid: payload.to
+            uid: payload.to,
+            originCreated: payload.createdAt
         )
     }
     
     func sectionItem(item: SeSACChat) {
         var sectionCount = sections.isEmpty ? 0 : sections.count - 1
         let rowCount = sections[sectionCount].items.count - 1
-
+    
         if sections.isEmpty {
             sections.append(ChattingSectionModel(items: [SeSACChat(sectionDate: item.sectionDate)]))
             sections[sectionCount].items.append(item)
@@ -221,14 +263,14 @@ extension ChattingViewModel {
                     let sectionItem = vc.sectionItems(info.payload[i])
                     
                     if i == 0 {
-                        vc.sections.append(ChattingSectionModel(items: [SeSACChat(sectionDate: info.payload[i].createdAt.toDate().dateStringFormat(date: "M월 d일 EEEE"))]))
+                        vc.sections.append(ChattingSectionModel(items: [sectionItem]))
                         vc.sections[sectionCount].items.append(sectionItem)
                     } else {
                         if info.payload[i].createdAt.toDate().dateStringFormat(date: "yyyy/M/d") == info.payload[i-1].createdAt.toDate().dateStringFormat(date: "yyyy/M/d") {
                             vc.sections[sectionCount].items.append(sectionItem)
                         } else {
                             sectionCount += 1
-                            vc.sections.append(ChattingSectionModel(items: [SeSACChat(sectionDate: info.payload[i].createdAt.toDate().dateStringFormat(date: "M월 d일 EEEE"))]))
+                            vc.sections.append(ChattingSectionModel(items: [sectionItem]))
                             vc.sections[sectionCount].items.append(sectionItem)
                         }
                     }
@@ -238,13 +280,75 @@ extension ChattingViewModel {
             .disposed(by: disposeBag)
     }
     
-    func bindPostInfo() {
+    func bindPostInfo(completion: @escaping() -> Void) {
         postInfo
             .withUnretained(self)
             .subscribe(onNext: { vc, info in
                 vc.sectionItem(item: info.toDomain(dateFormat: "a HH:mm"))
                 vc.chat.onNext(vc.sections)
+                completion()
             })
             .disposed(by: disposeBag) 
+    }
+}
+
+extension ChattingViewModel {
+    func addChats() {
+        do {
+            try repository.deleteRealm()
+        } catch {
+            print("ss")
+        }
+
+        for section in sections {
+            let task = ChatListData()
+            for item in section.items {
+                task.chatInfo.append(ChatData(message: item.message, createdAt: item.createdAt, sectionDate: item.sectionDate, from: item.from, uid: item.uid, originCreated: item.originCreated))
+            }
+            do {
+                try repository.addRealm(item: task)
+            } catch {
+                print("ee")
+            }
+        }
+    }
+    
+    func addChat(item: SeSACChat) {
+        guard let tasks = tasks else {return}
+        
+        let outSectionCount = tasks.count - 1
+        let inSectionCount = tasks[outSectionCount].chatInfo.count - 1
+        
+        let task = ChatListData()
+        let chat = ChatData(message: item.message, createdAt: item.createdAt, sectionDate: item.sectionDate, from: item.from, uid: item.uid, originCreated: item.originCreated)
+        if tasks.isEmpty {
+            for _ in 0...1 {
+                task.chatInfo.append(chat)
+            }
+            
+            do {
+                try repository.addRealm(item: task)
+            } catch {
+                print("SSSSSS")
+            }
+        } else {
+            if Date().nowDateFormat(date: "M월 d일 EEEE") == tasks[outSectionCount].chatInfo[inSectionCount].sectionDate {
+                do {
+                    try repository.appendChat(list: tasks[outSectionCount], item: chat)
+                } catch {
+                    print("SSs")
+                }
+            } else {
+                for _ in 0...1 {
+                    task.chatInfo.append(chat)
+                }
+                
+                do {
+                    try repository.addRealm(item: task)
+                } catch {
+                    print("SSSSSS")
+                }
+            }
+        }
     }
 }

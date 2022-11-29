@@ -43,6 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if let error = error {
                 print(error)
             } else if let token = token {
+                print(token)
                 UserManager.fcmToken = token
             }
         }
@@ -66,5 +67,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 }
 extension AppDelegate: MessagingDelegate, UNUserNotificationCenterDelegate {
-
+//    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
+//        let dataDictonary: [String: String] = ["token": fcmToken ?? ""]
+//        guard let fcmToken = fcmToken else { return }
+//        UserManager.fcmToken =  fcmToken
+//        //print(UserManager.fcmToken)
+//        NotificationCenter.default.post(name: Notification.Name("FCMToken"), object: nil, userInfo: dataDictonary)
+//    }
 }

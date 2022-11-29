@@ -49,10 +49,13 @@ class SplashViewController: BaseViewController {
         if UserManager.onboarding {
             SeSACAPIService.shared.requestSeSACAPI(type: SESACLoginDTO.self ,router: Router.loginGet(query: UserManager.idToken)) { [weak self] result in
                 guard let self = self else {return}
+                print(UserManager.idToken)
+                print(UserManager.fcmToken)
                 switch result {
                 case .success(let success):
-                    print(UserManager.idToken)
+                    
                     UserManager.sesacImage = success.sesac
+                    UserManager.myUID = success.uid
                     let vc = TabViewController()
                     sceneDelegate?.window?.rootViewController = vc
                 case .failure(let fail):
@@ -65,6 +68,7 @@ class SplashViewController: BaseViewController {
                         let vc = UINavigationController(rootViewController: NumberViewController())
                         sceneDelegate?.window?.rootViewController = vc
                     default:
+                        print(error.rawValue)
                         UserManager.signupStatus = true
                         let vc = UINavigationController(rootViewController: NumberViewController())
                         sceneDelegate?.window?.rootViewController = vc
