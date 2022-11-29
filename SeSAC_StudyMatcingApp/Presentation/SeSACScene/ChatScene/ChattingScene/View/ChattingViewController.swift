@@ -9,6 +9,7 @@ import UIKit
 
 import RxSwift
 import RxDataSources
+import RxKeyboard
 import RealmSwift
 
 final class ChattingViewController: BaseViewController {
@@ -117,11 +118,12 @@ extension ChattingViewController {
             sendTap: mainView.sendButton.rx.tap
         )
         let output = viewModel.transform(input: input)
-
+        
         mainView.bindKeyboard()
         mainView.bindTextView()
         mainView.bindMenuBar()
         
+        bindScrollTo()
         bindInfo(output: output)
         bindFailed(output: output)
         bindButtonTapped(output: output)
@@ -134,7 +136,6 @@ extension ChattingViewController {
     }
     
     private func bindInfo(output: ChattingViewModel.Output) {
-        
         output.matchInfo
             .withUnretained(self)
             .subscribe (onNext: { vc, info in
@@ -155,11 +156,7 @@ extension ChattingViewController {
             .disposed(by: disposeBag)
         
         viewModel.bindChatInfo()
-        viewModel.bindPostInfo { [weak self] in
-            guard let self = self else {return}
-            
-            self.scrollToBottom()
-        }
+        viewModel.bindPostInfo()
     }
     
     private func bindFailed(output: ChattingViewModel.Output) {
@@ -178,6 +175,34 @@ extension ChattingViewController {
                 guard let self = self else {return}
                 if error == true {
                     self.view.makeToast("상대방에게 채팅을 보낼 수 없습니다", position: .center)
+                }
+            }).disposed(by: disposeBag)
+    }
+    
+    func bindScrollTo() {
+        RxKeyboard.instance.visibleHeight
+            .skip(1)
+            .drive (onNext: { [weak self] height in
+                guard let self = self else {return}
+                UIView.animate(withDuration: 0) {
+                    self.mainView.sendButton.setImage(UIImage(named: "act"), for: .normal)
+                    self.mainView.messageTextView.snp.updateConstraints { make in
+                        make.bottom.equalTo(self.mainView.safeAreaLayoutGuide).inset(height - self.mainView.bottomHeight())
+                    }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                        self.scrollToBottom()
+                    }
+                }
+                self.mainView.layoutIfNeeded()
+            })
+            .disposed(by: disposeBag)
+
+        viewModel.scrollTo
+            .asDriver(onErrorJustReturn: false)
+            .drive (onNext: { [weak self] ok in
+                guard let self = self else {return}
+                if ok {
+                    self.scrollToBottom()
                 }
             }).disposed(by: disposeBag)
     }

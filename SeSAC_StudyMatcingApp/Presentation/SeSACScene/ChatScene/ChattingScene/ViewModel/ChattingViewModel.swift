@@ -22,6 +22,7 @@ class ChattingViewModel {
     var postInfo = PublishSubject<SeSACChatPostDTO>()
     var postFailed = PublishRelay<Bool>()
     var getFailed = PublishRelay<Bool>()
+    var scrollTo = PublishRelay<Bool>()
     
     var chat = PublishSubject<[ChattingSectionModel]>()
     var sections: [ChattingSectionModel] = []
@@ -180,7 +181,7 @@ extension ChattingViewModel: ViewModelType {
 }
 
 extension ChattingViewModel {
-
+    
     func sectionItems(_ payload: Payload) -> SeSACChat {
         var dateFormat: String = ""
         if Date().nowDateFormat(date: "yyyy/M/d") == payload.createdAt.toDate().dateStringFormat(date: "yyyy/M/d") {
@@ -201,7 +202,7 @@ extension ChattingViewModel {
     func sectionItem(item: SeSACChat) {
         var sectionCount = sections.isEmpty ? 0 : sections.count - 1
         let rowCount = sections[sectionCount].items.count - 1
-    
+        
         if sections.isEmpty {
             sections.append(ChattingSectionModel(items: [item, item]))
         } else {
@@ -213,7 +214,7 @@ extension ChattingViewModel {
             }
         }
     }
-
+    
     
     func bindChatInfo() {
         chatInfo
@@ -246,49 +247,48 @@ extension ChattingViewModel {
                                 }
                             }
                         }
-                        
-                      
                     }
                     vc.chat.onNext(vc.sections)
                 }
+                vc.scrollTo.accept(true)
             })
             .disposed(by: disposeBag)
     }
     
-    func bindPostInfo(completion: @escaping() -> Void) {
+    func bindPostInfo() {
         postInfo
             .withUnretained(self)
             .subscribe(onNext: { vc, info in
                 vc.sectionItem(item: info.toDomain(dateFormat: "a HH:mm"))
                 vc.chat.onNext(vc.sections)
-                completion()
+                vc.scrollTo.accept(true)
             })
-            .disposed(by: disposeBag) 
+            .disposed(by: disposeBag)
     }
 }
 
 extension ChattingViewModel {
-//    func addChats() {
-//        do {
-//            try repository.deleteRealm()
-//        } catch {
-//            print("ss")
-//        }
-//        let task = ChatListData(uid: uid, chatInfo: List<ChatData>())
-//        for section in sections {
-//
-//            for item in section.items {
-//                task.chatInfo.append(ChatData(message: item.message, createdAt: item.originCreated, from: item.from, uid: item.uid))
-//            }
-//
-//        }
-//
-//        do {
-//            try repository.addRealm(item: task)
-//        } catch {
-//            print("ee")
-//        }
-//    }
+    //    func addChats() {
+    //        do {
+    //            try repository.deleteRealm()
+    //        } catch {
+    //            print("ss")
+    //        }
+    //        let task = ChatListData(uid: uid, chatInfo: List<ChatData>())
+    //        for section in sections {
+    //
+    //            for item in section.items {
+    //                task.chatInfo.append(ChatData(message: item.message, createdAt: item.originCreated, from: item.from, uid: item.uid))
+    //            }
+    //
+    //        }
+    //
+    //        do {
+    //            try repository.addRealm(item: task)
+    //        } catch {
+    //            print("ee")
+    //        }
+    //    }
     
     func chatItems(item: ChatData) -> SeSACChat {
         var dateFormat: String = ""
@@ -330,7 +330,7 @@ extension ChattingViewModel {
     
     func addChat(item: SeSACChat) {
         guard let tasks = tasks else {return}
-
+        
         let task = ChatListData(uid: uid, chatInfo: List<ChatData>())
         let chat = ChatData(message: item.message, createdAt: item.originCreated, from: item.from, uid: item.uid)
         if tasks.isEmpty {

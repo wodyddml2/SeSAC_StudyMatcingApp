@@ -8,7 +8,6 @@
 import UIKit
 
 import RxSwift
-import RxKeyboard
 import RxGesture
 
 class ChattingView: BaseView {
@@ -159,32 +158,17 @@ class ChattingView: BaseView {
 }
 
 extension ChattingView {
-    func bindKeyboard() {
+    func bottomHeight() -> CGFloat {
         let window = UIApplication.shared.connectedScenes
             .filter({$0.activationState == .foregroundActive})
             .map({$0 as? UIWindowScene})
             .compactMap({$0})
             .first?.windows
             .filter({$0.isKeyWindow}).first
-        let extra = window!.safeAreaInsets.bottom - 32
-        
-        RxKeyboard.instance.visibleHeight
-            .skip(1)
-            .drive (onNext: { [weak self] height in
-                guard let self = self else {return}
-                UIView.animate(withDuration: 0) {
-                   
-                    self.sendButton.setImage(UIImage(named: "act"), for: .normal)
-                    self.messageTextView.snp.updateConstraints { make in
-                        make.bottom.equalTo(self.safeAreaLayoutGuide).inset(height - extra)
-                    }
-//                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-//                        self.tableView.scrollToRow(at: IndexPath(row: 5, section: 0), at: .bottom, animated: true)
-//                    }
-                }
-                self.layoutIfNeeded()
-            })
-            .disposed(by: disposeBag)
+        return window!.safeAreaInsets.bottom - 32
+    }
+    
+    func bindKeyboard() {
         
         tableView.rx.tapGesture()
             .when(.recognized)
