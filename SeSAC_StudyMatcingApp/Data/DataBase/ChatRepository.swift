@@ -15,6 +15,10 @@ class ChatRepository {
     func fetch() -> Results<ChatListData> {
         return localRealm.objects(ChatListData.self)
     }
+    
+    func fetchFilter(uid: String) -> Results<ChatListData> {
+        return localRealm.objects(ChatListData.self).filter("uid == %@", uid)
+    }
 
     func addRealm(item: ChatListData) throws {
         try localRealm.write {
@@ -32,10 +36,4 @@ class ChatRepository {
             list.chatInfo.append(item)
         }
     }
-    
-//    func updateChat(list: ChatListData, _ index: Int, date: String) throws {
-//        try localRealm.write({
-//            list.chatInfo[index].createdAt = list.chatInfo[index].originCreated.toDate().dateStringFormat(date: date)
-//        })
-//    }
 }

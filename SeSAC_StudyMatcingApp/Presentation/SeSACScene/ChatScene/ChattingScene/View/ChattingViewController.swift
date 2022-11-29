@@ -37,6 +37,7 @@ final class ChattingViewController: BaseViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         ChattingSocketService.shared.closeConnection()
+//        viewModel.addChats()
     }
    
     @objc func getMessage(notification: NSNotification) {
@@ -143,6 +144,7 @@ extension ChattingViewController {
                 vc.navigationItem.title = nick
                 vc.setTableView(uid: info.matchedUid ?? "", nick: nick)
                 vc.bindDataSource()
+                vc.viewModel.tasks = vc.viewModel.repository.fetchFilter(uid: info.matchedUid ?? "")
             })
             .disposed(by: disposeBag)
         

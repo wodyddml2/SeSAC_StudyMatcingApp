@@ -12,10 +12,11 @@ import RealmSwift
 class ChatListData: Object {
     @Persisted var chatInfo: List<ChatData>
     
-    @Persisted(primaryKey: true) var objectId: ObjectId
+    @Persisted(primaryKey: true) var uid: String
     
-    convenience init(chatInfo: List<ChatData>) {
+    convenience init(uid: String, chatInfo: List<ChatData>) {
         self.init()
         self.chatInfo = chatInfo
+        self.uid = uid
     }
 }

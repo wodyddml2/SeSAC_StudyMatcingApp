@@ -16,7 +16,7 @@ class ChattingViewModel {
     
     let disposeBag = DisposeBag()
     let repository = ChatRepository()
-    private var tasks: Results<ChatListData>?
+    var tasks: Results<ChatListData>?
     
     var chatInfo = PublishSubject<SeSACChatGetDTO>()
     var postInfo = PublishSubject<SeSACChatPostDTO>()
@@ -172,8 +172,6 @@ extension ChattingViewModel: ViewModelType {
             .withUnretained(self)
             .subscribe { vc, _ in
                 vc.requestMyQueue(output: output)
-                vc.tasks = vc.repository.fetch()
-//                vc.sections = vc.tasks
             }
             .disposed(by: disposeBag)
         
@@ -199,8 +197,6 @@ extension ChattingViewModel {
 //                print("Ssss")
 //            }
 //        }
-//
-//
 //    }
     
     func fetchChat(list: Results<ChatListData>) {
@@ -258,7 +254,7 @@ extension ChattingViewModel {
             }
         }
     }
-    
+
     
     func bindChatInfo() {
         chatInfo
@@ -305,31 +301,31 @@ extension ChattingViewModel {
 //        } catch {
 //            print("ss")
 //        }
-//
+//        let task = ChatListData(uid: uid, chatInfo: List<ChatData>())
 //        for section in sections {
-//            let task = ChatListData()
+//
 //            for item in section.items {
-//                task.chatInfo.append(ChatData(message: item.message, createdAt: item.createdAt, from: item.from, uid: item.uid))
+//                task.chatInfo.append(ChatData(message: item.message, createdAt: item.originCreated, from: item.from, uid: item.uid))
 //            }
-//            do {
-//                try repository.addRealm(item: task)
-//            } catch {
-//                print("ee")
-//            }
+//
+//        }
+//
+//        do {
+//            try repository.addRealm(item: task)
+//        } catch {
+//            print("ee")
 //        }
 //    }
     
     func addChat(item: SeSACChat) {
         guard let tasks = tasks else {return}
-        print(tasks.isEmpty)
 
-        let task = ChatListData()
-        let chat = ChatData(message: item.message, createdAt: item.createdAt, from: item.from, uid: item.uid)
+        let task = ChatListData(uid: uid, chatInfo: List<ChatData>())
+        let chat = ChatData(message: item.message, createdAt: item.originCreated, from: item.from, uid: item.uid)
         if tasks.isEmpty {
             for _ in 0...1 {
                 task.chatInfo.append(chat)
             }
-            
             do {
                 try repository.addRealm(item: task)
             } catch {
@@ -346,14 +342,13 @@ extension ChattingViewModel {
                 }
             } else {
                 for _ in 0...1 {
-                    task.chatInfo.append(chat)
+                    do {
+                        try repository.appendChat(list: tasks[0], item: chat)
+                    } catch {
+                        print("SSs")
+                    }
                 }
                 
-                do {
-                    try repository.addRealm(item: task)
-                } catch {
-                    print("SSSSSS")
-                }
             }
         }
     }
