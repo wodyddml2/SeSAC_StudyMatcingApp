@@ -139,12 +139,18 @@ extension ChattingViewController {
             .withUnretained(self)
             .subscribe (onNext: { vc, info in
                 vc.viewModel.uid = info.matchedUid ?? ""
-                vc.viewModel.requestChatGet(lastchatDate: "2000-01-01T00:00:00.000Z")
+                
                 guard let nick = info.matchedNick else {return}
                 vc.navigationItem.title = nick
                 vc.setTableView(uid: info.matchedUid ?? "", nick: nick)
                 vc.bindDataSource()
                 vc.viewModel.tasks = vc.viewModel.repository.fetchFilter(uid: info.matchedUid ?? "")
+                if let tasks = vc.viewModel.tasks?[0] {
+                    vc.viewModel.fetchChat(list: tasks)
+                    vc.viewModel.requestChatGet(lastchatDate: tasks.chatInfo[tasks.chatInfo.count - 1].createdAt)
+                } else {
+                    vc.viewModel.requestChatGet(lastchatDate: "2000-01-01T00:00:00.000Z")
+                }
             })
             .disposed(by: disposeBag)
         
