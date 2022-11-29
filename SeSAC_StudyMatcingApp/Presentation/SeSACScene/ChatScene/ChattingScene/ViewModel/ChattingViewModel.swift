@@ -28,6 +28,7 @@ class ChattingViewModel {
     var sections: [ChattingSectionModel] = []
     
     var uid: String = ""
+    var nickname: String = ""
     var lastDate: Date = Date()
     
     func requestMyQueue(output: Output) {

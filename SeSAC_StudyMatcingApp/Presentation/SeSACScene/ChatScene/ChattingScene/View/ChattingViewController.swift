@@ -15,7 +15,7 @@ import RealmSwift
 final class ChattingViewController: BaseViewController {
 
     private let mainView = ChattingView()
-    private let viewModel = ChattingViewModel()
+    let viewModel = ChattingViewModel()
     private let disposeBag = DisposeBag()
 
     private var dataSources: RxTableViewSectionedReloadDataSource<ChattingSectionModel>?
@@ -27,12 +27,11 @@ final class ChattingViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setTableView()
         bindViewModel()
         navigationBarStyle()
         
         NotificationCenter.default.addObserver(self, selector: #selector(getMessage(notification:)), name: NSNotification.Name("getMessage"), object: nil)
-        
-        
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -67,7 +66,7 @@ final class ChattingViewController: BaseViewController {
 
 extension ChattingViewController {
     private func navigationBarStyle() {
-        navigationBarCommon(title: "")
+        navigationBarCommon(title: viewModel.nickname)
         tabBarAndNaviHidden(hidden: true)
         
         navigationItem.hidesBackButton = true
@@ -75,16 +74,16 @@ extension ChattingViewController {
         navigationItem.rightBarButtonItem = mainView.editButton
     }
     
-    private func setTableView(uid: String, nick: String) {
+    private func setTableView() {
         dataSources = RxTableViewSectionedReloadDataSource<ChattingSectionModel>(configureCell: { dataSource, tableView, indexPath, item in
             if indexPath.row == 0 {
                 guard let dateCell = tableView.dequeueReusableCell(withIdentifier: ChattingDateTableViewCell.reusableIdentifier, for: indexPath) as? ChattingDateTableViewCell else {return UITableViewCell()}
                 dateCell.dateLabel.text = item.sectionDate
-                dateCell.sectionSet(index: indexPath.section, text: nick)
+                dateCell.sectionSet(index: indexPath.section, text: self.viewModel.nickname)
                 
                 return dateCell
             } else {
-                if uid == item.uid {
+                if self.viewModel.uid == item.uid {
                     guard let myCell = tableView.dequeueReusableCell(withIdentifier: MyChatTableViewCell.reusableIdentifier, for: indexPath) as? MyChatTableViewCell else {return UITableViewCell()}
                     myCell.chatLabel.text = item.message
                     myCell.timeLabel.text = item.createdAt
@@ -133,28 +132,24 @@ extension ChattingViewController {
         viewModel.chat
             .bind(to: mainView.tableView.rx.items(dataSource: dataSources!))
             .disposed(by: disposeBag)
+        
+        viewModel.tasks = viewModel.repository.fetchFilter(uid: viewModel.uid)
+        if let tasks = viewModel.tasks?[0] {
+            viewModel.fetchChat(list: tasks)
+            viewModel.requestChatGet(lastchatDate: tasks.chatInfo[tasks.chatInfo.count - 1].createdAt)
+        } else {
+            viewModel.requestChatGet(lastchatDate: "2000-01-01T00:00:00.000Z")
+        }
     }
     
     private func bindInfo(output: ChattingViewModel.Output) {
         output.matchInfo
             .withUnretained(self)
             .subscribe (onNext: { vc, info in
-                vc.viewModel.uid = info.matchedUid ?? ""
-                
-                guard let nick = info.matchedNick else {return}
-                vc.navigationItem.title = nick
-                vc.setTableView(uid: info.matchedUid ?? "", nick: nick)
-                vc.bindDataSource()
-                vc.viewModel.tasks = vc.viewModel.repository.fetchFilter(uid: info.matchedUid ?? "")
-                if let tasks = vc.viewModel.tasks?[0] {
-                    vc.viewModel.fetchChat(list: tasks)
-                    vc.viewModel.requestChatGet(lastchatDate: tasks.chatInfo[tasks.chatInfo.count - 1].createdAt)
-                } else {
-                    vc.viewModel.requestChatGet(lastchatDate: "2000-01-01T00:00:00.000Z")
-                }
+
             })
             .disposed(by: disposeBag)
-        
+        bindDataSource()
         viewModel.bindChatInfo()
         viewModel.bindPostInfo()
     }

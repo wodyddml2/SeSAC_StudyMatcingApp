@@ -152,13 +152,21 @@ extension PopupViewController {
                     if self.request {
                         guard let vc = (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.window?.rootViewController?.topViewController else { return }
                         vc.view.makeToast(MatchComment.togetherMatch, duration: 1) { _ in
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                vc.transition(ChattingViewController(), transitionStyle: .push)
+                            self.requestMYQueue { result in
+                                let chatting = ChattingViewController()
+                                chatting.viewModel.uid = result.matchedUid ?? ""
+                                chatting.viewModel.nickname = result.matchedNick ?? ""
+                                vc.transition(chatting, transitionStyle: .push)
                             }
                         }
                     } else {
                         guard let vc = (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.window?.rootViewController?.topViewController else { return }
-                        vc.transition(ChattingViewController(), transitionStyle: .push)
+                        self.requestMYQueue { result in
+                            let chatting = ChattingViewController()
+                            chatting.viewModel.uid = result.matchedUid ?? ""
+                            chatting.viewModel.nickname = result.matchedNick ?? ""
+                            vc.transition(chatting, transitionStyle: .push)
+                        }
                     }
                 }
                 // 사용자 현재 상태를 매칭 상태로 변경하고, 팝업 화면을 dismiss 한 뒤, 채팅 화면(1_5_chatting)으로 화면을 전환합니다.
@@ -191,4 +199,15 @@ extension PopupViewController {
             }
         }
     }
+    
+    func requestMYQueue(completion: @escaping (SeSACMatchDTO) -> Void) {
+        SeSACAPIService.shared.requestSeSACAPI(type: SeSACMatchDTO.self, router: Router.matchGet(query: UserManager.idToken)) { result in
+            switch result {
+            case .success(let success):
+                completion(success)
+            case .failure(_):
+                print("Ssss")
+                }
+            }
+        }
 }

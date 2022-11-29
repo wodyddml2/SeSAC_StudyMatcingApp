@@ -109,10 +109,13 @@ final class TabManSeSACViewController: TabmanViewController {
         viewModel.match
             .withUnretained(self)
             .bind (onNext: { vc, result in
-                print(result)
+                let viewController = ChattingViewController()
+
                 if result.matched == 1 {
                     vc.view.makeToast("\(result.matchedNick ?? "")님과 매칭되셨습니다. 잠시 후 채팅방으로 이동합니다.", duration: 1) { _ in
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                            viewController.viewModel.nickname = result.matchedNick ?? ""
+                            viewController.viewModel.uid = result.matchedUid ?? ""
                             vc.transition(ChattingViewController(), transitionStyle: .push)
                         }
                     }

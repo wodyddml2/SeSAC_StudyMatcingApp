@@ -20,7 +20,9 @@ final class HomeViewController: BaseViewController {
     let viewModel = HomeViewModel()
     
     let disposeBag = DisposeBag()
+    
     private var sesacUsers: [SeSACUser] = []
+    var matchInfo: SeSACMatchDTO?
     
     override func loadView() {
         view = mainView
@@ -85,7 +87,7 @@ extension HomeViewController: CLLocationManagerDelegate {
 
 extension HomeViewController {
     func setRegionAnnotation(center: CLLocationCoordinate2D, users: [SeSACUser]) {
-        let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: center.latitude, longitude: center.longitude), latitudinalMeters: 700, longitudinalMeters: 700)
+        let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 37.517819364682694, longitude: 126.88647317074734), latitudinalMeters: 700, longitudinalMeters: 700)
         mainView.mapView.removeAnnotations(mainView.mapView.annotations)
         mainView.mapView.setRegion(region, animated: false)
 
@@ -129,6 +131,7 @@ extension HomeViewController {
                 if result.matched == 0 {
                     vc.mainView.matchButtonSet(UIImage(named: MatchImage.antenna)!, MatchStatus.antenna.rawValue)
                 } else {
+                    vc.matchInfo = result
                     vc.mainView.matchButtonSet(UIImage(named: MatchImage.message)!, MatchStatus.message.rawValue)
                 }
             })
@@ -206,7 +209,10 @@ extension HomeViewController {
                         tab.firstVC.viewModel.locationValue = location
                         tab.secondVC.viewModel.locationValue = location
                     case .message:
-                        vc.transition(ChattingViewController(), transitionStyle: .push)
+                        let chatting = ChattingViewController()
+                        chatting.viewModel.uid = vc.matchInfo?.matchedUid ?? ""
+                        chatting.viewModel.nickname = vc.matchInfo?.matchedNick ?? ""
+                        vc.transition(chatting, transitionStyle: .push)
                     default:
                         break
                     }
