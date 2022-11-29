@@ -226,8 +226,11 @@ extension ChattingViewController {
         output.sendTap
             .withUnretained(self)
             .bind { vc, _ in
-                vc.viewModel.requestChatPost(chat: vc.mainView.messageTextView.text)
-                vc.scrollToBottom()
+                if vc.mainView.messageTextView.textColor == .black {
+                    vc.viewModel.requestChatPost(chat: vc.mainView.messageTextView.text)
+                    vc.mainView.messageTextView.text = nil
+                    vc.scrollToBottom()
+                }
             }
             .disposed(by: disposeBag)
     }
