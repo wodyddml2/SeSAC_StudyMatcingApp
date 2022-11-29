@@ -180,47 +180,7 @@ extension ChattingViewModel: ViewModelType {
 }
 
 extension ChattingViewModel {
-    
-    func dataChatItems(item: ChatData) -> SeSACChat {
 
-        var dateFormat: String = ""
-        if Date().nowDateFormat(date: "yyyy/M/d") == item.createdAt.toDate().dateStringFormat(date: "yyyy/M/d") {
-            dateFormat = "a HH:mm"
-        } else {
-            dateFormat = "M/d a HH:mm"
-        }
-        return SeSACChat(
-            message: item.message,
-            createdAt: item.createdAt.toDate().dateStringFormat(date: dateFormat),
-            sectionDate: item.createdAt.toDate().dateStringFormat(date: "M월 d일 EEEE"),
-            from: item.from,
-            uid: item.uid,
-            originCreated: item.createdAt
-        )
-    }
-    
-    func fetchChat(list: ChatListData) {
-        var sectionCount = 0
-        for i in 0...list.chatInfo.count - 1 {
-            let chatItem = dataChatItems(item: list.chatInfo[i])
-            
-            if i == 0 {
-                sections.append(ChattingSectionModel(items: [chatItem]))
-                sections[sectionCount].items.append(chatItem)
-            } else {
-                if list.chatInfo[i].createdAt.toDate().dateStringFormat(date: "yyyy/M/d") == list.chatInfo[i-1].createdAt.toDate().dateStringFormat(date: "yyyy/M/d") {
-                    sections[sectionCount].items.append(chatItem)
-                } else {
-                    sectionCount += 1
-                    sections.append(ChattingSectionModel(items: [chatItem]))
-                    sections[sectionCount].items.append(chatItem)
-                }
-            }
-        }
-        chat.onNext(sections)
-    }
-    
-    
     func sectionItems(_ payload: Payload) -> SeSACChat {
         var dateFormat: String = ""
         if Date().nowDateFormat(date: "yyyy/M/d") == payload.createdAt.toDate().dateStringFormat(date: "yyyy/M/d") {
@@ -263,23 +223,34 @@ extension ChattingViewModel {
                 if !info.payload.isEmpty {
                     for i in 0...info.payload.count - 1 {
                         let sectionItem = vc.sectionItems(info.payload[i])
-
-                        if i == 0 {
+                        vc.addChat(item: sectionItem)
+                        if vc.tasks?.isEmpty == true {
                             vc.sections.append(ChattingSectionModel(items: [sectionItem]))
                             vc.sections[sectionCount].items.append(sectionItem)
                         } else {
-                            if info.payload[i].createdAt.toDate().dateStringFormat(date: "yyyy/M/d") == info.payload[i-1].createdAt.toDate().dateStringFormat(date: "yyyy/M/d") {
-                                vc.sections[sectionCount].items.append(sectionItem)
+                            if i == 0 {
+                                guard let tasks = vc.tasks else {return}
+                                if tasks[0].chatInfo[tasks[0].chatInfo.count - 1].createdAt.toDate().dateStringFormat(date: "yyyy/M/d") == info.payload[i].createdAt.toDate().dateStringFormat(date: "yyyy/M/d") {
+                                    vc.sections[sectionCount].items.append(sectionItem)
+                                } else {
+                                    vc.sections.append(ChattingSectionModel(items: [sectionItem]))
+                                    vc.sections[sectionCount].items.append(sectionItem)
+                                }
                             } else {
-                                sectionCount += 1
-                                vc.sections.append(ChattingSectionModel(items: [sectionItem]))
-                                vc.sections[sectionCount].items.append(sectionItem)
+                                if info.payload[i].createdAt.toDate().dateStringFormat(date: "yyyy/M/d") == info.payload[i-1].createdAt.toDate().dateStringFormat(date: "yyyy/M/d") {
+                                    vc.sections[sectionCount].items.append(sectionItem)
+                                } else {
+                                    sectionCount += 1
+                                    vc.sections.append(ChattingSectionModel(items: [sectionItem]))
+                                    vc.sections[sectionCount].items.append(sectionItem)
+                                }
                             }
                         }
+                        
+                      
                     }
                     vc.chat.onNext(vc.sections)
                 }
-                
             })
             .disposed(by: disposeBag)
     }
@@ -318,6 +289,44 @@ extension ChattingViewModel {
 //            print("ee")
 //        }
 //    }
+    
+    func chatItems(item: ChatData) -> SeSACChat {
+        var dateFormat: String = ""
+        if Date().nowDateFormat(date: "yyyy/M/d") == item.createdAt.toDate().dateStringFormat(date: "yyyy/M/d") {
+            dateFormat = "a HH:mm"
+        } else {
+            dateFormat = "M/d a HH:mm"
+        }
+        return SeSACChat(
+            message: item.message,
+            createdAt: item.createdAt.toDate().dateStringFormat(date: dateFormat),
+            sectionDate: item.createdAt.toDate().dateStringFormat(date: "M월 d일 EEEE"),
+            from: item.from,
+            uid: item.uid,
+            originCreated: item.createdAt
+        )
+    }
+    
+    func fetchChat(list: ChatListData) {
+        var sectionCount = 0
+        for i in 0...list.chatInfo.count - 1 {
+            let chatItem = chatItems(item: list.chatInfo[i])
+            
+            if i == 0 {
+                sections.append(ChattingSectionModel(items: [chatItem]))
+                sections[sectionCount].items.append(chatItem)
+            } else {
+                if list.chatInfo[i].createdAt.toDate().dateStringFormat(date: "yyyy/M/d") == list.chatInfo[i-1].createdAt.toDate().dateStringFormat(date: "yyyy/M/d") {
+                    sections[sectionCount].items.append(chatItem)
+                } else {
+                    sectionCount += 1
+                    sections.append(ChattingSectionModel(items: [chatItem]))
+                    sections[sectionCount].items.append(chatItem)
+                }
+            }
+        }
+        chat.onNext(sections)
+    }
     
     func addChat(item: SeSACChat) {
         guard let tasks = tasks else {return}

@@ -12,10 +12,6 @@ import RealmSwift
 class ChatRepository {
     let localRealm = try! Realm()
     
-    func fetch() -> Results<ChatListData> {
-        return localRealm.objects(ChatListData.self)
-    }
-    
     func fetchFilter(uid: String) -> Results<ChatListData> {
         return localRealm.objects(ChatListData.self).filter("uid == %@", uid)
     }
@@ -31,6 +27,7 @@ class ChatRepository {
             localRealm.deleteAll()
         }
     }
+    
     func appendChat(list: ChatListData, item: ChatData) throws {
         try localRealm.write {
             list.chatInfo.append(item)

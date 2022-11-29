@@ -7,32 +7,32 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "13BBFBE8-D2E4-46A4-92D4-4A98685A4318"
+            uuid = "ECD047FC-6CB9-45FF-BEB3-B83DF1AC6DE2"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "SeSAC_StudyMatcingApp/Presentation/SeSACScene/ChatScene/ChattingScene/View/ChattingViewController.swift"
+            filePath = "SeSAC_StudyMatcingApp/Presentation/Splash/SplashViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "152"
-            endingLineNumber = "152"
-            landmarkName = "bindInfo(output:)"
+            startingLineNumber = "76"
+            endingLineNumber = "76"
+            landmarkName = "requestSeSAC()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "CD696DD5-47FC-4DEE-88E5-2EF7E43678A0"
+            uuid = "13561FC0-384B-4CE2-A7E2-5F506BAFBD4B"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "SeSAC_StudyMatcingApp/Presentation/SeSACScene/ChatScene/ChattingScene/View/ChattingViewController.swift"
+            filePath = "SeSAC_StudyMatcingApp/Presentation/Splash/SplashViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "150"
-            endingLineNumber = "150"
-            landmarkName = "bindInfo(output:)"
+            startingLineNumber = "77"
+            endingLineNumber = "77"
+            landmarkName = "requestSeSAC()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

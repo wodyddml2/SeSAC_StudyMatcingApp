@@ -49,11 +49,8 @@ class SplashViewController: BaseViewController {
         if UserManager.onboarding {
             SeSACAPIService.shared.requestSeSACAPI(type: SESACLoginDTO.self ,router: Router.loginGet(query: UserManager.idToken)) { [weak self] result in
                 guard let self = self else {return}
-                print(UserManager.idToken)
-                print(UserManager.fcmToken)
                 switch result {
                 case .success(let success):
-                    
                     UserManager.sesacImage = success.sesac
                     UserManager.myUID = success.uid
                     let vc = TabViewController()
