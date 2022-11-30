@@ -19,6 +19,7 @@ enum SeSACAPI {
     static let accept = "/queue/studyaccept"
     static let dodge = "/queue/dodge"
     static let chat = "/chat"
+    static let rate = "/queue/rate"
 }
 
 enum SeSACHeader {

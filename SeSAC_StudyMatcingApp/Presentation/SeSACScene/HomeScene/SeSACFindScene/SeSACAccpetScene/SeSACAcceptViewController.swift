@@ -94,6 +94,7 @@ final class SeSACAcceptViewController: BaseViewController {
     @objc func requestButtonTapped(_ sender: UIButton) {
         let vc = PopupViewController()
         vc.uid = info[sender.tag].uid
+        vc.request = false
         transition(vc, transitionStyle: .presentOverFull)
     }
     

@@ -82,6 +82,7 @@
 		63467E12291937CF00E7D8AE /* MessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63467E11291937CF00E7D8AE /* MessageViewModel.swift */; };
 		63467E2429194B8700E7D8AE /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 63467E2329194B8700E7D8AE /* .gitignore */; };
 		6351B6852919772000B953BF /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6351B6842919772000B953BF /* LoginView.swift */; };
+		6354BA62293773B9006113F2 /* SeSACReviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6354BA61293773B9006113F2 /* SeSACReviewViewModel.swift */; };
 		635E1609291BD9D00042E8E4 /* SeSACAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635E1608291BD9D00042E8E4 /* SeSACAPIService.swift */; };
 		635E160C291BDA1C0042E8E4 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 635E160B291BDA1C0042E8E4 /* Alamofire */; };
 		635E1610291BE3F50042E8E4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 635E160F291BE3F50042E8E4 /* GoogleService-Info.plist */; };
@@ -231,6 +232,7 @@
 		63467E1829193D8400E7D8AE /* SeSAC_StudyMatcingApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SeSAC_StudyMatcingApp.entitlements; sourceTree = "<group>"; };
 		63467E2329194B8700E7D8AE /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		6351B6842919772000B953BF /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		6354BA61293773B9006113F2 /* SeSACReviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACReviewViewModel.swift; sourceTree = "<group>"; };
 		635E1608291BD9D00042E8E4 /* SeSACAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACAPIService.swift; sourceTree = "<group>"; };
 		635E160F291BE3F50042E8E4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		635E1611291BF26B0042E8E4 /* SeSACAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACAPI.swift; sourceTree = "<group>"; };
@@ -496,8 +498,8 @@
 		633AC696292FC7B900A3249B /* ReviewScene */ = {
 			isa = PBXGroup;
 			children = (
-				633AC697292FC7F000A3249B /* SeSACReviewViewController.swift */,
-				633AC6A1292FD18500A3249B /* SeSACReviewView.swift */,
+				6354BA6029377118006113F2 /* View */,
+				6354BA5F29377106006113F2 /* ViewModel */,
 			);
 			path = ReviewScene;
 			sourceTree = "<group>";
@@ -757,6 +759,23 @@
 				633AC694292FC1FC00A3249B /* PopupView.swift */,
 			);
 			path = CustomView;
+			sourceTree = "<group>";
+		};
+		6354BA5F29377106006113F2 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				6354BA61293773B9006113F2 /* SeSACReviewViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		6354BA6029377118006113F2 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				633AC697292FC7F000A3249B /* SeSACReviewViewController.swift */,
+				633AC6A1292FD18500A3249B /* SeSACReviewView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		635E1613291BF6280042E8E4 /* Domain */ = {
@@ -1336,6 +1355,7 @@
 				637EDF4429253039009089E4 /* BaseCollectionViewCell.swift in Sources */,
 				631DC95029212CA300F23211 /* ReusableProtocol.swift in Sources */,
 				63308F232923A64C004B90A5 /* MyProfileViewModel.swift in Sources */,
+				6354BA62293773B9006113F2 /* SeSACReviewViewModel.swift in Sources */,
 				638B074D291ABB9E00E9D254 /* FirebaseError.swift in Sources */,
 				63308F1B292334E0004B90A5 /* ProfileAgeView.swift in Sources */,
 				63467DF22918E57E00E7D8AE /* UIViewController+Transition.swift in Sources */,

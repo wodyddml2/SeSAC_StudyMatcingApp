@@ -111,9 +111,10 @@ extension ChattingViewController {
 extension ChattingViewController {
     private func bindViewModel() {
         let input = ChattingViewModel.Input(
-            viewDidLoadEvent: Observable.just(()),
             backButton: mainView.backButton.rx.tap,
             declarationTap: mainView.declarationButton.rx.tap,
+            cancelTap: mainView.cancelButton.rx.tap,
+            reviewTap: mainView.writeButton.rx.tap,
             sendTap: mainView.sendButton.rx.tap
         )
         let output = viewModel.transform(input: input)
@@ -133,25 +134,48 @@ extension ChattingViewController {
             .bind(to: mainView.tableView.rx.items(dataSource: dataSources!))
             .disposed(by: disposeBag)
         
-        viewModel.tasks = viewModel.repository.fetchFilter(uid: viewModel.uid)
-        if let tasks = viewModel.tasks?[0] {
-            viewModel.fetchChat(list: tasks)
-            viewModel.requestChatGet(lastchatDate: tasks.chatInfo[tasks.chatInfo.count - 1].createdAt)
-        } else {
-            viewModel.requestChatGet(lastchatDate: "2000-01-01T00:00:00.000Z")
-        }
+        viewModel.requestGetBranch()
     }
     
     private func bindInfo(output: ChattingViewModel.Output) {
         output.matchInfo
             .withUnretained(self)
             .subscribe (onNext: { vc, info in
-
+                if info.dodged == 1 || info.reviewed == 1 {
+                    vc.mainView.cancelButton.setTitle("스터디 종료", for: .normal)
+                    vc.mainView.cancelButton.tag = CancelButtonTag.cancelAfter
+                } else {
+                    vc.mainView.cancelButton.setTitle("스터디 취소", for: .normal)
+                    vc.mainView.cancelButton.tag = CancelButtonTag.cancelBefore
+                }
             })
             .disposed(by: disposeBag)
         bindDataSource()
         viewModel.bindChatInfo()
         viewModel.bindPostInfo()
+        
+        mainView.editButton.rx.tap
+            .withUnretained(self)
+            .bind { vc, _ in
+                vc.viewModel.requestMyQueue(output: output)
+                vc.mainView.menuView.snp.remakeConstraints { make in
+                    make.top.leading.trailing.equalTo(vc.mainView.blurView)
+                    make.height.equalTo(72)
+                }
+                UIView.animate(withDuration: 0.3) {
+                    vc.mainView.layoutIfNeeded()
+
+                    vc.mainView.blurView.snp.remakeConstraints { make in
+                        make.top.leading.trailing.equalTo(vc.mainView.safeAreaLayoutGuide)
+                        make.bottom.equalToSuperview()
+                    }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                        vc.mainView.stackView.isHidden = false
+                    }
+                }
+            }
+            .disposed(by: disposeBag)
+        
     }
     
     private func bindFailed(output: ChattingViewModel.Output) {
@@ -213,7 +237,32 @@ extension ChattingViewController {
         output.declarationTap
             .withUnretained(self)
             .bind { vc, _ in
+                let viewController = DeclarationViewController()
+                vc.transition(viewController, transitionStyle: .presentOverFull)
+            }
+            .disposed(by: disposeBag)
+        
+        output.cancelTap
+            .withUnretained(self)
+            .bind { vc, _ in
+                let viewController = CancelViewController()
+                if vc.mainView.cancelButton.tag == CancelButtonTag.cancelAfter {
+                    viewController.matchingState = false
+                } else {
+                    viewController.matchingState = true
+                }
+                viewController.uid = vc.viewModel.uid
+                vc.transition(viewController, transitionStyle: .presentOverFull)
+            }
+            .disposed(by: disposeBag)
+        
+        
+        output.reviewTap
+            .withUnretained(self)
+            .bind { vc, _ in
                 let viewController = SeSACReviewViewController()
+                viewController.viewModel.nick = vc.viewModel.nickname
+                viewController.viewModel.uid = vc.viewModel.uid
                 vc.transition(viewController, transitionStyle: .presentOverFull)
             }
             .disposed(by: disposeBag)

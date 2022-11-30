@@ -22,6 +22,7 @@ enum Router: URLRequestConvertible {
     case requestPost(query: String, uid: String)
     case acceptPost(query: String, uid: String)
     case dodgePost(query: String, uid: String)
+    case ratePost(query: String, uid: String, list: [Int], comment: String)
     
     
     var baseURL: URL {
@@ -44,13 +45,15 @@ enum Router: URLRequestConvertible {
             return URL(string: SeSACAPI.baseURL + SeSACAPI.accept)!
         case .dodgePost:
             return URL(string: SeSACAPI.baseURL + SeSACAPI.dodge)!
+        case .ratePost(_, let uid, _, _):
+            return URL(string: SeSACAPI.baseURL + SeSACAPI.rate + "/\(uid)")!
         }
         
     }
     
     var header: HTTPHeaders {
         switch self {
-        case .loginGet(let query), .matchGet(let query), .savePut( _ ,let query), .withdrawPost(let query), .searchPost(let query, _, _), .findPost(let query, _, _, _), .findDelete(let query), .requestPost(query: let query, _), .acceptPost(let query, _), .dodgePost(let query, _):
+        case .loginGet(let query), .matchGet(let query), .savePut( _ ,let query), .withdrawPost(let query), .searchPost(let query, _, _), .findPost(let query, _, _, _), .findDelete(let query), .requestPost(query: let query, _), .acceptPost(let query, _), .dodgePost(let query, _), .ratePost(let query, _, _, _):
             return  [
                 "Content-Type": SeSACHeader.contentType,
                 "idtoken": query
@@ -108,6 +111,12 @@ enum Router: URLRequestConvertible {
            
         case .requestPost( _, let uid), .acceptPost( _, let uid), .dodgePost( _, let uid):
             return ["otheruid": uid]
+        case .ratePost(_ , let uid, let list, let comment):
+            return [
+                "otheruid": uid,
+                "reputation": list,
+                "comment": comment
+            ]
         }
     }
     
@@ -116,7 +125,7 @@ enum Router: URLRequestConvertible {
         switch self {
         case .loginGet, .matchGet:
             return .get
-        case .signUpPost, .withdrawPost, .searchPost, .findPost, .requestPost, .acceptPost, .dodgePost:
+        case .signUpPost, .withdrawPost, .searchPost, .findPost, .requestPost, .acceptPost, .dodgePost, .ratePost:
             return .post
         case .savePut:
             return .put
@@ -134,7 +143,7 @@ enum Router: URLRequestConvertible {
         switch self {
         case .loginGet, .withdrawPost, .matchGet, .findDelete:
             return request
-        case .signUpPost, .savePut, .searchPost, .findPost, .requestPost, .acceptPost, .dodgePost:
+        case .signUpPost, .savePut, .searchPost, .findPost, .requestPost, .acceptPost, .dodgePost, .ratePost:
             return try URLEncoding(arrayEncoding: .noBrackets).encode(request, with: parameters)
         }
         

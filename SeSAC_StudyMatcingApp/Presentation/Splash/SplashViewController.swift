@@ -54,6 +54,7 @@ class SplashViewController: BaseViewController {
                     print(UserManager.idToken)
                     UserManager.sesacImage = success.sesac
                     UserManager.myUID = success.uid
+                    UserManager.nickname = success.nick
                     let vc = TabViewController()
                     sceneDelegate?.window?.rootViewController = vc
                 case .failure(let fail):
@@ -82,8 +83,8 @@ class SplashViewController: BaseViewController {
     }
     
     private func renewalRequest() {
-        let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
-        let sceneDelegate = windowScene?.delegate as? SceneDelegate
+//        let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+//        let sceneDelegate = windowScene?.delegate as? SceneDelegate
         let currentUser = Auth.auth().currentUser
         currentUser?.getIDTokenForcingRefresh(true) { [weak self] idToken, error in
             guard let self = self else {return}
@@ -93,30 +94,30 @@ class SplashViewController: BaseViewController {
             }
             if let idToken = idToken {
                 UserManager.idToken = idToken
-                
-                SeSACAPIService.shared.requestSeSACAPI(type: SESACLoginDTO.self,router: Router.loginGet(query: idToken)) { result in
-                    switch result {
-                    case .success(let success):
-                        UserManager.sesacImage = success.sesac
-                        let vc = TabViewController()
-                        sceneDelegate?.window?.rootViewController = vc
-                    case .failure(let fail):
-                        let error = fail as! SeSACError
-                        switch error {
-                        case .noSignup:
-                            UserManager.signupStatus = false
-                            let vc = UINavigationController(rootViewController: NumberViewController())
-                            sceneDelegate?.window?.rootViewController = vc
-                        default:
-                            UserManager.signupStatus = true
-                            let vc = UINavigationController(rootViewController: NumberViewController())
-                            sceneDelegate?.window?.rootViewController = vc
-                        }
-                    }
-                }
+                self.requestSeSAC()
+//                SeSACAPIService.shared.requestSeSACAPI(type: SESACLoginDTO.self,router: Router.loginGet(query: idToken)) { result in
+//                    switch result {
+//                    case .success(let success):
+//                        UserManager.sesacImage = success.sesac
+//                        let vc = TabViewController()
+//                        sceneDelegate?.window?.rootViewController = vc
+//                    case .failure(let fail):
+//                        let error = fail as! SeSACError
+//                        switch error {
+//                        case .noSignup:
+//                            UserManager.signupStatus = false
+//                            let vc = UINavigationController(rootViewController: NumberViewController())
+//                            sceneDelegate?.window?.rootViewController = vc
+//                        default:
+//                            UserManager.signupStatus = true
+//                            let vc = UINavigationController(rootViewController: NumberViewController())
+//                            sceneDelegate?.window?.rootViewController = vc
+//                        }
+//                    }
+//                }
             }
         }
-        sceneDelegate?.window?.makeKeyAndVisible()
+//        sceneDelegate?.window?.makeKeyAndVisible()
     }
     
     override func configureUI() {

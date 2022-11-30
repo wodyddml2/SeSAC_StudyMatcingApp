@@ -64,15 +64,7 @@ class ChattingViewModel {
             }
         }
     }
-    
-    func requestDodge() {
-        
-    }
-    
-    func renewalDodge() {
-        
-    }
-    
+
     func requestChatPost(chat: String) {
         ChattingAPIService.shared.requestPOSTAPI(router: ChatRouter.chatPost(query: UserManager.idToken, path: uid, chat: chat)) { [weak self] result in
             
@@ -149,9 +141,10 @@ class ChattingViewModel {
 
 extension ChattingViewModel: ViewModelType {
     struct Input {
-        let viewDidLoadEvent: Observable<Void>
         let backButton: ControlEvent<Void>
         let declarationTap: ControlEvent<Void>
+        let cancelTap: ControlEvent<Void>
+        let reviewTap: ControlEvent<Void>
         let sendTap: ControlEvent<Void>
     }
     
@@ -160,6 +153,8 @@ extension ChattingViewModel: ViewModelType {
         var networkFailed = PublishRelay<Bool>()
         let backButton: ControlEvent<Void>
         let declarationTap: ControlEvent<Void>
+        let cancelTap: ControlEvent<Void>
+        let reviewTap: ControlEvent<Void>
         let sendTap: ControlEvent<Void>
     }
     
@@ -167,15 +162,10 @@ extension ChattingViewModel: ViewModelType {
         let output = Output(
             backButton: input.backButton,
             declarationTap: input.declarationTap,
+            cancelTap: input.cancelTap,
+            reviewTap: input.reviewTap,
             sendTap: input.sendTap
         )
-        
-        input.viewDidLoadEvent
-            .withUnretained(self)
-            .subscribe { vc, _ in
-                vc.requestMyQueue(output: output)
-            }
-            .disposed(by: disposeBag)
         
         return output
     }
@@ -201,12 +191,12 @@ extension ChattingViewModel {
     }
     
     func sectionItem(item: SeSACChat) {
-        var sectionCount = sections.isEmpty ? 0 : sections.count - 1
-        let rowCount = sections[sectionCount].items.count - 1
-        
+ 
         if sections.isEmpty {
             sections.append(ChattingSectionModel(items: [item, item]))
         } else {
+            var sectionCount = sections.isEmpty ? 0 : sections.count - 1
+            let rowCount = sections[sectionCount].items.count - 1
             if sections[sectionCount].items[rowCount].sectionDate == item.sectionDate {
                 sections[sectionCount].items.append(item)
             } else {
@@ -225,7 +215,7 @@ extension ChattingViewModel {
                 if !info.payload.isEmpty {
                     for i in 0...info.payload.count - 1 {
                         let sectionItem = vc.sectionItems(info.payload[i])
-                        vc.addChat(item: sectionItem)
+                        
                         if vc.tasks?.isEmpty == true {
                             vc.sections.append(ChattingSectionModel(items: [sectionItem]))
                             vc.sections[sectionCount].items.append(sectionItem)
@@ -248,6 +238,7 @@ extension ChattingViewModel {
                                 }
                             }
                         }
+                        vc.addChat(item: sectionItem)
                     }
                     vc.chat.onNext(vc.sections)
                 }
@@ -328,7 +319,20 @@ extension ChattingViewModel {
         }
         chat.onNext(sections)
     }
-    
+    func requestGetBranch() {
+        tasks = repository.fetchFilter(uid: uid)
+        print(tasks?.count)
+        if let tasks = tasks {
+            if tasks.isEmpty {
+                requestChatGet(lastchatDate: "2000-01-01T00:00:00.000Z")
+            } else {
+                fetchChat(list: tasks[0])
+                requestChatGet(lastchatDate: tasks[0].chatInfo[tasks[0].chatInfo.count - 1].createdAt)
+            }
+        } else {
+            requestChatGet(lastchatDate: "2000-01-01T00:00:00.000Z")
+        }
+    }
     func addChat(item: SeSACChat) {
         guard let tasks = tasks else {return}
         

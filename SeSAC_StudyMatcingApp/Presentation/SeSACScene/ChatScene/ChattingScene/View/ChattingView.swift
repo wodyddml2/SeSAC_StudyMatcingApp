@@ -10,6 +10,11 @@ import UIKit
 import RxSwift
 import RxGesture
 
+enum CancelButtonTag {
+    static let cancelAfter = 1
+    static let cancelBefore = 0
+}
+
 class ChattingView: BaseView {
     
     let disposeBag = DisposeBag()
@@ -224,27 +229,7 @@ extension ChattingView {
     }
     
     func bindMenuBar() {
-        editButton.rx.tap
-            .withUnretained(self)
-            .bind { vc, _ in
-                vc.menuView.snp.remakeConstraints { make in
-                    make.top.leading.trailing.equalTo(vc.blurView)
-                    make.height.equalTo(72)
-                }
-                UIView.animate(withDuration: 0.3) {
-                    vc.layoutIfNeeded()
-
-                    vc.blurView.snp.remakeConstraints { make in
-                        make.top.leading.trailing.equalTo(vc.safeAreaLayoutGuide)
-                        make.bottom.equalToSuperview()
-                    }
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                        vc.stackView.isHidden = false
-                    }
-                }
-            }
-            .disposed(by: disposeBag)
-        
+   
         blurView.rx.tap
             .withUnretained(self)
             .bind { vc, _ in
