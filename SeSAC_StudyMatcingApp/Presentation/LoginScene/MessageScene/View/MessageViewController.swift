@@ -17,6 +17,8 @@ class MessageViewController: BaseViewController {
     let mainView = MessageView()
     let viewModel = MessageViewModel()
     
+    let firebaseAPI = FirebaseAPIService()
+    
     var disposeBag = DisposeBag()
     
     var timerDisposable: Disposable?
@@ -87,7 +89,7 @@ extension MessageViewController {
         output.auth
             .withUnretained(self)
             .bind { vc, _ in
-                FirebaseAPIService.shared.requestVerificationCompare(text: vc.mainView.numberTextField.text!) { result in
+                vc.firebaseAPI.requestVerificationCompare(text: vc.mainView.numberTextField.text!) { result in
                     switch result {
                     case .success(let success):
                         success.user.getIDTokenForcingRefresh(true) { idToken, error in
@@ -135,8 +137,7 @@ extension MessageViewController {
             .withUnretained(self)
             .throttle(.seconds(5), scheduler: MainScheduler.instance)
             .bind { vc, _ in
-                
-                FirebaseAPIService.shared.requestAuth(phoneNumber: UserManager.phoneNumber) { result in
+                vc.firebaseAPI.requestAuth(phoneNumber: UserManager.phoneNumber) { result in
                     vc.mainView.makeToast(AuthComent.resend.rawValue, position: .center)
                     switch result {
                     case .success(let success):

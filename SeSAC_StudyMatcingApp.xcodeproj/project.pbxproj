@@ -83,6 +83,10 @@
 		63467E2429194B8700E7D8AE /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 63467E2329194B8700E7D8AE /* .gitignore */; };
 		6351B6852919772000B953BF /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6351B6842919772000B953BF /* LoginView.swift */; };
 		6354BA62293773B9006113F2 /* SeSACReviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6354BA61293773B9006113F2 /* SeSACReviewViewModel.swift */; };
+		6354BA662937A540006113F2 /* SeSACShopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6354BA652937A540006113F2 /* SeSACShopViewController.swift */; };
+		6354BA682937A547006113F2 /* BgShopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6354BA672937A547006113F2 /* BgShopViewController.swift */; };
+		6354BA6A2937A5BA006113F2 /* ShopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6354BA692937A5BA006113F2 /* ShopView.swift */; };
+		6354BA6C2937AE28006113F2 /* TabmanShopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6354BA6B2937AE28006113F2 /* TabmanShopViewController.swift */; };
 		635E1609291BD9D00042E8E4 /* SeSACAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635E1608291BD9D00042E8E4 /* SeSACAPIService.swift */; };
 		635E160C291BDA1C0042E8E4 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 635E160B291BDA1C0042E8E4 /* Alamofire */; };
 		635E1610291BE3F50042E8E4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 635E160F291BE3F50042E8E4 /* GoogleService-Info.plist */; };
@@ -141,7 +145,7 @@
 		63DACA78292E627C00D0CDB6 /* ChattingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DACA77292E627C00D0CDB6 /* ChattingView.swift */; };
 		63DACA7A292E895F00D0CDB6 /* ChattingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DACA79292E895F00D0CDB6 /* ChattingViewModel.swift */; };
 		63E9113B292B728A0048180F /* Tabman in Frameworks */ = {isa = PBXBuildFile; productRef = 63E9113A292B728A0048180F /* Tabman */; };
-		63E9113D292B72F40048180F /* TabManViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E9113C292B72F40048180F /* TabManViewController.swift */; };
+		63E9113D292B72F40048180F /* TabManSeSACViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E9113C292B72F40048180F /* TabManSeSACViewController.swift */; };
 		63E9113F292B73CE0048180F /* SeSACAcceptViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E9113E292B73CE0048180F /* SeSACAcceptViewController.swift */; };
 		63E91144292B824A0048180F /* SeSACFindView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E91143292B824A0048180F /* SeSACFindView.swift */; };
 		63E91148292BC9470048180F /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E91147292BC9470048180F /* AlertView.swift */; };
@@ -233,6 +237,10 @@
 		63467E2329194B8700E7D8AE /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		6351B6842919772000B953BF /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		6354BA61293773B9006113F2 /* SeSACReviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACReviewViewModel.swift; sourceTree = "<group>"; };
+		6354BA652937A540006113F2 /* SeSACShopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACShopViewController.swift; sourceTree = "<group>"; };
+		6354BA672937A547006113F2 /* BgShopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BgShopViewController.swift; sourceTree = "<group>"; };
+		6354BA692937A5BA006113F2 /* ShopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopView.swift; sourceTree = "<group>"; };
+		6354BA6B2937AE28006113F2 /* TabmanShopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabmanShopViewController.swift; sourceTree = "<group>"; };
 		635E1608291BD9D00042E8E4 /* SeSACAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACAPIService.swift; sourceTree = "<group>"; };
 		635E160F291BE3F50042E8E4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		635E1611291BF26B0042E8E4 /* SeSACAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACAPI.swift; sourceTree = "<group>"; };
@@ -286,7 +294,7 @@
 		63DACA75292E5EF900D0CDB6 /* SeSACChat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACChat.swift; sourceTree = "<group>"; };
 		63DACA77292E627C00D0CDB6 /* ChattingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingView.swift; sourceTree = "<group>"; };
 		63DACA79292E895F00D0CDB6 /* ChattingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingViewModel.swift; sourceTree = "<group>"; };
-		63E9113C292B72F40048180F /* TabManViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabManViewController.swift; sourceTree = "<group>"; };
+		63E9113C292B72F40048180F /* TabManSeSACViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabManSeSACViewController.swift; sourceTree = "<group>"; };
 		63E9113E292B73CE0048180F /* SeSACAcceptViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACAcceptViewController.swift; sourceTree = "<group>"; };
 		63E91143292B824A0048180F /* SeSACFindView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACFindView.swift; sourceTree = "<group>"; };
 		63E91147292BC9470048180F /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
@@ -377,7 +385,7 @@
 		6300492B291EC22F0046E6D3 /* ShopScene */ = {
 			isa = PBXGroup;
 			children = (
-				6300492E291EC27A0046E6D3 /* ShopViewController.swift */,
+				6354BA63293797FD006113F2 /* View */,
 			);
 			path = ShopScene;
 			sourceTree = "<group>";
@@ -778,6 +786,26 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		6354BA63293797FD006113F2 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				6300492E291EC27A0046E6D3 /* ShopViewController.swift */,
+				6354BA6B2937AE28006113F2 /* TabmanShopViewController.swift */,
+				6354BA692937A5BA006113F2 /* ShopView.swift */,
+				6354BA652937A540006113F2 /* SeSACShopViewController.swift */,
+				6354BA672937A547006113F2 /* BgShopViewController.swift */,
+				6354BA6429379805006113F2 /* Cells */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		6354BA6429379805006113F2 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		635E1613291BF6280042E8E4 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
@@ -1143,7 +1171,7 @@
 		63E9114F292BCD0D0048180F /* TabMan */ = {
 			isa = PBXGroup;
 			children = (
-				63E9113C292B72F40048180F /* TabManViewController.swift */,
+				63E9113C292B72F40048180F /* TabManSeSACViewController.swift */,
 			);
 			path = TabMan;
 			sourceTree = "<group>";
@@ -1339,6 +1367,7 @@
 				63F31455291D37DF00C31F59 /* GenderButtonView.swift in Sources */,
 				63467DB32918D4AE00E7D8AE /* AppDelegate.swift in Sources */,
 				635E161E291C0C890042E8E4 /* NicknameViewController.swift in Sources */,
+				6354BA6C2937AE28006113F2 /* TabmanShopViewController.swift in Sources */,
 				63004927291EC1290046E6D3 /* TabViewController.swift in Sources */,
 				6351B6852919772000B953BF /* LoginView.swift in Sources */,
 				63467DB52918D4AE00E7D8AE /* SceneDelegate.swift in Sources */,
@@ -1346,6 +1375,7 @@
 				63308F252923A7BF004B90A5 /* SeSACTitle.swift in Sources */,
 				63DACA67292E2DBA00D0CDB6 /* Penalty.swift in Sources */,
 				63DACA78292E627C00D0CDB6 /* ChattingView.swift in Sources */,
+				6354BA662937A540006113F2 /* SeSACShopViewController.swift in Sources */,
 				637827B229229FD2009E1424 /* ReviewView.swift in Sources */,
 				6300491D291E4F570046E6D3 /* SplashViewController.swift in Sources */,
 				63DACA7A292E895F00D0CDB6 /* ChattingViewModel.swift in Sources */,
@@ -1355,6 +1385,7 @@
 				637EDF4429253039009089E4 /* BaseCollectionViewCell.swift in Sources */,
 				631DC95029212CA300F23211 /* ReusableProtocol.swift in Sources */,
 				63308F232923A64C004B90A5 /* MyProfileViewModel.swift in Sources */,
+				6354BA6A2937A5BA006113F2 /* ShopView.swift in Sources */,
 				6354BA62293773B9006113F2 /* SeSACReviewViewModel.swift in Sources */,
 				638B074D291ABB9E00E9D254 /* FirebaseError.swift in Sources */,
 				63308F1B292334E0004B90A5 /* ProfileAgeView.swift in Sources */,
@@ -1421,7 +1452,7 @@
 				637827A829222E30009E1424 /* MyProfileReviewTableViewCell.swift in Sources */,
 				637EDF3F29252FB0009089E4 /* SearchViewController.swift in Sources */,
 				63D01EF1292697E4007ADA35 /* HomeViewModel.swift in Sources */,
-				63E9113D292B72F40048180F /* TabManViewController.swift in Sources */,
+				63E9113D292B72F40048180F /* TabManSeSACViewController.swift in Sources */,
 				6300491F291E5E7F0046E6D3 /* HomeViewController.swift in Sources */,
 				635E1626291C2BFC0042E8E4 /* SignupCommet.swift in Sources */,
 				63D01EEF29268E88007ADA35 /* SearchOtherStudyCollectionViewCell.swift in Sources */,
@@ -1429,6 +1460,7 @@
 				631DC9542921319F00F23211 /* SeSACProfile.swift in Sources */,
 				63E9113F292B73CE0048180F /* SeSACAcceptViewController.swift in Sources */,
 				63670CD02928BFA500EAF29D /* SeSACFindReviewTableViewCell.swift in Sources */,
+				6354BA682937A547006113F2 /* BgShopViewController.swift in Sources */,
 				63E91144292B824A0048180F /* SeSACFindView.swift in Sources */,
 				63F3144A291D2A6300C31F59 /* EmailViewModel.swift in Sources */,
 				633AC684292F56E100A3249B /* ChattingSocketService.swift in Sources */,

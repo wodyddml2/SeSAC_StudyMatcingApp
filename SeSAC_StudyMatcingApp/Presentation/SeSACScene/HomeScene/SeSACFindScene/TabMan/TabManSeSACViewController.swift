@@ -178,7 +178,7 @@ final class TabManSeSACViewController: TabmanViewController {
 }
 
 extension TabManSeSACViewController: PageboyViewControllerDataSource, TMBarDataSource {
-    public func barItem(for bar: Tabman.TMBar, at index: Int) -> Tabman.TMBarItemable {
+    func barItem(for bar: Tabman.TMBar, at index: Int) -> Tabman.TMBarItemable {
         switch index {
         case 0:
             return TMBarItem(title: "주변 새싹")
@@ -189,15 +189,15 @@ extension TabManSeSACViewController: PageboyViewControllerDataSource, TMBarDataS
         }
     }
     
-    public func numberOfViewControllers(in pageboyViewController: Pageboy.PageboyViewController) -> Int {
+    func numberOfViewControllers(in pageboyViewController: Pageboy.PageboyViewController) -> Int {
         return viewControllers.count
     }
     
-    public func viewController(for pageboyViewController: Pageboy.PageboyViewController, at index: Pageboy.PageboyViewController.PageIndex) -> UIViewController? {
+    func viewController(for pageboyViewController: Pageboy.PageboyViewController, at index: Pageboy.PageboyViewController.PageIndex) -> UIViewController? {
         return viewControllers[index]
     }
     
-    public func defaultPage(for pageboyViewController: Pageboy.PageboyViewController) -> Pageboy.PageboyViewController.Page? {
+    func defaultPage(for pageboyViewController: Pageboy.PageboyViewController) -> Pageboy.PageboyViewController.Page? {
         return nil
     }
     

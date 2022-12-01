@@ -58,13 +58,6 @@ class SeSACReviewViewController: UIViewController {
                 }
             }).disposed(by: disposeBag)
         
-        mainView.cancelButton.rx.tap
-            .withUnretained(self)
-            .bind { vc, _ in
-                vc.dismiss(animated: false)
-            }
-            .disposed(by: disposeBag)
-        
         output.reviewButton
             .withUnretained(self)
             .bind { vc, review in
@@ -85,7 +78,12 @@ class SeSACReviewViewController: UIViewController {
             }
             .disposed(by: disposeBag)
         
-
+        mainView.cancelButton.rx.tap
+            .withUnretained(self)
+            .bind { vc, _ in
+                vc.dismiss(animated: false)
+            }
+            .disposed(by: disposeBag)
         
         mainView.okButton.rx.tap
             .withUnretained(self)

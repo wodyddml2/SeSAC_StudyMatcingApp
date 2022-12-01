@@ -9,11 +9,7 @@ import Foundation
 
 import FirebaseAuth
 
-class FirebaseAPIService {
-    
-    static let shared = FirebaseAPIService()
-    
-    private init() { }
+struct FirebaseAPIService {
     
     func requestAuth(phoneNumber: String, completion: @escaping (Result<String, FirebaseError>) -> Void) {
         PhoneAuthProvider.provider()

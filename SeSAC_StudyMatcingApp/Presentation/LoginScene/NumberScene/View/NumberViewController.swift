@@ -16,6 +16,8 @@ final class NumberViewController: BaseViewController {
     let mainView = NumberView()
     let viewModel = NumberViewModel()
     
+    let firebaseAPI = FirebaseAPIService()
+    
     let disposeBag = DisposeBag()
     
     override func loadView() {
@@ -61,7 +63,7 @@ extension NumberViewController {
     }
     
     private func requestFirebase() {
-        FirebaseAPIService.shared.requestAuth(phoneNumber: formattingNumber()) { [weak self] result in
+        firebaseAPI.requestAuth(phoneNumber: formattingNumber()) { [weak self] result in
             guard let self = self else {return}
             switch result {
             case .success(let success):

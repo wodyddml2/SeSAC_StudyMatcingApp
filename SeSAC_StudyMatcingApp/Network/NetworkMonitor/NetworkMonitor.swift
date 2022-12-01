@@ -15,6 +15,7 @@ final class NetworkMonitor {
     private let queue = DispatchQueue.global()
     private let monitor: NWPathMonitor
     
+    // 외부에서는 읽기만 가능하고 내부에서는 쓰기만 가능
     public private(set) var isConnected: Bool = false
     
     private init() {
