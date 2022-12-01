@@ -32,7 +32,7 @@ class ChattingViewModel {
     var lastDate: Date = Date()
     
     func requestMyQueue(output: Output) {
-        SeSACAPIService.shared.requestSeSACAPI(type: SeSACMatchDTO.self, router: Router.matchGet(query: UserManager.idToken)) { [weak self] result in
+        SeSACAPIService.shared.requestSeSACAPI(type: SeSACMatchDTO.self, router: QueueRouter.matchGet(query: UserManager.idToken)) { [weak self] result in
             guard let self = self else {return}
             switch result {
             case .success(let success):
@@ -51,22 +51,6 @@ class ChattingViewModel {
             }
         }
     }
-//
-//    func renewalMyQueue(output: Output) {
-//        let currentUser = Auth.auth().currentUser
-//        currentUser?.getIDTokenForcingRefresh(true) { [weak self] idToken, error in
-//            guard let self = self else {return}
-//            if error != nil {
-//                output.networkFailed.accept(true)
-//                return
-//            }
-//            if let idToken = idToken {
-//                UserManager.idToken = idToken
-//
-//                self.requestMyQueue(output: output)
-//            }
-//        }
-//    }
 
     func requestChatPost(chat: String) {
         ChattingAPIService.shared.requestPOSTAPI(router: ChatRouter.chatPost(query: UserManager.idToken, path: uid, chat: chat)) { [weak self] result in
@@ -91,21 +75,6 @@ class ChattingViewModel {
         }
     }
     
-//    func renewalChatPost(chat: String) {
-//        let currentUser = Auth.auth().currentUser
-//        currentUser?.getIDTokenForcingRefresh(true) { [weak self] idToken, error in
-//            guard let self = self else {return}
-//            if error != nil {
-//                self.getFailed.accept(true)
-//                return
-//            }
-//            if let idToken = idToken {
-//                UserManager.idToken = idToken
-//                self.requestChatPost(chat: chat)
-//            }
-//        }
-//    }
-    
     func requestChatGet(lastchatDate: String) {
         ChattingAPIService.shared.requestGETAPI(router: ChatRouter.chatGet(query: UserManager.idToken, path: uid, lastchatDate: lastchatDate)) { [weak self] result in
             
@@ -128,24 +97,6 @@ class ChattingViewModel {
             }
         }
     }
-    
-//    func renewalChatGet(lastchatDate: String) {
-//        let currentUser = Auth.auth().currentUser
-//        currentUser?.getIDTokenForcingRefresh(true) { [weak self] idToken, error in
-//            guard let self = self else {return}
-//            if error != nil {
-//                self.postFailed.accept(true)
-//                return
-//            }
-//            if let idToken = idToken {
-//                UserManager.idToken = idToken
-//                
-//                self.requestChatGet(lastchatDate: lastchatDate)
-//            }
-//        }
-//    }
-    
-    
 }
 
 extension ChattingViewModel: ViewModelType {

@@ -58,7 +58,7 @@ final class WithdrawViewController: BaseViewController {
                 UserManager.idToken = idToken
                 let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
                 let sceneDelegate = windowScene?.delegate as? SceneDelegate
-                SeSACAPIService.shared.requestStatusSeSACAPI(router: Router.withdrawPost(query: UserManager.idToken)) { value in
+                SeSACAPIService.shared.requestStatusSeSACAPI(router: UserRouter.withdrawPost(query: UserManager.idToken)) { value in
                     switch StatusCode(rawValue: value) {
                     case .success, .noSignup:
                         UserManager.onboarding = false

@@ -35,7 +35,7 @@ final class SearchViewModel {
     
     private func requestSearchSeSAC(output: Output) {
         guard let location = locationValue else {return}
-        SeSACAPIService.shared.requestSeSACAPI(type: SeSACSearchDTO.self, router: Router.searchPost(query: UserManager.idToken, lat: location.latitude, long: location.longitude)) { result in
+        SeSACAPIService.shared.requestSeSACAPI(type: SeSACSearchDTO.self, router: QueueRouter.searchPost(query: UserManager.idToken, lat: location.latitude, long: location.longitude)) { result in
             switch result {
             case .success(let success):
                 output.sesacInfo.onNext(success)
@@ -54,30 +54,14 @@ final class SearchViewModel {
             }
         }
     }
-    
-//    private func renewalRequest(output: Output) {
-//        let currentUser = Auth.auth().currentUser
-//        currentUser?.getIDTokenForcingRefresh(true) { [weak self] idToken, error in
-//            guard let self = self else {return}
-//            if error != nil {
-//                output.networkFailed.accept(true)
-//                return
-//            }
-//            if let idToken = idToken {
-//                UserManager.idToken = idToken
-//
-//                self.requestSearchSeSAC(output: output)
-//            }
-//        }
-//    }
-    
+
     func requestSeSACUser(completion: @escaping (Int) -> Void) {
         guard let location = locationValue else {return}
         var studylist: [String] = []
         myStudyArr.forEach { study in
             studylist.append(study.title)
         }
-        SeSACAPIService.shared.requestStatusSeSACAPI(router: Router.findPost(query: UserManager.idToken, lat: location.latitude, long: location.longitude, list: studylist)) { value in
+        SeSACAPIService.shared.requestStatusSeSACAPI(router: QueueRouter.findPost(query: UserManager.idToken, lat: location.latitude, long: location.longitude, list: studylist)) { value in
             completion(value)
         }
     }

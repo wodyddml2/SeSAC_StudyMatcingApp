@@ -1,8 +1,8 @@
 //
-//  ChattingAPIService.swift
+//  ChatRouter.swift
 //  SeSAC_StudyMatcingApp
 //
-//  Created by J on 2022/11/25.
+//  Created by J on 2022/12/01.
 //
 
 import Foundation
@@ -20,7 +20,6 @@ enum ChatRouter: URLRequestConvertible {
         case .chatGet(_, path: let path, _):
             return URL(string: SeSACAPI.baseURL + SeSACAPI.chat + "/\(path)")!
         }
-        
     }
     
     var header: HTTPHeaders {
@@ -33,7 +32,6 @@ enum ChatRouter: URLRequestConvertible {
         }
     }
     
-    
     var parameters: Parameters {
         switch self {
         case .chatPost(_, _, let chat):
@@ -42,7 +40,6 @@ enum ChatRouter: URLRequestConvertible {
             return ["lastchatDate": lastchatDate]
         }
     }
-    
     
     var method: HTTPMethod {
         switch self {
@@ -62,39 +59,5 @@ enum ChatRouter: URLRequestConvertible {
         case .chatPost, .chatGet:
             return try URLEncoding(arrayEncoding: .noBrackets).encode(request, with: parameters)
         }
-        
     }
-}
-
-class ChattingAPIService {
-    static let shared = ChattingAPIService()
-    
-    private init() { }
-    
-    func requestGETAPI(router: URLRequestConvertible ,completion: @escaping (Result<SeSACChatGetDTO, Error>) -> Void) {
-        AF.request(router).responseDecodable(of: SeSACChatGetDTO.self) { response in
-            switch response.result {
-            case .success(let result):
-                completion(.success(result))
-            case .failure(_):
-                guard let statusCode = response.response?.statusCode else {return}
-                guard let error = SeSACError(rawValue: statusCode) else {return}
-                completion(.failure(error))
-            }
-        }
-    }
-    
-    func requestPOSTAPI(router: URLRequestConvertible ,completion: @escaping (Result<SeSACChatPostDTO, Error>) -> Void) {
-        AF.request(router).responseDecodable(of: SeSACChatPostDTO.self) { response in
-            switch response.result {
-            case .success(let result):
-                completion(.success(result))
-            case .failure(_):
-                guard let statusCode = response.response?.statusCode else {return}
-                guard let error = SeSACError(rawValue: statusCode) else {return}
-                completion(.failure(error))
-            }
-        }
-    }
-    
 }

@@ -47,7 +47,7 @@ class SplashViewController: BaseViewController {
         let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
         let sceneDelegate = windowScene?.delegate as? SceneDelegate
         if UserManager.onboarding {
-            SeSACAPIService.shared.requestSeSACAPI(type: SESACLoginDTO.self ,router: Router.loginGet(query: UserManager.idToken)) { [weak self] result in
+            SeSACAPIService.shared.requestSeSACAPI(type: SESACLoginDTO.self ,router: UserRouter.loginGet(query: UserManager.idToken)) { [weak self] result in
                 guard let self = self else {return}
                 switch result {
                 case .success(let success):

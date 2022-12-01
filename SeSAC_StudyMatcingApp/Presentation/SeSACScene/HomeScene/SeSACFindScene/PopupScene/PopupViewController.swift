@@ -102,7 +102,7 @@ final class PopupViewController: BaseViewController {
 extension PopupViewController {
     private func requestPost() {
         guard let uid = uid else {return}
-        SeSACAPIService.shared.requestStatusSeSACAPI(router: Router.requestPost(query: UserManager.idToken, uid: uid)) { [weak self] value in
+        SeSACAPIService.shared.requestStatusSeSACAPI(router: QueueRouter.requestPost(query: UserManager.idToken, uid: uid)) { [weak self] value in
             guard let self = self else {return}
             
             switch StatusCode(rawValue: value) {
@@ -122,22 +122,6 @@ extension PopupViewController {
             }
         }
     }
-//
-//    private func renewalRequest() {
-//        let currentUser = Auth.auth().currentUser
-//        currentUser?.getIDTokenForcingRefresh(true) { [weak self] idToken, error in
-//            guard let self = self else {return}
-//            if error != nil {
-//                self.view.makeToast("에러가 발생했습니다.")
-//                return
-//            }
-//            if let idToken = idToken {
-//                UserManager.idToken = idToken
-//
-//                self.requestPost()
-//            }
-//        }
-//    }
 }
 
 extension PopupViewController {
@@ -145,7 +129,7 @@ extension PopupViewController {
         guard let uid = uid else {
             view.makeToast("에러가 발생했습니다.")
             return}
-        SeSACAPIService.shared.requestStatusSeSACAPI(router: Router.acceptPost(query: UserManager.idToken, uid: uid)) { [weak self] value in
+        SeSACAPIService.shared.requestStatusSeSACAPI(router: QueueRouter.acceptPost(query: UserManager.idToken, uid: uid)) { [weak self] value in
             guard let self = self else {return}
             switch StatusCode(rawValue: value) {
             case .success:
@@ -191,7 +175,7 @@ extension PopupViewController {
     }
     
     func requestMYQueue(completion: @escaping (SeSACMatchDTO) -> Void) {
-        SeSACAPIService.shared.requestSeSACAPI(type: SeSACMatchDTO.self, router: Router.matchGet(query: UserManager.idToken)) { result in
+        SeSACAPIService.shared.requestSeSACAPI(type: SeSACMatchDTO.self, router: QueueRouter.matchGet(query: UserManager.idToken)) { result in
             switch result {
             case .success(let success):
                 completion(success)

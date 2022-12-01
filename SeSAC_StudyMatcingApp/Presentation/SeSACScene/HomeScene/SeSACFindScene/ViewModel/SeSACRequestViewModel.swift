@@ -29,7 +29,7 @@ extension SeSACRequestViewModel {
         
         guard let location = locationValue else {return}
         
-        SeSACAPIService.shared.requestSeSACAPI(type: SeSACSearchDTO.self ,router: Router.searchPost(query: UserManager.idToken, lat: location.latitude, long: location.longitude)) { [weak self] result in
+        SeSACAPIService.shared.requestSeSACAPI(type: SeSACSearchDTO.self ,router: QueueRouter.searchPost(query: UserManager.idToken, lat: location.latitude, long: location.longitude)) { [weak self] result in
             guard let self = self else {return}
             switch result {
             case .success(let success):
@@ -51,27 +51,13 @@ extension SeSACRequestViewModel {
 
     
     func requestFindDelete(completion: @escaping (Int) -> Void) {
-        SeSACAPIService.shared.requestStatusSeSACAPI(router: Router.findDelete(query: UserManager.idToken)) { value in
+        SeSACAPIService.shared.requestStatusSeSACAPI(router: QueueRouter.findDelete(query: UserManager.idToken)) { value in
             completion(value)
         }
     }
     
-//    func renewalFindDeleteRequest(completion: @escaping () -> Void) {
-//        let currentUser = Auth.auth().currentUser
-//        currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
-//            if error != nil {
-//                print("error")
-//            }
-//            if let idToken = idToken {
-//                UserManager.idToken = idToken
-//                
-//                completion()
-//            }
-//        }
-//    }
-    
     func requestMYQueue() {
-        SeSACAPIService.shared.requestSeSACAPI(type: SeSACMatchDTO.self, router: Router.matchGet(query: UserManager.idToken)) { [weak self] result in
+        SeSACAPIService.shared.requestSeSACAPI(type: SeSACMatchDTO.self, router: QueueRouter.matchGet(query: UserManager.idToken)) { [weak self] result in
             guard let self = self else {return}
             switch result {
             case .success(let success):
@@ -90,21 +76,6 @@ extension SeSACRequestViewModel {
             }
         }
     }
-    
-//    func renewalMyQueueRequest() {
-//        let currentUser = Auth.auth().currentUser
-//        currentUser?.getIDTokenForcingRefresh(true) { [weak self] idToken, error in
-//            guard let self = self else {return}
-//            if error != nil {
-//                print("error")
-//            }
-//            if let idToken = idToken {
-//                UserManager.idToken = idToken
-//
-//                self.requestMYQueue()
-//            }
-//        }
-//    }
 }
 
 extension SeSACRequestViewModel: ViewModelType {

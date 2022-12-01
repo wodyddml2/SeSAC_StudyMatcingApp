@@ -129,6 +129,9 @@
 		638B0746291AA49600E9D254 /* AuthComent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638B0745291AA49600E9D254 /* AuthComent.swift */; };
 		638B074B291AB44200E9D254 /* FirebaseAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638B074A291AB44200E9D254 /* FirebaseAPIService.swift */; };
 		638B074D291ABB9E00E9D254 /* FirebaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638B074C291ABB9E00E9D254 /* FirebaseError.swift */; };
+		63BCEFA62938A832008BEDA6 /* UserRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BCEFA52938A832008BEDA6 /* UserRouter.swift */; };
+		63BCEFA82938AB6F008BEDA6 /* QueueRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BCEFA72938AB6F008BEDA6 /* QueueRouter.swift */; };
+		63BCEFAA2938AC11008BEDA6 /* ChatRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BCEFA92938AC11008BEDA6 /* ChatRouter.swift */; };
 		63D01EEB2926152A007ADA35 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D01EEA2926152A007ADA35 /* SearchViewModel.swift */; };
 		63D01EED292649BC007ADA35 /* SeSACSearchDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D01EEC292649BC007ADA35 /* SeSACSearchDTO.swift */; };
 		63D01EEF29268E88007ADA35 /* SearchOtherStudyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D01EEE29268E88007ADA35 /* SearchOtherStudyCollectionViewCell.swift */; };
@@ -279,6 +282,9 @@
 		638B0745291AA49600E9D254 /* AuthComent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthComent.swift; sourceTree = "<group>"; };
 		638B074A291AB44200E9D254 /* FirebaseAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAPIService.swift; sourceTree = "<group>"; };
 		638B074C291ABB9E00E9D254 /* FirebaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseError.swift; sourceTree = "<group>"; };
+		63BCEFA52938A832008BEDA6 /* UserRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRouter.swift; sourceTree = "<group>"; };
+		63BCEFA72938AB6F008BEDA6 /* QueueRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueueRouter.swift; sourceTree = "<group>"; };
+		63BCEFA92938AC11008BEDA6 /* ChatRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRouter.swift; sourceTree = "<group>"; };
 		63D01EEA2926152A007ADA35 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		63D01EEC292649BC007ADA35 /* SeSACSearchDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACSearchDTO.swift; sourceTree = "<group>"; };
 		63D01EEE29268E88007ADA35 /* SearchOtherStudyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchOtherStudyCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -496,7 +502,6 @@
 		633AC688292F5BA000A3249B /* Socket */ = {
 			isa = PBXGroup;
 			children = (
-				63209A912930A5F400C17AA3 /* ChattingAPIService.swift */,
 				633AC683292F56E100A3249B /* ChattingSocketService.swift */,
 				633AC689292F5BBD00A3249B /* SocketKey.swift */,
 			);
@@ -1080,12 +1085,24 @@
 		638B0748291AB41200E9D254 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				63BCEFA42938A7DA008BEDA6 /* Router */,
 				638B074A291AB44200E9D254 /* FirebaseAPIService.swift */,
 				635E1608291BD9D00042E8E4 /* SeSACAPIService.swift */,
+				63209A912930A5F400C17AA3 /* ChattingAPIService.swift */,
 				633AC688292F5BA000A3249B /* Socket */,
 				63004922291EAAAC0046E6D3 /* NetworkMonitor */,
 			);
 			path = Network;
+			sourceTree = "<group>";
+		};
+		63BCEFA42938A7DA008BEDA6 /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				63BCEFA52938A832008BEDA6 /* UserRouter.swift */,
+				63BCEFA72938AB6F008BEDA6 /* QueueRouter.swift */,
+				63BCEFA92938AC11008BEDA6 /* ChatRouter.swift */,
+			);
+			path = Router;
 			sourceTree = "<group>";
 		};
 		63DACA61292E2B7B00D0CDB6 /* API */ = {
@@ -1426,6 +1443,7 @@
 				63308F1729233460004B90A5 /* ProfileStudyView.swift in Sources */,
 				63F31451291D36E600C31F59 /* GenderView.swift in Sources */,
 				633AC693292F850A00A3249B /* ChatMenuImage.swift in Sources */,
+				63BCEFAA2938AC11008BEDA6 /* ChatRouter.swift in Sources */,
 				63D01EF32926981F007ADA35 /* SeSACMatchDTO.swift in Sources */,
 				63004921291E9D780046E6D3 /* Date+Format.swift in Sources */,
 				63467DF52918E6E300E7D8AE /* UserDefault.swift in Sources */,
@@ -1469,8 +1487,10 @@
 				635E1622291C1A440042E8E4 /* NicknameView.swift in Sources */,
 				63DACA74292E5DB500D0CDB6 /* ChattingSectionModel.swift in Sources */,
 				633AC69E292FC83000A3249B /* CancelViewController.swift in Sources */,
+				63BCEFA62938A832008BEDA6 /* UserRouter.swift in Sources */,
 				63DACA70292E55D700D0CDB6 /* YourChatTableViewCell.swift in Sources */,
 				63209A982930DA3F00C17AA3 /* SeSACChatPostDTO.swift in Sources */,
+				63BCEFA82938AB6F008BEDA6 /* QueueRouter.swift in Sources */,
 				63467DF02918E2F900E7D8AE /* UIColor+CustomColor.swift in Sources */,
 				6378279E292225D3009E1424 /* MyProfileViewController.swift in Sources */,
 				63F3144F291D36DD00C31F59 /* GenderViewController.swift in Sources */,

@@ -99,7 +99,7 @@ extension MessageViewController {
                             }
                             
                             if let idToken = idToken {
-                                SeSACAPIService.shared.requestSeSACAPI(type: SESACLoginDTO.self ,router: Router.loginGet(query: idToken)) { result in
+                                SeSACAPIService.shared.requestSeSACAPI(type: SESACLoginDTO.self ,router: UserRouter.loginGet(query: idToken)) { result in
                                     switch result {
                                     case .success(_):
                                         UserManager.signupStatus = true

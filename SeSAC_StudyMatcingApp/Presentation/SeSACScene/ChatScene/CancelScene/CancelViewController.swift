@@ -92,7 +92,7 @@ class CancelViewController: BaseViewController {
     }
     
     private func requestDodge() {
-        SeSACAPIService.shared.requestStatusSeSACAPI(router: Router.dodgePost(query: UserManager.idToken, uid: uid)) { [weak self] value in
+        SeSACAPIService.shared.requestStatusSeSACAPI(router: QueueRouter.dodgePost(query: UserManager.idToken, uid: uid)) { [weak self] value in
             guard let self = self else {return}
             switch StatusCode(rawValue: value) {
             case .success:
@@ -110,20 +110,4 @@ class CancelViewController: BaseViewController {
             }
         }
     }
-    
-//    private func renewalDodge() {
-//        let currentUser = Auth.auth().currentUser
-//        currentUser?.getIDTokenForcingRefresh(true) { [weak self] idToken, error in
-//            guard let self = self else {return}
-//            if error != nil {
-//                self.view.makeToast("에러가 발생했습니다.")
-//                return
-//            }
-//            if let idToken = idToken {
-//                UserManager.idToken = idToken
-//                
-//                self.requestDodge()
-//            }
-//        }
-//    }
 }

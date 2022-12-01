@@ -25,7 +25,7 @@ final class HomeViewModel {
     
     
     func requestSearchSeSAC(output: Output, lat: Double, long: Double) {
-        SeSACAPIService.shared.requestSeSACAPI(type: SeSACSearchDTO.self, router: Router.searchPost(query: UserManager.idToken, lat: lat, long: long)) { result in
+        SeSACAPIService.shared.requestSeSACAPI(type: SeSACSearchDTO.self, router: QueueRouter.searchPost(query: UserManager.idToken, lat: lat, long: long)) { result in
             switch result {
             case .success(let success):
                 output.searchInfo.onNext(success)
@@ -44,25 +44,8 @@ final class HomeViewModel {
         }
     }
     
-//    private func renewalSearchRequest(output: Output, lat: Double, long: Double) {
-//        let currentUser = Auth.auth().currentUser
-//        currentUser?.getIDTokenForcingRefresh(true) { [weak self] idToken, error in
-//            guard let self = self else {return}
-//            if error != nil {
-//                output.networkFailed.accept(true)
-//                return
-//            }
-//            if let idToken = idToken {
-//                UserManager.idToken = idToken
-//
-//                self.requestSearchSeSAC(output: output, lat: lat, long: long)
-//            }
-//        }
-//    }
-    
-    
     func requestMatchSeSAC(output: Output) {
-        SeSACAPIService.shared.requestSeSACAPI(type: SeSACMatchDTO.self, router: Router.matchGet(query: UserManager.idToken)) { result in
+        SeSACAPIService.shared.requestSeSACAPI(type: SeSACMatchDTO.self, router: QueueRouter.matchGet(query: UserManager.idToken)) { result in
             switch result {
             case .success(let success):
                 output.matchInfo.onNext(success)
@@ -82,22 +65,6 @@ final class HomeViewModel {
             }
         }
     }
-    
-//    private func renewalMatchRequest(output: Output) {
-//        let currentUser = Auth.auth().currentUser
-//        currentUser?.getIDTokenForcingRefresh(true) { [weak self] idToken, error in
-//            guard let self = self else {return}
-//            if error != nil {
-//                output.networkFailed.accept(true)
-//                return
-//            }
-//            if let idToken = idToken {
-//                UserManager.idToken = idToken
-//                
-//                self.requestMatchSeSAC(output: output)
-//            }
-//        }
-//    }
 }
 
 extension HomeViewModel: ViewModelType {

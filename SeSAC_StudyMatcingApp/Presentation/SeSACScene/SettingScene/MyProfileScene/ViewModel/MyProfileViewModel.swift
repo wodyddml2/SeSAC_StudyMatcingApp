@@ -17,7 +17,7 @@ final class MyProfileViewModel {
     
     func requsetProfile(output: Output) {
         
-        SeSACAPIService.shared.requestSeSACAPI(type: SESACLoginDTO.self ,router: Router.loginGet(query: UserManager.idToken)) { [weak self] result in
+        SeSACAPIService.shared.requestSeSACAPI(type: SESACLoginDTO.self ,router: UserRouter.loginGet(query: UserManager.idToken)) { [weak self] result in
             guard let self = self else {return}
             switch result {
             case .success(let success):
@@ -36,24 +36,6 @@ final class MyProfileViewModel {
             }
         }
     }
-    
-//    private func renewalRequest(output: Output) {
-//        let currentUser = Auth.auth().currentUser
-//        currentUser?.getIDTokenForcingRefresh(true) { [weak self] idToken, error in
-//            guard let self = self else {return}
-//            if error != nil {
-//                output.networkFailed.accept(true)
-//                return
-//            }
-//            if let idToken = idToken {
-//                UserManager.idToken = idToken
-//
-//                self.requsetProfile(output: output)
-//            }
-//        }
-//    }
-//
-    
 }
 
 extension MyProfileViewModel: ViewModelType {

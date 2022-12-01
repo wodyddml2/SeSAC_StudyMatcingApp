@@ -25,7 +25,7 @@ class SeSACReviewViewModel {
     var uid: String = ""
     
     func requestRate(output: Output, list: [Int], comment: String) {
-        SeSACAPIService.shared.requestStatusSeSACAPI(router: Router.ratePost(query: UserManager.idToken, uid: uid, list: list, comment: comment)) {  [weak self] value in
+        SeSACAPIService.shared.requestStatusSeSACAPI(router: QueueRouter.ratePost(query: UserManager.idToken, uid: uid, list: list, comment: comment)) {  [weak self] value in
             guard let self = self else {return}
             switch StatusCode(rawValue: value) {
             case .success:
@@ -41,23 +41,6 @@ class SeSACReviewViewModel {
             }
         }
     }
-    
-//    func renewalRate(output: Output, list: [Int], comment: String) {
-//        let currentUser = Auth.auth().currentUser
-//        currentUser?.getIDTokenForcingRefresh(true) { [weak self] idToken, error in
-//            guard let self = self else {return}
-//            if error != nil {
-//                output.networkFailed.accept(true)
-//            } else {
-//                if let idToken = idToken {
-//                    UserManager.idToken = idToken
-//                    
-//                    self.requestRate(output: output, list: list, comment: comment)
-//                }
-//            }
-//           
-//        }
-//    }
 }
 
 extension SeSACReviewViewModel: ViewModelType {
