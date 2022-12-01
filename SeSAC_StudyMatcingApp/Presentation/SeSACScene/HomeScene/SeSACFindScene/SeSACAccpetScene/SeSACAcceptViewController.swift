@@ -233,7 +233,7 @@ extension SeSACAcceptViewController {
     }
     
     private func renewalDelete<T: UIViewController>(_ vc: T) {
-        viewModel.renewalFindDeleteRequest { [weak self] in
+        self.renwalGetIdToken { [weak self] in
             guard let self = self else {return}
             self.requestDelete(T())
         }

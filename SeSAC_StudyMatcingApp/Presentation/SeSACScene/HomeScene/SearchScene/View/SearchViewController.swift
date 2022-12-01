@@ -235,18 +235,17 @@ extension SearchViewController {
             case .cancelThird:
                 self.view.makeToast(Penalty.threeMintue, position: .center)
             case .firebaseError:
-                self.renewalUser()
+                self.renwalGetIdToken { [weak self] in
+                    guard let self = self else {return}
+                    self.requestUser()
+                }
             default:
                 self.view.makeToast("에러가 발생했습니다.", position: .center)
             }
         }
     }
     
-    private func renewalUser() {
-        viewModel.renewalSeSACUserRequest {
-            self.requestUser()
-        }
-    }
+    
 }
 
 extension SearchViewController {

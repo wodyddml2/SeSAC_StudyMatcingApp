@@ -113,28 +113,31 @@ extension PopupViewController {
             case .stopFind:
                 self.dismissToast(message: "상대방이 스터디 찾기를 그만두었습니다")
             case .firebaseError:
-                self.renewalRequest()
+                self.renwalGetIdToken { [weak self] in
+                    guard let self = self else {return}
+                    self.requestPost()
+                }
             default:
                 self.view.makeToast("에러가 발생했습니다")
             }
         }
     }
-    
-    private func renewalRequest() {
-        let currentUser = Auth.auth().currentUser
-        currentUser?.getIDTokenForcingRefresh(true) { [weak self] idToken, error in
-            guard let self = self else {return}
-            if error != nil {
-                self.view.makeToast("에러가 발생했습니다.")
-                return
-            }
-            if let idToken = idToken {
-                UserManager.idToken = idToken
-                
-                self.requestPost()
-            }
-        }
-    }
+//
+//    private func renewalRequest() {
+//        let currentUser = Auth.auth().currentUser
+//        currentUser?.getIDTokenForcingRefresh(true) { [weak self] idToken, error in
+//            guard let self = self else {return}
+//            if error != nil {
+//                self.view.makeToast("에러가 발생했습니다.")
+//                return
+//            }
+//            if let idToken = idToken {
+//                UserManager.idToken = idToken
+//
+//                self.requestPost()
+//            }
+//        }
+//    }
 }
 
 extension PopupViewController {
@@ -177,25 +180,12 @@ extension PopupViewController {
             case .cancelFirst:
                 self.dismissToast(message: "앗! 누군가가 나의 스터디를 수락하였어요!")
             case .firebaseError:
-                self.renewalAccpet()
+                self.renwalGetIdToken { [weak self] in
+                    guard let self = self else {return}
+                    self.acceptPost()
+                }
             default:
                 self.view.makeToast("에러가 발생했습니다")
-            }
-        }
-    }
-    
-    private func renewalAccpet() {
-        let currentUser = Auth.auth().currentUser
-        currentUser?.getIDTokenForcingRefresh(true) { [weak self] idToken, error in
-            guard let self = self else {return}
-            if error != nil {
-                self.view.makeToast("에러가 발생했습니다.")
-                return
-            }
-            if let idToken = idToken {
-                UserManager.idToken = idToken
-                
-                self.acceptPost()
             }
         }
     }

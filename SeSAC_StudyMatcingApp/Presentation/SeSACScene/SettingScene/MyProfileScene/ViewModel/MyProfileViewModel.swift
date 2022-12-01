@@ -26,7 +26,10 @@ final class MyProfileViewModel {
                 let error = fail as! SeSACError
                 switch error {
                 case .firebaseTokenError:
-                    self.renewalRequest(output: output)
+                    self.renwalGetIdToken { [weak self] in
+                        guard let self = self else {return}
+                        self.requsetProfile(output: output)
+                    }
                 default:
                     output.networkFailed.accept(true)
                 }
@@ -34,22 +37,22 @@ final class MyProfileViewModel {
         }
     }
     
-    private func renewalRequest(output: Output) {
-        let currentUser = Auth.auth().currentUser
-        currentUser?.getIDTokenForcingRefresh(true) { [weak self] idToken, error in
-            guard let self = self else {return}
-            if error != nil {
-                output.networkFailed.accept(true)
-                return
-            }
-            if let idToken = idToken {
-                UserManager.idToken = idToken
-                
-                self.requsetProfile(output: output)
-            }
-        }
-    }
-    
+//    private func renewalRequest(output: Output) {
+//        let currentUser = Auth.auth().currentUser
+//        currentUser?.getIDTokenForcingRefresh(true) { [weak self] idToken, error in
+//            guard let self = self else {return}
+//            if error != nil {
+//                output.networkFailed.accept(true)
+//                return
+//            }
+//            if let idToken = idToken {
+//                UserManager.idToken = idToken
+//
+//                self.requsetProfile(output: output)
+//            }
+//        }
+//    }
+//
     
 }
 

@@ -61,7 +61,10 @@ class SplashViewController: BaseViewController {
                     let error = fail as! SeSACError
                     switch error {
                     case .firebaseTokenError:
-                        self.renewalRequest()
+                        self.renwalGetIdToken { [weak self] in
+                            guard let self = self else {return}
+                            self.requestSeSAC()
+                        }
                     case .noSignup:
                         UserManager.signupStatus = false
                         let vc = UINavigationController(rootViewController: NumberViewController())
@@ -80,44 +83,6 @@ class SplashViewController: BaseViewController {
         }
         
         sceneDelegate?.window?.makeKeyAndVisible()
-    }
-    
-    private func renewalRequest() {
-//        let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
-//        let sceneDelegate = windowScene?.delegate as? SceneDelegate
-        let currentUser = Auth.auth().currentUser
-        currentUser?.getIDTokenForcingRefresh(true) { [weak self] idToken, error in
-            guard let self = self else {return}
-            if error != nil {
-                self.view.makeToast("에러가 발생했습니다.")
-                return
-            }
-            if let idToken = idToken {
-                UserManager.idToken = idToken
-                self.requestSeSAC()
-//                SeSACAPIService.shared.requestSeSACAPI(type: SESACLoginDTO.self,router: Router.loginGet(query: idToken)) { result in
-//                    switch result {
-//                    case .success(let success):
-//                        UserManager.sesacImage = success.sesac
-//                        let vc = TabViewController()
-//                        sceneDelegate?.window?.rootViewController = vc
-//                    case .failure(let fail):
-//                        let error = fail as! SeSACError
-//                        switch error {
-//                        case .noSignup:
-//                            UserManager.signupStatus = false
-//                            let vc = UINavigationController(rootViewController: NumberViewController())
-//                            sceneDelegate?.window?.rootViewController = vc
-//                        default:
-//                            UserManager.signupStatus = true
-//                            let vc = UINavigationController(rootViewController: NumberViewController())
-//                            sceneDelegate?.window?.rootViewController = vc
-//                        }
-//                    }
-//                }
-            }
-        }
-//        sceneDelegate?.window?.makeKeyAndVisible()
     }
     
     override func configureUI() {

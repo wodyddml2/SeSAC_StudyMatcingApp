@@ -38,30 +38,17 @@ extension SeSACRequestViewModel {
                 let error = fail as! SeSACError
                 switch error {
                 case .firebaseTokenError:
-                    
-                    self.renewalRequest(output: output)
+                    self.renwalGetIdToken { [weak self] in
+                        guard let self = self else {return}
+                        self.requsetSearch(output: output)
+                    }
                 default:
                     output.networkFailed.accept(true)
                 }
             }
         }
     }
-    
-    private func renewalRequest(output: Output) {
-        let currentUser = Auth.auth().currentUser
-        currentUser?.getIDTokenForcingRefresh(true) { [weak self] idToken, error in
-            guard let self = self else {return}
-            if error != nil {
-                output.networkFailed.accept(true)
-                return
-            }
-            if let idToken = idToken {
-                UserManager.idToken = idToken
-                
-                self.requsetSearch(output: output)
-            }
-        }
-    }
+
     
     func requestFindDelete(completion: @escaping (Int) -> Void) {
         SeSACAPIService.shared.requestStatusSeSACAPI(router: Router.findDelete(query: UserManager.idToken)) { value in
@@ -69,19 +56,19 @@ extension SeSACRequestViewModel {
         }
     }
     
-    func renewalFindDeleteRequest(completion: @escaping () -> Void) {
-        let currentUser = Auth.auth().currentUser
-        currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
-            if error != nil {
-                print("error")
-            }
-            if let idToken = idToken {
-                UserManager.idToken = idToken
-                
-                completion()
-            }
-        }
-    }
+//    func renewalFindDeleteRequest(completion: @escaping () -> Void) {
+//        let currentUser = Auth.auth().currentUser
+//        currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
+//            if error != nil {
+//                print("error")
+//            }
+//            if let idToken = idToken {
+//                UserManager.idToken = idToken
+//                
+//                completion()
+//            }
+//        }
+//    }
     
     func requestMYQueue() {
         SeSACAPIService.shared.requestSeSACAPI(type: SeSACMatchDTO.self, router: Router.matchGet(query: UserManager.idToken)) { [weak self] result in
@@ -93,7 +80,10 @@ extension SeSACRequestViewModel {
                 let error = fail as! SeSACError
                 switch error {
                 case .firebaseTokenError:
-                    self.renewalMyQueueRequest()
+                    self.renwalGetIdToken { [weak self] in
+                        guard let self = self else {return}
+                        self.requestMYQueue()
+                    }
                 default:
                     self.matchError.accept(true)
                 }
@@ -101,20 +91,20 @@ extension SeSACRequestViewModel {
         }
     }
     
-    func renewalMyQueueRequest() {
-        let currentUser = Auth.auth().currentUser
-        currentUser?.getIDTokenForcingRefresh(true) { [weak self] idToken, error in
-            guard let self = self else {return}
-            if error != nil {
-                print("error")
-            }
-            if let idToken = idToken {
-                UserManager.idToken = idToken
-                
-                self.requestMYQueue()
-            }
-        }
-    }
+//    func renewalMyQueueRequest() {
+//        let currentUser = Auth.auth().currentUser
+//        currentUser?.getIDTokenForcingRefresh(true) { [weak self] idToken, error in
+//            guard let self = self else {return}
+//            if error != nil {
+//                print("error")
+//            }
+//            if let idToken = idToken {
+//                UserManager.idToken = idToken
+//
+//                self.requestMYQueue()
+//            }
+//        }
+//    }
 }
 
 extension SeSACRequestViewModel: ViewModelType {

@@ -33,7 +33,10 @@ final class HomeViewModel {
                 let error = fail as! SeSACError
                 switch error {
                 case .firebaseTokenError:
-                    self.renewalSearchRequest(output: output, lat: lat, long: long)
+                    self.renwalGetIdToken { [weak self] in
+                        guard let self = self else {return}
+                        self.requestSearchSeSAC(output: output, lat: lat, long: long)
+                    }
                 default:
                     output.networkFailed.accept(true)
                 }
@@ -41,21 +44,21 @@ final class HomeViewModel {
         }
     }
     
-    private func renewalSearchRequest(output: Output, lat: Double, long: Double) {
-        let currentUser = Auth.auth().currentUser
-        currentUser?.getIDTokenForcingRefresh(true) { [weak self] idToken, error in
-            guard let self = self else {return}
-            if error != nil {
-                output.networkFailed.accept(true)
-                return
-            }
-            if let idToken = idToken {
-                UserManager.idToken = idToken
-                
-                self.requestSearchSeSAC(output: output, lat: lat, long: long)
-            }
-        }
-    }
+//    private func renewalSearchRequest(output: Output, lat: Double, long: Double) {
+//        let currentUser = Auth.auth().currentUser
+//        currentUser?.getIDTokenForcingRefresh(true) { [weak self] idToken, error in
+//            guard let self = self else {return}
+//            if error != nil {
+//                output.networkFailed.accept(true)
+//                return
+//            }
+//            if let idToken = idToken {
+//                UserManager.idToken = idToken
+//
+//                self.requestSearchSeSAC(output: output, lat: lat, long: long)
+//            }
+//        }
+//    }
     
     
     func requestMatchSeSAC(output: Output) {
@@ -69,7 +72,10 @@ final class HomeViewModel {
                 case .existingUsers:
                     output.normalStatus.accept(true)
                 case .firebaseTokenError:
-                    self.renewalMatchRequest(output: output)
+                    self.renwalGetIdToken { [weak self] in
+                        guard let self = self else {return}
+                        self.requestMatchSeSAC(output: output)
+                    }
                 default:
                     output.networkFailed.accept(true)
                 }
@@ -77,21 +83,21 @@ final class HomeViewModel {
         }
     }
     
-    private func renewalMatchRequest(output: Output) {
-        let currentUser = Auth.auth().currentUser
-        currentUser?.getIDTokenForcingRefresh(true) { [weak self] idToken, error in
-            guard let self = self else {return}
-            if error != nil {
-                output.networkFailed.accept(true)
-                return
-            }
-            if let idToken = idToken {
-                UserManager.idToken = idToken
-                
-                self.requestMatchSeSAC(output: output)
-            }
-        }
-    }
+//    private func renewalMatchRequest(output: Output) {
+//        let currentUser = Auth.auth().currentUser
+//        currentUser?.getIDTokenForcingRefresh(true) { [weak self] idToken, error in
+//            guard let self = self else {return}
+//            if error != nil {
+//                output.networkFailed.accept(true)
+//                return
+//            }
+//            if let idToken = idToken {
+//                UserManager.idToken = idToken
+//                
+//                self.requestMatchSeSAC(output: output)
+//            }
+//        }
+//    }
 }
 
 extension HomeViewModel: ViewModelType {

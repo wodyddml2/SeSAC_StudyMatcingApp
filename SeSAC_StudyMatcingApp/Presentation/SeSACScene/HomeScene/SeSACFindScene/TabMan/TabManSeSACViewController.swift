@@ -91,20 +91,30 @@ final class TabManSeSACViewController: TabmanViewController {
                     self.bindTimerMatch()
                 }
             case .firebaseError:
-                self.renewalDelete()
+                self.renwalGetIdToken { [weak self] in
+                    guard let self = self else {return}
+                    self.requestDelete()
+                }
             default:
                 self.view.makeToast("에러가 발생했습니다.", position: .center)
             }
         }
     }
     
-    private func renewalDelete() {
-        viewModel.renewalFindDeleteRequest { [weak self] in
-            guard let self = self else {return}
-            self.requestDelete()
+    func renwalGetIdToken(completion: @escaping () -> Void) {
+        let currentUser = Auth.auth().currentUser
+        currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
+            if error != nil {
+                return
+            }
+            if let idToken = idToken {
+                UserManager.idToken = idToken
+                completion()
+            }
         }
     }
     
+
     private func bindViewModel() {
         viewModel.match
             .withUnretained(self)

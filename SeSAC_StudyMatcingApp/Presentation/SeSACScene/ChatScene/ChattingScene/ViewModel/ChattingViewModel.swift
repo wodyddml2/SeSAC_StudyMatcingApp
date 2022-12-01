@@ -41,29 +41,32 @@ class ChattingViewModel {
                 let error = fail as! SeSACError
                 switch error {
                 case .firebaseTokenError:
-                    self.renewalMyQueue(output: output)
+                    self.renwalGetIdToken { [weak self] in
+                        guard let self = self else {return}
+                        self.requestMyQueue(output: output)
+                    }
                 default:
                     output.networkFailed.accept(true)
                 }
             }
         }
     }
-    
-    func renewalMyQueue(output: Output) {
-        let currentUser = Auth.auth().currentUser
-        currentUser?.getIDTokenForcingRefresh(true) { [weak self] idToken, error in
-            guard let self = self else {return}
-            if error != nil {
-                output.networkFailed.accept(true)
-                return
-            }
-            if let idToken = idToken {
-                UserManager.idToken = idToken
-                
-                self.requestMyQueue(output: output)
-            }
-        }
-    }
+//
+//    func renewalMyQueue(output: Output) {
+//        let currentUser = Auth.auth().currentUser
+//        currentUser?.getIDTokenForcingRefresh(true) { [weak self] idToken, error in
+//            guard let self = self else {return}
+//            if error != nil {
+//                output.networkFailed.accept(true)
+//                return
+//            }
+//            if let idToken = idToken {
+//                UserManager.idToken = idToken
+//
+//                self.requestMyQueue(output: output)
+//            }
+//        }
+//    }
 
     func requestChatPost(chat: String) {
         ChattingAPIService.shared.requestPOSTAPI(router: ChatRouter.chatPost(query: UserManager.idToken, path: uid, chat: chat)) { [weak self] result in
@@ -77,7 +80,10 @@ class ChattingViewModel {
                 let error = fail as! SeSACError
                 switch error {
                 case .firebaseTokenError:
-                    self.renewalChatPost(chat: chat)
+                    self.renwalGetIdToken { [weak self] in
+                        guard let self = self else {return}
+                        self.requestChatPost(chat: chat)
+                    }
                 default:
                     self.postFailed.accept(true)
                 }
@@ -85,20 +91,20 @@ class ChattingViewModel {
         }
     }
     
-    func renewalChatPost(chat: String) {
-        let currentUser = Auth.auth().currentUser
-        currentUser?.getIDTokenForcingRefresh(true) { [weak self] idToken, error in
-            guard let self = self else {return}
-            if error != nil {
-                self.getFailed.accept(true)
-                return
-            }
-            if let idToken = idToken {
-                UserManager.idToken = idToken
-                self.requestChatPost(chat: chat)
-            }
-        }
-    }
+//    func renewalChatPost(chat: String) {
+//        let currentUser = Auth.auth().currentUser
+//        currentUser?.getIDTokenForcingRefresh(true) { [weak self] idToken, error in
+//            guard let self = self else {return}
+//            if error != nil {
+//                self.getFailed.accept(true)
+//                return
+//            }
+//            if let idToken = idToken {
+//                UserManager.idToken = idToken
+//                self.requestChatPost(chat: chat)
+//            }
+//        }
+//    }
     
     func requestChatGet(lastchatDate: String) {
         ChattingAPIService.shared.requestGETAPI(router: ChatRouter.chatGet(query: UserManager.idToken, path: uid, lastchatDate: lastchatDate)) { [weak self] result in
@@ -112,7 +118,10 @@ class ChattingViewModel {
                 let error = fail as! SeSACError
                 switch error {
                 case .firebaseTokenError:
-                    self.renewalChatGet(lastchatDate: lastchatDate)
+                    self.renwalGetIdToken { [weak self] in
+                        guard let self = self else {return}
+                        self.requestChatGet(lastchatDate: lastchatDate)
+                    }
                 default:
                     self.getFailed.accept(true)
                 }
@@ -120,21 +129,21 @@ class ChattingViewModel {
         }
     }
     
-    func renewalChatGet(lastchatDate: String) {
-        let currentUser = Auth.auth().currentUser
-        currentUser?.getIDTokenForcingRefresh(true) { [weak self] idToken, error in
-            guard let self = self else {return}
-            if error != nil {
-                self.postFailed.accept(true)
-                return
-            }
-            if let idToken = idToken {
-                UserManager.idToken = idToken
-                
-                self.requestChatGet(lastchatDate: lastchatDate)
-            }
-        }
-    }
+//    func renewalChatGet(lastchatDate: String) {
+//        let currentUser = Auth.auth().currentUser
+//        currentUser?.getIDTokenForcingRefresh(true) { [weak self] idToken, error in
+//            guard let self = self else {return}
+//            if error != nil {
+//                self.postFailed.accept(true)
+//                return
+//            }
+//            if let idToken = idToken {
+//                UserManager.idToken = idToken
+//                
+//                self.requestChatGet(lastchatDate: lastchatDate)
+//            }
+//        }
+//    }
     
     
 }

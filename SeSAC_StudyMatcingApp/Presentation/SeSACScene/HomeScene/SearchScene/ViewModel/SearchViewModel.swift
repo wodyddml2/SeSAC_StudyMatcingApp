@@ -43,7 +43,11 @@ final class SearchViewModel {
                 let error = fail as! SeSACError
                 switch error {
                 case .firebaseTokenError:
-                    self.renewalRequest(output: output)
+                    self.renwalGetIdToken { [weak self] in
+                        guard let self = self else {return}
+                        self.requestSearchSeSAC(output: output)
+                    }
+//                    self.renewalRequest(output: output)
                 default:
                     output.networkFailed.accept(true)
                 }
@@ -51,21 +55,21 @@ final class SearchViewModel {
         }
     }
     
-    private func renewalRequest(output: Output) {
-        let currentUser = Auth.auth().currentUser
-        currentUser?.getIDTokenForcingRefresh(true) { [weak self] idToken, error in
-            guard let self = self else {return}
-            if error != nil {
-                output.networkFailed.accept(true)
-                return
-            }
-            if let idToken = idToken {
-                UserManager.idToken = idToken
-                
-                self.requestSearchSeSAC(output: output)
-            }
-        }
-    }
+//    private func renewalRequest(output: Output) {
+//        let currentUser = Auth.auth().currentUser
+//        currentUser?.getIDTokenForcingRefresh(true) { [weak self] idToken, error in
+//            guard let self = self else {return}
+//            if error != nil {
+//                output.networkFailed.accept(true)
+//                return
+//            }
+//            if let idToken = idToken {
+//                UserManager.idToken = idToken
+//
+//                self.requestSearchSeSAC(output: output)
+//            }
+//        }
+//    }
     
     func requestSeSACUser(completion: @escaping (Int) -> Void) {
         guard let location = locationValue else {return}
@@ -77,22 +81,6 @@ final class SearchViewModel {
             completion(value)
         }
     }
-    
-    func renewalSeSACUserRequest(completion: @escaping () -> Void) {
-        let currentUser = Auth.auth().currentUser
-        currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
-            if error != nil {
-                print("error")
-                return
-            }
-            if let idToken = idToken {
-                UserManager.idToken = idToken
-                
-                completion()
-            }
-        }
-    }
-    
 }
 
 extension SearchViewModel: ViewModelType {

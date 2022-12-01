@@ -101,26 +101,29 @@ class CancelViewController: BaseViewController {
                     vc.navigationController?.popToRootViewController(animated: true)
                 }
             case .firebaseError:
-                self.renewalDodge()
+                self.renwalGetIdToken { [weak self] in
+                    guard let self = self else {return}
+                    self.requestDodge()
+                }
             default:
                 self.view.makeToast("에러가 발생했습니다.")
             }
         }
     }
     
-    private func renewalDodge() {
-        let currentUser = Auth.auth().currentUser
-        currentUser?.getIDTokenForcingRefresh(true) { [weak self] idToken, error in
-            guard let self = self else {return}
-            if error != nil {
-                self.view.makeToast("에러가 발생했습니다.")
-                return
-            }
-            if let idToken = idToken {
-                UserManager.idToken = idToken
-                
-                self.requestDodge()
-            }
-        }
-    }
+//    private func renewalDodge() {
+//        let currentUser = Auth.auth().currentUser
+//        currentUser?.getIDTokenForcingRefresh(true) { [weak self] idToken, error in
+//            guard let self = self else {return}
+//            if error != nil {
+//                self.view.makeToast("에러가 발생했습니다.")
+//                return
+//            }
+//            if let idToken = idToken {
+//                UserManager.idToken = idToken
+//                
+//                self.requestDodge()
+//            }
+//        }
+//    }
 }

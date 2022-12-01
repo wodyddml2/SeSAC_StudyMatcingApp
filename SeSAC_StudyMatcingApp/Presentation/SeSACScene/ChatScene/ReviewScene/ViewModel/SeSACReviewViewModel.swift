@@ -31,7 +31,10 @@ class SeSACReviewViewModel {
             case .success:
                 output.success.accept(true)
             case .firebaseError:
-                self.renewalRate(output: output, list: list, comment: comment)
+                self.renwalGetIdToken { [weak self] in
+                    guard let self = self else {return}
+                    self.requestRate(output: output, list: list, comment: comment)
+                }
             default:
                 print(value)
                 output.networkFailed.accept(true)
@@ -39,22 +42,22 @@ class SeSACReviewViewModel {
         }
     }
     
-    func renewalRate(output: Output, list: [Int], comment: String) {
-        let currentUser = Auth.auth().currentUser
-        currentUser?.getIDTokenForcingRefresh(true) { [weak self] idToken, error in
-            guard let self = self else {return}
-            if error != nil {
-                output.networkFailed.accept(true)
-            } else {
-                if let idToken = idToken {
-                    UserManager.idToken = idToken
-                    
-                    self.requestRate(output: output, list: list, comment: comment)
-                }
-            }
-           
-        }
-    }
+//    func renewalRate(output: Output, list: [Int], comment: String) {
+//        let currentUser = Auth.auth().currentUser
+//        currentUser?.getIDTokenForcingRefresh(true) { [weak self] idToken, error in
+//            guard let self = self else {return}
+//            if error != nil {
+//                output.networkFailed.accept(true)
+//            } else {
+//                if let idToken = idToken {
+//                    UserManager.idToken = idToken
+//                    
+//                    self.requestRate(output: output, list: list, comment: comment)
+//                }
+//            }
+//           
+//        }
+//    }
 }
 
 extension SeSACReviewViewModel: ViewModelType {

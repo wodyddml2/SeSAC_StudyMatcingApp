@@ -9,7 +9,6 @@ import Foundation
 
 import Alamofire
 
-
 enum Router: URLRequestConvertible {
     case loginGet(query: String)
     case signUpPost
@@ -177,6 +176,4 @@ class SeSACAPIService {
             
         }
     }
-    
-    
 }

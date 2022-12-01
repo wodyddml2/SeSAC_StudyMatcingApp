@@ -7,6 +7,8 @@
 
 import UIKit
 
+import FirebaseAuth
+
 class BaseViewController: UIViewController {
 
     override func viewDidLoad() {
@@ -58,6 +60,19 @@ class BaseViewController: UIViewController {
         navigationController?.navigationBar.scrollEdgeAppearance = navigationAppearance
         navigationController?.navigationBar.standardAppearance = navigationAppearance
         
+    }
+    
+    func renwalGetIdToken(completion: @escaping () -> Void) {
+        let currentUser = Auth.auth().currentUser
+        currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
+            if error != nil {
+                return
+            }
+            if let idToken = idToken {
+                UserManager.idToken = idToken
+                completion()
+            }
+        }
     }
 }
 
