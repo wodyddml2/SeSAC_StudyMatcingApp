@@ -673,14 +673,8 @@
 		63467DEA2918DB1600E7D8AE /* Extension */ = {
 			isa = PBXGroup;
 			children = (
-				63467DEB2918DB3E00E7D8AE /* UIFont+CustomFont.swift */,
-				637EDF37292522C5009089E4 /* UIView+Shadow.swift */,
-				63004920291E9D780046E6D3 /* Date+Format.swift */,
-				6337F01D291A5B57002C81FA /* String+Custom.swift */,
-				63467DEF2918E2F900E7D8AE /* UIColor+CustomColor.swift */,
-				63467DFE2918F04300E7D8AE /* NSAttributedString+CustomText.swift */,
-				63467DED2918E0EF00E7D8AE /* UIImage+Extension.swift */,
-				63467DF12918E57E00E7D8AE /* UIViewController+Transition.swift */,
+				63B8381C293A0B85009F3B2D /* UI */,
+				63B8381D293A0B9C009F3B2D /* Logic */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1082,6 +1076,28 @@
 				63004922291EAAAC0046E6D3 /* NetworkMonitor */,
 			);
 			path = Network;
+			sourceTree = "<group>";
+		};
+		63B8381C293A0B85009F3B2D /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				63467DEB2918DB3E00E7D8AE /* UIFont+CustomFont.swift */,
+				637EDF37292522C5009089E4 /* UIView+Shadow.swift */,
+				63467DEF2918E2F900E7D8AE /* UIColor+CustomColor.swift */,
+				63467DED2918E0EF00E7D8AE /* UIImage+Extension.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		63B8381D293A0B9C009F3B2D /* Logic */ = {
+			isa = PBXGroup;
+			children = (
+				63004920291E9D780046E6D3 /* Date+Format.swift */,
+				6337F01D291A5B57002C81FA /* String+Custom.swift */,
+				63467DFE2918F04300E7D8AE /* NSAttributedString+CustomText.swift */,
+				63467DF12918E57E00E7D8AE /* UIViewController+Transition.swift */,
+			);
+			path = Logic;
 			sourceTree = "<group>";
 		};
 		63BCEFA42938A7DA008BEDA6 /* Router */ = {

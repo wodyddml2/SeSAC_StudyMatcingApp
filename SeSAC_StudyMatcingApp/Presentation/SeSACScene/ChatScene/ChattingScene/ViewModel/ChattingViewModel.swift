@@ -266,14 +266,14 @@ extension ChattingViewModel {
             
             if i == 0 {
                 sections.append(ChattingSectionModel(items: [chatItem]))
-                sections[sectionCount].items.append(chatItem)
+//                sections[sectionCount].items.append(chatItem)
             } else {
                 if list.chatInfo[i].createdAt.toDate().dateStringFormat(date: "yyyy/M/d") == list.chatInfo[i-1].createdAt.toDate().dateStringFormat(date: "yyyy/M/d") {
                     sections[sectionCount].items.append(chatItem)
                 } else {
                     sectionCount += 1
                     sections.append(ChattingSectionModel(items: [chatItem]))
-                    sections[sectionCount].items.append(chatItem)
+//                    sections[sectionCount].items.append(chatItem)
                 }
             }
         }
@@ -281,7 +281,6 @@ extension ChattingViewModel {
     }
     func requestGetBranch() {
         tasks = repository.fetchFilter(uid: uid)
-        print(tasks?.count)
         if let tasks = tasks {
             if tasks.isEmpty {
                 requestChatGet(lastchatDate: "2000-01-01T00:00:00.000Z")
@@ -305,7 +304,7 @@ extension ChattingViewModel {
             do {
                 try repository.addRealm(item: task)
             } catch {
-                print("SSSSSS")
+                print("error")
             }
         } else {
             let outSectionCount = tasks.count - 1
@@ -314,14 +313,14 @@ extension ChattingViewModel {
                 do {
                     try repository.appendChat(list: tasks[outSectionCount], item: chat)
                 } catch {
-                    print("SSs")
+                    print("error")
                 }
             } else {
                 for _ in 0...1 {
                     do {
                         try repository.appendChat(list: tasks[0], item: chat)
                     } catch {
-                        print("SSs")
+                        print("error")
                     }
                 }
                 
