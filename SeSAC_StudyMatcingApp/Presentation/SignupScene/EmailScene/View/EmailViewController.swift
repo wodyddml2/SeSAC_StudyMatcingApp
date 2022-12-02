@@ -55,7 +55,7 @@ extension EmailViewController {
                     UserManager.email = vc.mainView.emailTextField.text!
                     vc.transition(GenderViewController(), transitionStyle: .push)
                 } else {
-                    vc.mainView.makeToast(SignupCommet.emailValid, position: .center)
+                    vc.mainView.makeToast(Comment.Signup.emailValid, position: .center)
                 }
             }
             .disposed(by: disposeBag)

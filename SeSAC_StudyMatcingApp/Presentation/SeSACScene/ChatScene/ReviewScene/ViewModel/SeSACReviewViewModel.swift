@@ -25,7 +25,7 @@ class SeSACReviewViewModel {
     var uid: String = ""
     
     func requestRate(output: Output, list: [Int], comment: String) {
-        SeSACAPIService.shared.requestStatusSeSACAPI(router: QueueRouter.ratePost(query: UserManager.idToken, uid: uid, list: list, comment: comment)) {  [weak self] value in
+        SeSACAPIService.shared.requestStatusSeSACAPI(router: QueueRouter.rate(query: UserManager.idToken, uid: uid, list: list, comment: comment)) {  [weak self] value in
             guard let self = self else {return}
             switch StatusCode(rawValue: value) {
             case .success:

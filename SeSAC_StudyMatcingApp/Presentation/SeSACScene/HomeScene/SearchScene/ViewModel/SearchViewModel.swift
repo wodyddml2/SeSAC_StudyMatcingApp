@@ -35,7 +35,7 @@ final class SearchViewModel {
     
     private func requestSearchSeSAC(output: Output) {
         guard let location = locationValue else {return}
-        SeSACAPIService.shared.requestSeSACAPI(type: SeSACSearchDTO.self, router: QueueRouter.searchPost(query: UserManager.idToken, lat: location.latitude, long: location.longitude)) { result in
+        SeSACAPIService.shared.requestSeSACAPI(type: SeSACSearchDTO.self, router: QueueRouter.search(query: UserManager.idToken, lat: location.latitude, long: location.longitude)) { result in
             switch result {
             case .success(let success):
                 output.sesacInfo.onNext(success)

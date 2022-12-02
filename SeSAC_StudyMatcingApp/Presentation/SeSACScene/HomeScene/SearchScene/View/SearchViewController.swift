@@ -77,10 +77,10 @@ extension SearchViewController {
     private func validCheck(text: String) {
         let study = viewModel.myStudyArr.map({$0.title})
         if study.contains(text) {
-            view.makeToast(StudyRegistration.overlap, position: .center)
+            view.makeToast(Comment.StudyRegistration.overlap, position: .center)
         } else {
             if viewModel.arrCountLimit() {
-                view.makeToast(StudyRegistration.overStudy, position: .center)
+                view.makeToast(Comment.StudyRegistration.overStudy, position: .center)
             } else {
                 viewModel.myStudyArr.append(StudyTag(title: text))
                 studySnapshot()
@@ -190,12 +190,12 @@ extension SearchViewController {
                 let study = vc.viewModel.myStudyArr.map({$0.title})
                 
                 if separatedText.filter({$0.count > 8}).count != 0 {
-                    vc.view.makeToast(StudyRegistration.characterLimit, position: .center)
+                    vc.view.makeToast(Comment.StudyRegistration.characterLimit, position: .center)
                 } else  if separatedText.filter({ study.contains($0)}).count != 0 || separatedText.count != Set(separatedText).count {
-                    vc.view.makeToast(StudyRegistration.overlap, position: .center)
+                    vc.view.makeToast(Comment.StudyRegistration.overlap, position: .center)
                 } else {
                     if vc.viewModel.arrCountLimit() {
-                        vc.view.makeToast(StudyRegistration.overStudy, position: .center)
+                        vc.view.makeToast(Comment.StudyRegistration.overStudy, position: .center)
                     } else {
                         vc.viewModel.myStudyArr.append(contentsOf: result)
                         vc.studySnapshot()
@@ -227,13 +227,13 @@ extension SearchViewController {
                 vc.secondVC.viewModel.locationValue = self.viewModel.locationValue
                 self.transition(vc, transitionStyle: .push)
             case .declarationOrMatch:
-                self.view.makeToast(Penalty.unavailable, position: .center)
+                self.view.makeToast(Comment.Penalty.unavailable, position: .center)
             case .cancelFirst:
-                self.view.makeToast(Penalty.oneMinute, position: .center)
+                self.view.makeToast(Comment.Penalty.oneMinute, position: .center)
             case .cancelSecond:
-                self.view.makeToast(Penalty.twoMinute, position: .center)
+                self.view.makeToast(Comment.Penalty.twoMinute, position: .center)
             case .cancelThird:
-                self.view.makeToast(Penalty.threeMintue, position: .center)
+                self.view.makeToast(Comment.Penalty.threeMintue, position: .center)
             case .firebaseError:
                 self.renwalGetIdToken { [weak self] in
                     guard let self = self else {return}

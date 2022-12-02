@@ -95,11 +95,11 @@ extension NumberViewController {
             .withUnretained(self)
             .bind { vc, _ in
                 if vc.mainView.authButton.backgroundColor == .sesacGreen {
-                    self.mainView.makeToast(AuthComent.phoneAuth.rawValue, duration: 5, position: .center)
+                    self.mainView.makeToast(Comment.Auth.phoneAuth.rawValue, duration: 5, position: .center)
                     
                     vc.requestFirebase()
                 } else {
-                    vc.mainView.makeToast(AuthComent.invalidNumber.rawValue, position: .center)
+                    vc.mainView.makeToast(Comment.Auth.invalidNumber.rawValue, position: .center)
                 }
             }
             .disposed(by: disposeBag)

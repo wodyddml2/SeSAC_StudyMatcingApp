@@ -84,7 +84,7 @@ extension BirthViewController {
                         UserManager.birth = vc.mainView.datePicker.date
                         vc.transition(EmailViewController(), transitionStyle: .push)
                     } else {
-                        vc.mainView.makeToast(SignupCommet.birthValid, position: .center)
+                        vc.mainView.makeToast(Comment.Signup.birthValid, position: .center)
                     }
                 }
                 

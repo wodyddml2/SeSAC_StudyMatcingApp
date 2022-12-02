@@ -77,7 +77,7 @@ extension NicknameViewController {
                     UserManager.nickname = nicknameText
                     vc.transition(BirthViewController(), transitionStyle: .push)
                 } else {
-                    vc.mainView.makeToast(SignupCommet.nicknameValid, position: .center)
+                    vc.mainView.makeToast(Comment.Signup.nicknameValid, position: .center)
                 }
             }
             .disposed(by: disposeBag)

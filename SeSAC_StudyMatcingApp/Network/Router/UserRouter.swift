@@ -10,30 +10,30 @@ import Foundation
 import Alamofire
 
 enum UserRouter: URLRequestConvertible {
-    case loginGet(query: String)
-    case signUpPost
-    case savePut(sesac: SeSACProfile, query: String)
-    case withdrawPost(query: String)
+    case login(query: String)
+    case signUp
+    case save(sesac: SeSACProfile, query: String)
+    case withdraw(query: String)
     
     var baseURL: URL {
         switch self {
-        case .loginGet, .signUpPost:
+        case .login, .signUp:
             return URL(string: SeSACAPI.baseURL + SeSACAPI.login)!
-        case .savePut:
+        case .save:
             return URL(string: SeSACAPI.baseURL + SeSACAPI.profileSave)!
-        case .withdrawPost:
+        case .withdraw:
             return URL(string: SeSACAPI.baseURL + SeSACAPI.withdraw)!
         }
     }
     
     var header: HTTPHeaders {
         switch self {
-        case .loginGet(let query), .savePut( _ ,let query), .withdrawPost(let query):
+        case .login(let query), .save( _ ,let query), .withdraw(let query):
             return  [
                 "Content-Type": SeSACHeader.contentType,
                 "idtoken": query
             ]
-        case .signUpPost:
+        case .signUp:
             return [
                 "Content-Type": SeSACHeader.contentType,
                 "idtoken": UserManager.idToken
@@ -43,9 +43,9 @@ enum UserRouter: URLRequestConvertible {
     
     var parameters: Parameters {
         switch self {
-        case .loginGet, .withdrawPost:
+        case .login, .withdraw:
             return ["":""]
-        case .signUpPost:
+        case .signUp:
             guard let gender = UserManager.gender else {return Parameters()}
             guard let birth = UserManager.birth else {return Parameters()}
             return [
@@ -56,7 +56,7 @@ enum UserRouter: URLRequestConvertible {
                 "email": UserManager.email,
                 "gender": gender
             ]
-        case .savePut(let sesac, _):
+        case .save(let sesac, _):
             return [
                 "searchable": "\(sesac.searchable)",
                 "ageMin": "\(sesac.ageMin)",
@@ -69,11 +69,11 @@ enum UserRouter: URLRequestConvertible {
     
     var method: HTTPMethod {
         switch self {
-        case .loginGet:
+        case .login:
             return .get
-        case .signUpPost, .withdrawPost:
+        case .signUp, .withdraw:
             return .post
-        case .savePut:
+        case .save:
             return .put
         }
     }
@@ -84,9 +84,9 @@ enum UserRouter: URLRequestConvertible {
         request.method = method
         request.headers = header
         switch self {
-        case .loginGet, .withdrawPost:
+        case .login, .withdraw:
             return request
-        case .signUpPost, .savePut:
+        case .signUp, .save:
             return try URLEncoding(arrayEncoding: .noBrackets).encode(request, with: parameters)
         }
     }

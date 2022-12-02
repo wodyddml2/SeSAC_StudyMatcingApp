@@ -102,7 +102,7 @@ final class PopupViewController: BaseViewController {
 extension PopupViewController {
     private func requestPost() {
         guard let uid = uid else {return}
-        SeSACAPIService.shared.requestStatusSeSACAPI(router: QueueRouter.requestPost(query: UserManager.idToken, uid: uid)) { [weak self] value in
+        SeSACAPIService.shared.requestStatusSeSACAPI(router: QueueRouter.request(query: UserManager.idToken, uid: uid)) { [weak self] value in
             guard let self = self else {return}
             
             switch StatusCode(rawValue: value) {
@@ -129,7 +129,7 @@ extension PopupViewController {
         guard let uid = uid else {
             view.makeToast("에러가 발생했습니다.")
             return}
-        SeSACAPIService.shared.requestStatusSeSACAPI(router: QueueRouter.acceptPost(query: UserManager.idToken, uid: uid)) { [weak self] value in
+        SeSACAPIService.shared.requestStatusSeSACAPI(router: QueueRouter.accept(query: UserManager.idToken, uid: uid)) { [weak self] value in
             guard let self = self else {return}
             switch StatusCode(rawValue: value) {
             case .success:
@@ -138,7 +138,7 @@ extension PopupViewController {
                     guard let self = self else {return}
                     if self.request {
                         guard let vc = (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.window?.rootViewController?.topViewController else { return }
-                        vc.view.makeToast(MatchComment.togetherMatch, duration: 1) { _ in
+                        vc.view.makeToast(Comment.Match.togetherMatch, duration: 1) { _ in
                             self.requestMYQueue { result in
                                 let chatting = ChattingViewController()
                                 chatting.viewModel.uid = result.matchedUid ?? ""
@@ -175,7 +175,7 @@ extension PopupViewController {
     }
     
     func requestMYQueue(completion: @escaping (SeSACMatchDTO) -> Void) {
-        SeSACAPIService.shared.requestSeSACAPI(type: SeSACMatchDTO.self, router: QueueRouter.matchGet(query: UserManager.idToken)) { result in
+        SeSACAPIService.shared.requestSeSACAPI(type: SeSACMatchDTO.self, router: QueueRouter.match(query: UserManager.idToken)) { result in
             switch result {
             case .success(let success):
                 completion(success)

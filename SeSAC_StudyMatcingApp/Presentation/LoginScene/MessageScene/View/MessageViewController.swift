@@ -99,7 +99,7 @@ extension MessageViewController {
                             }
                             
                             if let idToken = idToken {
-                                SeSACAPIService.shared.requestSeSACAPI(type: SESACLoginDTO.self ,router: UserRouter.loginGet(query: idToken)) { result in
+                                SeSACAPIService.shared.requestSeSACAPI(type: SESACLoginDTO.self ,router: UserRouter.login(query: idToken)) { result in
                                     switch result {
                                     case .success(_):
                                         UserManager.signupStatus = true
@@ -138,7 +138,7 @@ extension MessageViewController {
             .throttle(.seconds(5), scheduler: MainScheduler.instance)
             .bind { vc, _ in
                 vc.firebaseAPI.requestAuth(phoneNumber: UserManager.phoneNumber) { result in
-                    vc.mainView.makeToast(AuthComent.resend.rawValue, position: .center)
+                    vc.mainView.makeToast(Comment.Auth.resend.rawValue, position: .center)
                     switch result {
                     case .success(let success):
                         UserManager.authVerificationID = success

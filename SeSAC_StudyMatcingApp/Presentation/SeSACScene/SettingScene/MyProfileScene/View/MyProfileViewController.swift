@@ -235,7 +235,7 @@ extension MyProfileViewController {
             .bind { vc, _ in
                 guard let sesacData = vc.sesacData else {return}
                 
-                SeSACAPIService.shared.requestStatusSeSACAPI(router: UserRouter.savePut(sesac: sesacData, query: UserManager.idToken)) { value in
+                SeSACAPIService.shared.requestStatusSeSACAPI(router: UserRouter.save(sesac: sesacData, query: UserManager.idToken)) { value in
                     switch StatusCode(rawValue: value) {
                     case .success:
                         vc.view.makeToast("저장 완료!", position: .center)

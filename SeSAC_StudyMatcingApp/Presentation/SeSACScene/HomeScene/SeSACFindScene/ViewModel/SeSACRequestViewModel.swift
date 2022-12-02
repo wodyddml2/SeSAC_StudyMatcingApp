@@ -29,7 +29,7 @@ extension SeSACRequestViewModel {
         
         guard let location = locationValue else {return}
         
-        SeSACAPIService.shared.requestSeSACAPI(type: SeSACSearchDTO.self ,router: QueueRouter.searchPost(query: UserManager.idToken, lat: location.latitude, long: location.longitude)) { [weak self] result in
+        SeSACAPIService.shared.requestSeSACAPI(type: SeSACSearchDTO.self ,router: QueueRouter.search(query: UserManager.idToken, lat: location.latitude, long: location.longitude)) { [weak self] result in
             guard let self = self else {return}
             switch result {
             case .success(let success):
@@ -57,7 +57,7 @@ extension SeSACRequestViewModel {
     }
     
     func requestMYQueue() {
-        SeSACAPIService.shared.requestSeSACAPI(type: SeSACMatchDTO.self, router: QueueRouter.matchGet(query: UserManager.idToken)) { [weak self] result in
+        SeSACAPIService.shared.requestSeSACAPI(type: SeSACMatchDTO.self, router: QueueRouter.match(query: UserManager.idToken)) { [weak self] result in
             guard let self = self else {return}
             switch result {
             case .success(let success):

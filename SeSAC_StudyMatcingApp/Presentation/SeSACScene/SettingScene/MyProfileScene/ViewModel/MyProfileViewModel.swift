@@ -17,7 +17,7 @@ final class MyProfileViewModel {
     
     func requsetProfile(output: Output) {
         
-        SeSACAPIService.shared.requestSeSACAPI(type: SESACLoginDTO.self ,router: UserRouter.loginGet(query: UserManager.idToken)) { [weak self] result in
+        SeSACAPIService.shared.requestSeSACAPI(type: SESACLoginDTO.self ,router: UserRouter.login(query: UserManager.idToken)) { [weak self] result in
             guard let self = self else {return}
             switch result {
             case .success(let success):

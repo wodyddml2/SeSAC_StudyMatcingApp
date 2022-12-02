@@ -25,7 +25,7 @@ final class HomeViewModel {
     
     
     func requestSearchSeSAC(output: Output, lat: Double, long: Double) {
-        SeSACAPIService.shared.requestSeSACAPI(type: SeSACSearchDTO.self, router: QueueRouter.searchPost(query: UserManager.idToken, lat: lat, long: long)) { result in
+        SeSACAPIService.shared.requestSeSACAPI(type: SeSACSearchDTO.self, router: QueueRouter.search(query: UserManager.idToken, lat: lat, long: long)) { result in
             switch result {
             case .success(let success):
                 output.searchInfo.onNext(success)
@@ -45,7 +45,7 @@ final class HomeViewModel {
     }
     
     func requestMatchSeSAC(output: Output) {
-        SeSACAPIService.shared.requestSeSACAPI(type: SeSACMatchDTO.self, router: QueueRouter.matchGet(query: UserManager.idToken)) { result in
+        SeSACAPIService.shared.requestSeSACAPI(type: SeSACMatchDTO.self, router: QueueRouter.match(query: UserManager.idToken)) { result in
             switch result {
             case .success(let success):
                 output.matchInfo.onNext(success)

@@ -32,7 +32,7 @@ class ChattingViewModel {
     var lastDate: Date = Date()
     
     func requestMyQueue(output: Output) {
-        SeSACAPIService.shared.requestSeSACAPI(type: SeSACMatchDTO.self, router: QueueRouter.matchGet(query: UserManager.idToken)) { [weak self] result in
+        SeSACAPIService.shared.requestSeSACAPI(type: SeSACMatchDTO.self, router: QueueRouter.match(query: UserManager.idToken)) { [weak self] result in
             guard let self = self else {return}
             switch result {
             case .success(let success):

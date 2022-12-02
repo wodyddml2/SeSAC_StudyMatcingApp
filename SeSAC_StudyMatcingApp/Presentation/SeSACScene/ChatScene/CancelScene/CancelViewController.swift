@@ -92,7 +92,7 @@ class CancelViewController: BaseViewController {
     }
     
     private func requestDodge() {
-        SeSACAPIService.shared.requestStatusSeSACAPI(router: QueueRouter.dodgePost(query: UserManager.idToken, uid: uid)) { [weak self] value in
+        SeSACAPIService.shared.requestStatusSeSACAPI(router: QueueRouter.dodge(query: UserManager.idToken, uid: uid)) { [weak self] value in
             guard let self = self else {return}
             switch StatusCode(rawValue: value) {
             case .success:

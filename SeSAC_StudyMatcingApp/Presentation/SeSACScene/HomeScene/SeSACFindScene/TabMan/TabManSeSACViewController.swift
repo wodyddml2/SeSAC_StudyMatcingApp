@@ -86,7 +86,7 @@ final class TabManSeSACViewController: TabmanViewController {
             case .success:
                 self.navigationPopToViewController(HomeViewController())
             case .declarationOrMatch:
-                self.view.makeToast(MatchComment.alreadyPromised, duration: 1) { _ in
+                self.view.makeToast(Comment.Match.alreadyPromised, duration: 1) { _ in
                     self.timerDisposable?.dispose()
                     self.bindTimerMatch()
                 }
