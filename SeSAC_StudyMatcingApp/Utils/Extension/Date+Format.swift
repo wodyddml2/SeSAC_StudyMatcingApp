@@ -8,6 +8,8 @@
 import Foundation
 
 extension Date {
+    static let formatter = DateFormatter()
+    
     func datePickerFormat(dateFormat: String) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = dateFormat

@@ -23,19 +23,19 @@ enum QueueRouter: URLRequestConvertible {
     var baseURL: URL {
         switch self {
         case .search:
-            return URL(string: SeSACAPI.baseURL + SeSACAPI.search)!
+            return URL(string: SeSACAPI.baseURL + SeSACAPI.Queue.base + SeSACAPI.Queue.search)!
         case .match:
-            return URL(string: SeSACAPI.baseURL + SeSACAPI.match)!
+            return URL(string: SeSACAPI.baseURL + SeSACAPI.Queue.base + SeSACAPI.Queue.match)!
         case .findPost, .findDelete:
-            return URL(string: SeSACAPI.baseURL + SeSACAPI.find)!
+            return URL(string: SeSACAPI.baseURL + SeSACAPI.Queue.base)!
         case .request:
-            return URL(string: SeSACAPI.baseURL + SeSACAPI.request)!
+            return URL(string: SeSACAPI.baseURL + SeSACAPI.Queue.base + SeSACAPI.Queue.request)!
         case .accept:
-            return URL(string: SeSACAPI.baseURL + SeSACAPI.accept)!
+            return URL(string: SeSACAPI.baseURL + SeSACAPI.Queue.base + SeSACAPI.Queue.accept)!
         case .dodge:
-            return URL(string: SeSACAPI.baseURL + SeSACAPI.dodge)!
+            return URL(string: SeSACAPI.baseURL + SeSACAPI.Queue.base + SeSACAPI.Queue.dodge)!
         case .rate(_, let uid, _, _):
-            return URL(string: SeSACAPI.baseURL + SeSACAPI.rate + "/\(uid)")!
+            return URL(string: SeSACAPI.baseURL + SeSACAPI.Queue.base + SeSACAPI.Queue.rate + "/\(uid)")!
         }
         
     }

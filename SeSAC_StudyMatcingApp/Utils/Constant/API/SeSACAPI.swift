@@ -8,18 +8,25 @@
 import Foundation
 
 enum SeSACAPI {
-    static let baseURL = "http://api.sesac.co.kr:1210/v1"
-    static let login = "/user"
-    static let profileSave = "/user/mypage"
-    static let withdraw = "/user/withdraw"
-    static let search = "/queue/search"
-    static let match = "/queue/myQueueState"
-    static let find = "/queue"
-    static let request = "/queue/studyrequest"
-    static let accept = "/queue/studyaccept"
-    static let dodge = "/queue/dodge"
-    static let chat = "/chat"
-    static let rate = "/queue/rate"
+    static let baseURL = "http://api.sesac.co.kr:1210/"
+    
+    enum User {
+        static let base = "v1/user"
+        static let profileSave = "/mypage"
+        static let withdraw = "/withdraw"
+    }
+    
+    enum Queue {
+        static let base = "v1/queue"
+        static let search = "/search"
+        static let match = "/myQueueState"
+        static let request = "/studyrequest"
+        static let accept = "/studyaccept"
+        static let dodge = "/dodge"
+        static let rate = "/rate"
+    }
+
+    static let chat = "v1/chat"
 }
 
 enum SeSACHeader {

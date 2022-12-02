@@ -18,11 +18,11 @@ enum UserRouter: URLRequestConvertible {
     var baseURL: URL {
         switch self {
         case .login, .signUp:
-            return URL(string: SeSACAPI.baseURL + SeSACAPI.login)!
+            return URL(string: SeSACAPI.baseURL + SeSACAPI.User.base)!
         case .save:
-            return URL(string: SeSACAPI.baseURL + SeSACAPI.profileSave)!
+            return URL(string: SeSACAPI.baseURL + SeSACAPI.User.base + SeSACAPI.User.profileSave)!
         case .withdraw:
-            return URL(string: SeSACAPI.baseURL + SeSACAPI.withdraw)!
+            return URL(string: SeSACAPI.baseURL + SeSACAPI.User.base + SeSACAPI.User.withdraw)!
         }
     }
     
