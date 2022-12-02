@@ -261,19 +261,20 @@ extension ChattingViewModel {
     
     func fetchChat(list: ChatListData) {
         var sectionCount = 0
+       
         for i in 0...list.chatInfo.count - 1 {
             let chatItem = chatItems(item: list.chatInfo[i])
             
             if i == 0 {
                 sections.append(ChattingSectionModel(items: [chatItem]))
-//                sections[sectionCount].items.append(chatItem)
+                sections[sectionCount].items.append(chatItem)
             } else {
                 if list.chatInfo[i].createdAt.toDate().dateStringFormat(date: "yyyy/M/d") == list.chatInfo[i-1].createdAt.toDate().dateStringFormat(date: "yyyy/M/d") {
                     sections[sectionCount].items.append(chatItem)
                 } else {
                     sectionCount += 1
                     sections.append(ChattingSectionModel(items: [chatItem]))
-//                    sections[sectionCount].items.append(chatItem)
+                    sections[sectionCount].items.append(chatItem)
                 }
             }
         }
@@ -298,32 +299,17 @@ extension ChattingViewModel {
         let task = ChatListData(uid: uid, chatInfo: List<ChatData>())
         let chat = ChatData(message: item.message, createdAt: item.originCreated, from: item.from, uid: item.uid)
         if tasks.isEmpty {
-            for _ in 0...1 {
-                task.chatInfo.append(chat)
-            }
+            task.chatInfo.append(chat)
             do {
                 try repository.addRealm(item: task)
             } catch {
                 print("error")
             }
         } else {
-            let outSectionCount = tasks.count - 1
-            let inSectionCount = tasks[outSectionCount].chatInfo.count - 1
-            if Date().nowDateFormat(date: "M월 d일 EEEE") == tasks[outSectionCount].chatInfo[inSectionCount].createdAt.toDate().dateStringFormat(date: "M월 d일 EEEE") {
-                do {
-                    try repository.appendChat(list: tasks[outSectionCount], item: chat)
-                } catch {
-                    print("error")
-                }
-            } else {
-                for _ in 0...1 {
-                    do {
-                        try repository.appendChat(list: tasks[0], item: chat)
-                    } catch {
-                        print("error")
-                    }
-                }
-                
+            do {
+                try repository.appendChat(list: tasks[0], item: chat)
+            } catch {
+                print("error")
             }
         }
     }
