@@ -6,14 +6,13 @@
 //
 
 import UIKit
+import StoreKit
 
 import RxSwift
 import RxDataSources
 
 class SeSACShopViewController: BaseViewController {
 
-    let disposeBag = DisposeBag()
-    
     lazy var collectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout())
         view.register(SeSACShopCollectionViewCell.self, forCellWithReuseIdentifier: SeSACShopCollectionViewCell.reusableIdentifier)
@@ -23,11 +22,21 @@ class SeSACShopViewController: BaseViewController {
     
     private var dataSources: RxCollectionViewSectionedReloadDataSource<ShopSectionModel>?
     
+    let viewModel = ShopViewModel()
+    let disposeBag = DisposeBag()
+    
+    var productIdentifiers: Set<String> = ["com.memolease.sesac1.sprout1", "com.memolease.sesac1.sprout2", "com.memolease.sesac1.sprout3", "com.memolease.sesac1.sprout4"]
+    
+    var productArray = Array<SKProduct>()
+    var product: SKProduct?
+    
+    var sections: [ShopSectionModel] = [ShopSectionModel(items: [ShopModel(name: SeSAC.allCases[0].name, info: SeSAC.allCases[0].info, price: SeSAC.allCases[0].price)])]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setCollecionView()
-  
+        bindViewModel()
+        requestProductData()
     }
     
     override func configureUI() {
@@ -42,7 +51,35 @@ class SeSACShopViewController: BaseViewController {
 }
 
 extension SeSACShopViewController {
-   
+    private func bindViewModel() {
+        viewModel.sesacSections
+            .bind(to: collectionView.rx.items(dataSource: dataSources!))
+            .disposed(by: disposeBag)
+    }
+}
+
+extension SeSACShopViewController {
+    func requestProductData() {
+        if SKPaymentQueue.canMakePayments() {
+            print("인앱 결제 가능")
+            let request = SKProductsRequest(productIdentifiers: productIdentifiers)
+            request.delegate = self
+            request.start()
+        } else {
+            print("In App Purchase Not Enabled")
+        }
+    }
+    
+    func receiptValidation(transaction: SKPaymentTransaction, productIdentifier: String) {
+        let receiptFileURL = Bundle.main.appStoreReceiptURL
+        let receiptData = try? Data(contentsOf: receiptFileURL!)
+        let receiptString = receiptData?.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
+        
+        print(receiptString)
+        //거래 내역(transaction)을 큐에서 제거
+        SKPaymentQueue.default().finishTransaction(transaction)
+        
+    }
 }
 
 extension SeSACShopViewController: UICollectionViewDelegate {
@@ -55,18 +92,6 @@ extension SeSACShopViewController: UICollectionViewDelegate {
             cell.sesacImageView.image = .sesacImage(num: indexPath.item)
             return cell
         })
-        
-        var sections: [ShopSectionModel] = [ShopSectionModel(items: [])]
-        
-        for value in SeSAC.allCases {
-            sections[0].items.append(ShopModel(name: value.name, info: value.info, price: value.price))
-        }
-        
-        let data = Observable<[ShopSectionModel]>.just(sections)
-        
-        data
-            .bind(to: collectionView.rx.items(dataSource: dataSources!))
-            .disposed(by: disposeBag)
         
         collectionView.rx.setDelegate(self)
             .disposed(by: disposeBag)
@@ -85,3 +110,51 @@ extension SeSACShopViewController: UICollectionViewDelegate {
         return layout
     }
 }
+
+extension SeSACShopViewController: SKProductsRequestDelegate, SKPaymentTransactionObserver {
+    
+    func commaFormat(price: NSDecimalNumber) -> String {
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .decimal
+        return numberFormatter.string(for: price)!
+    }
+    func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
+        let products = response.products
+        
+        if products.count > 0 {
+            
+            for i in products {
+                productArray.append(i)
+                product = i // 옵션. 테이블 뷰 셀에서 구매하기 버튼 클릭 시, 버튼 클릭 시
+                sections[0].items.append(ShopModel(name: i.localizedTitle, info: i.localizedDescription, price: commaFormat(price: i.price)))
+                
+                viewModel.sesacSections.onNext(sections)
+                print(i.localizedTitle, i.price, i.priceLocale, i.localizedDescription)
+            }
+            
+        } else {
+            print("No Product Found") // 계약 업데이트, 유료 계약 X, Capablities X
+        }
+    }
+    
+    func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
+        for transaction in transactions {
+            
+            switch transaction.transactionState {
+                
+            case .purchased: //구매 승인 이후에 영수증 검증
+                print("Transaction Approved. \(transaction.payment.productIdentifier)")
+                receiptValidation(transaction: transaction, productIdentifier: transaction.payment.productIdentifier)
+                
+            case .failed: //실패 토스트, transaction
+                print("Transaction Failed")
+                SKPaymentQueue.default().finishTransaction(transaction)
+                
+            default:
+                break
+            }
+        }
+    }
+}
+
+

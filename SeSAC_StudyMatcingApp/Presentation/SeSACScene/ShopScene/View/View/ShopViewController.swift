@@ -12,6 +12,8 @@ final class ShopViewController: BaseViewController {
     let mainView = ShopView()
     let viewModel = ShopViewModel()
     
+    let vc = TabmanShopViewController()
+    
     let disposeBag = DisposeBag()
     
     override func loadView() {
@@ -28,7 +30,7 @@ final class ShopViewController: BaseViewController {
         view.backgroundColor = .white
         navigationBarCommon(title: "새싹샵")
         
-        let vc = TabmanShopViewController()
+        
         self.addChild(vc)
         self.view.addSubview(vc.view)
         vc.view.snp.makeConstraints { make in
@@ -46,5 +48,13 @@ extension ShopViewController {
         let output = viewModel.transform(input: input)
         
         mainView.bindImageView(output: output)
+        
+        vc.firstVC.collectionView.rx.itemSelected
+            .withUnretained(self)
+            .bind { vc, indexPath in
+                vc.mainView.sesacImageView.image = .sesacImage(num: indexPath.item)
+            }
+            .disposed(by: disposeBag)
+        
     }
 }

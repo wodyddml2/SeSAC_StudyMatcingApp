@@ -41,7 +41,7 @@ class SeSACShopCollectionViewCell: BaseCollectionViewCell {
     
     override func configureUI() {
         [sesacImageView, sesacLabel, sesacPriceButton, sesacInfoLabel].forEach {
-            self.addSubview($0)
+            contentView.addSubview($0)
         }
     }
     
