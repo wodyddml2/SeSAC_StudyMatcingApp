@@ -41,5 +41,9 @@ extension SESACLoginDTO {
     func toDomain() -> SeSACProfile {
         return .init(backgroundImage: background, image: sesac, nickname: nick, sesacTitle: reputation, comment: comment, gender: gender, study: study, searchable: searchable, ageMin: ageMin, ageMax: ageMax)
     }
+    
+    func toMyInfo() -> SeSACMyInfo {
+        return .init(sesac: sesac, sesacCollection: sesacCollection, background: background, backgroundCollection: backgroundCollection)
+    }
 }
 

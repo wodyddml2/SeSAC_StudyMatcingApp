@@ -17,6 +17,9 @@
 		63004933291EC2950046E6D3 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63004932291EC2950046E6D3 /* SettingViewController.swift */; };
 		63004935291EC7020046E6D3 /* TabImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63004934291EC7020046E6D3 /* TabImage.swift */; };
 		6305E736291F7F9C001388DE /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6305E735291F7F9C001388DE /* HomeView.swift */; };
+		6308B26D293C923800E539BF /* ShopViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6308B26C293C923800E539BF /* ShopViewModel.swift */; };
+		6308B26F293C930900E539BF /* ShopRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6308B26E293C930900E539BF /* ShopRouter.swift */; };
+		6308B271293C976200E539BF /* SeSACMyInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6308B270293C976200E539BF /* SeSACMyInfo.swift */; };
 		631DC94429210BB600F23211 /* RxDataSources in Frameworks */ = {isa = PBXBuildFile; productRef = 631DC94329210BB600F23211 /* RxDataSources */; };
 		631DC94629210DB500F23211 /* SettingSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631DC94529210DB500F23211 /* SettingSectionModel.swift */; };
 		631DC94929210F5100F23211 /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631DC94829210F5100F23211 /* BaseTableViewCell.swift */; };
@@ -175,6 +178,9 @@
 		63004932291EC2950046E6D3 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		63004934291EC7020046E6D3 /* TabImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabImage.swift; sourceTree = "<group>"; };
 		6305E735291F7F9C001388DE /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		6308B26C293C923800E539BF /* ShopViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopViewModel.swift; sourceTree = "<group>"; };
+		6308B26E293C930900E539BF /* ShopRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopRouter.swift; sourceTree = "<group>"; };
+		6308B270293C976200E539BF /* SeSACMyInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACMyInfo.swift; sourceTree = "<group>"; };
 		631DC94529210DB500F23211 /* SettingSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingSectionModel.swift; sourceTree = "<group>"; };
 		631DC94829210F5100F23211 /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
 		631DC94A29210FB300F23211 /* SettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableViewCell.swift; sourceTree = "<group>"; };
@@ -426,6 +432,35 @@
 				63D01EF0292697E4007ADA35 /* HomeViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		6308B272293C9BE900E539BF /* View */ = {
+			isa = PBXGroup;
+			children = (
+				6354BA692937A5BA006113F2 /* ShopView.swift */,
+				6300492E291EC27A0046E6D3 /* ShopViewController.swift */,
+				6354BA6B2937AE28006113F2 /* TabmanShopViewController.swift */,
+				6308B274293C9C1A00E539BF /* SubView */,
+				6354BA6429379805006113F2 /* Cells */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		6308B273293C9BF500E539BF /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				6308B26C293C923800E539BF /* ShopViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		6308B274293C9C1A00E539BF /* SubView */ = {
+			isa = PBXGroup;
+			children = (
+				6354BA672937A547006113F2 /* BgShopViewController.swift */,
+				6354BA652937A540006113F2 /* SeSACShopViewController.swift */,
+			);
+			path = SubView;
 			sourceTree = "<group>";
 		};
 		631DC94729210F3700F23211 /* Cell */ = {
@@ -782,12 +817,8 @@
 		6354BA63293797FD006113F2 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				6300492E291EC27A0046E6D3 /* ShopViewController.swift */,
-				6354BA6B2937AE28006113F2 /* TabmanShopViewController.swift */,
-				6354BA692937A5BA006113F2 /* ShopView.swift */,
-				6354BA652937A540006113F2 /* SeSACShopViewController.swift */,
-				6354BA672937A547006113F2 /* BgShopViewController.swift */,
-				6354BA6429379805006113F2 /* Cells */,
+				6308B272293C9BE900E539BF /* View */,
+				6308B273293C9BF500E539BF /* ViewModel */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -835,6 +866,7 @@
 				63670CD62928CCB600EAF29D /* SeSACFind.swift */,
 				632564A82927BE08003DDB9F /* SeSACUser.swift */,
 				63DACA75292E5EF900D0CDB6 /* SeSACChat.swift */,
+				6308B270293C976200E539BF /* SeSACMyInfo.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1106,6 +1138,7 @@
 				63BCEFA52938A832008BEDA6 /* UserRouter.swift */,
 				63BCEFA72938AB6F008BEDA6 /* QueueRouter.swift */,
 				63BCEFA92938AC11008BEDA6 /* ChatRouter.swift */,
+				6308B26E293C930900E539BF /* ShopRouter.swift */,
 			);
 			path = Router;
 			sourceTree = "<group>";
@@ -1388,6 +1421,7 @@
 				635E1630291C2D090042E8E4 /* BirthViewModel.swift in Sources */,
 				63004933291EC2950046E6D3 /* SettingViewController.swift in Sources */,
 				635E1612291BF26B0042E8E4 /* SeSACAPI.swift in Sources */,
+				6308B26F293C930900E539BF /* ShopRouter.swift in Sources */,
 				635E162E291C2CFE0042E8E4 /* BirthView.swift in Sources */,
 				637827A2292226BD009E1424 /* MyProfileTableViewCell.swift in Sources */,
 				63467DFF2918F04300E7D8AE /* NSAttributedString+CustomText.swift in Sources */,
@@ -1430,6 +1464,7 @@
 				63004931291EC28E0046E6D3 /* ChattingViewController.swift in Sources */,
 				63308F19292334D0004B90A5 /* ProfilePermitView.swift in Sources */,
 				63F31446291D2A3500C31F59 /* EmailViewController.swift in Sources */,
+				6308B26D293C923800E539BF /* ShopViewModel.swift in Sources */,
 				633AC6A0292FC88400A3249B /* DeclarationView.swift in Sources */,
 				637827B029229990009E1424 /* ReviewStackView.swift in Sources */,
 				63670CD92928CDCC00EAF29D /* SeSACFindSectionModel.swift in Sources */,
@@ -1449,6 +1484,7 @@
 				631DC94929210F5100F23211 /* BaseTableViewCell.swift in Sources */,
 				63467DDE2918D85800E7D8AE /* BaseViewController.swift in Sources */,
 				63D01EED292649BC007ADA35 /* SeSACSearchDTO.swift in Sources */,
+				6308B271293C976200E539BF /* SeSACMyInfo.swift in Sources */,
 				63308F1529233379004B90A5 /* ProfileGenderView.swift in Sources */,
 				63DACA76292E5EF900D0CDB6 /* SeSACChat.swift in Sources */,
 				631DC94D2921194C00F23211 /* ProfileTableViewCell.swift in Sources */,
