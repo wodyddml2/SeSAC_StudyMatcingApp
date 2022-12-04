@@ -62,5 +62,21 @@ class CommonButton: UIButton {
         self.backgroundColor = .gray6
         self.setTitleColor(.gray3, for: .normal)
     }
+    
+    
+    func priceOwnedButton() {
+        layer.borderWidth = 0
+        layer.cornerRadius = 10
+        backgroundColor = .gray2
+        setTitleColor(.gray5, for: .normal)
+        titleLabel?.font = UIFont.notoSans(size: 12, family: .Medium)
+    }
   
+    func priceNotOwnedButton() {
+        layer.borderWidth = 0
+        layer.cornerRadius = 10
+        backgroundColor = .sesacGreen
+        setTitleColor(.white, for: .normal)
+        titleLabel?.font = UIFont.notoSans(size: 12, family: .Medium)
+    }
 }

@@ -20,6 +20,10 @@
 		6308B26D293C923800E539BF /* ShopViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6308B26C293C923800E539BF /* ShopViewModel.swift */; };
 		6308B26F293C930900E539BF /* ShopRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6308B26E293C930900E539BF /* ShopRouter.swift */; };
 		6308B271293C976200E539BF /* SeSACMyInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6308B270293C976200E539BF /* SeSACMyInfo.swift */; };
+		6308B276293C9DAF00E539BF /* SeSACShopCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6308B275293C9DAF00E539BF /* SeSACShopCollectionViewCell.swift */; };
+		6308B278293C9DCA00E539BF /* BgShopTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6308B277293C9DCA00E539BF /* BgShopTableViewCell.swift */; };
+		6308B27B293CA65E00E539BF /* SeSAC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6308B27A293CA65E00E539BF /* SeSAC.swift */; };
+		6308B280293CB2F200E539BF /* ShopSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6308B27F293CB2F200E539BF /* ShopSectionModel.swift */; };
 		631DC94429210BB600F23211 /* RxDataSources in Frameworks */ = {isa = PBXBuildFile; productRef = 631DC94329210BB600F23211 /* RxDataSources */; };
 		631DC94629210DB500F23211 /* SettingSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631DC94529210DB500F23211 /* SettingSectionModel.swift */; };
 		631DC94929210F5100F23211 /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631DC94829210F5100F23211 /* BaseTableViewCell.swift */; };
@@ -181,6 +185,10 @@
 		6308B26C293C923800E539BF /* ShopViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopViewModel.swift; sourceTree = "<group>"; };
 		6308B26E293C930900E539BF /* ShopRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopRouter.swift; sourceTree = "<group>"; };
 		6308B270293C976200E539BF /* SeSACMyInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACMyInfo.swift; sourceTree = "<group>"; };
+		6308B275293C9DAF00E539BF /* SeSACShopCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACShopCollectionViewCell.swift; sourceTree = "<group>"; };
+		6308B277293C9DCA00E539BF /* BgShopTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BgShopTableViewCell.swift; sourceTree = "<group>"; };
+		6308B27A293CA65E00E539BF /* SeSAC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSAC.swift; sourceTree = "<group>"; };
+		6308B27F293CB2F200E539BF /* ShopSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopSectionModel.swift; sourceTree = "<group>"; };
 		631DC94529210DB500F23211 /* SettingSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingSectionModel.swift; sourceTree = "<group>"; };
 		631DC94829210F5100F23211 /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
 		631DC94A29210FB300F23211 /* SettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableViewCell.swift; sourceTree = "<group>"; };
@@ -457,10 +465,27 @@
 		6308B274293C9C1A00E539BF /* SubView */ = {
 			isa = PBXGroup;
 			children = (
-				6354BA672937A547006113F2 /* BgShopViewController.swift */,
 				6354BA652937A540006113F2 /* SeSACShopViewController.swift */,
+				6354BA672937A547006113F2 /* BgShopViewController.swift */,
+				6308B27E293CB2CE00E539BF /* SectionModel */,
 			);
 			path = SubView;
+			sourceTree = "<group>";
+		};
+		6308B279293CA63F00E539BF /* Shop */ = {
+			isa = PBXGroup;
+			children = (
+				6308B27A293CA65E00E539BF /* SeSAC.swift */,
+			);
+			path = Shop;
+			sourceTree = "<group>";
+		};
+		6308B27E293CB2CE00E539BF /* SectionModel */ = {
+			isa = PBXGroup;
+			children = (
+				6308B27F293CB2F200E539BF /* ShopSectionModel.swift */,
+			);
+			path = SectionModel;
 			sourceTree = "<group>";
 		};
 		631DC94729210F3700F23211 /* Cell */ = {
@@ -826,6 +851,8 @@
 		6354BA6429379805006113F2 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				6308B275293C9DAF00E539BF /* SeSACShopCollectionViewCell.swift */,
+				6308B277293C9DCA00E539BF /* BgShopTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -1079,6 +1106,7 @@
 		638B0744291AA05D00E9D254 /* Constant */ = {
 			isa = PBXGroup;
 			children = (
+				6308B279293CA63F00E539BF /* Shop */,
 				63DACA61292E2B7B00D0CDB6 /* API */,
 				635E1625291C2BFC0042E8E4 /* Comment.swift */,
 				63F31456291D39F300C31F59 /* Gender.swift */,
@@ -1165,8 +1193,8 @@
 		63DACA6A292E4E0700D0CDB6 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				63004937291EC8540046E6D3 /* ViewModel */,
 				63004936291EC84B0046E6D3 /* View */,
+				63004937291EC8540046E6D3 /* ViewModel */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -1407,6 +1435,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6308B278293C9DCA00E539BF /* BgShopTableViewCell.swift in Sources */,
 				63467E12291937CF00E7D8AE /* MessageViewModel.swift in Sources */,
 				637827A629222E20009E1424 /* MyProfileImageTableViewCell.swift in Sources */,
 				637EDF422925301E009089E4 /* SearchMyStudyCollectionViewCell.swift in Sources */,
@@ -1438,6 +1467,7 @@
 				63467DB52918D4AE00E7D8AE /* SceneDelegate.swift in Sources */,
 				63DACA65292E2D2300D0CDB6 /* StatusCode.swift in Sources */,
 				63308F252923A7BF004B90A5 /* SeSACTitle.swift in Sources */,
+				6308B276293C9DAF00E539BF /* SeSACShopCollectionViewCell.swift in Sources */,
 				63DACA78292E627C00D0CDB6 /* ChattingView.swift in Sources */,
 				6354BA662937A540006113F2 /* SeSACShopViewController.swift in Sources */,
 				637827B229229FD2009E1424 /* ReviewView.swift in Sources */,
@@ -1467,6 +1497,7 @@
 				6308B26D293C923800E539BF /* ShopViewModel.swift in Sources */,
 				633AC6A0292FC88400A3249B /* DeclarationView.swift in Sources */,
 				637827B029229990009E1424 /* ReviewStackView.swift in Sources */,
+				6308B27B293CA65E00E539BF /* SeSAC.swift in Sources */,
 				63670CD92928CDCC00EAF29D /* SeSACFindSectionModel.swift in Sources */,
 				63467DD52918D80E00E7D8AE /* SecondViewController.swift in Sources */,
 				63467DD72918D81300E7D8AE /* ThirdViewController.swift in Sources */,
@@ -1525,6 +1556,7 @@
 				63467DFD2918EA8400E7D8AE /* NumberViewController.swift in Sources */,
 				631DC9542921319F00F23211 /* SeSACProfile.swift in Sources */,
 				63E9113F292B73CE0048180F /* SeSACAcceptViewController.swift in Sources */,
+				6308B280293CB2F200E539BF /* ShopSectionModel.swift in Sources */,
 				63670CD02928BFA500EAF29D /* SeSACFindReviewTableViewCell.swift in Sources */,
 				6354BA682937A547006113F2 /* BgShopViewController.swift in Sources */,
 				63E91144292B824A0048180F /* SeSACFindView.swift in Sources */,
@@ -1683,22 +1715,24 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = QV329P6X5G;
+				DEVELOPMENT_TEAM = 2EZ5QWFYX2;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SeSAC_StudyMatcingApp/Resources/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "새싹 스터디";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자의 현재 위치의 기반으로 주변의 스터디 모임을 보여주기 위해서 권한이 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.memolease.sesacslp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.memolease.sesac1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1719,22 +1753,24 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = QV329P6X5G;
+				DEVELOPMENT_TEAM = 2EZ5QWFYX2;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SeSAC_StudyMatcingApp/Resources/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "새싹 스터디";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자의 현재 위치의 기반으로 주변의 스터디 모임을 보여주기 위해서 권한이 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.memolease.sesacslp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.memolease.sesac1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

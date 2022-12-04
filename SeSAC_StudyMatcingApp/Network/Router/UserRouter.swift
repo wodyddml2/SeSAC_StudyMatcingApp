@@ -14,6 +14,7 @@ enum UserRouter: URLRequestConvertible {
     case signUp
     case save(sesac: SeSACProfile, query: String)
     case withdraw(query: String)
+    case fcm(query: String, tokenFCM: String)
     
     var baseURL: URL {
         switch self {
@@ -23,12 +24,14 @@ enum UserRouter: URLRequestConvertible {
             return URL(string: SeSACAPI.baseURL + SeSACAPI.User.base + SeSACAPI.User.profileSave)!
         case .withdraw:
             return URL(string: SeSACAPI.baseURL + SeSACAPI.User.base + SeSACAPI.User.withdraw)!
+        case .fcm:
+            return URL(string: SeSACAPI.baseURL + SeSACAPI.User.base + SeSACAPI.User.fcm)!
         }
     }
     
     var header: HTTPHeaders {
         switch self {
-        case .login(let query), .save( _ ,let query), .withdraw(let query):
+        case .login(let query), .save( _ ,let query), .withdraw(let query), .fcm(let query, _):
             return  [
                 "Content-Type": SeSACHeader.contentType,
                 "idtoken": query
@@ -64,6 +67,11 @@ enum UserRouter: URLRequestConvertible {
                 "gender": "\(sesac.gender)",
                 "study": sesac.study
             ]
+            
+        case .fcm(_, let tokenFCM):
+            return [
+                "FCMtoken": tokenFCM
+            ]
         }
     }
     
@@ -73,7 +81,7 @@ enum UserRouter: URLRequestConvertible {
             return .get
         case .signUp, .withdraw:
             return .post
-        case .save:
+        case .save, .fcm:
             return .put
         }
     }
@@ -86,7 +94,7 @@ enum UserRouter: URLRequestConvertible {
         switch self {
         case .login, .withdraw:
             return request
-        case .signUp, .save:
+        case .signUp, .save, .fcm:
             return try URLEncoding(arrayEncoding: .noBrackets).encode(request, with: parameters)
         }
     }

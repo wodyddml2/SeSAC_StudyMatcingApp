@@ -14,6 +14,7 @@ enum SeSACAPI {
         static let base = "v1/user"
         static let profileSave = "/mypage"
         static let withdraw = "/withdraw"
+        static let fcm = "/update_fcm_token"
         enum Shop {
             static let base = "/shop"
             static let myInfo = "/myinfo"

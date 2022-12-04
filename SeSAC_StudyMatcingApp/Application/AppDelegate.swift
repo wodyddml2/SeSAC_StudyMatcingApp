@@ -39,6 +39,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 UserManager.fcmToken = token
             }
         }
+        
         return true
     }
 
@@ -66,4 +67,8 @@ extension AppDelegate: MessagingDelegate, UNUserNotificationCenterDelegate {
 //        //print(UserManager.fcmToken)
 //        NotificationCenter.default.post(name: Notification.Name("FCMToken"), object: nil, userInfo: dataDictonary)
 //    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        print(response.notification.request.content.userInfo)
+    }
 }

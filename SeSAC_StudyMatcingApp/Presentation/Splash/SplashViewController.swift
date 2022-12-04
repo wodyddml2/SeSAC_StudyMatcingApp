@@ -51,7 +51,6 @@ class SplashViewController: BaseViewController {
                 guard let self = self else {return}
                 switch result {
                 case .success(let success):
-                    print(UserManager.idToken)
                     UserManager.sesacImage = success.sesac
                     UserManager.myUID = success.uid
                     UserManager.nickname = success.nick
