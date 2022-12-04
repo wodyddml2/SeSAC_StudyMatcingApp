@@ -22,7 +22,7 @@ class SeSACShopViewController: BaseViewController {
     
     private var dataSources: RxCollectionViewSectionedReloadDataSource<ShopSectionModel>?
     
-    let viewModel = ShopViewModel()
+    let viewModel = SeSACShopViewModel()
     let disposeBag = DisposeBag()
     
     var productIdentifiers: Set<String> = ["com.memolease.sesac1.sprout1", "com.memolease.sesac1.sprout2", "com.memolease.sesac1.sprout3", "com.memolease.sesac1.sprout4"]
@@ -55,6 +55,23 @@ extension SeSACShopViewController {
         viewModel.sesacSections
             .bind(to: collectionView.rx.items(dataSource: dataSources!))
             .disposed(by: disposeBag)
+ 
+        viewModel.myInfo
+            .withUnretained(self)
+            .subscribe { vc, result in
+                vc.viewModel.sesacCollection.onNext(result.sesacCollection)
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.infoFailed
+            .asDriver()
+            .drive (onNext: { [weak self] error in
+                guard let self = self else {return}
+                if error == true {
+                    self.view.makeToast("사용자의 정보를 불러오는데 실패했습니다.")
+                }
+            })
+            .disposed(by: disposeBag)
     }
 }
 
@@ -76,6 +93,10 @@ extension SeSACShopViewController {
         let receiptString = receiptData?.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
         
         print(receiptString)
+        if let product = product?.productIdentifier {
+            viewModel.requestiOS(receipt: receiptString ?? "", product: product)
+        }
+        
         //거래 내역(transaction)을 큐에서 제거
         SKPaymentQueue.default().finishTransaction(transaction)
         
@@ -90,6 +111,17 @@ extension SeSACShopViewController: UICollectionViewDelegate {
             cell.sesacInfoLabel.text = item.info
             cell.sesacPriceButton.setTitle(item.price, for: .normal)
             cell.sesacImageView.image = .sesacImage(num: indexPath.item)
+            cell.sesacPriceButton.rx.tapGesture()
+                .when(.recognized)
+                .withUnretained(self)
+                .bind { vc, _ in
+                    if indexPath.item > 0 && !vc.viewModel.sesacArr.contains(indexPath.item) {
+                        let payment = SKPayment(product: vc.productArray[indexPath.item - 1])
+                        SKPaymentQueue.default().add(payment)
+                        SKPaymentQueue.default().add(self)
+                    }
+                }
+                .disposed(by: cell.disposeBag)
             return cell
         })
         
@@ -125,12 +157,20 @@ extension SeSACShopViewController: SKProductsRequestDelegate, SKPaymentTransacti
             
             for i in products {
                 productArray.append(i)
-                product = i // 옵션. 테이블 뷰 셀에서 구매하기 버튼 클릭 시, 버튼 클릭 시
                 sections[0].items.append(ShopModel(name: i.localizedTitle, info: i.localizedDescription, price: commaFormat(price: i.price)))
-                
-                viewModel.sesacSections.onNext(sections)
-                print(i.localizedTitle, i.price, i.priceLocale, i.localizedDescription)
             }
+       
+            viewModel.sesacCollection
+                .withUnretained(self)
+                .subscribe { vc, values in
+                    vc.viewModel.sesacArr = values
+                    for value in values {
+                        vc.sections[0].items[value].price = "보유"
+                    }
+                    vc.viewModel.sesacSections.onNext(vc.sections)
+                }
+                .disposed(by: disposeBag)
+            
             
         } else {
             print("No Product Found") // 계약 업데이트, 유료 계약 X, Capablities X

@@ -66,14 +66,6 @@ class ShopView: BaseView {
     }
     
     func bindImageView(output: ShopViewModel.Output) {
-        output.myInfo
-            .withUnretained(self)
-            .subscribe { vc, result in
-                vc.backgroundImageView.image = .sesacBackgroundImage(num: result.background)
-                vc.sesacImageView.image = .sesacImage(num: result.sesac)
-            }
-            .disposed(by: disposeBag)
-        
         output.infoFailed
             .asDriver()
             .drive (onNext: { [weak self] error in

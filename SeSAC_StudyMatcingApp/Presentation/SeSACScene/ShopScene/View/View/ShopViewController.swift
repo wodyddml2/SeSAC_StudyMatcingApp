@@ -12,7 +12,7 @@ final class ShopViewController: BaseViewController {
     let mainView = ShopView()
     let viewModel = ShopViewModel()
     
-    let vc = TabmanShopViewController()
+    let viewController = TabmanShopViewController()
     
     let disposeBag = DisposeBag()
     
@@ -31,14 +31,14 @@ final class ShopViewController: BaseViewController {
         navigationBarCommon(title: "새싹샵")
         
         
-        self.addChild(vc)
-        self.view.addSubview(vc.view)
-        vc.view.snp.makeConstraints { make in
+        self.addChild(viewController)
+        self.view.addSubview(viewController.view)
+        viewController.view.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
             make.bottom.equalTo(mainView.safeAreaLayoutGuide)
             make.top.equalTo(mainView.backgroundImageView.snp.bottom)
         }
-        vc.didMove(toParent: self)
+        viewController.didMove(toParent: self)
     }
 }
 
@@ -49,7 +49,16 @@ extension ShopViewController {
         
         mainView.bindImageView(output: output)
         
-        vc.firstVC.collectionView.rx.itemSelected
+        output.myInfo
+            .withUnretained(self)
+            .subscribe { vc, result in
+                vc.mainView.backgroundImageView.image = .sesacBackgroundImage(num: result.background)
+                vc.mainView.sesacImageView.image = .sesacImage(num: result.sesac)
+                vc.viewController.firstVC.viewModel.sesacCollection.onNext(result.sesacCollection)
+            }
+            .disposed(by: disposeBag)
+        
+        viewController.firstVC.collectionView.rx.itemSelected
             .withUnretained(self)
             .bind { vc, indexPath in
                 vc.mainView.sesacImageView.image = .sesacImage(num: indexPath.item)

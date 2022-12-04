@@ -12,9 +12,7 @@ import RxCocoa
 
 class ShopViewModel {
     let disposeBag = DisposeBag()
-    
-    var sesacSections = PublishSubject<[ShopSectionModel]>()
-    
+
     func requestInfo(output: Output) {
         SeSACAPIService.shared.requestSeSACAPI(type: SESACLoginDTO.self, router: ShopRouter.myInfo(query: UserManager.idToken)) { [weak self] result in
             guard let self = self else {return}

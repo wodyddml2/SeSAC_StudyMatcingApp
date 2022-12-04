@@ -113,6 +113,8 @@
 		63670CD72928CCB600EAF29D /* SeSACFind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63670CD62928CCB600EAF29D /* SeSACFind.swift */; };
 		63670CD92928CDCC00EAF29D /* SeSACFindSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63670CD82928CDCC00EAF29D /* SeSACFindSectionModel.swift */; };
 		636B6E4B292CDA6A00CED2F2 /* ReviewTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636B6E4A292CDA6A00CED2F2 /* ReviewTableViewController.swift */; };
+		63761768293CE86B007D4489 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63761767293CE86B007D4489 /* StoreKit.framework */; };
+		6376176A293CF893007D4489 /* SeSACShopViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63761769293CF893007D4489 /* SeSACShopViewModel.swift */; };
 		6378279E292225D3009E1424 /* MyProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6378279D292225D3009E1424 /* MyProfileViewController.swift */; };
 		637827A2292226BD009E1424 /* MyProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637827A1292226BD009E1424 /* MyProfileTableViewCell.swift */; };
 		637827A429222A56009E1424 /* CommonButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637827A329222A56009E1424 /* CommonButton.swift */; };
@@ -273,6 +275,8 @@
 		63670CD62928CCB600EAF29D /* SeSACFind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACFind.swift; sourceTree = "<group>"; };
 		63670CD82928CDCC00EAF29D /* SeSACFindSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACFindSectionModel.swift; sourceTree = "<group>"; };
 		636B6E4A292CDA6A00CED2F2 /* ReviewTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewTableViewController.swift; sourceTree = "<group>"; };
+		63761767293CE86B007D4489 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		63761769293CF893007D4489 /* SeSACShopViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACShopViewModel.swift; sourceTree = "<group>"; };
 		6378279D292225D3009E1424 /* MyProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileViewController.swift; sourceTree = "<group>"; };
 		637827A1292226BD009E1424 /* MyProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileTableViewCell.swift; sourceTree = "<group>"; };
 		637827A329222A56009E1424 /* CommonButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonButton.swift; sourceTree = "<group>"; };
@@ -342,6 +346,7 @@
 				633AC687292F573B00A3249B /* SocketIO in Frameworks */,
 				637827AB29225A9F009E1424 /* MultiSlider in Frameworks */,
 				63F423402919E9AF00F91D01 /* Toast in Frameworks */,
+				63761768293CE86B007D4489 /* StoreKit.framework in Frameworks */,
 				63467DC82918D4DC00E7D8AE /* SnapKit in Frameworks */,
 				63F3145C291D569500C31F59 /* FirebaseAuth in Frameworks */,
 			);
@@ -449,7 +454,6 @@
 				6300492E291EC27A0046E6D3 /* ShopViewController.swift */,
 				6354BA6B2937AE28006113F2 /* TabmanShopViewController.swift */,
 				6308B274293C9C1A00E539BF /* SubView */,
-				6354BA6429379805006113F2 /* Cells */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -468,6 +472,8 @@
 				6354BA652937A540006113F2 /* SeSACShopViewController.swift */,
 				6354BA672937A547006113F2 /* BgShopViewController.swift */,
 				6308B27E293CB2CE00E539BF /* SectionModel */,
+				6354BA6429379805006113F2 /* Cells */,
+				6376176B293CF8A0007D4489 /* ViewModel */,
 			);
 			path = SubView;
 			sourceTree = "<group>";
@@ -594,6 +600,7 @@
 				63467E2329194B8700E7D8AE /* .gitignore */,
 				63467DB12918D4AE00E7D8AE /* SeSAC_StudyMatcingApp */,
 				63467DB02918D4AE00E7D8AE /* Products */,
+				63761766293CE86B007D4489 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -992,6 +999,22 @@
 				636B6E4A292CDA6A00CED2F2 /* ReviewTableViewController.swift */,
 			);
 			path = ReviewScene;
+			sourceTree = "<group>";
+		};
+		63761766293CE86B007D4489 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				63761767293CE86B007D4489 /* StoreKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		6376176B293CF8A0007D4489 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				63761769293CF893007D4489 /* SeSACShopViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		6378279829222579009E1424 /* SettingView */ = {
@@ -1535,6 +1558,7 @@
 				63467E042918F9CE00E7D8AE /* NumberView.swift in Sources */,
 				637EDF362924F923009089E4 /* WithdrawViewController.swift in Sources */,
 				63004935291EC7020046E6D3 /* TabImage.swift in Sources */,
+				6376176A293CF893007D4489 /* SeSACShopViewModel.swift in Sources */,
 				633AC6A2292FD18500A3249B /* SeSACReviewView.swift in Sources */,
 				63670CD72928CCB600EAF29D /* SeSACFind.swift in Sources */,
 				63467DE02918D87F00E7D8AE /* BaseView.swift in Sources */,

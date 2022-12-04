@@ -7,7 +7,11 @@
 
 import UIKit
 
+import RxSwift
+
 class SeSACShopCollectionViewCell: BaseCollectionViewCell {
+    var disposeBag = DisposeBag()
+    
     let sesacImageView: UIImageView = {
         let view = UIImageView()
         view.layer.cornerRadius = 8
@@ -43,6 +47,10 @@ class SeSACShopCollectionViewCell: BaseCollectionViewCell {
         [sesacImageView, sesacLabel, sesacPriceButton, sesacInfoLabel].forEach {
             contentView.addSubview($0)
         }
+    }
+    
+    override func prepareForReuse() {
+        disposeBag = DisposeBag()
     }
     
     override func setConstraints() {
