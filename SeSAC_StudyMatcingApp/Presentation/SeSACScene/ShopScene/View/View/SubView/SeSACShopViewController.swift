@@ -78,7 +78,6 @@ extension SeSACShopViewController {
 extension SeSACShopViewController {
     func requestProductData() {
         if SKPaymentQueue.canMakePayments() {
-            print("인앱 결제 가능")
             let request = SKProductsRequest(productIdentifiers: productIdentifiers)
             request.delegate = self
             request.start()
@@ -91,15 +90,12 @@ extension SeSACShopViewController {
         let receiptFileURL = Bundle.main.appStoreReceiptURL
         let receiptData = try? Data(contentsOf: receiptFileURL!)
         let receiptString = receiptData?.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
-        
-        print(receiptString)
+     
         if let product = product?.productIdentifier {
             viewModel.requestiOS(receipt: receiptString ?? "", product: product)
         }
         
-        //거래 내역(transaction)을 큐에서 제거
         SKPaymentQueue.default().finishTransaction(transaction)
-        
     }
 }
 
@@ -116,6 +112,7 @@ extension SeSACShopViewController: UICollectionViewDelegate {
                 .withUnretained(self)
                 .bind { vc, _ in
                     if indexPath.item > 0 && !vc.viewModel.sesacArr.contains(indexPath.item) {
+                        vc.product = vc.productArray[indexPath.row - 1]
                         let payment = SKPayment(product: vc.productArray[indexPath.item - 1])
                         SKPaymentQueue.default().add(payment)
                         SKPaymentQueue.default().add(self)

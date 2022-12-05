@@ -29,8 +29,7 @@ final class ShopViewController: BaseViewController {
     override func configureUI() {
         view.backgroundColor = .white
         navigationBarCommon(title: "새싹샵")
-        
-        
+ 
         self.addChild(viewController)
         self.view.addSubview(viewController.view)
         viewController.view.snp.makeConstraints { make in
@@ -55,6 +54,8 @@ extension ShopViewController {
                 vc.mainView.backgroundImageView.image = .sesacBackgroundImage(num: result.background)
                 vc.mainView.sesacImageView.image = .sesacImage(num: result.sesac)
                 vc.viewController.firstVC.viewModel.sesacCollection.onNext(result.sesacCollection)
+                print(result.backgroundCollection)
+                vc.viewController.secondVC.viewModel.backgroundCollection.onNext(result.backgroundCollection)
             }
             .disposed(by: disposeBag)
         
@@ -62,6 +63,13 @@ extension ShopViewController {
             .withUnretained(self)
             .bind { vc, indexPath in
                 vc.mainView.sesacImageView.image = .sesacImage(num: indexPath.item)
+            }
+            .disposed(by: disposeBag)
+        
+        viewController.secondVC.tableView.rx.itemSelected
+            .withUnretained(self)
+            .bind { vc, indexPath in
+                vc.mainView.backgroundImageView.image = .sesacBackgroundImage(num: indexPath.row)
             }
             .disposed(by: disposeBag)
         

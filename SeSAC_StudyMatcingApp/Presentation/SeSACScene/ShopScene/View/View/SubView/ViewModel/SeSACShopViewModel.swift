@@ -14,6 +14,7 @@ class SeSACShopViewModel {
     let disposeBag = DisposeBag()
     
     var sesacCollection = BehaviorSubject<[Int]>(value: [0])
+    var backgroundCollection = BehaviorSubject<[Int]>(value: [0])
     var sesacArr: [Int] = []
     
     var sesacSections = PublishSubject<[ShopSectionModel]>()
