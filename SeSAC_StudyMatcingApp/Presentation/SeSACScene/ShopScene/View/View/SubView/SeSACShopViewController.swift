@@ -156,7 +156,7 @@ extension SeSACShopViewController: SKProductsRequestDelegate, SKPaymentTransacti
                 productArray.append(i)
                 sections[0].items.append(ShopModel(name: i.localizedTitle, info: i.localizedDescription, price: commaFormat(price: i.price)))
             }
-       
+            viewModel.sesacCollection.onNext(viewModel.sesacArr)
             viewModel.sesacCollection
                 .withUnretained(self)
                 .subscribe { vc, values in

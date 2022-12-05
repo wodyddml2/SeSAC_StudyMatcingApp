@@ -19,6 +19,7 @@ enum SeSACAPI {
             static let base = "/shop"
             static let myInfo = "/myinfo"
             static let ios = "/ios"
+            static let item = "/item"
         }
     }
     

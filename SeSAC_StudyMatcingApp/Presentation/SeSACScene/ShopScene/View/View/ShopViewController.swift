@@ -53,16 +53,17 @@ extension ShopViewController {
             .subscribe { vc, result in
                 vc.mainView.backgroundImageView.image = .sesacBackgroundImage(num: result.background)
                 vc.mainView.sesacImageView.image = .sesacImage(num: result.sesac)
-                vc.viewController.firstVC.viewModel.sesacCollection.onNext(result.sesacCollection)
-                print(result.backgroundCollection)
-                vc.viewController.secondVC.viewModel.backgroundCollection.onNext(result.backgroundCollection)
+                vc.viewController.firstVC.viewModel.sesacArr = result.sesacCollection
+                vc.viewController.secondVC.viewModel.sesacArr = result.backgroundCollection
             }
             .disposed(by: disposeBag)
         
+       
         viewController.firstVC.collectionView.rx.itemSelected
             .withUnretained(self)
             .bind { vc, indexPath in
                 vc.mainView.sesacImageView.image = .sesacImage(num: indexPath.item)
+                vc.mainView.sesacImageView.tag = indexPath.item
             }
             .disposed(by: disposeBag)
         
@@ -70,6 +71,15 @@ extension ShopViewController {
             .withUnretained(self)
             .bind { vc, indexPath in
                 vc.mainView.backgroundImageView.image = .sesacBackgroundImage(num: indexPath.row)
+                vc.mainView.backgroundImageView.tag = indexPath.row
+            }
+            .disposed(by: disposeBag)
+        
+        mainView.saveButton.rx.tap
+            .throttle(.seconds(3), scheduler: MainScheduler.asyncInstance)
+            .withUnretained(self)
+            .bind { vc, _ in
+                vc.viewModel.requestItem(output: output, sesac: vc.mainView.sesacImageView.tag, background: vc.mainView.backgroundImageView.tag)
             }
             .disposed(by: disposeBag)
         

@@ -31,7 +31,6 @@ class BgShopViewController: BaseViewController {
     
     var productArray = Array<SKProduct>()
     var product: SKProduct?
-    
     var sections: [ShopSectionModel] = [ShopSectionModel(items: [ShopModel(name: SeSACBackground.allCases[0].name, info: SeSACBackground.allCases[0].info, price: SeSACBackground.allCases[0].price)])]
     
     override func viewDidLoad() {
@@ -94,8 +93,6 @@ extension BgShopViewController {
         let receiptString = receiptData?.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
      
         if let product = product?.productIdentifier {
-            print(product)
-            print(receiptString)
             viewModel.requestiOS(receipt: receiptString ?? "", product: product)
         }
         
@@ -148,7 +145,7 @@ extension BgShopViewController: SKProductsRequestDelegate, SKPaymentTransactionO
                 productArray.append(i)
                 sections[0].items.append(ShopModel(name: i.localizedTitle, info: i.localizedDescription, price: commaFormat(price: i.price)))
             }
-       
+            viewModel.backgroundCollection.onNext(viewModel.sesacArr)
             viewModel.backgroundCollection
                 .withUnretained(self)
                 .subscribe { vc, values in

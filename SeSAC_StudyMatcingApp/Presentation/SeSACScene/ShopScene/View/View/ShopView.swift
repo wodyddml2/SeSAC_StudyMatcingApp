@@ -67,7 +67,7 @@ class ShopView: BaseView {
     
     func bindImageView(output: ShopViewModel.Output) {
         output.infoFailed
-            .asDriver()
+            .asDriver(onErrorJustReturn: false)
             .drive (onNext: { [weak self] error in
                 guard let self = self else {return}
                 if error == true {
@@ -75,5 +75,16 @@ class ShopView: BaseView {
                 }
             }).disposed(by: disposeBag)
             
+        
+        output.updateSuccess
+            .asDriver(onErrorJustReturn: false)
+            .drive (onNext: { [weak self] success in
+                guard let self = self else {return}
+                if success == true {
+                    self.makeToast("저장이 완료되었습니다!", position: .center)
+                } else {
+                    self.makeToast("구매가 필요한 아이템이 있어요", position: .center)
+                }
+            }).disposed(by: disposeBag)
     }
 }

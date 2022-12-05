@@ -32,6 +32,24 @@ class ShopViewModel {
             }
         }
     }
+    
+    func requestItem(output: Output, sesac: Int, background: Int) {
+        SeSACAPIService.shared.requestStatusSeSACAPI(router: ShopRouter.item(query: UserManager.idToken, sesac: "\(sesac)", background: "\(background)")) {[weak self] value in
+            guard let self = self else {return}
+            switch StatusCode(rawValue: value) {
+            case .success:
+                output.updateSuccess.accept(true)
+            case .declarationOrMatch:
+                output.updateSuccess.accept(false)
+            case .firebaseError:
+                self.renwalGetIdToken {
+                    self.requestItem(output: output,sesac: sesac, background: background)
+                }
+            default:
+                output.infoFailed.accept(true)
+            }
+        }
+    }
 }
 
 extension ShopViewModel: ViewModelType {
@@ -42,6 +60,7 @@ extension ShopViewModel: ViewModelType {
     struct Output {
         let myInfo = BehaviorSubject<SeSACMyInfo>(value: SeSACMyInfo())
         let infoFailed = BehaviorRelay<Bool>(value: false)
+        let updateSuccess = PublishRelay<Bool>()
     }
     
     func transform(input: Input) -> Output {
