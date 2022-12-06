@@ -85,3 +85,22 @@ extension UIViewController {
         navigationController?.navigationBar.standardAppearance = navigationAppearance
     }
 }
+
+
+extension UINavigationController {
+    private func doAfterAnimatingTransition(animated: Bool, completion: @escaping (() -> Void)) {
+        if let coordinator = transitionCoordinator, animated {
+            coordinator.animate(alongsideTransition: nil, completion: { _ in
+                completion()
+            })
+        } else {
+            DispatchQueue.main.async {
+                completion()
+            }
+        }
+    }
+    func popViewController(animated: Bool, completion: @escaping (() -> Void)) {
+        popViewController(animated: animated)
+        doAfterAnimatingTransition(animated: animated, completion: completion)
+    }
+}

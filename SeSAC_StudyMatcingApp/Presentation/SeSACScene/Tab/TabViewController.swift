@@ -27,7 +27,7 @@ final class TabViewController: UITabBarController {
     
     private func configureTabBar() {
         let homeVC = setupTabBar(viewController: HomeViewController(), title: "홈", image: TabImage.home)
-        
+
         let shopVC = setupTabBar(viewController: ShopViewController(), title: "새싹샵", image: TabImage.shop)
       
         let chattingVC = setupTabBar(viewController: ChattingViewController(), title: "새싹친구", image: TabImage.chat)

@@ -80,15 +80,37 @@ extension AppDelegate: MessagingDelegate, UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         let userInfo = response.notification.request.content.userInfo
         
+        guard let vc = (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.window?.rootViewController?.topViewController else { return }
+        
         if userInfo[AnyHashable("matched")] as? String == "1" {
-            let home = HomeViewController()
-            home.transition(ChattingViewController(), transitionStyle: .push)
+            let chat = ChattingViewController()
+            chat.viewModel.uid = userInfo[AnyHashable("Uid")] as? String ?? ""
+            chat.viewModel.nickname = userInfo[AnyHashable("Nick")] as? String ?? ""
+            if vc is HomeViewController {
+                vc.transition(chat, transitionStyle: .push)
+            } else if vc is SettingViewController || vc is ShopViewController {
+                if let home = vc.tabBarController?.viewControllers?[0] {
+                    vc.tabBarController?.selectedViewController = home
+                    home.topViewController?.transition(chat, transitionStyle: .push)
+                }
+            } else if vc is MyProfileViewController {
+                vc.navigationController?.popViewController(animated: false, completion: {
+                    guard let viewController = (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.window?.rootViewController?.topViewController else { return }
+                    
+                    if let home = viewController.tabBarController?.viewControllers?[0] {
+                        viewController.tabBarController?.selectedViewController = home
+                        home.topViewController?.transition(chat, transitionStyle: .push)
+                    }
+                })
+            }
         } else {
-//            if userInfo[AnyHashable("dodge")] as? String == "dodge" {
-//
-//           } else if userInfo[AnyHashable("studyAccepted")] as? String == "studyAccepted" {
-//
-//           }
+
         }
+        
+        //            if userInfo[AnyHashable("dodge")] as? String == "dodge" {
+        //
+        //           } else if userInfo[AnyHashable("studyAccepted")] as? String == "studyAccepted" {
+        //
+        //           }
     }
 }

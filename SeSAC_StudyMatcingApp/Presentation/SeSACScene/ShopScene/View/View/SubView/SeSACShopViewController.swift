@@ -94,7 +94,6 @@ extension SeSACShopViewController {
         if let product = product?.productIdentifier {
             viewModel.requestiOS(receipt: receiptString ?? "", product: product)
         }
-        
         SKPaymentQueue.default().finishTransaction(transaction)
     }
 }
@@ -151,7 +150,6 @@ extension SeSACShopViewController: SKProductsRequestDelegate, SKPaymentTransacti
         let products = response.products
         
         if products.count > 0 {
-            
             for i in products {
                 productArray.append(i)
                 sections[0].items.append(ShopModel(name: i.localizedTitle, info: i.localizedDescription, price: commaFormat(price: i.price)))
@@ -167,8 +165,6 @@ extension SeSACShopViewController: SKProductsRequestDelegate, SKPaymentTransacti
                     vc.viewModel.sesacSections.onNext(vc.sections)
                 }
                 .disposed(by: disposeBag)
-            
-            
         } else {
             view.makeToast("상품을 준비중입니다.", position: .center)
         }

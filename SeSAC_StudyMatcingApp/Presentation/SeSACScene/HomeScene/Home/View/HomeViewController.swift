@@ -22,8 +22,9 @@ final class HomeViewController: BaseViewController {
     let disposeBag = DisposeBag()
     
     private var sesacUsers: [SeSACUser] = []
-    var matchInfo: SeSACMatchDTO?
     
+    var matchInfo: SeSACMatchDTO?
+
     override func loadView() {
         view = mainView
     }
