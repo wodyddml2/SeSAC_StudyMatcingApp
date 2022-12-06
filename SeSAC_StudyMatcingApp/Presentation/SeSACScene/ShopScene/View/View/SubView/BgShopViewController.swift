@@ -140,7 +140,6 @@ extension BgShopViewController: SKProductsRequestDelegate, SKPaymentTransactionO
         let products = response.products
         
         if products.count > 0 {
-            
             for i in products {
                 productArray.append(i)
                 sections[0].items.append(ShopModel(name: i.localizedTitle, info: i.localizedDescription, price: commaFormat(price: i.price)))
@@ -157,7 +156,7 @@ extension BgShopViewController: SKProductsRequestDelegate, SKPaymentTransactionO
                 }
                 .disposed(by: disposeBag)
         } else {
-            print("No Product Found") // 계약 업데이트, 유료 계약 X, Capablities X
+            view.makeToast("상품을 준비중입니다.", position: .center)
         }
     }
     
@@ -167,11 +166,10 @@ extension BgShopViewController: SKProductsRequestDelegate, SKPaymentTransactionO
             switch transaction.transactionState {
                 
             case .purchased: //구매 승인 이후에 영수증 검증
-                print("Transaction Approved. \(transaction.payment.productIdentifier)")
                 receiptValidation(transaction: transaction, productIdentifier: transaction.payment.productIdentifier)
                 
-            case .failed: //실패 토스트, transaction
-                print("Transaction Failed")
+            case .failed:
+                view.makeToast("구매를 취소했습니다.", position: .center)
                 SKPaymentQueue.default().finishTransaction(transaction)
                 
             default:

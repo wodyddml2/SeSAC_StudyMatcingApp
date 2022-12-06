@@ -50,9 +50,6 @@ final class TabmanShopViewController: TabmanViewController {
         
         addBar(bar, dataSource: self, at: .top)
     }
-    
-
-    
 }
 
 extension TabmanShopViewController: PageboyViewControllerDataSource, TMBarDataSource {

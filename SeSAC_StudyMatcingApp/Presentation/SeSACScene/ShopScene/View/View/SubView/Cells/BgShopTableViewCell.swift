@@ -15,6 +15,7 @@ class BgShopTableViewCell: BaseTableViewCell {
 
     let sesacImageView: UIImageView = {
         let view = UIImageView()
+        view.layer.masksToBounds = true
         view.layer.cornerRadius = 8
         view.layer.borderColor = UIColor.gray2.cgColor
         view.layer.borderWidth = 1
@@ -42,7 +43,6 @@ class BgShopTableViewCell: BaseTableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
     }
 
     override func configureUI() {

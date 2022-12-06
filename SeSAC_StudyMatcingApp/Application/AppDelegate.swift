@@ -25,7 +25,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
         UNUserNotificationCenter.current().requestAuthorization(
           options: authOptions,
-          completionHandler: { _, _ in }
+          completionHandler: { _, _ in
+              print("SSs")
+          }
         )
         application.registerForRemoteNotifications()
         
@@ -68,7 +70,25 @@ extension AppDelegate: MessagingDelegate, UNUserNotificationCenterDelegate {
 //        NotificationCenter.default.post(name: Notification.Name("FCMToken"), object: nil, userInfo: dataDictonary)
 //    }
     
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        let userInfo = notification.request.content.userInfo
+        if userInfo[AnyHashable("matched")] as? String != "1" {
+            completionHandler([.list, .banner, .sound])
+        }
+    }
+    
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        print(response.notification.request.content.userInfo)
+        let userInfo = response.notification.request.content.userInfo
+        
+        if userInfo[AnyHashable("matched")] as? String == "1" {
+            let home = HomeViewController()
+            home.transition(ChattingViewController(), transitionStyle: .push)
+        } else {
+//            if userInfo[AnyHashable("dodge")] as? String == "dodge" {
+//
+//           } else if userInfo[AnyHashable("studyAccepted")] as? String == "studyAccepted" {
+//
+//           }
+        }
     }
 }

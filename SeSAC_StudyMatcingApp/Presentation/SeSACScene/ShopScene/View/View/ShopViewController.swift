@@ -53,6 +53,8 @@ extension ShopViewController {
             .subscribe { vc, result in
                 vc.mainView.backgroundImageView.image = .sesacBackgroundImage(num: result.background)
                 vc.mainView.sesacImageView.image = .sesacImage(num: result.sesac)
+                vc.mainView.backgroundImageView.tag = result.background
+                vc.mainView.sesacImageView.tag = result.sesac
                 vc.viewController.firstVC.viewModel.sesacArr = result.sesacCollection
                 vc.viewController.secondVC.viewModel.sesacArr = result.backgroundCollection
             }

@@ -170,7 +170,7 @@ extension SeSACShopViewController: SKProductsRequestDelegate, SKPaymentTransacti
             
             
         } else {
-            print("No Product Found") // 계약 업데이트, 유료 계약 X, Capablities X
+            view.makeToast("상품을 준비중입니다.", position: .center)
         }
     }
     
@@ -180,11 +180,10 @@ extension SeSACShopViewController: SKProductsRequestDelegate, SKPaymentTransacti
             switch transaction.transactionState {
                 
             case .purchased: //구매 승인 이후에 영수증 검증
-                print("Transaction Approved. \(transaction.payment.productIdentifier)")
                 receiptValidation(transaction: transaction, productIdentifier: transaction.payment.productIdentifier)
                 
             case .failed: //실패 토스트, transaction
-                print("Transaction Failed")
+                view.makeToast("구매를 취소했습니다.", position: .center)
                 SKPaymentQueue.default().finishTransaction(transaction)
                 
             default:
