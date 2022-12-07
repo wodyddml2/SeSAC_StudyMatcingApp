@@ -26,7 +26,7 @@ final class ChattingViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        ChattingSocketService.shared.establishConnection()
         setTableView()
         bindViewModel()
         navigationBarStyle()
@@ -37,7 +37,6 @@ final class ChattingViewController: BaseViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         ChattingSocketService.shared.closeConnection()
-//        viewModel.addChats()
     }
    
     @objc func getMessage(notification: NSNotification) {

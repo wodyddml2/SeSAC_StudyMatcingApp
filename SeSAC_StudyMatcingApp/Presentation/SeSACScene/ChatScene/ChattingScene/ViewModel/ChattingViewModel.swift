@@ -81,7 +81,6 @@ class ChattingViewModel {
             guard let self = self else {return}
             switch result {
             case .success(let success):
-                ChattingSocketService.shared.establishConnection()
                 self.chatInfo.onNext(success)
             case .failure(let fail):
                 let error = fail as! SeSACError
