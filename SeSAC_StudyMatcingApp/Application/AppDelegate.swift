@@ -104,7 +104,25 @@ extension AppDelegate: MessagingDelegate, UNUserNotificationCenterDelegate {
                 })
             }
         } else {
-
+            if !(vc is HomeViewController) {
+                if vc is SettingViewController || vc is ShopViewController {
+                    if let home = vc.tabBarController?.viewControllers?[0] {
+                        vc.tabBarController?.selectedViewController = home
+                    }
+                } else if vc is MyProfileViewController {
+                    vc.navigationController?.popViewController(animated: false, completion: {
+                        guard let viewController = (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.window?.rootViewController?.topViewController else { return }
+                        if let home = viewController.tabBarController?.viewControllers?[0] {
+                            viewController.tabBarController?.selectedViewController = home
+                        }
+                    })
+                } else if vc is SearchViewController || vc is TabManSeSACViewController {
+                    vc.navigationController?.popToRootViewController(animated: false)
+                }
+                
+            }
+            
+            
         }
         
         //            if userInfo[AnyHashable("dodge")] as? String == "dodge" {
