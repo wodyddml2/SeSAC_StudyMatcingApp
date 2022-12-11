@@ -128,7 +128,6 @@ extension HomeViewController {
         output.matchInfo
             .withUnretained(self)
             .subscribe (onNext: {vc, result in
-                print(result)
                 if result.matched == 0 {
                     vc.mainView.matchButtonSet(UIImage(named: MatchImage.antenna)!, MatchStatus.antenna.rawValue)
                 } else {

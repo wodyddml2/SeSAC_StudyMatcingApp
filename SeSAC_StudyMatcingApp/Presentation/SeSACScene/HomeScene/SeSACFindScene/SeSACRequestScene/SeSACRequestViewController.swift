@@ -132,7 +132,6 @@ extension SeSACRequestViewController {
         output.sesacInfo
             .withUnretained(self)
             .subscribe (onNext: { vc, sesacInfo in
-                print(sesacInfo)
                 vc.info = sesacInfo.fromQueueDB
                 vc.setTableView(sesacInfo: sesacInfo)
             })

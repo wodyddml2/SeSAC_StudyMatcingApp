@@ -69,7 +69,6 @@ class SplashViewController: BaseViewController {
                         let vc = UINavigationController(rootViewController: NumberViewController())
                         sceneDelegate?.window?.rootViewController = vc
                     default:
-                        print(error.rawValue)
                         UserManager.signupStatus = true
                         let vc = UINavigationController(rootViewController: NumberViewController())
                         sceneDelegate?.window?.rootViewController = vc

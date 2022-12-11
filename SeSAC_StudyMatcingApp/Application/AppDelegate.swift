@@ -26,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UNUserNotificationCenter.current().requestAuthorization(
           options: authOptions,
           completionHandler: { _, _ in
-              print("SSs")
+              
           }
         )
         application.registerForRemoteNotifications()
@@ -37,7 +37,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if let error = error {
                 print(error)
             } else if let token = token {
-                print(token)
                 UserManager.fcmToken = token
             }
         }

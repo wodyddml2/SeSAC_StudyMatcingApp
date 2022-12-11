@@ -27,12 +27,11 @@ class ChattingSocketService {
         
         socket.on(clientEvent: .connect) { [weak self] data, ack in
             guard let self = self else {return}
-            print("SOCKET IS CONNECTED", data, ack)
             self.socket.emit("changesocketid", UserManager.myUID)
         }
         
         socket.on(clientEvent: .disconnect) { data, ack in
-            print("SOCKET IS DISCONNECTED", data, ack)
+            
         }
 
         socket.on("chat") { dataArray, ack in

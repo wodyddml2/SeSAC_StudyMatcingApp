@@ -49,13 +49,13 @@ class SeSACShopViewModel {
             case .success:
                 self.requestInfo()
             case .declarationOrMatch:
-                print("SS")
+                print("201")
             case .firebaseError:
                 self.renwalGetIdToken {
                     self.requestiOS(receipt: receipt, product: product)
                 }
             default:
-                print("fff")
+                print("fail")
             }
         }
     }

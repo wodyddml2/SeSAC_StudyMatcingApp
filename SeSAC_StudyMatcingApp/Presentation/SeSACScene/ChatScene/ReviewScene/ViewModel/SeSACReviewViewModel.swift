@@ -36,7 +36,6 @@ class SeSACReviewViewModel {
                     self.requestRate(output: output, list: list, comment: comment)
                 }
             default:
-                print(value)
                 output.networkFailed.accept(true)
             }
         }

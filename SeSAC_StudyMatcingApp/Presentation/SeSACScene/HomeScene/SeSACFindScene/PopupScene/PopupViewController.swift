@@ -180,7 +180,7 @@ extension PopupViewController {
             case .success(let success):
                 completion(success)
             case .failure(_):
-                print("Ssss")
+                print("fail")
                 }
             }
         }
