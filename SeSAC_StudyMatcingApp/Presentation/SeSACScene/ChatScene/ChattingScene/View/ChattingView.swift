@@ -170,7 +170,7 @@ extension ChattingView {
             .compactMap({$0})
             .first?.windows
             .filter({$0.isKeyWindow}).first
-        return window!.safeAreaInsets.bottom - 32
+        return (window?.safeAreaInsets.bottom ?? 0) - 32
     }
     
     func bindKeyboard() {

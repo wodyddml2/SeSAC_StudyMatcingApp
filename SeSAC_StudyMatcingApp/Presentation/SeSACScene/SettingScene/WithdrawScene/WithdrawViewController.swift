@@ -13,6 +13,7 @@ import RxSwift
 final class WithdrawViewController: BaseViewController {
     
     let disposeBag = DisposeBag()
+    let repository = ChatRepository()
     
     let mainView = AlertView()
     
@@ -61,6 +62,11 @@ final class WithdrawViewController: BaseViewController {
                 SeSACAPIService.shared.requestStatusSeSACAPI(router: UserRouter.withdraw(query: UserManager.idToken)) { value in
                     switch StatusCode(rawValue: value) {
                     case .success, .noSignup:
+                        do {
+                            try self.repository.deleteRealm()
+                        } catch {
+                            print("error")
+                        }
                         UserManager.onboarding = false
                         let vc = OnboardingViewController()
                         sceneDelegate?.window?.rootViewController = vc

@@ -30,7 +30,7 @@ final class ChattingViewController: BaseViewController {
         setTableView()
         bindViewModel()
         navigationBarStyle()
-        
+    
         NotificationCenter.default.addObserver(self, selector: #selector(getMessage(notification:)), name: NSNotification.Name("getMessage"), object: nil)
     }
     
