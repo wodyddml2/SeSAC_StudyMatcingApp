@@ -108,8 +108,7 @@ extension BgShopViewController: UITableViewDelegate {
             cell.sesacInfoLabel.text = item.info
             cell.sesacPriceButton.setTitle(item.price, for: .normal)
             cell.sesacImageView.image = .sesacBackgroundImage(num: indexPath.row)
-            cell.sesacPriceButton.rx.tapGesture()
-                .when(.recognized)
+            cell.sesacPriceButton.rx.tap
                 .withUnretained(self)
                 .bind { vc, _ in
                     if indexPath.item > 0 && !vc.viewModel.sesacArr.contains(indexPath.row) {

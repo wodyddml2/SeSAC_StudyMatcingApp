@@ -106,8 +106,7 @@ extension SeSACShopViewController: UICollectionViewDelegate {
             cell.sesacInfoLabel.text = item.info
             cell.sesacPriceButton.setTitle(item.price, for: .normal)
             cell.sesacImageView.image = .sesacImage(num: indexPath.item)
-            cell.sesacPriceButton.rx.tapGesture()
-                .when(.recognized)
+            cell.sesacPriceButton.rx.tap
                 .withUnretained(self)
                 .bind { vc, _ in
                     if indexPath.item > 0 && !vc.viewModel.sesacArr.contains(indexPath.item) {

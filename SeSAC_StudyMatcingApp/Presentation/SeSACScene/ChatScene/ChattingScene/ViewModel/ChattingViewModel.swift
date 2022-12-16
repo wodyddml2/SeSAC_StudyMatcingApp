@@ -219,27 +219,6 @@ extension ChattingViewModel {
 }
 
 extension ChattingViewModel {
-    //    func addChats() {
-    //        do {
-    //            try repository.deleteRealm()
-    //        } catch {
-    //            print("ss")
-    //        }
-    //        let task = ChatListData(uid: uid, chatInfo: List<ChatData>())
-    //        for section in sections {
-    //
-    //            for item in section.items {
-    //                task.chatInfo.append(ChatData(message: item.message, createdAt: item.originCreated, from: item.from, uid: item.uid))
-    //            }
-    //
-    //        }
-    //
-    //        do {
-    //            try repository.addRealm(item: task)
-    //        } catch {
-    //            print("ee")
-    //        }
-    //    }
     
     func chatItems(item: ChatData) -> SeSACChat {
         var dateFormat: String = ""

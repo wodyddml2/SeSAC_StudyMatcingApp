@@ -248,5 +248,3 @@ extension MyProfileViewController {
             .disposed(by: disposeBag)
     }
 }
-
-

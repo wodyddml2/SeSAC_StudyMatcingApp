@@ -41,13 +41,14 @@ extension MessageViewController {
     func setTimer(with timer: Observable<Int>) {
         timerDisposable?.dispose()
         timerDisposable = timer
-            .subscribe(onNext: { value in
+            .withUnretained(self)
+            .subscribe(onNext: { vc, value in
                 if value <= 50 {
-                    self.mainView.timerLabel.text = value == 0 ? "01:00" : "00:\(60 - value)"
+                    vc.mainView.timerLabel.text = value == 0 ? "01:00" : "00:\(60 - value)"
                 } else if value <= 60 {
-                    self.mainView.timerLabel.text = "00:0\(60 - value)"
+                    vc.mainView.timerLabel.text = "00:0\(60 - value)"
                 } else {
-                    self.timerDisposable?.dispose()
+                    vc.timerDisposable?.dispose()
                     
                 }
             }, onDisposed: {
