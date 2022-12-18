@@ -134,7 +134,7 @@ Rx를 사용하면서 당연하게 DisposeBag을 사용해왔는데 해당 이�
 
 </aside>
 
-![KakaoTalk_Photo_2022-12-16-23-54-23](https://user-images.githubusercontent.com/83345066/208295034-653d0637-f17a-412d-8299-19f6df8152d2.jpeg)
+<img width="361" alt="%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2022-12-18_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_8 13 28" src="https://user-images.githubusercontent.com/83345066/208295201-10ec38c2-2f2b-4111-925e-17fa73d05b11.png">
 
 스터디를 등록하는 기능을 만드는 과정에서 위의 이미지처럼 **‘지금 주변에는’** section의 cell을 클릭 시 **‘내가 하고 싶은’** section에 값이 들어가야하는데 **DiffableDataSource**의 특징으로 setion과 item의 identifier는 **unique**해야하기 때문에 cell을 클릭하면 **‘내가 하고 싶은’**의 section에 값이 들어가지만 **‘지금 주변에는’** section의 cell이 사라지는 문제가 발생
 
