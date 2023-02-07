@@ -1,17 +1,21 @@
-# 새싹 스터디
+# 🌱 새싹 스터디
 
 <img width="831" alt="스크린샷 2022-12-22 오후 7 29 05" src="https://user-images.githubusercontent.com/83345066/209114716-558cf067-c331-41e5-81dc-f09cf4ddda1b.png">
 
 <img width="837" alt="스크린샷 2022-12-22 오후 7 28 18" src="https://user-images.githubusercontent.com/83345066/209114838-f58cb07a-21aa-4d57-8a88-eac0b0d28087.png">
 
-> **Introduction**
-> 
+## 💁🏻‍♂️ Introduction
 - 개인 프로젝트(기획, 디자인, API 제공)
 - 프로젝트 기간 한달 (2022.11.07 ~ 2022.12.07)
 - 현재 위치를 기반으로 주변에 스터디를 원하는 새싹인들을 지도를 통해 찾아볼 수 있으며 원하는 새싹인과 스터디 매칭 후 채팅을 이어주는 앱
+- 스터디를 원하는 주변에 스터디를 원하는 사용자들을 지도에 표시해줍니다
+- 스터디를 등록하고 주변 사용자와 매칭을 할 수 있습니다
+- 매칭된 사용자와 실시간 채팅이 가능합니다
+- 인앱 결제를 통해 캐릭터와 배경화면을 구매하고 적용할 수 있습니다
 
-<br/><br/>
-> **Stack**
+<br><br/>
+## ⚙️ Stack
+> 기술 및 라이브러리
 > 
 - UIKit, SnapKit, StoreKit, MapKit, CoreLocation, Toast
 - Tabman, MultiSlider, Compositional Layout, DiffableDataSource
@@ -21,20 +25,8 @@
 - SPM
 - RxSwift, RxCocoa, RxDataSources, RxGesture, RxKeyboard
 
-<br/><br/>
-> **프로젝트 기능**
-> 
-- 로그인, 회원가입
-- 지도의 가운데 위치를 기준으로 스터디를 원하는 주변 새싹인들을 성별에 따라 지도에 표시
-- 원하는 스터디 목록 등록
-- 주변 새싹인들과 매칭 요청, 수락 / 스터디 찾기 중단, 새로고침
-- 매칭된 사용자와 실시간 채팅
-- 스터디 취소, 신고, 리뷰 작성
-- 인앱 결제를 통한 상품 구매, 상품 적용
-- 내 정보 (내 성별, 내 번호 검색 허용, 스터디 연령대) 수정, 회원 탈퇴
-
-<br/><br/>
-> **프로젝트 기술 적용**
+<br><br/>
+> 프로젝트 기술 적용
 > 
 - **MVVM** pattern, **input output** pattern 비즈니스 로직 분리
 - **Singleton** pattern 서버 통신의 로직을 하나의 객체만을 생성해 메모리 낭비 방지
@@ -57,9 +49,8 @@
     - 구매 승인 시 구매 목록 갱신을 위해 영수증 검증 후 Encoding하여 서버 통신
 - **Network** Framework을 이용해 실시간 모니터링으로 네트워크 연결 상태 체크 및 대응
 
-<br/><br/>
-> **개발 공수**
-> 
+<br><br/>
+## 📝 개발 공수
 - 개발 기간: 2022.11.07 ~ 2022.12.07 (약 4주)
 - [개인일지](https://www.notion.so/09865db883654d33ba1c7a996d54f48a)
 
@@ -73,11 +64,11 @@
 | 앱 성능 개선 (Repactoring) | 2022.12.01 ~ 2022.12.02 | endpoint 분리, 폴더링 세분화, 필요없는 singleton pattern 제거, Router 파일 분리, 자주 호출되는 프로퍼티 타입 프로퍼티로 변경, 반복되는 코드 하나로 묶어서 사용 |
 | 인 앱 결제 화면 구현 | 2022.12.03 ~ 2022.12.04 | 아이콘과 배경화면 구입 기능, 내 아이콘과 배경화면 변경 기능 |
 
-<br/><br/>
-> **Trouble Shooting**
-> 
+<br><br/>
+## ⚒ Trouble Shooting
 
-▶︎  **인증 문자 재전송 버튼 누를 시 타이머가 중복되어 무작위로 시간초가 보이는 문제**
+> **인증 문자 재전송 버튼 누를 시 타이머가 중복되어 무작위로 시간초가 보이는 문제**
+>
 
 ```swift
 var timerDisposable: Disposable?
@@ -105,8 +96,9 @@ timerDisposable = Observable<Int>
 
 이번 문제를 해결하면서 구독하고 해지시키는 시점에 따라 이벤트 발생을 조절 시킬 수 있는 disposable과 dispose에 대해 배우면서 Rx의 로직 흐름을 더욱 이해할 수 있는 과정이 됨
 
-<br/><br/>
-▶︎  **binding 해준 버튼의 tap 이벤트가 누를 때마다 중첩되는 현상**
+<br><br/>
+>  binding 해준 버튼의 tap 이벤트가 누를 때마다 중첩되는 현상
+>
 
 ```swift
 // VC File
@@ -137,8 +129,9 @@ Rx를 사용하면서 당연하게 DisposeBag을 사용해왔는데 해당 이�
 
 또한 cell을 재사용하는 시점에서 binding된 이벤트들이 불필요하게 사용되는 부분을 더욱 고려하여 코드를 작성할 수 있는 좋은 계기가 됨
 
-<br/><br/>
-▶︎  **cell의 동적인 높이를 구현중 cell을 접었을 때 화면 밖으로 내부 객체들이 튀어나오는 이슈**
+<br><br/>
+> cell의 동적인 높이를 구현중 cell을 접었을 때 화면 밖으로 내부 객체들이 튀어나오는 이슈
+>
 
 <img width="387" alt="%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2022-12-15_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_9 50 24" src="https://user-images.githubusercontent.com/83345066/208295029-0fa376f3-a790-4e07-8925-867cef97def0.png">
 
@@ -146,8 +139,9 @@ Rx를 사용하면서 당연하게 DisposeBag을 사용해왔는데 해당 이�
 
 해당 문제는 Stack View에 정적으로 높이를 지정해주면서 **automaticDimension**의 기능이 적용이 되지않아 생긴 layout 에러인데 **automaticDimension**은 cell의 높이값을 설정할 때 cell의 내부 객체의 높이를 정적으로 구현하면 layout이 깨지는 오류가 발생하기 때문에 Stack View의 특성대로 특정 높이를 주지않고 내부 객체들의 높이를 통해 동적으로 높이를 구현함으로써 해당 이슈를 해결
 
-<br/><br/>
-▶︎  **다른 section의 cell에 같은 값이 중복되어 들어가지 않는 문제**
+<br><br/>
+> 다른 section의 cell에 같은 값이 중복되어 들어가지 않는 문제
+>
 
 <img width="361" alt="%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2022-12-18_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_8 13 28" src="https://user-images.githubusercontent.com/83345066/208295201-10ec38c2-2f2b-4111-925e-17fa73d05b11.png">
 
@@ -158,9 +152,8 @@ setion과 item의 identifier가 **unique**해야하는 **DiffableDataSource**의
 DiffableDataSource를 처음 사용해보면서 여러 기능을 사용해보며 새로운 기술을 공부할 수 있었을 뿐만 아니라 DiffableDataSource가 내부적으로 어떻게 구성이 되어 있고 어떤 프로토콜을 준수하는지를 이번 이슈로 인해 많이 배움
 
 
-<br/><br/>
-> **프로젝트 회고**
-> 
+<br><br/>
+## 🔥 프로젝트 회고
 이번 프로젝트는 협업 프로젝트를 진행하게 되었다.
 처음으로 디자인, 기획, 백앤드 파트와 진행하는 협업 프로젝트이다보니 여러 상황에 대처하는 것을 배울 수 있었는데
 예를 들어 중간에 version 값이나 path 값이 바뀌는 경우를 겪으면서 url을 세분화해서 구성해놔야 변경사항에 효율적으로 대처할 수 있음을 배울 수 있었다.
