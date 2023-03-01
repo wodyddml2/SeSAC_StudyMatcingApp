@@ -28,26 +28,31 @@
 <br><br/>
 > 프로젝트 기술 적용
 > 
-- **MVVM** pattern, **input output** pattern 비즈니스 로직 분리
-- **Singleton** pattern 서버 통신의 로직을 하나의 객체만을 생성해 메모리 낭비 방지
-- **Compositional Layout**을 사용해 복잡한 레이아웃 대응
-- **DiffableDataSource**를 이용해 자연스러운 UI 업데이트와 데이터 자동 동기화 작업으로 에러 방지
-- UITableView의 **automaticDimension**을 사용해 cell의 동적인 높이 조절
-- **Alamofire** case 별로 나누기 위해 **URLRequestConvertible**을 채택한 Router 생성
-    - 각 Error Status Code에 따라 Toast, 다른 이벤트 처리 등의 **Error Handling**
-- 문자열 **정규식**을 통한 전화번호 유효성 체크 후 **FirebaseAuth** 문자 인증을 통한 로그인
-    - RxSwift의 **timer**를 통해 인증번호 유효시간 제한
-- **FCM** push 클릭 시 (데이터 메시지 수신 정보, Foreground, background)에 따라 이벤트 처리
-- **CoreLocation, MapKit**으로 주변 위치 탐색 및 주변 사용자들 Annotation으로 식별
-    - location **authorizationStatus**에 따라 분기 처리
-    - **dequeueReusableAnnotationView**과 **이미지 리사이징**을 통해 cutom Annotation 생성
-- **Socket** 통신을 기반으로 한 채팅 기능
-    - 채팅 이벤트 수신 시 **notificationCenter**를 통해 전달 받은 데이터 채팅 내역에 추가
-    - **Realm** Database에 채팅 내역 저장
-- **StoreKit**을 이용한 상품 인앱 결제
+- **Design Pattern**
+    - **MVVM**, **input-output** 패턴을 이용한 비즈니스 로직 분리
+    - **Singleton** 패턴으로 하나의 객체만을 생성해 메모리 낭비 방지
+- **Reactive Programming**
+    - **RxSwift**, **RxCocoa**를 이용해 데이터 스트림을 비동기적인 흐름으로 처리
+- **Authentication View**
+    - **Firebase Authentication** 문자 인증을 통한 로그인
+    - **Restful API**를 통한 회원 가입 구현
+- **Main View**
+    - **CoreLocation, MapKit**으로 주변 위치 탐색 및 주변 사용자들 Annotation으로 식별
+- **Study Registration View**
+    - **Compositional Layout**을 사용해 복잡한 레이아웃 대응
+    - **DiffableDataSource**를 이용해 자연스러운 UI 업데이트
+- **Study Matching View**, **Profile** **View**
+    - UITableView의 **automaticDimension**을 사용해 cell의 동적인 높이 조절
+- **Chatting View**
+    - **Socket** 통신을 기반으로 한 채팅 기능
+    - **Realm Database**에 채팅 내역을 저장해 서버에 과도한 요청 방지
+    - **FCM** background 상태에서 채팅 알림 구현
+- **Store View**
+    - **StoreKit**을 이용한 상품 인앱 결제
     - 상품 결제 시 **transaction** 상태에 따른 이벤트 처리
     - 구매 승인 시 구매 목록 갱신을 위해 영수증 검증 후 Encoding하여 서버 통신
-- **Network** Framework을 이용해 실시간 모니터링으로 네트워크 연결 상태 체크 및 대응
+- **Network** Framework를 이용한 네트워크 연결 상태 체크 및 대응
+
 
 <br><br/>
 ## 📝 개발 공수
