@@ -28,6 +28,8 @@
 <br><br/>
 > 프로젝트 기술 적용
 > 
+- **Network**
+    - **Alamofire**의 **URLRequestConvertible** 프로토콜을 이용해 라우터 모듈화
 - **Design Pattern**
     - **MVVM**, **input-output** 패턴을 이용한 비즈니스 로직 분리
     - **Singleton** 패턴으로 하나의 객체만을 생성해 메모리 낭비 방지
